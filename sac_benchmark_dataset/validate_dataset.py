@@ -12,9 +12,9 @@ import sys
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
-MIN_DOCUMENTS = 2000
-MIN_STRUCTURED_DISTRACTORS = 1800
-MIN_TASKS_WITH_HARD_NEGATIVES = 30
+MIN_DOCUMENTS = 5000
+MIN_STRUCTURED_DISTRACTORS = 4500
+MIN_TASKS_WITH_HARD_NEGATIVES = 44
 REQUIRED_DISTRACTOR_TYPES = {
     "account_brief_distractor",
     "escalation_distractor",

@@ -6,10 +6,11 @@ fixed retrieval pipelines and multi-turn tool-calling agents.
 The dataset is synthetic, but it is designed to look like realistic enterprise
 search work: customer account notes, support escalations, release notes,
 security advisories, internal tickets, runbooks, and evaluation policy docs.
-The current generated corpus contains 2,499 documents: 57 core labeled or
-near-labeled documents plus 2,442 structured hard distractors. Version 2 adds
-same-topic incident, customer, product, and enterprise-background clusters so
-one topic has many plausible but non-authoritative artifacts.
+The current generated corpus contains 6,010 documents: 68 core/source-of-truth
+or near-labeled documents plus 5,942 structured hard distractors. Version 3 adds
+same-topic incident, customer, product, enterprise-background, alias, approval,
+policy, reflection, war-room, and namespace-proof clusters so one topic has many
+plausible but non-authoritative artifacts.
 
 ## Why This Dataset Exists
 
@@ -19,7 +20,9 @@ advantage of Search-as-Code. Search-as-Code should win when the system needs to:
 - fan out across many entities
 - join evidence across sources
 - preserve exact identifiers such as CVEs, ticket IDs, versions, and customer names
+- expand aliases and code names before joining evidence
 - filter by metadata such as date, severity, vertical, product, owner, and renewal date
+- prefer final approval ledgers and release notes over stale drafts
 - control rerank budget
 - reflect when the first evidence pool is thin
 - answer with negative evidence instead of over-claiming
@@ -52,13 +55,13 @@ Source files:
 
 ## Current Size
 
-- Documents: 2,499
-- Structured hard distractors: 2,442
-- Tasks: 36
-- Splits: train 7, dev 7, test 22
-- Tasks with hard negatives: 36
-- Hard-negative labels: 200
-- Reflection-required tasks: 7
+- Documents: 6,010
+- Structured hard distractors: 5,942
+- Tasks: 48
+- Splits: train 8, dev 9, test 31
+- Tasks with hard negatives: 48
+- Hard-negative labels: 266
+- Reflection-required tasks: 9
 - BEIR export: included
 
 The distractor corpus is intentionally larger than the labeled evidence set.
@@ -66,8 +69,9 @@ It includes nearby versions, close CVEs and ticket IDs, similar customer names,
 similar renewal-risk records, and generic policy docs that reuse the same search
 vocabulary without containing the gold answer. It also includes topic clusters:
 draft advisories, duplicate tickets, stale renewal notes, customer emails,
-risk dashboards, rollout notes, migration docs, KB articles, and policy drafts
-that reuse the same customer/product/CVE vocabulary.
+risk dashboards, rollout notes, migration docs, KB articles, policy drafts,
+ambiguous alias artifacts, approval-like wrong-version ledgers, and stale
+war-room rosters that reuse the same customer/product/CVE vocabulary.
 
 BEIR qrels contain positive evidence only. Hard negatives are exported
 separately so standard retrieval metrics and hard-negative intrusion metrics do
@@ -83,7 +87,7 @@ Each document:
   "title": "Northwind Health account brief",
   "text": "...",
   "metadata": {
-    "dataset_version": "sac-codegen-v2",
+    "dataset_version": "sac-codegen-v3",
     "source": "crm",
     "doc_type": "account_brief",
     "customer": "Northwind Health",
@@ -129,6 +133,9 @@ Each task:
 - `exact_identifier_lookup`: preserve and search exact CVEs, tickets, versions, and IDs
 - `regulated_customer_filter`: filter by vertical, renewal date, and severity
 - `negative_evidence`: correctly answer "no" with supporting evidence
+- `alias_resolution`: expand customer and owner aliases before retrieval and join
+- `authority_disambiguation`: distinguish final ledgers/source-of-truth docs from stale drafts
+- `temporal_authority`: prefer the latest final roster/approval over draft candidates
 - `budget_control`: avoid brute-force reranking and choose focused routes
 - `tool_calling_vs_codegen`: tasks intended to compare codegen with multi-turn tool calling
 - `reflection_required`: thin-evidence or no-answer cases where follow-up planning is expected

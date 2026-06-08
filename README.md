@@ -4,7 +4,7 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 
 ## What Is Included
 
-- `sac_benchmark_dataset/`: synthetic enterprise knowledge-base dataset with 2,499 documents, 36 tasks, BEIR exports, hard-negative labels, generator, validator, and audit tooling.
+- `sac_benchmark_dataset/`: synthetic enterprise knowledge-base dataset with 6,010 documents, 48 tasks, BEIR exports, hard-negative labels, generator, validator, and audit tooling.
 - `real_search_stack/`: open-source search APIs built on BM25, sentence-transformers dense retrieval, spaCy query understanding/entity extraction, optional Wikidata linking, and cross-encoder reranking.
 - `run_sac_dataset_benchmark.py`: main benchmark runner for fixed BM25, dense, hybrid, hybrid+rerank, fixed enriched, one-shot generated Search-as-Code, and reflective generated Search-as-Code flows.
 - `sac_benchmark_results.json`: latest benchmark result payload.
@@ -14,25 +14,25 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 
 ## Latest Result
 
-Dataset: `sac-codegen-v2`
+Dataset: `sac-codegen-v3`
 
-- Test split: 22 queries
-- Corpus: 2,499 documents
+- Test split: 31 queries
+- Corpus: 6,010 documents
 - Primary metric: Recall@10
 - Candidate opportunity: rerank systems retrieve up to 2,400 candidates before producing final top 10
 
 | System | Recall@10 | Mean latency ms | Notes |
 |---|---:|---:|---|
-| `fixed_bm25` | 0.2959 | 2.7 | Strong lexical baseline across full corpus |
-| `fixed_hybrid_rerank_small_budget` | 0.2938 | 884.1 | 400-candidate rerank budget |
-| `fixed_hybrid_rerank` | 0.2861 | 4599.9 | 2,400-candidate rerank budget |
-| `generated_search_as_code` | 0.2861 | 4664.5 | Dynamic routes, search modes, budgets, and rerank set |
-| `generated_reflective_search_as_code` | 0.2861 | 4761.8 | Adds reflection path, but did not improve on this test split |
-| `fixed_understanding_rewrite_hybrid_rerank` | 0.2861 | 4783.7 | Fixed enriched flow with understanding, entity linking, rewrite, hybrid, rerank |
-| `fixed_hybrid` | 0.2614 | 8.0 | No reranking |
-| `fixed_semantic_dense` | 0.1604 | 4.0 | Dense-only |
+| `fixed_bm25` | 0.2304 | 11.0 | Strong lexical baseline across full corpus |
+| `fixed_hybrid` | 0.2286 | 20.1 | No reranking |
+| `generated_search_as_code` | 0.1857 | 4076.7 | Dynamic routes, search modes, budgets, and rerank set |
+| `generated_reflective_search_as_code` | 0.1857 | 3893.1 | Reflection path currently does not trigger enough |
+| `fixed_understanding_rewrite_hybrid_rerank` | 0.1857 | 4077.7 | Fixed enriched flow with understanding, entity linking, rewrite, hybrid, rerank |
+| `fixed_hybrid_rerank` | 0.1857 | 4049.5 | 2,400-candidate rerank budget |
+| `fixed_hybrid_rerank_small_budget` | 0.1714 | 794.6 | 400-candidate rerank budget |
+| `fixed_semantic_dense` | 0.0932 | 19.2 | Dense-only |
 
-The current conclusion is intentionally nuanced: Search-as-Code is useful for making retrieval control flow inspectable and dynamic, but it does not automatically beat a strong fixed enriched baseline. The best examples are where generated code changes route shape, uses exact identifier routes, manages branch budgets, and decides which candidates reach reranking.
+v3 is deliberately harder than v2: it adds alias/code-name tasks, source-authority disambiguation, stale approval ledgers, policy near-duplicates, and thousands of same-topic distractors. The current conclusion is intentionally nuanced: Search-as-Code is useful for making retrieval control flow inspectable and dynamic, but it does not automatically beat a strong fixed enriched baseline without a better reflection policy and better rerank/evidence selection.
 
 ## Reproduce
 

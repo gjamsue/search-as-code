@@ -597,7 +597,7 @@
           <p class="lead">The core idea is not “agentic search” broadly. It is a sharper architecture: expose search primitives as an SDK, let the model write code, execute that code in a sandbox, and compare it against fixed pipelines and tool-calling agents.</p>
           <div class="pill-row">
             <span class="pill">Perplexity SaC: model + sandbox + Agentic Search SDK</span>
-            <span class="pill">Our eval: 2,499-doc enterprise benchmark</span>
+            <span class="pill">Our eval: 6,010-doc enterprise benchmark</span>
             <span class="pill">Primary metric: Recall@10</span>
           </div>
         </div>
@@ -608,7 +608,7 @@
           </div>
           <div class="summary-item">
             <strong>What our eval shows.</strong>
-            <p>With 2,400-candidate opportunity per query, generated Search-as-Code and fixed enriched both reach Recall@10 0.2861. The bottleneck moves from retrieval access to top-10 reranking quality and cost.</p>
+            <p>v3 is much harder: top Recall@10 is 0.2304, while generated Search-as-Code and fixed enriched both reach 0.1857. The bottleneck is now authority-aware evidence selection, not raw retrieval access.</p>
           </div>
           <div class="summary-item">
             <strong>What is still missing.</strong>
@@ -722,10 +722,10 @@
         </div>
 
         <div class="stat-strip">
-          <div class="stat"><strong>2,499</strong><span>documents</span></div>
-          <div class="stat"><strong>36</strong><span>tasks, 22 test</span></div>
-          <div class="stat"><strong>2,442</strong><span>hard distractors</span></div>
-          <div class="stat"><strong>200</strong><span>hard-negative labels</span></div>
+          <div class="stat"><strong>6,010</strong><span>documents</span></div>
+          <div class="stat"><strong>48</strong><span>tasks, 31 test</span></div>
+          <div class="stat"><strong>5,942</strong><span>hard distractors</span></div>
+          <div class="stat"><strong>266</strong><span>hard-negative labels</span></div>
         </div>
 
         <div class="bench-tabs" role="tablist" aria-label="Benchmark tabs">
@@ -737,18 +737,18 @@
           <div class="card">
             <h3>Dataset scope</h3>
             <ul>
-              <li>Simulated enterprise knowledge base: account briefs, escalation logs, renewal notes, security advisories, Jira-style tickets, release notes, runbooks, and roadmap docs.</li>
-              <li>Tasks require joining customer, product, CVE, ticket, owner, fixed version, renewal window, and blocker status.</li>
-              <li>Hard distractors are structured into same-topic clusters: draft advisories, duplicate tickets, rollout notes, stale account snapshots, customer emails, risk dashboards, KB docs, and policy drafts.</li>
+              <li>Simulated enterprise knowledge base: account briefs, escalation logs, security advisories, Jira-style tickets, release notes, runbooks, alias registries, approval ledgers, and policy docs.</li>
+              <li>Tasks require joining customer, alias, product, CVE, ticket, owner, fixed version, source authority, renewal window, and blocker status.</li>
+              <li>Hard distractors are structured into same-topic clusters: draft advisories, duplicate tickets, stale snapshots, ambiguous aliases, wrong-version approvals, war-room drafts, namespace-proof notes, and policy near-duplicates.</li>
             </ul>
           </div>
           <div class="card">
             <h3>What it tests</h3>
             <ul class="takeaway-list">
-              <li><strong>Dynamic route selection:</strong> decide when to use hybrid, BM25, dense, rewrite, or exact identifier routes.</li>
+              <li><strong>Dynamic route selection:</strong> decide when to use hybrid, BM25, dense, rewrite, alias expansion, or exact identifier routes.</li>
               <li><strong>Large candidate opportunity:</strong> main rerank flows can retrieve around 2,400 candidates before final top-10 output.</li>
-              <li><strong>Evidence discipline:</strong> recover missing evidence while avoiding hard-negative intrusion.</li>
-              <li><strong>Reflection:</strong> generate follow-up retrieval code only when first-pass evidence is incomplete.</li>
+              <li><strong>Evidence discipline:</strong> recover missing evidence while avoiding stale or non-authoritative hard negatives.</li>
+              <li><strong>Reflection:</strong> generate follow-up retrieval code when required evidence categories are missing, not only when candidate pool is thin.</li>
             </ul>
           </div>
         </div>
@@ -757,12 +757,12 @@
           <div class="card">
             <h3>Recall@10 leaderboard</h3>
             <div class="bar-list">
-              <div class="bar-row"><div class="bar-label">BM25</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">0.2959</div></div>
-              <div class="bar-row"><div class="bar-label">Small rerank budget</div><div class="bar-track"><div class="bar-fill amber" style="width:99.3%"></div></div><div class="bar-value">0.2938</div></div>
-              <div class="bar-row"><div class="bar-label">Fixed enriched</div><div class="bar-track"><div class="bar-fill green" style="width:96.7%"></div></div><div class="bar-value">0.2861</div></div>
-              <div class="bar-row"><div class="bar-label">Generated SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:96.7%"></div></div><div class="bar-value">0.2861</div></div>
-              <div class="bar-row"><div class="bar-label">Reflective SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:96.7%"></div></div><div class="bar-value">0.2861</div></div>
-              <div class="bar-row"><div class="bar-label">Dense only</div><div class="bar-track"><div class="bar-fill" style="width:54.2%"></div></div><div class="bar-value">0.1604</div></div>
+              <div class="bar-row"><div class="bar-label">BM25</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">0.2304</div></div>
+              <div class="bar-row"><div class="bar-label">Hybrid</div><div class="bar-track"><div class="bar-fill amber" style="width:99.2%"></div></div><div class="bar-value">0.2286</div></div>
+              <div class="bar-row"><div class="bar-label">Fixed enriched</div><div class="bar-track"><div class="bar-fill green" style="width:80.6%"></div></div><div class="bar-value">0.1857</div></div>
+              <div class="bar-row"><div class="bar-label">Generated SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:80.6%"></div></div><div class="bar-value">0.1857</div></div>
+              <div class="bar-row"><div class="bar-label">Reflective SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:80.6%"></div></div><div class="bar-value">0.1857</div></div>
+              <div class="bar-row"><div class="bar-label">Dense only</div><div class="bar-track"><div class="bar-fill" style="width:40.5%"></div></div><div class="bar-value">0.0932</div></div>
             </div>
             <table class="leaderboard">
               <thead>
@@ -775,18 +775,19 @@
                 </tr>
               </thead>
               <tbody>
-                <tr><td>BM25</td><td>0.2959</td><td>0.2727</td><td>2.7 ms</td><td>10</td></tr>
-                <tr><td>Fixed enriched</td><td>0.2861</td><td>0.2273</td><td>4,784 ms</td><td>2,481</td></tr>
-                <tr><td>Generated SaC</td><td>0.2861</td><td>0.2273</td><td>4,664 ms</td><td>2,349</td></tr>
-                <tr><td>Reflective SaC</td><td>0.2861</td><td>0.2273</td><td>4,762 ms</td><td>2,349</td></tr>
+                <tr><td>BM25</td><td>0.2304</td><td>0.1290</td><td>11 ms</td><td>10</td></tr>
+                <tr><td>Hybrid</td><td>0.2286</td><td>0.0645</td><td>20 ms</td><td>10</td></tr>
+                <tr><td>Fixed enriched</td><td>0.1857</td><td>0.2258</td><td>4,078 ms</td><td>3,660</td></tr>
+                <tr><td>Generated SaC</td><td>0.1857</td><td>0.2258</td><td>4,077 ms</td><td>3,215</td></tr>
+                <tr><td>Reflective SaC</td><td>0.1857</td><td>0.2258</td><td>3,893 ms</td><td>3,215</td></tr>
               </tbody>
             </table>
           </div>
           <div class="metrics">
             <div class="metric"><span>Primary metric</span><strong>Recall@10</strong><p>No nDCG/MRR as headline metrics</p></div>
             <div class="metric"><span>Generated vs fixed</span><strong>0.0000</strong><p>Recall@10 delta vs fixed enriched</p></div>
-            <div class="metric"><span>Candidate pool</span><strong>2.3k+</strong><p>Generated averages 2,349 candidates/query</p></div>
-            <div class="metric"><span>Cost signal</span><strong>4.7s</strong><p>Large-pool rerank latency per query</p></div>
+            <div class="metric"><span>Candidate pool</span><strong>3.2k+</strong><p>Generated averages 3,215 candidates/query</p></div>
+            <div class="metric"><span>Cost signal</span><strong>4.1s</strong><p>Large-pool rerank latency per query</p></div>
           </div>
         </div>
       </div>
@@ -804,20 +805,20 @@
         <div class="case-grid">
           <article class="case">
             <div>
-              <span class="tag violet">Large-pool convergence</span>
-              <h3>Exact version comparison</h3>
-              <div class="query">Compare Beacon CRM Connector 3.14.0 and 3.14.1 for Contoso's security review. Which one is acceptable?</div>
+              <span class="tag violet">Authority-aware evidence</span>
+              <h3>Policy latency readout</h3>
+              <div class="query">For the CEO Search-as-Code readout, which latency number is primary: including code generation or execution-only?</div>
               <div class="mini-flow">
                 <span class="step">hybrid top 2000</span>
-                <span class="step">BM25 exact top 2000</span>
+                <span class="step">BM25 metric route</span>
                 <span class="step">rewrite</span>
                 <span class="step">rerank</span>
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Fixed enriched</strong><span>Recall@10 0.6000, hard-neg 1.</span></div>
-              <div class="outcome-row"><strong>Generated</strong><span>Recall@10 0.6000, hard-neg 1.</span></div>
-              <div class="outcome-row"><strong>Lesson</strong><span>When both flows see thousands of candidates, the top-10 bottleneck is reranking/source authority, not search access.</span></div>
+              <div class="outcome-row"><strong>Fixed enriched</strong><span>Recall@10 0.5000, hard-neg 0.</span></div>
+              <div class="outcome-row"><strong>Generated</strong><span>Recall@10 0.5000, hard-neg 0.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>Policy near-duplicates crowd top-10; source authority has to be explicit.</span></div>
             </div>
           </article>
 
@@ -827,15 +828,15 @@
               <h3>Same final recall, different control cost</h3>
               <div class="query">Main rerank flows now retrieve roughly the whole enterprise index before producing top-10 evidence.</div>
               <div class="mini-flow">
-                <span class="step">fixed enriched pool 2481</span>
-                <span class="step">generated pool 2349</span>
+                <span class="step">fixed enriched pool 3660</span>
+                <span class="step">generated pool 3215</span>
                 <span class="step">top-10 output</span>
                 <span class="step">rerank</span>
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Recall</strong><span>Generated, reflective, fixed enriched, and full hybrid rerank all reach 0.2861.</span></div>
-              <div class="outcome-row"><strong>Latency</strong><span>Large-pool reranking costs roughly 4.6-4.9s/query.</span></div>
+              <div class="outcome-row"><strong>Recall</strong><span>Generated, reflective, fixed enriched, and full hybrid rerank all reach 0.1857.</span></div>
+              <div class="outcome-row"><strong>Latency</strong><span>Large-pool reranking costs roughly 3.9-4.1s/query.</span></div>
               <div class="outcome-row"><strong>Lesson</strong><span>For this benchmark, codegen value must come from smarter pruning or authority-aware ranking, not simply larger recall pools.</span></div>
             </div>
           </article>
@@ -852,8 +853,8 @@
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Fixed enriched</strong><span>Recall@10 0.5000, hard-neg 0.</span></div>
-              <div class="outcome-row"><strong>Generated</strong><span>Recall@10 0.5000, hard-neg 0.</span></div>
+              <div class="outcome-row"><strong>Fixed enriched</strong><span>Recall@10 0.0000, hard-neg 0.</span></div>
+              <div class="outcome-row"><strong>Generated</strong><span>Recall@10 0.0000, hard-neg 0.</span></div>
               <div class="outcome-row"><strong>Lesson</strong><span>Reflection still needs missing-evidence checks; candidate-pool size alone is now the wrong trigger.</span></div>
             </div>
           </article>
@@ -896,7 +897,7 @@
             </tr>
             <tr>
               <td>Reflection policy</td>
-              <td>Reflective mode triggered 0/22 times on the test split, so it did not improve quality.</td>
+              <td>Reflective mode triggered 0/31 times on the test split, so it did not improve quality.</td>
               <td>Trigger on missing required evidence, entity coverage, and conflicting evidence, not only candidate-pool size.</td>
             </tr>
             <tr>

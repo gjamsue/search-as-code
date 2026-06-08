@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
 BEIR_DIR = DATA_DIR / "beir"
-VERSION = "sac-codegen-v2"
+VERSION = "sac-codegen-v3"
 
 
 def main() -> None:
@@ -588,10 +588,232 @@ def build_documents() -> list[dict]:
         owner="Identity Platform",
     )
 
+    for spec in build_v3_source_documents():
+        add(**spec)
+
     for spec in build_distractor_documents():
         add(**spec)
 
+    for spec in build_v3_adversarial_documents():
+        add(**spec)
+
     return docs
+
+
+def build_v3_source_documents() -> list[dict]:
+    """Build source-of-truth docs for v3 alias, authority, and approval tasks."""
+    specs: list[dict] = []
+
+    def spec(doc_id: str, title: str, body: str, **metadata: object) -> None:
+        specs.append({"doc_id": doc_id, "title": title, "body": body, **metadata})
+
+    spec(
+        "alias-customer-codenames",
+        "Customer alias and code-name registry",
+        """
+        Customer alias registry for support, sales, and security-search workflows.
+        BPI means BluePeak Insurance. QBL means QuartzBio Labs. NF-17 means NovaFoods.
+        RL-7 means Riverline Logistics. NW-H means Northwind Health. AB-Q3 means
+        Aster Bank. HG-E means HelioGrid Energy. CT-R means Contoso Retail. GU-Edu
+        means Greenhouse University. UNest means UrbanNest. Search systems should
+        expand aliases to canonical customer names before joining account, security,
+        release, and approval evidence.
+        """,
+        source="source_of_truth",
+        doc_type="alias_registry",
+        date="2026-06-04",
+        owner="Revenue Systems",
+    )
+    spec(
+        "alias-owner-directory",
+        "Technical owner alias directory",
+        """
+        Technical owner alias directory. MP maps to Mina Patel. JBell maps to Jon Bell.
+        PRao maps to Priya Rao. LRomero maps to Luis Romero. AChen maps to Ava Chen.
+        NSingh maps to Nora Singh. Use the canonical owner name when grouping blockers
+        across account briefs, escalation logs, Jira tickets, and release notes.
+        """,
+        source="source_of_truth",
+        doc_type="alias_registry",
+        date="2026-06-04",
+        owner="Engineering Operations",
+    )
+    spec(
+        "source-authority-matrix-v3",
+        "Search evidence source authority matrix",
+        """
+        Source authority matrix for enterprise search evaluation. Customer-specific
+        answers should prefer current account briefs, current escalation logs, vendor
+        advisories, Jira security tickets, release notes, source-of-truth alias
+        registries, and final approval ledgers. Draft policies, Slack digests,
+        dashboards, copied meeting snippets, sales discovery notes, and stale weekly
+        snapshots are non-authoritative unless the user explicitly asks for historical
+        background. If two documents mention the same CVE or release, cite the final
+        approval ledger or release note, not the draft artifact.
+        """,
+        source="source_of_truth",
+        doc_type="authority_matrix",
+        date="2026-06-05",
+        owner="Knowledge Quality",
+    )
+    spec(
+        "approval-beacon-contoso-may06",
+        "Contoso Beacon OAuth final approval ledger",
+        """
+        Final approval ledger for CT-R / Contoso Retail security review. Beacon CRM
+        Connector 3.14.1 is approved for customer citation after 2026-05-06 because it
+        includes single-use refresh tokens and fixes CVE-2026-3771 under SEC-1811.
+        Beacon CRM Connector 3.14.0 is explicitly rejected for the security review:
+        it added diagnostics but did not fix the OAuth refresh-token replay issue.
+        This final ledger supersedes draft approvals, email snippets, and stale
+        support dashboards.
+        """,
+        source="governance",
+        doc_type="approval_ledger",
+        customer="Contoso Retail",
+        product="Beacon CRM Connector",
+        version="3.14.1",
+        rejected_version="3.14.0",
+        cve="CVE-2026-3771",
+        ticket="SEC-1811",
+        date="2026-05-06",
+        owner="Luis Romero",
+    )
+    spec(
+        "approval-atlas-northwind-final",
+        "Northwind AtlasSearch final remediation approval",
+        """
+        Final remediation approval for NW-H / Northwind Health. The approved citation
+        is AtlasSearch 4.8.2 with Exact Token Guard and SAML metadata refresh audit
+        logging. It fixes CVE-2026-4102 under SEC-1842. AtlasSearch 4.8.1 is rejected
+        because it did not remediate the SAML connector issue. AtlasSearch 4.8.3 is
+        not approved for Northwind because it was a rollback-drill candidate, not a
+        customer security remediation.
+        """,
+        source="governance",
+        doc_type="approval_ledger",
+        customer="Northwind Health",
+        product="AtlasSearch",
+        version="4.8.2",
+        cve="CVE-2026-4102",
+        ticket="SEC-1842",
+        date="2026-05-17",
+        owner="Mina Patel",
+    )
+    spec(
+        "approval-quartzbio-namespace-proof",
+        "QuartzBio namespace proof approval",
+        """
+        Final approval ledger for QBL / QuartzBio Labs. QuartzBio is a regulated
+        life-sciences customer asking for tenant cache namespace proof. The approved
+        evidence is AtlasSearch 4.9.0 because it adds Evidence Ledger and a
+        tenant-scoped rerank cache for CVE-2026-4520 / SEC-1899. AtlasSearch 4.8.2
+        is not sufficient for this request because it addresses the SAML connector,
+        not rerank-cache isolation.
+        """,
+        source="governance",
+        doc_type="approval_ledger",
+        customer="QuartzBio Labs",
+        product="AtlasSearch",
+        version="4.9.0",
+        cve="CVE-2026-4520",
+        ticket="SEC-1899",
+        date="2026-06-02",
+        owner="Mina Patel",
+    )
+    spec(
+        "warroom-r7-june-critical-roster",
+        "R7 June critical-patch war room final roster",
+        """
+        R7 final roster for the June critical-patch war room. Included customer aliases:
+        NW-H, AB-Q3, HG-E, and RL-7. Canonical customers are Northwind Health, Aster
+        Bank, HelioGrid Energy, and Riverline Logistics. Inclusion rule: regulated or
+        red-risk customer, renewal call before 2026-07-01, and critical patch or audit
+        blocker requiring customer evidence. Explicit exclusions: BPI and QBL are high
+        severity rerank-cache cases, not critical June war-room cases; GU-Edu has a
+        critical ForgeDeploy issue but renewal is in August; CT-R and UNest are high
+        severity Beacon cases outside the June critical roster.
+        """,
+        source="source_of_truth",
+        doc_type="war_room_roster",
+        date="2026-06-06",
+        owner="Security PMO",
+    )
+    spec(
+        "policy-reflection-missing-evidence-v3",
+        "Reflection trigger policy for generated retrieval code",
+        """
+        Reflection should trigger when required evidence categories are missing, not
+        only when the raw candidate pool is thin. For Search-as-Code, a generated
+        retrieval program should inspect whether it found the expected mix of account
+        brief, escalation, security ticket, advisory, release note, approval ledger,
+        and alias mapping. If the candidate pool is large but one required category is
+        absent, generate follow-up retrieval code with targeted routes instead of
+        blindly increasing rerank budget.
+        """,
+        source="eval_policy",
+        doc_type="policy",
+        product="Rovo Chat",
+        date="2026-06-06",
+        owner="Nora Singh",
+    )
+    spec(
+        "policy-sac-latency-ledger-v3",
+        "Search-as-Code latency accounting ledger",
+        """
+        Search-as-Code latency reporting uses two numbers: end-to-end latency including
+        code generation, and execution latency excluding code generation. CEO-level
+        comparisons should use end-to-end latency as the primary number and show
+        execution-only latency as a diagnostic. Token cost, search calls, rerank pairs,
+        invalid code rate, and reflection trigger precision remain required secondary
+        metrics.
+        """,
+        source="eval_policy",
+        doc_type="policy",
+        product="Rovo Chat",
+        date="2026-06-07",
+        owner="Nora Singh",
+    )
+    spec(
+        "sales-novafoods-forgedeploy-discovery",
+        "NF-17 ForgeDeploy sales discovery note",
+        """
+        Sales discovery note for NF-17 / NovaFoods. NovaFoods asked about a future
+        ForgeDeploy evaluation, but no ForgeDeploy workspace, implementation record,
+        production tenant, or security remediation exists. The active customer
+        footprint remains Compass Analytics only. This note is useful to explain why a
+        sales mention of ForgeDeploy must not override the product-footprint
+        clarification.
+        """,
+        source="sales",
+        doc_type="sales_discovery",
+        customer="NovaFoods",
+        products=["Compass Analytics"],
+        date="2026-06-03",
+        owner="Owen Hart",
+    )
+    spec(
+        "rollout-riverline-second-blocker-ledger",
+        "RL-7 second blocker evidence ledger",
+        """
+        Final second-blocker ledger for RL-7 / Riverline Logistics. The first blocker
+        is AtlasSearch SAML connector CVE-2026-4102 / SEC-1842. The second blocker is
+        Meridian Sync export path traversal CVE-2026-2899 / SEC-1775, fixed in
+        Meridian Sync 2.7.5 and owned by Jon Bell. A retrieval flow that only finds
+        AtlasSearch evidence is incomplete and must generate a Meridian Sync follow-up
+        route.
+        """,
+        source="governance",
+        doc_type="approval_ledger",
+        customer="Riverline Logistics",
+        product="Meridian Sync",
+        version="2.7.5",
+        cve="CVE-2026-2899",
+        ticket="SEC-1775",
+        date="2026-06-04",
+        owner="Jon Bell",
+    )
+    return specs
 
 
 def build_distractor_documents() -> list[dict]:
@@ -1128,6 +1350,236 @@ def build_distractor_documents() -> list[dict]:
     return specs
 
 
+def build_v3_adversarial_documents() -> list[dict]:
+    """Build thicker v3 same-topic distractors with authority and alias traps."""
+    specs: list[dict] = []
+
+    def spec(doc_id: str, title: str, body: str, **metadata: object) -> None:
+        specs.append({"doc_id": doc_id, "title": title, "body": body, **metadata})
+
+    products = [
+        "AtlasSearch",
+        "Meridian Sync",
+        "ForgeDeploy",
+        "Beacon CRM Connector",
+        "Compass Analytics",
+        "Rovo Chat",
+    ]
+    owners = ["Mina Patel", "Jon Bell", "Priya Rao", "Luis Romero", "Ava Chen", "Nora Singh"]
+    customers = [
+        ("BPI", "BluePeak Insurance", "AtlasSearch", "SEC-1899", "CVE-2026-4520", "4.9.0"),
+        ("QBL", "QuartzBio Labs", "AtlasSearch", "SEC-1899", "CVE-2026-4520", "4.9.0"),
+        ("NF-17", "NovaFoods", "Compass Analytics", "SEC-1604", "CVE-2026-1440", "1.19.3"),
+        ("RL-7", "Riverline Logistics", "Meridian Sync", "SEC-1775", "CVE-2026-2899", "2.7.5"),
+        ("NW-H", "Northwind Health", "AtlasSearch", "SEC-1842", "CVE-2026-4102", "4.8.2"),
+        ("AB-Q3", "Aster Bank", "Meridian Sync", "EXPORT-LAT-77", "CVE-2026-2899", "2.7.5"),
+        ("HG-E", "HelioGrid Energy", "ForgeDeploy", "SEC-1690", "CVE-2026-1984", "6.2.0"),
+        ("CT-R", "Contoso Retail", "Beacon CRM Connector", "SEC-1811", "CVE-2026-3771", "3.14.1"),
+        ("GU-Edu", "Greenhouse University", "ForgeDeploy", "SEC-1690", "CVE-2026-1984", "6.2.0"),
+        ("UNest", "UrbanNest", "Beacon CRM Connector", "SEC-1811", "CVE-2026-3771", "3.14.1"),
+    ]
+
+    alias_false_meanings = [
+        "Beacon Pilot Instance",
+        "Blue Peak Initiative",
+        "Batch Policy Import",
+        "Billing Profile Index",
+        "Backup Preview Image",
+        "Query Batch Lab",
+        "Quarterly Budget Ledger",
+        "Namespace Framework 17",
+        "Northwest Health staging tenant",
+        "Release Line 7",
+    ]
+    for idx in range(480):
+        alias, canonical, product, ticket, cve, version = customers[idx % len(customers)]
+        false_meaning = alias_false_meanings[idx % len(alias_false_meanings)]
+        owner = owners[idx % len(owners)]
+        body = f"""
+        Alias-heavy search artifact. It mentions alias {alias}, canonical-looking text
+        {canonical}, {product}, {ticket}, {cve}, version {version}, owner {owner}, and
+        customer evidence. However, this artifact is a copied dashboard or ambiguous
+        glossary note where {alias} may also mean {false_meaning}. It is not the
+        source-of-truth alias registry and must not be used to decide canonical
+        customer identity, active deployment, fixed version, or approval status.
+        """
+        spec(
+            f"v3-alias-decoy-{idx + 1:04d}",
+            f"{alias} ambiguous alias artifact {idx + 1:04d}",
+            body,
+            source=["dashboard", "slack", "sales", "support_kb"][idx % 4],
+            doc_type=["alias_distractor", "dashboard_snapshot_distractor", "slack_thread_distractor", "memo_distractor"][idx % 4],
+            customer=canonical,
+            product=product,
+            ticket=ticket,
+            cve=cve,
+            version=version,
+            date=f"2026-{2 + (idx % 5):02d}-{1 + (idx % 27):02d}",
+            owner=owner,
+        )
+
+    metric_variants = [
+        "answer correctness, citation correctness, retrieval recall, latency excluding code generation",
+        "nDCG, MRR, semantic similarity, and synthetic answer score",
+        "tool calls, rerank pairs, token cost, but not invalid code rate",
+        "latency including code generation, execution-only latency, invalid code rate, reflection trigger precision",
+        "search freshness, source diversity, and reranker confidence only",
+    ]
+    for idx in range(720):
+        metrics = metric_variants[idx % len(metric_variants)]
+        status = [
+            "draft proposal before the final evaluation policy",
+            "stale AB test notebook",
+            "team-specific dashboard that omits CEO-level latency accounting",
+            "copied meeting note that mixes fixed retrieval and agent metrics",
+            "non-authoritative experiment readout",
+        ][idx % 5]
+        body = f"""
+        Search-as-Code evaluation comparison artifact {idx + 1:04d}. It discusses
+        fixed enriched retrieval, multi-turn tool calling, one-shot generated code,
+        reflective generated code, retrieval recall, token cost, tool calls, rerank
+        pairs, invalid code rate, reflection trigger precision, and latency. Metric
+        list in this artifact: {metrics}. Status: {status}. Use the final evaluation
+        policy and latency accounting ledger instead of this draft when answering
+        official benchmark or CEO-readout questions.
+        """
+        spec(
+            f"v3-policy-decoy-{idx + 1:04d}",
+            f"Search-as-Code evaluation policy draft {idx + 1:04d}",
+            body,
+            source=["docs", "analytics", "meeting_notes", "confluence"][idx % 4],
+            doc_type=["draft_policy_distractor", "dashboard_snapshot_distractor", "meeting_note_distractor", "review_note_distractor"][idx % 4],
+            product="Rovo Chat",
+            date=f"2026-{1 + (idx % 6):02d}-{1 + (idx % 27):02d}",
+            owner="Nora Singh",
+        )
+
+    reflection_actions = [
+        "force all candidates into rerank even when required categories are missing",
+        "stop because the candidate pool is already above 25",
+        "increase dense-only search budget without inspecting account or release evidence",
+        "run one generic hybrid search and synthesize immediately",
+        "generate targeted follow-up retrieval only if a required evidence category is missing",
+    ]
+    for idx in range(520):
+        action = reflection_actions[idx % len(reflection_actions)]
+        body = f"""
+        Reflection policy scratchpad {idx + 1:04d}. It repeats the phrase candidate
+        pool below 25 and discusses thin evidence, follow-up code generation, targeted
+        routes, rerank budget, account brief, security ticket, advisory, release note,
+        approval ledger, and alias mapping. Proposed action: {action}. Status:
+        non-final scratchpad. The final policy says missing evidence categories should
+        trigger follow-up retrieval even when the raw candidate pool is large.
+        """
+        spec(
+            f"v3-reflection-decoy-{idx + 1:04d}",
+            f"Candidate pool below 25 reflection scratchpad {idx + 1:04d}",
+            body,
+            source=["docs", "slack", "review", "dashboard"][idx % 4],
+            doc_type=["draft_policy_distractor", "slack_thread_distractor", "review_note_distractor", "dashboard_snapshot_distractor"][idx % 4],
+            product="Rovo Chat",
+            date=f"2026-{1 + (idx % 6):02d}-{1 + (idx % 27):02d}",
+            owner="Nora Singh",
+        )
+
+    approval_topics = [
+        ("Beacon CRM Connector", "Contoso Retail", "CT-R", "3.14.0", "3.14.1", "SEC-1811", "CVE-2026-3771", "Luis Romero"),
+        ("AtlasSearch", "Northwind Health", "NW-H", "4.8.1", "4.8.2", "SEC-1842", "CVE-2026-4102", "Mina Patel"),
+        ("AtlasSearch", "QuartzBio Labs", "QBL", "4.8.2", "4.9.0", "SEC-1899", "CVE-2026-4520", "Mina Patel"),
+        ("Meridian Sync", "Riverline Logistics", "RL-7", "2.7.4", "2.7.5", "SEC-1775", "CVE-2026-2899", "Jon Bell"),
+        ("ForgeDeploy", "NovaFoods", "NF-17", "6.1.9", "6.2.0", "SEC-1690", "CVE-2026-1984", "Priya Rao"),
+    ]
+    approval_statuses = [
+        "draft approval, not customer-citable",
+        "rollback drill, not final remediation",
+        "sales note, not active deployment evidence",
+        "stale support dashboard before security owner signoff",
+        "copied final-looking text with wrong version ordering",
+        "meeting summary that omits source authority",
+    ]
+    for idx in range(900):
+        product, customer, alias, wrong_version, right_version, ticket, cve, owner = approval_topics[idx % len(approval_topics)]
+        status = approval_statuses[idx % len(approval_statuses)]
+        version_phrase = f"{wrong_version} and {right_version}" if idx % 2 == 0 else f"{right_version} and {wrong_version}"
+        body = f"""
+        Approval-like artifact for {alias} / {customer}. It mentions {product},
+        versions {version_phrase}, {ticket}, {cve}, owner {owner}, customer citation,
+        final approval, rejected version, evidence packet, and security review.
+        Status: {status}. This is intentionally near-authoritative but should be
+        treated as a hard negative unless it is the final approval ledger or release
+        note. It may contain copied language from real evidence with one field stale.
+        """
+        spec(
+            f"v3-approval-decoy-{idx + 1:04d}",
+            f"{customer} {product} approval artifact {idx + 1:04d}",
+            body,
+            source=["governance", "email", "meeting_notes", "dashboard", "sales"][idx % 5],
+            doc_type=["security_approval_distractor", "customer_email_distractor", "meeting_note_distractor", "dashboard_snapshot_distractor", "memo_distractor"][idx % 5],
+            customer=customer,
+            product=product,
+            ticket=ticket,
+            cve=cve,
+            version=right_version if idx % 3 else wrong_version,
+            date=f"2026-{3 + (idx % 4):02d}-{1 + (idx % 27):02d}",
+            owner=owner,
+        )
+
+    roster_rules = [
+        "include NW-H, AB-Q3, HG-E, RL-7",
+        "exclude BPI and QBL because high severity is not critical",
+        "exclude GU-Edu because renewal is August",
+        "include CT-R by mistake even though it is high severity only",
+        "include NF-17 by mistake due sales discovery, not active ForgeDeploy",
+    ]
+    for idx in range(520):
+        rule = roster_rules[idx % len(roster_rules)]
+        body = f"""
+        June critical-patch war room roster artifact {idx + 1:04d}. It mentions
+        aliases NW-H, AB-Q3, HG-E, RL-7, BPI, QBL, GU-Edu, CT-R, UNest, and NF-17,
+        plus regulated renewal window, critical patch, high severity, August renewal,
+        and final roster. Draft rule in this artifact: {rule}. Status: stale roster
+        candidate, not the R7 final roster.
+        """
+        spec(
+            f"v3-warroom-decoy-{idx + 1:04d}",
+            f"June critical-patch roster draft {idx + 1:04d}",
+            body,
+            source=["confluence", "slack", "dashboard", "meeting_notes"][idx % 4],
+            doc_type=["draft_policy_distractor", "slack_thread_distractor", "dashboard_snapshot_distractor", "meeting_note_distractor"][idx % 4],
+            date=f"2026-06-{1 + (idx % 7):02d}",
+            owner="Security PMO",
+        )
+
+    namespace_customers = ["QuartzBio Labs", "BluePeak Insurance", "Northwind Health", "Riverline Logistics", "Orchid Labs"]
+    for idx in range(360):
+        customer = namespace_customers[idx % len(namespace_customers)]
+        version = ["4.9.0", "4.8.2", "4.8.1", "4.9.1"][idx % 4]
+        body = f"""
+        Tenant cache namespace proof artifact {idx + 1:04d}. It mentions {customer},
+        cache namespace sample, Evidence Ledger, tenant-scoped rerank cache,
+        AtlasSearch {version}, CVE-2026-4520, SEC-1899, regulated review, and customer
+        evidence. Status: non-final namespace sample or wrong-customer note. Only the
+        QuartzBio final approval ledger plus AtlasSearch 4.9.0 release note should
+        answer the regulated namespace-proof question.
+        """
+        spec(
+            f"v3-namespace-decoy-{idx + 1:04d}",
+            f"{customer} namespace proof artifact {idx + 1:04d}",
+            body,
+            source=["docs", "dashboard", "email", "support"][idx % 4],
+            doc_type=["guide_distractor", "dashboard_snapshot_distractor", "customer_email_distractor", "implementation_note_distractor"][idx % 4],
+            customer=customer,
+            product="AtlasSearch",
+            cve="CVE-2026-4520",
+            ticket="SEC-1899",
+            version=version,
+            date=f"2026-{4 + (idx % 3):02d}-{1 + (idx % 27):02d}",
+            owner="Mina Patel",
+        )
+
+    return specs
+
+
 def slug(value: str) -> str:
     return (
         value.lower()
@@ -1644,6 +2096,192 @@ def build_tasks() -> list[dict]:
         ideal_routes=[{"query": "technical owner product blockers account brief", "mode": "hybrid", "top_k": 45}],
     )
 
+    task(
+        "sac-037",
+        "test",
+        "alias_resolution",
+        "hard",
+        "BPI asks for tenant isolation proof. Expand the alias, identify the blocker, and cite the release that provides the evidence.",
+        "BPI means BluePeak Insurance. BluePeak Insurance is blocked by the AtlasSearch rerank-cache issue, SEC-1899 / CVE-2026-4520. The evidence release is AtlasSearch 4.9.0 because it provides Evidence Ledger and tenant-scoped rerank cache.",
+        ["alias-customer-codenames", "acct-bluepeak", "esc-bluepeak", "ticket-sec-1899", "adv-atlas-rerank-4520", "rel-atlas-4-9-0"],
+        ["query_understanding", "entity_linking", "alias_resolution", "join", "rerank"],
+        hard_negatives=["v3-alias-decoy-0001", "v3-alias-decoy-0011", "v3-namespace-decoy-0002", "rel-atlas-4-8-2", "adv-atlas-saml-4102"],
+        answer_fields={"alias": "BPI", "customer": "BluePeak Insurance", "ticket": "SEC-1899", "cve": "CVE-2026-4520", "release": "AtlasSearch 4.9.0"},
+        ideal_routes=[
+            {"query": "BPI BluePeak Insurance alias tenant isolation proof", "mode": "hybrid", "top_k": 40},
+            {"query": "SEC-1899 CVE-2026-4520 AtlasSearch 4.9.0 Evidence Ledger", "mode": "bm25", "top_k": 40},
+        ],
+    )
+    task(
+        "sac-038",
+        "test",
+        "authority_disambiguation",
+        "hard",
+        "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+        "CT-R means Contoso Retail. The customer-citable version after final approval is Beacon CRM Connector 3.14.1 because it fixes CVE-2026-3771 under SEC-1811. Beacon CRM Connector 3.14.0 must be rejected because it only added diagnostics and did not fix the OAuth refresh-token issue.",
+        ["alias-customer-codenames", "approval-beacon-contoso-may06", "acct-contoso", "esc-contoso", "rel-beacon-3-14-1", "rel-beacon-3-14-0", "adv-beacon-oauth-3771"],
+        ["alias_resolution", "exact_version_compare", "source_authority_filter", "join", "rerank"],
+        hard_negatives=["v3-approval-decoy-0001", "v3-approval-decoy-0006", "v3-approval-decoy-0011", "cluster-beacon-oauth-3771-release-005"],
+        answer_fields={"alias": "CT-R", "customer": "Contoso Retail", "approved_version": "3.14.1", "rejected_version": "3.14.0", "cve": "CVE-2026-3771"},
+        ideal_routes=[
+            {"query": "CT-R Contoso Retail Beacon 3.14.1 3.14.0 final approval", "mode": "hybrid", "top_k": 40},
+            {"query": "approval-beacon-contoso SEC-1811 CVE-2026-3771", "mode": "bm25", "top_k": 30},
+        ],
+    )
+    task(
+        "sac-039",
+        "test",
+        "negative_evidence",
+        "hard",
+        "NF-17 has a sales discovery note mentioning ForgeDeploy. Does that create a ForgeDeploy remediation obligation?",
+        "No. NF-17 means NovaFoods, and the sales discovery note only records future interest. NovaFoods has no ForgeDeploy workspace, implementation record, production tenant, or security remediation obligation. Its active footprint remains Compass Analytics only.",
+        ["alias-customer-codenames", "sales-novafoods-forgedeploy-discovery", "negative-forgedeploy-novafoods", "acct-novafoods"],
+        ["alias_resolution", "negative_evidence_check", "source_authority_filter", "metadata_filter", "reflection"],
+        hard_negatives=["v3-alias-decoy-0003", "v3-approval-decoy-0005", "v3-warroom-decoy-0005", "adv-forge-ssrf-1984", "ticket-sec-1690"],
+        answer_fields={"alias": "NF-17", "customer": "NovaFoods", "forge_deploy": False, "active_product": "Compass Analytics"},
+        ideal_routes=[
+            {"query": "NF-17 NovaFoods ForgeDeploy sales discovery product footprint", "mode": "hybrid", "top_k": 40},
+            {"query": "NovaFoods no ForgeDeploy Compass Analytics only", "mode": "bm25", "top_k": 30},
+        ],
+        should_reflect=True,
+    )
+    task(
+        "sac-040",
+        "test",
+        "temporal_authority",
+        "hard",
+        "Use the R7 final roster, not drafts: which aliases are included in the June critical-patch war room and which are explicit exclusions?",
+        "The R7 final roster includes NW-H, AB-Q3, HG-E, and RL-7, which expand to Northwind Health, Aster Bank, HelioGrid Energy, and Riverline Logistics. Explicit exclusions are BPI, QBL, GU-Edu, CT-R, and UNest because they are high severity, outside the June renewal window, or not critical war-room cases.",
+        ["warroom-r7-june-critical-roster", "alias-customer-codenames", "runbook-regulated-upgrade", "acct-northwind", "acct-aster", "acct-heliogrid", "acct-riverline"],
+        ["alias_resolution", "metadata_filter", "source_authority_filter", "negative_filter", "aggregate"],
+        hard_negatives=["v3-warroom-decoy-0001", "v3-warroom-decoy-0004", "v3-warroom-decoy-0005", "acct-bluepeak", "acct-quartzbio", "acct-greenhouse"],
+        answer_fields={"included_aliases": ["NW-H", "AB-Q3", "HG-E", "RL-7"], "excluded_aliases": ["BPI", "QBL", "GU-Edu", "CT-R", "UNest"]},
+        ideal_routes=[
+            {"query": "R7 final roster June critical patch war room aliases", "mode": "hybrid", "top_k": 50},
+            {"query": "NW-H AB-Q3 HG-E RL-7 BPI QBL GU-Edu CT-R UNest", "mode": "bm25", "top_k": 50},
+        ],
+    )
+    task(
+        "sac-041",
+        "test",
+        "authority_disambiguation",
+        "hard",
+        "NW-H has rollback-drill notes for AtlasSearch 4.8.3. What AtlasSearch version is actually approved for the SAML blocker?",
+        "NW-H means Northwind Health. The actually approved version for the SAML blocker is AtlasSearch 4.8.2, which fixes CVE-2026-4102 / SEC-1842. AtlasSearch 4.8.3 is only a rollback-drill candidate and is not approved for Northwind customer remediation.",
+        ["alias-customer-codenames", "approval-atlas-northwind-final", "acct-northwind", "adv-atlas-saml-4102", "ticket-sec-1842", "rel-atlas-4-8-2"],
+        ["alias_resolution", "exact_version_compare", "source_authority_filter", "join", "rerank"],
+        hard_negatives=["v3-approval-decoy-0002", "v3-approval-decoy-0007", "rel-atlas-4-8-1", "cluster-atlas-saml-4102-release-005"],
+        answer_fields={"alias": "NW-H", "customer": "Northwind Health", "approved_version": "AtlasSearch 4.8.2", "cve": "CVE-2026-4102"},
+        ideal_routes=[
+            {"query": "NW-H Northwind AtlasSearch 4.8.3 rollback drill 4.8.2 final approval", "mode": "hybrid", "top_k": 45},
+            {"query": "SEC-1842 CVE-2026-4102 AtlasSearch 4.8.2", "mode": "bm25", "top_k": 35},
+        ],
+    )
+    task(
+        "sac-042",
+        "test",
+        "policy_lookup",
+        "hard",
+        "For the CEO Search-as-Code readout, which latency number is primary: including code generation or execution-only?",
+        "For the CEO Search-as-Code readout, end-to-end latency including code generation is the primary number. Execution-only latency excluding code generation should be shown as a diagnostic. The same ledger also keeps token cost, search calls, rerank pairs, invalid code rate, and reflection trigger precision.",
+        ["policy-sac-latency-ledger-v3", "eval-sac-policy"],
+        ["policy_lookup", "source_authority_filter", "bm25_exact", "citation"],
+        hard_negatives=["v3-policy-decoy-0001", "v3-policy-decoy-0003", "v3-policy-decoy-0010", "cluster-enterprise-dashboard-004"],
+        answer_fields={"primary_latency": "end-to-end latency including code generation", "diagnostic_latency": "execution-only latency excluding code generation"},
+        ideal_routes=[
+            {"query": "CEO Search-as-Code latency including code generation execution-only", "mode": "hybrid", "top_k": 35},
+            {"query": "latency accounting ledger code generation execution latency", "mode": "bm25", "top_k": 35},
+        ],
+    )
+    task(
+        "sac-043",
+        "test",
+        "reflection_required",
+        "hard",
+        "A generated query already found 900 candidates but no approval ledger. According to policy, should it stop or generate follow-up code?",
+        "It should generate follow-up retrieval code. The v3 reflection policy says missing required evidence categories, such as an approval ledger, should trigger targeted follow-up retrieval even when the raw candidate pool is 900 and therefore large.",
+        ["policy-reflection-missing-evidence-v3", "source-authority-matrix-v3"],
+        ["evidence_reflection", "followup_code_generation", "source_authority_filter", "budget_control"],
+        hard_negatives=["v3-reflection-decoy-0001", "v3-reflection-decoy-0002", "v3-reflection-decoy-0004", "eval-sac-policy"],
+        answer_fields={"candidate_pool": "900", "missing_category": "approval ledger", "action": "generate follow-up retrieval code"},
+        ideal_routes=[
+            {"query": "900 candidates no approval ledger missing evidence category follow-up retrieval code", "mode": "hybrid", "top_k": 45},
+            {"query": "reflection missing evidence categories approval ledger", "mode": "bm25", "top_k": 35},
+        ],
+        should_reflect=True,
+    )
+    task(
+        "sac-044",
+        "test",
+        "multi_hop",
+        "hard",
+        "The account asking for a namespace sample is QBL. Which release and feature should the response cite, and what nearby release is insufficient?",
+        "QBL means QuartzBio Labs. The response should cite AtlasSearch 4.9.0 and its Evidence Ledger / tenant-scoped rerank cache. AtlasSearch 4.8.2 is insufficient because it addresses the SAML connector, not rerank-cache isolation.",
+        ["alias-customer-codenames", "approval-quartzbio-namespace-proof", "acct-quartzbio", "esc-quartzbio", "adv-atlas-rerank-4520", "rel-atlas-4-9-0", "rel-atlas-4-8-2"],
+        ["alias_resolution", "semantic_search", "exact_version_compare", "join", "rerank"],
+        hard_negatives=["v3-namespace-decoy-0001", "v3-namespace-decoy-0002", "v3-namespace-decoy-0003", "adv-atlas-saml-4102"],
+        answer_fields={"alias": "QBL", "customer": "QuartzBio Labs", "release": "AtlasSearch 4.9.0", "insufficient_release": "AtlasSearch 4.8.2"},
+        ideal_routes=[
+            {"query": "QBL QuartzBio namespace sample Evidence Ledger tenant-scoped rerank cache", "mode": "dense", "top_k": 40},
+            {"query": "SEC-1899 CVE-2026-4520 AtlasSearch 4.9.0 4.8.2", "mode": "bm25", "top_k": 45},
+        ],
+    )
+    task(
+        "sac-045",
+        "test",
+        "wide_fanout",
+        "hard",
+        "For JBell's red renewals before July, which customers are in scope and which product blocker does each have?",
+        "JBell means Jon Bell. Jon Bell is in scope for Aster Bank and Riverline Logistics red renewals before July. Aster Bank has the Meridian Sync export audit / EXPORT-LAT-77 blocker, and Riverline Logistics has a Meridian Sync export path traversal blocker tied to SEC-1775 / CVE-2026-2899.",
+        ["alias-owner-directory", "acct-aster", "esc-aster", "acct-riverline", "esc-riverline", "ticket-sec-1775", "adv-meridian-path-2899", "rel-meridian-2-7-5"],
+        ["alias_resolution", "metadata_filter", "join", "aggregate", "bm25_exact"],
+        hard_negatives=["v3-alias-decoy-0004", "cluster-customer-aster-forecast-007", "cluster-customer-riverline-forecast-007", "acct-northwind", "acct-heliogrid"],
+        answer_fields={"owner_alias": "JBell", "owner": "Jon Bell", "customers": ["Aster Bank", "Riverline Logistics"], "product": "Meridian Sync"},
+        ideal_routes=[
+            {"query": "JBell Jon Bell red renewal before July Meridian Sync", "mode": "hybrid", "top_k": 50},
+            {"query": "Aster Riverline SEC-1775 EXPORT-LAT-77 Jon Bell", "mode": "bm25", "top_k": 45},
+        ],
+    )
+    task(
+        "sac-046",
+        "dev",
+        "authority_disambiguation",
+        "hard",
+        "Which source types should win when draft approvals, Slack digests, and release notes all mention the same CVE?",
+        "The source authority matrix says current account briefs, escalation logs, vendor advisories, Jira security tickets, release notes, source-of-truth alias registries, and final approval ledgers should win. Draft approvals, Slack digests, dashboards, sales notes, and stale weekly snapshots are non-authoritative unless historical context is requested.",
+        ["source-authority-matrix-v3", "eval-sac-policy"],
+        ["policy_lookup", "source_authority_filter", "negative_filter"],
+        hard_negatives=["v3-approval-decoy-0001", "v3-reflection-decoy-0001", "cluster-enterprise-thread-002"],
+        answer_fields={"winning_sources": ["account briefs", "escalation logs", "vendor advisories", "Jira security tickets", "release notes", "alias registries", "final approval ledgers"]},
+        ideal_routes=[{"query": "source authority matrix draft approvals Slack digests release notes same CVE", "mode": "bm25", "top_k": 30}],
+    )
+    task(
+        "sac-047",
+        "dev",
+        "alias_resolution",
+        "medium",
+        "UNest appears in a Beacon rollout note. What customer does it map to and which fix is relevant?",
+        "UNest maps to UrbanNest. The relevant fix is Beacon CRM Connector 3.14.1 for CVE-2026-3771 / SEC-1811, owned by Luis Romero.",
+        ["alias-customer-codenames", "acct-urbannest", "esc-urbannest", "ticket-sec-1811", "adv-beacon-oauth-3771", "rel-beacon-3-14-1"],
+        ["alias_resolution", "bm25_exact", "join", "rerank"],
+        hard_negatives=["v3-alias-decoy-0010", "v3-approval-decoy-0001", "rel-beacon-3-14-0"],
+        answer_fields={"alias": "UNest", "customer": "UrbanNest", "fix": "Beacon CRM Connector 3.14.1"},
+        ideal_routes=[{"query": "UNest UrbanNest Beacon CVE-2026-3771 SEC-1811 3.14.1", "mode": "hybrid", "top_k": 35}],
+    )
+    task(
+        "sac-048",
+        "train",
+        "policy_lookup",
+        "medium",
+        "What does the latency ledger say to show as diagnostic but not primary for CEO comparison?",
+        "The latency ledger says execution-only latency excluding code generation should be shown as diagnostic but not primary for CEO comparison. End-to-end latency including code generation is primary.",
+        ["policy-sac-latency-ledger-v3", "eval-sac-policy"],
+        ["policy_lookup", "bm25_exact"],
+        hard_negatives=["v3-policy-decoy-0001", "v3-policy-decoy-0002", "v3-policy-decoy-0003"],
+        answer_fields={"diagnostic_latency": "execution-only latency excluding code generation", "primary_latency": "end-to-end latency including code generation"},
+        ideal_routes=[{"query": "latency ledger diagnostic not primary CEO comparison execution-only", "mode": "bm25", "top_k": 25}],
+    )
+
     attach_cluster_hard_negatives(tasks)
     return tasks
 
@@ -1706,6 +2344,10 @@ def attach_cluster_hard_negatives(tasks: list[dict]) -> None:
             "cluster-beacon-oauth-3771-faq-009",
             "cluster-product-beacon-crm-connector-release-001",
             "cluster-customer-contoso-renewal-002",
+            "v3-approval-decoy-0001",
+            "v3-approval-decoy-0006",
+            "v3-approval-decoy-0011",
+            "v3-approval-decoy-0016",
         ],
         "sac-014": [
             "cluster-atlas-saml-4102-approval-007",
@@ -1720,6 +2362,10 @@ def attach_cluster_hard_negatives(tasks: list[dict]) -> None:
             "cluster-enterprise-review-003",
             "cluster-enterprise-draft-006",
             "cluster-product-rovo-chat-runbook-004",
+            "v3-reflection-decoy-0001",
+            "v3-reflection-decoy-0002",
+            "v3-reflection-decoy-0004",
+            "v3-policy-decoy-0004",
         ],
         "sac-018": [
             "cluster-forge-ssrf-1984-digest-001",
@@ -1745,6 +2391,10 @@ def attach_cluster_hard_negatives(tasks: list[dict]) -> None:
             "cluster-enterprise-review-009",
             "cluster-product-rovo-chat-kb-003",
             "cluster-product-rovo-chat-runbook-004",
+            "v3-policy-decoy-0001",
+            "v3-policy-decoy-0002",
+            "v3-policy-decoy-0003",
+            "v3-policy-decoy-0010",
         ],
         "sac-025": [
             "cluster-atlas-saml-4102-digest-001",
@@ -1790,6 +2440,10 @@ def attach_cluster_hard_negatives(tasks: list[dict]) -> None:
             "cluster-forge-ssrf-1984-rollout-002",
             "cluster-customer-novafoods-audit-008",
             "cluster-product-forgedeploy-kb-003",
+            "v3-alias-decoy-0003",
+            "v3-approval-decoy-0005",
+            "v3-warroom-decoy-0005",
+            "sales-novafoods-forgedeploy-discovery",
         ],
         "sac-036": [
             "cluster-customer-northwind-crm-001",

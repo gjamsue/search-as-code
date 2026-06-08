@@ -1,4 +1,4 @@
-# Dataset Card: Search-as-Code Codegen Benchmark v2
+# Dataset Card: Search-as-Code Codegen Benchmark v3
 
 ## Summary
 
@@ -13,43 +13,49 @@ code generation. It is designed to compare:
 
 The dataset is intentionally not a generic retrieval benchmark. It targets the
 cases where Search-as-Code should have a structural advantage: fanout, joins,
-filters, exact identifiers, evidence sufficiency, negative evidence, and rerank
-budget control.
+filters, exact identifiers, alias resolution, source authority, evidence
+sufficiency, negative evidence, and rerank budget control.
 
 ## Current Size
 
-- Documents: 2,499
-- Core labeled or near-labeled documents: 57
-- Structured hard distractors: 2,442
-- Tasks: 36
-- Splits: train 7, dev 7, test 22
-- Tasks with hard negatives: 36
-- Hard-negative labels: 200
-- Reflection-required tasks: 7
+- Documents: 6,010
+- Core/source-of-truth or near-labeled documents: 68
+- Structured hard distractors: 5,942
+- Tasks: 48
+- Splits: train 8, dev 9, test 31
+- Tasks with hard negatives: 48
+- Hard-negative labels: 266
+- Reflection-required tasks: 9
 - BEIR export: included; qrels contain positive evidence only
 - Separate hard-negative export: included
 - Content audit report: included
 
 ## Document Types
 
-- Core / near-labeled evidence docs: 57
+- Core / source-of-truth / near-labeled evidence docs: 68
 - Baseline structured distractors: 486
 - Incident topic clusters: 360
 - Customer activity clusters: 480
 - Product knowledge clusters: 576
 - Enterprise background clusters: 540
-- Largest distractor types: release 264, guide 240, security advisory 168, meeting note 146, security ticket 132
+- v3 alias/code-name decoys: 480
+- v3 policy/reflection decoys: 1,240
+- v3 approval/war-room/namespace decoys: 1,780
+- Largest distractor types: dashboard 920, meeting note 636, draft policy 530, Slack thread 470, review note 400
 
-Version 2 is intentionally a thicker enterprise index. A single topic can now
-have dozens of similar artifacts: draft advisories, rollout notes, duplicate
+Version 3 is intentionally a thicker enterprise index. A single topic can now
+have hundreds of similar artifacts: draft advisories, rollout notes, duplicate
 tickets, meeting summaries, emails, approvals, postmortems, risk dashboards,
-KB docs, policy drafts, and stale customer snapshots.
+KB docs, policy drafts, stale customer snapshots, ambiguous aliases, approval-like
+wrong-version ledgers, and policy near-duplicates.
 
 ## Task Coverage
 
 The task set includes:
 
 - security fanout and joins
+- alias and code-name resolution
+- source-authority disambiguation
 - customer renewal risk joins
 - release-to-fix mapping
 - exact identifier lookup
@@ -64,16 +70,18 @@ The task set includes:
 
 Operation coverage from validation:
 
-- join: 26 tasks
-- metadata_filter: 18 tasks
-- bm25_exact: 16 tasks
-- aggregate: 12 tasks
-- entity_linking: 12 tasks
+- join: 32 tasks
+- metadata_filter: 21 tasks
+- bm25_exact: 20 tasks
+- aggregate: 14 tasks
+- entity_linking: 13 tasks
 - fanout_search: 9 tasks
-- negative_evidence_check: 5 tasks
-- query_understanding: 4 tasks
-- evidence_reflection: 3 tasks
-- exact_version_compare: 3 tasks
+- alias_resolution: 8 tasks
+- source_authority_filter: 7 tasks
+- negative_evidence_check: 6 tasks
+- query_understanding: 5 tasks
+- evidence_reflection: 4 tasks
+- exact_version_compare: 6 tasks
 
 ## Example Tasks
 
@@ -140,8 +148,8 @@ The generator and validator enforce:
 - hard negatives do not overlap evidence docs
 - all tasks include hard negatives
 - structured distractor docs cannot be used as positive evidence
-- corpus contains at least 500 documents
-- corpus contains at least 450 structured hard distractors
+- corpus contains at least 5,000 documents
+- corpus contains at least 4,500 structured hard distractors
 - required distractor types are present: releases, advisories, tickets, account
   briefs, escalation logs, meeting notes, and guides
 - BEIR qrels contain only positive evidence rows

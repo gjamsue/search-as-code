@@ -14,11 +14,11 @@
 
 数据由 [generate_dataset.py](sac_benchmark_dataset/generate_dataset.py) 确定性生成，每次运行会得到相同的数据集。
 
-生成流程分四层：
+生成流程分五层：
 
 1. Core enterprise knowledge
 
-   先生成 57 篇核心文档或近核心文档，覆盖真实企业搜索里常见的信息源：
+   先生成 68 篇核心文档、source-of-truth 文档或近核心文档，覆盖真实企业搜索里常见的信息源：
 
    - customer account brief
    - escalation log
@@ -27,10 +27,11 @@
    - internal security ticket
    - release note
    - runbook / policy / roadmap / product footprint
+   - alias registry / source authority matrix / final approval ledger / war-room roster
 
 2. Structured hard distractors
 
-   再生成 2,442 篇 structured hard distractors。它们不是随机噪声，而是有意设计成“看起来很像答案但不是答案”的干扰文档：
+   再生成 5,942 篇 structured hard distractors。它们不是随机噪声，而是有意设计成“看起来很像答案但不是答案”的干扰文档：
 
    - 相近版本号：例如 `4.8.1` vs `4.8.2`
    - 相近 CVE / ticket ID
@@ -38,17 +39,30 @@
    - 相似客户名、行业、renewal date、risk level
    - 使用相同搜索术语但只提供泛化背景的 guide / policy docs
 
-   v2 里额外加入了更接近企业知识库的 topic clusters：
+   v3 里额外加入了更接近企业知识库的 topic clusters：
 
    - 486 篇基础 hard distractors：附近版本、附近 CVE、相似客户、泛化 guide
    - 360 篇 incident clusters：6 个核心安全事件各 60 篇 draft、rollout、duplicate ticket、meeting、email、approval、postmortem、FAQ、dashboard
    - 480 篇 customer activity clusters：10 个核心客户各 48 篇 CRM snapshot、renewal note、escalation note、customer email、risk dashboard、implementation note、forecast note、audit packet
    - 576 篇 product knowledge clusters：6 个产品各 96 篇 release、migration、KB、runbook、advisory、rollback、compatibility、performance note
    - 540 篇 enterprise background clusters：war room、regulated renewal evidence、Search-as-Code eval、tool-calling comparison、rerank budget、reflection policy 等相似主题文档
+   - 480 篇 alias/code-name decoys：同一个缩写可能对应客户、项目、dashboard 或 sales note，逼迫系统先找 source-of-truth alias registry
+   - 1,240 篇 policy/reflection decoys：大量 Search-as-Code policy draft、reflection scratchpad、latency readout，文字很像最终 policy 但指标或动作不完整
+   - 1,780 篇 approval/war-room/namespace decoys：final approval、roster、namespace proof 的近重复文档，包含相同客户、CVE、版本号，但状态是 draft/stale/wrong-customer/non-authoritative
 
-3. Task labels
+3. Authority and alias source docs
 
-   生成 36 个任务，每个任务包含：
+   v3 新增了一层正向 source-of-truth 文档，让任务不只是“搜 exact ID”，而是要先判断哪些证据更可信：
+
+   - `alias-customer-codenames`：BPI、QBL、NF-17、RL-7、NW-H 等客户 alias 映射
+   - `alias-owner-directory`：JBell、MP、PRao 等 owner alias 映射
+   - `source-authority-matrix-v3`：final approval ledger / release note / Jira ticket 优先于 draft、Slack、dashboard
+   - final approval ledgers：Contoso Beacon、Northwind AtlasSearch、QuartzBio namespace proof、Riverline second blocker
+   - `warroom-r7-june-critical-roster`：June critical-patch war room 的最终 included/excluded alias roster
+
+4. Task labels
+
+   生成 48 个任务，每个任务包含：
 
    - query
    - gold answer
@@ -59,7 +73,7 @@
    - expected ideal search routes
    - whether reflection is expected
 
-4. Benchmark exports
+5. Benchmark exports
 
    输出标准 JSONL 和 BEIR-style 文件：
 
@@ -79,12 +93,12 @@ BEIR qrels 只包含正相关 evidence。Hard negatives 单独导出，用于计
 
 | Product | Corpus mentions |
 |---|---:|
-| AtlasSearch | 676 |
-| Meridian Sync | 510 |
-| Compass Analytics | 507 |
-| Beacon CRM Connector | 459 |
-| ForgeDeploy | 431 |
-| Rovo Chat | 422 |
+| AtlasSearch | 2,620 |
+| ForgeDeploy | 1,262 |
+| Meridian Sync | 1,212 |
+| Beacon CRM Connector | 1,136 |
+| Compass Analytics | 820 |
+| Rovo Chat | 615 |
 
 核心客户包括：
 
@@ -105,16 +119,16 @@ BEIR qrels 只包含正相关 evidence。Hard negatives 单独导出，用于计
 
 | Item | Count |
 |---|---:|
-| Documents | 2,499 |
-| Core / near-labeled documents | 57 |
-| Structured hard distractors | 2,442 |
-| Tasks | 36 |
-| Train tasks | 7 |
-| Dev tasks | 7 |
-| Test tasks | 22 |
-| Tasks with hard negatives | 36 |
-| Hard-negative labels | 200 |
-| Reflection-required tasks | 7 |
+| Documents | 6,010 |
+| Core / source-of-truth / near-labeled documents | 68 |
+| Structured hard distractors | 5,942 |
+| Tasks | 48 |
+| Train tasks | 8 |
+| Dev tasks | 9 |
+| Test tasks | 31 |
+| Tasks with hard negatives | 48 |
+| Hard-negative labels | 266 |
+| Reflection-required tasks | 9 |
 | Audit errors | 0 |
 | Audit warnings | 0 |
 
@@ -122,8 +136,8 @@ Task difficulty:
 
 | Difficulty | Count |
 |---|---:|
-| Hard | 20 |
-| Medium | 16 |
+| Hard | 30 |
+| Medium | 18 |
 
 ## 文档类型
 
@@ -131,67 +145,78 @@ Task difficulty:
 
 | Group | Count |
 |---|---:|
-| Core / near-labeled evidence docs | 57 |
+| Core / source-of-truth / near-labeled evidence docs | 68 |
 | Baseline structured distractors | 486 |
 | Incident topic clusters | 360 |
 | Customer activity clusters | 480 |
 | Product knowledge clusters | 576 |
 | Enterprise background clusters | 540 |
+| v3 alias/code-name decoys | 480 |
+| v3 policy/reflection decoys | 1,240 |
+| v3 approval/war-room/namespace decoys | 1,780 |
 
 Top document types:
 
 | Document Type | Count |
 |---|---:|
+| dashboard_snapshot_distractor | 920 |
+| meeting_note_distractor | 636 |
+| draft_policy_distractor | 530 |
+| slack_thread_distractor | 470 |
+| review_note_distractor | 400 |
+| memo_distractor | 390 |
+| customer_email_distractor | 366 |
+| guide_distractor | 330 |
 | release_distractor | 264 |
-| guide_distractor | 240 |
+| security_approval_distractor | 216 |
 | security_advisory_distractor | 168 |
-| meeting_note_distractor | 146 |
-| security_ticket_distractor | 132 |
-| account_brief_distractor | 110 |
-| escalation_distractor | 110 |
-| customer_email_distractor | 96 |
-| risk_dashboard_distractor | 96 |
-| memo / thread / review / dashboard / decision / draft distractors | 540 |
-| runbook / compatibility / performance distractors | 216 |
+| implementation_note_distractor | 150 |
 
 ## 任务类别
 
 | Category | Count | What It Tests |
 |---|---:|---|
 | customer_patch_mapping | 7 | 从客户 blocker 映射到 ticket、CVE、fixed version、owner |
-| wide_fanout | 4 | 跨多客户、多产品、多漏洞的大范围 fanout 和 aggregation |
+| wide_fanout | 5 | 跨多客户、多产品、多漏洞的大范围 fanout 和 aggregation |
 | release_fix_mapping | 3 | 从 release notes 找修复版本、性能变化和相关 CVE |
-| negative_evidence | 3 | 正确回答“不需要 / 不应包含”，并给出证据 |
-| reflection_required | 3 | 当第一轮 evidence 不够时，是否应该生成 follow-up route |
+| negative_evidence | 4 | 正确回答“不需要 / 不应包含”，并给出证据 |
+| reflection_required | 4 | 当第一轮 evidence 不够或缺少关键 evidence category 时，是否应该生成 follow-up route |
+| authority_disambiguation | 3 | 在 final ledger、draft、Slack、dashboard 之间识别可引用来源 |
+| alias_resolution | 2 | 先解析 BPI / QBL / NF-17 / JBell 等 alias，再做搜索和 join |
+| policy_lookup | 3 | 查找 benchmark / policy / latency accounting 指标要求 |
+| multi_hop | 3 | 通过多篇文档推断最终答案 |
 | security_fanout_join | 2 | 客户、产品、漏洞、ticket、release、owner 的多源 join |
 | exact_identifier_lookup | 2 | 精确保留并检索 `SEC-*`、`CVE-*`、版本号等 identifier |
 | budget_control | 2 | 控制 rerank candidate budget，避免盲目扩大候选集 |
 | tool_calling_vs_codegen | 2 | 比较多轮 tool calling 和一次性 codegen 的控制差异 |
 | comparative_analysis | 2 | 比较版本、客户或 blocker 差异 |
-| multi_hop | 2 | 通过多篇文档推断最终答案 |
 | customer_risk_join | 1 | 汇总 customer renewal risk 和 next action |
 | regulated_customer_filter | 1 | 按 regulated vertical、severity、renewal window 过滤 |
-| policy_lookup | 1 | 查找 benchmark / policy 指标要求 |
+| temporal_authority | 1 | 使用 final roster / final approval，而不是 stale draft |
 | search_as_code_eval_design | 1 | 设计 Search-as-Code 评估表 |
 
 ## 覆盖的操作能力
 
 | Operation | Task Count |
 |---|---:|
-| join | 26 |
-| metadata_filter | 18 |
-| bm25_exact | 16 |
-| aggregate | 12 |
-| entity_linking | 12 |
+| join | 32 |
+| rerank | 28 |
+| metadata_filter | 21 |
+| bm25_exact | 20 |
+| aggregate | 14 |
+| entity_linking | 13 |
 | fanout_search | 9 |
-| negative_evidence_check | 5 |
-| query_understanding | 4 |
-| evidence_reflection | 3 |
-| exact_version_compare | 3 |
+| alias_resolution | 8 |
+| source_authority_filter | 7 |
+| negative_evidence_check | 6 |
+| exact_version_compare | 6 |
+| policy_lookup | 6 |
+| query_understanding | 5 |
+| evidence_reflection | 4 |
 | query_rewrite | 2 |
 | candidate_pruning | 2 |
 | dynamic_route_selection | 2 |
-| semantic_search | 2 |
+| semantic_search | 3 |
 
 ## 示例任务
 
@@ -238,8 +263,8 @@ If the first search only finds AtlasSearch SAML docs, what additional route shou
 
 质量门槛包括：
 
-- document 数至少 500
-- structured distractors 至少 450
+- document 数至少 5,000
+- structured distractors 至少 4,500
 - 所有 task 都必须有 hard negatives
 - structured distractor 不能作为 positive evidence
 - evidence 和 hard negatives 不能重叠
