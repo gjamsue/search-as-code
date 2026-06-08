@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search-as-Code Codegen</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5c6978;
+      --line: #d8dee6;
+      --bg: #f7f9fb;
+      --surface: #ffffff;
+      --blue: #2f68d8;
+      --green: #147a64;
+      --amber: #a35c00;
+      --red: #b93535;
+      --violet: #6d4cc2;
+      --blue-soft: #e9f0ff;
+      --green-soft: #e4f4f0;
+      --amber-soft: #fff3df;
+      --violet-soft: #f0ecff;
+      --red-soft: #ffecec;
+      --shadow: 0 12px 30px rgba(23, 32, 42, 0.08);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(247, 249, 251, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .nav {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .mark {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      border: 1px solid #9fb4d8;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .links {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      padding: 6px 0;
+    }
+    .links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 10px;
+      border-radius: 6px;
+      color: #2c3745;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .links a:hover { background: #edf2f7; text-decoration: none; }
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    section {
+      padding: 46px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero {
+      min-height: calc(100vh - 58px);
+      display: grid;
+      align-items: center;
+      padding: 42px 0 28px;
+      background:
+        linear-gradient(90deg, rgba(47, 104, 216, 0.08), rgba(20, 122, 100, 0.08)),
+        var(--bg);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+      gap: 30px;
+      align-items: center;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--blue);
+      font-weight: 840;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 12px;
+    }
+    h1, h2, h3 { margin: 0; line-height: 1.08; letter-spacing: 0; }
+    h1 {
+      max-width: 900px;
+      font-size: clamp(40px, 6vw, 76px);
+      font-weight: 880;
+    }
+    h2 {
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 840;
+    }
+    h3 { font-size: 19px; font-weight: 800; }
+    .lead {
+      margin: 20px 0 0;
+      max-width: 780px;
+      color: #314153;
+      font-size: clamp(18px, 2vw, 22px);
+    }
+    .pill-row {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+      color: #293747;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .summary-board { display: grid; gap: 12px; }
+    .summary-item {
+      min-height: 96px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .summary-item strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 17px;
+    }
+    .summary-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 22px;
+      margin-bottom: 24px;
+    }
+    .section-head p {
+      margin: 10px 0 0;
+      max-width: 730px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 20px rgba(23, 32, 42, 0.05);
+    }
+    .card p, .card li {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .card ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      margin-bottom: 10px;
+    }
+    .tag.blue { background: var(--blue-soft); color: var(--blue); border-color: #c8d6ff; }
+    .tag.green { background: var(--green-soft); color: var(--green); border-color: #c2e0d9; }
+    .tag.amber { background: var(--amber-soft); color: var(--amber); border-color: #f2d2a5; }
+    .tag.violet { background: var(--violet-soft); color: var(--violet); border-color: #d8cdfb; }
+    .tag.red { background: var(--red-soft); color: var(--red); border-color: #f2bcbc; }
+    .stack {
+      display: grid;
+      gap: 12px;
+    }
+    .layer {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius);
+    }
+    .layer strong { color: #243243; }
+    .layer p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .flow-lanes { display: grid; gap: 12px; }
+    .lane {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr) 160px;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius);
+    }
+    .lane-name {
+      font-weight: 820;
+      color: #243243;
+    }
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .step {
+      min-height: 30px;
+      padding: 6px 9px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #cad3df;
+      background: #fbfcfe;
+      border-radius: 6px;
+      color: #344457;
+      font-size: 13px;
+      font-weight: 680;
+    }
+    .arrow { color: #7b8794; font-size: 13px; }
+    .lane-read {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
+    }
+    .bench-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .tab-button {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: 6px;
+      color: #273445;
+      font-weight: 780;
+      cursor: pointer;
+    }
+    .tab-button.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+    .benchmark {
+      display: none;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+    }
+    .benchmark.active { display: grid; }
+    .bar-list { display: grid; gap: 10px; }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr) 74px;
+      align-items: center;
+      gap: 10px;
+      min-height: 34px;
+    }
+    .bar-label {
+      font-size: 13px;
+      font-weight: 740;
+      color: #2b3848;
+    }
+    .bar-track {
+      position: relative;
+      height: 12px;
+      background: #e8edf3;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar-fill { height: 100%; border-radius: inherit; background: var(--blue); }
+    .bar-fill.green { background: var(--green); }
+    .bar-fill.amber { background: var(--amber); }
+    .bar-fill.violet { background: var(--violet); }
+    .bar-value {
+      color: #2c3b4c;
+      font-variant-numeric: tabular-nums;
+      font-size: 13px;
+      text-align: right;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .stat {
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius);
+    }
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 720;
+    }
+    .metric {
+      min-height: 106px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius);
+    }
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 780;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .metric strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 26px;
+      font-weight: 860;
+      font-variant-numeric: tabular-nums;
+    }
+    .metric p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .leaderboard {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+    }
+    .leaderboard th, .leaderboard td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      font-size: 13px;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .leaderboard th:first-child, .leaderboard td:first-child {
+      text-align: left;
+      color: #243243;
+      font-weight: 780;
+      font-variant-numeric: normal;
+    }
+    .leaderboard th {
+      background: #eef3f8;
+      color: #243243;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .takeaway-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .takeaway-list li {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      background: #fbfcfe;
+      border-radius: 4px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .takeaway-list strong { color: var(--ink); }
+    .case-grid { display: grid; gap: 14px; }
+    .case {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 18px;
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .query {
+      margin: 12px 0;
+      padding: 12px;
+      background: #f2f6fb;
+      border-left: 4px solid var(--blue);
+      border-radius: 4px;
+      color: #243243;
+      font-size: 14px;
+      font-weight: 660;
+    }
+    .mini-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .outcome { display: grid; gap: 8px; }
+    .outcome-row {
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .outcome-row strong { color: var(--ink); }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    pre {
+      margin: 0;
+      padding: 14px;
+      max-height: 250px;
+      overflow: auto;
+      border: 1px solid #cdd6e1;
+      background: #101820;
+      color: #e7edf5;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .gap-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(23, 32, 42, 0.05);
+    }
+    .gap-table th, .gap-table td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+    .gap-table th {
+      background: #eef3f8;
+      color: #243243;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .gap-table td { color: var(--muted); }
+    .gap-table tr:last-child td { border-bottom: 0; }
+    .decision {
+      background: #101820;
+      color: white;
+      padding: 28px;
+      border-radius: var(--radius);
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(300px, 1.18fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .decision h2, .decision h3 { color: white; }
+    .decision p, .decision li { color: #cdd6e1; }
+    .next-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .next-list li {
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .footer {
+      padding: 28px 0 44px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 900px) {
+      .hero-grid, .grid-2, .grid-3, .benchmark.active, .case, .decision { grid-template-columns: 1fr; }
+      .lane, .layer { grid-template-columns: 1fr; }
+      .lane-read { text-align: left; }
+      .bar-row { grid-template-columns: 1fr; gap: 5px; }
+      .bar-value { text-align: left; }
+      .metrics, .stat-strip { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+    }
+    @media (max-width: 560px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 10px 0;
+      }
+      .hero { min-height: auto; }
+      .wrap { width: min(100% - 22px, 1180px); }
+      section { padding: 34px 0; }
+      .outcome-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="Presentation navigation">
+      <div class="brand"><span class="mark">SaC</span> Search-as-Code Codegen</div>
+      <div class="links">
+        <a href="#perplexity">Perplexity</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#benchmarks">Our Eval</a>
+        <a href="#examples">Examples</a>
+        <a href="#missing">Gaps</a>
+        <a href="#decision">Next</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Scoped presentation</p>
+          <h1>Search-as-Code: let the model generate the retrieval program.</h1>
+          <p class="lead">The core idea is not “agentic search” broadly. It is a sharper architecture: expose search primitives as an SDK, let the model write code, execute that code in a sandbox, and compare it against fixed pipelines and tool-calling agents.</p>
+          <div class="pill-row">
+            <span class="pill">Perplexity SaC: model + sandbox + Agentic Search SDK</span>
+            <span class="pill">Our eval: 2,499-doc enterprise benchmark</span>
+            <span class="pill">Primary metric: Recall@10</span>
+          </div>
+        </div>
+        <div class="summary-board">
+          <div class="summary-item">
+            <strong>What we should say first.</strong>
+            <p>Search-as-Code moves control below the monolithic search API: retrieval, ranking, filtering, fanout, and aggregation become programmable.</p>
+          </div>
+          <div class="summary-item">
+            <strong>What our eval shows.</strong>
+            <p>With 2,400-candidate opportunity per query, generated Search-as-Code and fixed enriched both reach Recall@10 0.2861. The bottleneck moves from retrieval access to top-10 reranking quality and cost.</p>
+          </div>
+          <div class="summary-item">
+            <strong>What is still missing.</strong>
+            <p>The real next comparison is Search-as-Code vs. multi-turn tool calling, using the same tools, real LLM codegen, token accounting, and answer-level scoring.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="perplexity">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Industry reference</p>
+            <h2>Perplexity reframes search as code generation.</h2>
+            <p>The useful industry anchor is Perplexity’s Search as Code architecture, not broad enterprise search positioning.</p>
+          </div>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <span class="tag blue">Why it matters</span>
+            <h3>Traditional search is too rigid for agents</h3>
+            <ul>
+              <li>A monolithic search endpoint controls the downstream pipeline.</li>
+              <li>Agents need task-specific fanout, filtering, joining, ranking, and aggregation.</li>
+              <li>Repeated tool calls add latency and pollute model context with intermediate results.</li>
+            </ul>
+            <p><a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research, Jun 1 2026</a></p>
+          </article>
+          <article class="card">
+            <span class="tag green">What changed</span>
+            <h3>Code becomes the search orchestrator</h3>
+            <ul>
+              <li>The model generates Python search pipelines.</li>
+              <li>The sandbox executes deterministic compute: batching, retries, filtering, joining, dedupe.</li>
+              <li>The Agentic Search SDK exposes search primitives rather than only final resultsets.</li>
+            </ul>
+            <p>Perplexity reports SaC outperforms other agent systems on 4 of 5 benchmarks and ties closely on HLE.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Architecture</p>
+            <h2>Search-as-Code has three layers.</h2>
+            <p>This is the framing we should use in the presentation.</p>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="layer">
+            <strong>1. Model as control plane</strong>
+            <p>Reason about the task, decompose evidence needs, decide retrieval strategy, and generate code.</p>
+          </div>
+          <div class="layer">
+            <strong>2. Sandbox as runtime</strong>
+            <p>Run generated code safely; handle deterministic control flow, batching, filtering, serialization, retries, and aggregation.</p>
+          </div>
+          <div class="layer">
+            <strong>3. Search SDK as I/O layer</strong>
+            <p>Expose low-level search primitives: retrieval, ranking, filtering, fanout, document rendering, intermediate candidate state.</p>
+          </div>
+        </div>
+
+        <div style="height:18px"></div>
+
+        <div class="flow-lanes">
+          <div class="lane">
+            <div class="lane-name">Fixed search API</div>
+            <div class="steps">
+              <span class="step">query</span><span class="arrow">-&gt;</span><span class="step">predefined pipeline</span><span class="arrow">-&gt;</span><span class="step">final resultset</span>
+            </div>
+            <div class="lane-read">Good default, limited control</div>
+          </div>
+          <div class="lane">
+            <div class="lane-name">Tool-calling agent</div>
+            <div class="steps">
+              <span class="step">LLM turn</span><span class="arrow">-&gt;</span><span class="step">search call</span><span class="arrow">-&gt;</span><span class="step">LLM turn</span><span class="arrow">-&gt;</span><span class="step">repeat</span>
+            </div>
+            <div class="lane-read">Flexible, token-heavy</div>
+          </div>
+          <div class="lane">
+            <div class="lane-name">Search-as-Code</div>
+            <div class="steps">
+              <span class="step">generate code</span><span class="arrow">-&gt;</span><span class="step">fanout/search/rank/filter</span><span class="arrow">-&gt;</span><span class="step">compact evidence</span>
+            </div>
+            <div class="lane-read">Programmable, inspectable</div>
+          </div>
+          <div class="lane">
+            <div class="lane-name">Reflective SaC</div>
+            <div class="steps">
+              <span class="step">execute code</span><span class="arrow">-&gt;</span><span class="step">inspect evidence</span><span class="arrow">-&gt;</span><span class="step">generate follow-up code</span>
+            </div>
+            <div class="lane-read">Recovery path</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="benchmarks">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Our evaluation</p>
+            <h2>We built a benchmark around enterprise search control.</h2>
+            <p>The test is designed for Search-as-Code: fanout, joins, exact identifiers, metadata filters, negative evidence, rerank budget control, and reflection.</p>
+          </div>
+        </div>
+
+        <div class="stat-strip">
+          <div class="stat"><strong>2,499</strong><span>documents</span></div>
+          <div class="stat"><strong>36</strong><span>tasks, 22 test</span></div>
+          <div class="stat"><strong>2,442</strong><span>hard distractors</span></div>
+          <div class="stat"><strong>200</strong><span>hard-negative labels</span></div>
+        </div>
+
+        <div class="bench-tabs" role="tablist" aria-label="Benchmark tabs">
+          <button class="tab-button active" type="button" data-tab="dataset">Dataset</button>
+          <button class="tab-button" type="button" data-tab="results">Results</button>
+        </div>
+
+        <div id="dataset" class="benchmark active" role="tabpanel">
+          <div class="card">
+            <h3>Dataset scope</h3>
+            <ul>
+              <li>Simulated enterprise knowledge base: account briefs, escalation logs, renewal notes, security advisories, Jira-style tickets, release notes, runbooks, and roadmap docs.</li>
+              <li>Tasks require joining customer, product, CVE, ticket, owner, fixed version, renewal window, and blocker status.</li>
+              <li>Hard distractors are structured into same-topic clusters: draft advisories, duplicate tickets, rollout notes, stale account snapshots, customer emails, risk dashboards, KB docs, and policy drafts.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>What it tests</h3>
+            <ul class="takeaway-list">
+              <li><strong>Dynamic route selection:</strong> decide when to use hybrid, BM25, dense, rewrite, or exact identifier routes.</li>
+              <li><strong>Large candidate opportunity:</strong> main rerank flows can retrieve around 2,400 candidates before final top-10 output.</li>
+              <li><strong>Evidence discipline:</strong> recover missing evidence while avoiding hard-negative intrusion.</li>
+              <li><strong>Reflection:</strong> generate follow-up retrieval code only when first-pass evidence is incomplete.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="results" class="benchmark" role="tabpanel">
+          <div class="card">
+            <h3>Recall@10 leaderboard</h3>
+            <div class="bar-list">
+              <div class="bar-row"><div class="bar-label">BM25</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">0.2959</div></div>
+              <div class="bar-row"><div class="bar-label">Small rerank budget</div><div class="bar-track"><div class="bar-fill amber" style="width:99.3%"></div></div><div class="bar-value">0.2938</div></div>
+              <div class="bar-row"><div class="bar-label">Fixed enriched</div><div class="bar-track"><div class="bar-fill green" style="width:96.7%"></div></div><div class="bar-value">0.2861</div></div>
+              <div class="bar-row"><div class="bar-label">Generated SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:96.7%"></div></div><div class="bar-value">0.2861</div></div>
+              <div class="bar-row"><div class="bar-label">Reflective SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:96.7%"></div></div><div class="bar-value">0.2861</div></div>
+              <div class="bar-row"><div class="bar-label">Dense only</div><div class="bar-track"><div class="bar-fill" style="width:54.2%"></div></div><div class="bar-value">0.1604</div></div>
+            </div>
+            <table class="leaderboard">
+              <thead>
+                <tr>
+                  <th>System</th>
+                  <th>Recall</th>
+                  <th>Hard-neg</th>
+                  <th>Latency</th>
+                  <th>Pool</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>BM25</td><td>0.2959</td><td>0.2727</td><td>2.7 ms</td><td>10</td></tr>
+                <tr><td>Fixed enriched</td><td>0.2861</td><td>0.2273</td><td>4,784 ms</td><td>2,481</td></tr>
+                <tr><td>Generated SaC</td><td>0.2861</td><td>0.2273</td><td>4,664 ms</td><td>2,349</td></tr>
+                <tr><td>Reflective SaC</td><td>0.2861</td><td>0.2273</td><td>4,762 ms</td><td>2,349</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="metrics">
+            <div class="metric"><span>Primary metric</span><strong>Recall@10</strong><p>No nDCG/MRR as headline metrics</p></div>
+            <div class="metric"><span>Generated vs fixed</span><strong>0.0000</strong><p>Recall@10 delta vs fixed enriched</p></div>
+            <div class="metric"><span>Candidate pool</span><strong>2.3k+</strong><p>Generated averages 2,349 candidates/query</p></div>
+            <div class="metric"><span>Cost signal</span><strong>4.7s</strong><p>Large-pool rerank latency per query</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="examples">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Codegen behavior</p>
+            <h2>The useful demo is not the score. It is the generated flow.</h2>
+            <p>These examples show why programmable retrieval can be better than one fixed pipeline, and where it still fails.</p>
+          </div>
+        </div>
+        <div class="case-grid">
+          <article class="case">
+            <div>
+              <span class="tag violet">Large-pool convergence</span>
+              <h3>Exact version comparison</h3>
+              <div class="query">Compare Beacon CRM Connector 3.14.0 and 3.14.1 for Contoso's security review. Which one is acceptable?</div>
+              <div class="mini-flow">
+                <span class="step">hybrid top 2000</span>
+                <span class="step">BM25 exact top 2000</span>
+                <span class="step">rewrite</span>
+                <span class="step">rerank</span>
+              </div>
+            </div>
+            <div class="outcome">
+              <div class="outcome-row"><strong>Fixed enriched</strong><span>Recall@10 0.6000, hard-neg 1.</span></div>
+              <div class="outcome-row"><strong>Generated</strong><span>Recall@10 0.6000, hard-neg 1.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>When both flows see thousands of candidates, the top-10 bottleneck is reranking/source authority, not search access.</span></div>
+            </div>
+          </article>
+
+          <article class="case">
+            <div>
+              <span class="tag amber">Candidate opportunity</span>
+              <h3>Same final recall, different control cost</h3>
+              <div class="query">Main rerank flows now retrieve roughly the whole enterprise index before producing top-10 evidence.</div>
+              <div class="mini-flow">
+                <span class="step">fixed enriched pool 2481</span>
+                <span class="step">generated pool 2349</span>
+                <span class="step">top-10 output</span>
+                <span class="step">rerank</span>
+              </div>
+            </div>
+            <div class="outcome">
+              <div class="outcome-row"><strong>Recall</strong><span>Generated, reflective, fixed enriched, and full hybrid rerank all reach 0.2861.</span></div>
+              <div class="outcome-row"><strong>Latency</strong><span>Large-pool reranking costs roughly 4.6-4.9s/query.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>For this benchmark, codegen value must come from smarter pruning or authority-aware ranking, not simply larger recall pools.</span></div>
+            </div>
+          </article>
+
+          <article class="case">
+            <div>
+              <span class="tag red">Current limitation</span>
+              <h3>Same-topic clusters can still mislead</h3>
+              <div class="query">A generated flow for a thin-evidence enterprise query finds only 18 candidates. What should the agent do when candidate pool is below 25?</div>
+              <div class="mini-flow">
+                <span class="step">large first pass</span>
+                <span class="step">no follow-up</span>
+                <span class="step">rerank</span>
+              </div>
+            </div>
+            <div class="outcome">
+              <div class="outcome-row"><strong>Fixed enriched</strong><span>Recall@10 0.5000, hard-neg 0.</span></div>
+              <div class="outcome-row"><strong>Generated</strong><span>Recall@10 0.5000, hard-neg 0.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>Reflection still needs missing-evidence checks; candidate-pool size alone is now the wrong trigger.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="missing">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Current gaps</p>
+            <h2>The benchmark is useful, but not yet production proof.</h2>
+            <p>We now have a better dataset and fixed-flow comparison. The remaining gaps are about model behavior, end-task success, and production cost.</p>
+          </div>
+        </div>
+        <table class="gap-table">
+          <thead>
+            <tr>
+              <th>Gap</th>
+              <th>Why it matters</th>
+              <th>Next action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Real LLM codegen</td>
+              <td>Current generated flow is deterministic. It validates the architecture, not the model’s ability to write reliable retrieval code.</td>
+              <td>Generate Python from a tool schema; measure codegen latency, invalid-code rate, repair rate, and retrieval quality.</td>
+            </tr>
+            <tr>
+              <td>Tool-calling agent baseline</td>
+              <td>This is the real alternative architecture: same tools, but the model decides over multiple turns instead of writing one retrieval program.</td>
+              <td>Run query understanding, rewrite, search, rerank, and reflection as tools; compare quality, latency, tokens, and tool calls.</td>
+            </tr>
+            <tr>
+              <td>Answer-level task success</td>
+              <td>Retrieval metrics do not prove the final answer is correct, concise, and grounded.</td>
+              <td>Add answer generation with citation scoring, field-level accuracy, and missing-evidence penalties.</td>
+            </tr>
+            <tr>
+              <td>Reflection policy</td>
+              <td>Reflective mode triggered 0/22 times on the test split, so it did not improve quality.</td>
+              <td>Trigger on missing required evidence, entity coverage, and conflicting evidence, not only candidate-pool size.</td>
+            </tr>
+            <tr>
+              <td>Production cost and safety</td>
+              <td>Generated programs are more flexible but can add latency, extra search calls, larger rerank pools, and sandbox failures.</td>
+              <td>Track code tokens, result tokens, final-context tokens, timeout rate, sandbox policy violations, and fallback behavior.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="decision">
+      <div class="wrap">
+        <div class="decision">
+          <div>
+            <p class="eyebrow">Recommendation</p>
+            <h2>Recommended next step: prove the architecture, not just the benchmark score.</h2>
+            <p>The demo should show generated retrieval code, different flows per query, and a fair comparison against fixed pipelines and tool-calling agents.</p>
+          </div>
+          <ol class="next-list">
+            <li><strong>Run real codegen.</strong><br>Use proprietary models to generate retrieval programs from the same tool schema.</li>
+            <li><strong>Add the agent baseline.</strong><br>Compare against multi-turn tool calling with the same APIs and the same evaluation set.</li>
+            <li><strong>Score final answers.</strong><br>Measure answer accuracy, citation grounding, token cost, latency, and failure rate.</li>
+            <li><strong>Improve reflection.</strong><br>Trigger follow-up code from missing evidence and coverage gaps, not only thin candidate pools.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; local artifacts: sac_benchmark_dataset_intro.md, sac_benchmark_report.md, sac_benchmark_results.json.
+    </div>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll(".tab-button");
+    const panels = document.querySelectorAll(".benchmark");
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.tab;
+        buttons.forEach((item) => item.classList.toggle("active", item === button));
+        panels.forEach((panel) => panel.classList.toggle("active", panel.id === target));
+      });
+    });
+  </script>
+</body>
+</html>

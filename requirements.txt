@@ -1,0 +1,8 @@
+beir
+fastapi
+numpy
+pydantic
+rank-bm25
+sentence-transformers
+spacy
+uvicorn
