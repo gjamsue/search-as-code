@@ -7,11 +7,14 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `sac_benchmark_dataset/`: synthetic enterprise knowledge-base dataset with 6,010 documents, 48 tasks, BEIR exports, hard-negative labels, generator, validator, and audit tooling.
 - `real_search_stack/`: open-source search APIs built on BM25, sentence-transformers dense retrieval, spaCy query understanding/entity extraction, optional Wikidata linking, and cross-encoder reranking.
 - `run_sac_dataset_benchmark.py`: main benchmark runner for fixed BM25, dense, hybrid, hybrid+rerank, fixed enriched, one-shot generated Search-as-Code, agentic fixed-flow calls, naive reflective Search-as-Code, and iterative agentic Search-as-Code flows.
+- `run_experiment_matrix.py`: presentation-aligned matrix runner for fixed flow, agentic fixed flow, preset flow, agentic preset flow, one-shot codegen, and agentic codegen.
 - `run_public_benchmarks.py`: public benchmark sanity-check runner for BEIR/SciFact and HotpotQA dev-distractor slices.
 - `llm_search_codegen.py`: real LLM-backed Search-as-Code generator with `codex-cli` and `openai` providers, AST validation, sandbox execution, and one-shot repair support.
 - `skills/search-as-code-codegen/`: reusable Codex skill that defines the Search-as-Code runtime/tool contract for real code generation.
-- `sac_benchmark_results.json`: latest benchmark result payload.
-- `sac_benchmark_report.md`: latest benchmark report, focused on Recall@10.
+- `experiment_matrix_results.json`: latest presentation-aligned experiment matrix payload.
+- `experiment_matrix_report.md`: latest presentation-aligned experiment matrix report.
+- `sac_benchmark_results.json`: legacy broad benchmark result payload.
+- `sac_benchmark_report.md`: legacy broad benchmark report, focused on Recall@10.
 - `public_benchmark_results.json`: latest public benchmark sanity-check payload.
 - `public_benchmark_report.md`: latest public benchmark sanity-check report.
 - `real_codegen_demo_results.json` and `real_codegen_demo_report.md`: 1-query real LLM codegen smoke using the local Codex CLI login path.
@@ -27,16 +30,16 @@ Dataset: `sac-codegen-v3`
 - Corpus: 6,010 documents
 - Primary metric: Recall@10
 - Candidate opportunity: rerank systems retrieve up to 2,400 candidates before producing final top 10
-- Quality score: weighted Recall@10, nDCG@10, MRR@10, all-evidence recovery, and hard-negative intrusion penalty
-
-| Architecture | System | Quality | Recall@10 | Total ms | Codegen ms | Execution ms | Search calls | Notes |
+| Architecture | System | Recall@10 | Total ms | Plan/code ms | Execution ms | Search calls | Rerank pairs | Notes |
 |---|---|---:|---:|---:|---:|---:|---:|---|
-| Fixed flow baseline | `fixed_understanding_rewrite_hybrid_rerank` | 23.2 | 0.1857 | 3231.2 | 0.0 | 3231.2 | 3.97 | Fixed understanding + rewrite + hybrid retrieval + rerank |
-| Generated flow | `generated_search_as_code` | 23.2 | 0.1857 | 3263.1 | 0.1 | 3262.9 | 6.97 | One-shot generated route plan with exposed SDK parameters |
-| Agentic fixed-flow calls | `agentic_fixed_flow_iterative` | 33.1 | 0.2694 | 3991.5 | 0.1 | 3991.4 | 12.71 | Agent iteratively calls the same fixed flow with new queries |
-| Agentic codegen | `generated_iterative_agentic_search_as_code` | 47.1 | 0.4712 | 3362.5 | 0.1 | 3362.3 | 7.16 | Generated code iterates with evidence-coverage reflection |
+| Fixed flow | `fixed_flow_model_qr` | 0.1857 | 3556.8 | 0.0 | 3556.8 | 3.97 | 2400 | Query rewrite + multi-query hybrid + rerank |
+| Preset flow | `preset_flow_model_router` | 0.2083 | 1770.7 | 0.0 | 1770.7 | 2.00 | 1252 | Router picks one preset search stack |
+| One-shot codegen | `one_shot_code_gen_rule_policy` | 0.1857 | 3238.0 | 0.1 | 3237.8 | 6.97 | 2400 | Python retrieval program, one execution |
+| Agentic fixed flow | `agentic_fixed_flow_rule_reflection` | 0.2785 | 7775.8 | 0.2 | 7775.5 | 12.39 | 5189 | Repeated fixed-flow calls with reflection |
+| Agentic preset flow | `agentic_preset_flows_rule_reflection` | 0.4655 | 1104.2 | 5.4 | 1098.8 | 6.10 | 733 | Reflection adds missing preset stacks |
+| Agentic codegen | `agentic_code_gen_rule_reflection` | 0.4712 | 3338.5 | 0.2 | 3338.2 | 7.16 | 2400 | Generated code with evidence-goal reflection |
 
-v3 is deliberately harder than v2: it adds alias/code-name tasks, source-authority disambiguation, stale approval ledgers, policy near-duplicates, and thousands of same-topic distractors. The current conclusion is sharper: one-shot generated flow does not beat the fixed baseline even with richer SDK parameters. Agentic iteration helps when the agent can only call the fixed flow, but agentic codegen is materially better because it can reflect on missing evidence and directly control the search stack.
+v3 is deliberately harder than v2: it adds alias/code-name tasks, source-authority disambiguation, stale approval ledgers, policy near-duplicates, and thousands of same-topic distractors. The current conclusion is sharper: one-shot codegen does not beat the fixed baseline. The lift comes from agentic evidence coverage: either selecting additional preset stacks after reflection, or generating retrieval code that can directly control routes, filters, and evidence preselection.
 
 ## Public Benchmark Sanity Check
 
@@ -84,6 +87,7 @@ pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 python sac_benchmark_dataset/validate_dataset.py
 python sac_benchmark_dataset/audit_dataset.py --write-report
+python run_experiment_matrix.py --split test
 python run_sac_dataset_benchmark.py --split test
 python run_public_benchmarks.py --benchmarks beir/scifact,hotpotqa/distractor --hotpot-limit 100 --candidate-k 40 --generated-branch-top-k 20 --generated-max-rerank-candidates 40 --no-per-query
 ```

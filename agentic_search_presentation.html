@@ -898,11 +898,11 @@
           </div>
           <div class="summary-item">
             <strong>What our eval shows.</strong>
-            <p>One-shot generated flow ties fixed baseline at 0.1857 Recall@10. Agentic fixed-flow calls reach 0.2694, while agentic codegen reaches 0.4712 by reflecting on missing evidence and controlling the search stack.</p>
+            <p>One-shot codegen and fixed flow both land at 0.1857 Recall@10. Agentic preset flows reach 0.4655, and agentic codegen reaches 0.4712 by reflecting on missing evidence.</p>
           </div>
           <div class="summary-item">
-            <strong>What real codegen shows.</strong>
-            <p>On a 5-query retest, real agentic codegen improves over real one-shot, but still trails the deterministic agentic design target and spends almost all time generating code.</p>
+            <strong>What the matrix changes.</strong>
+            <p>We now compare fixed flow, agentic fixed flow, preset flow, agentic preset flow, one-shot codegen, and agentic codegen with the same Recall@10 and latency accounting.</p>
           </div>
         </div>
       </div>
@@ -1087,41 +1087,44 @@
 
         <div id="results" class="benchmark" role="tabpanel">
           <div class="card">
-            <h3>Four architecture comparison</h3>
+            <h3>Architecture matrix</h3>
             <div class="bar-list">
               <div class="bar-row"><div class="bar-label">Agentic codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:100%"></div></div><div class="bar-value">0.4712</div></div>
-              <div class="bar-row"><div class="bar-label">Agentic fixed-flow</div><div class="bar-track"><div class="bar-fill amber" style="width:57.2%"></div></div><div class="bar-value">0.2694</div></div>
-              <div class="bar-row"><div class="bar-label">Fixed baseline</div><div class="bar-track"><div class="bar-fill green" style="width:39.4%"></div></div><div class="bar-value">0.1857</div></div>
-              <div class="bar-row"><div class="bar-label">Generated flow</div><div class="bar-track"><div class="bar-fill violet" style="width:39.4%"></div></div><div class="bar-value">0.1857</div></div>
+              <div class="bar-row"><div class="bar-label">Agentic preset flow</div><div class="bar-track"><div class="bar-fill blue" style="width:98.8%"></div></div><div class="bar-value">0.4655</div></div>
+              <div class="bar-row"><div class="bar-label">Agentic fixed-flow</div><div class="bar-track"><div class="bar-fill amber" style="width:59.1%"></div></div><div class="bar-value">0.2785</div></div>
+              <div class="bar-row"><div class="bar-label">Preset router</div><div class="bar-track"><div class="bar-fill green" style="width:44.2%"></div></div><div class="bar-value">0.2083</div></div>
+              <div class="bar-row"><div class="bar-label">One-shot codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:39.4%"></div></div><div class="bar-value">0.1857</div></div>
+              <div class="bar-row"><div class="bar-label">Fixed flow</div><div class="bar-track"><div class="bar-fill green" style="width:39.4%"></div></div><div class="bar-value">0.1857</div></div>
             </div>
             <div class="table-scroll">
               <table class="leaderboard">
                 <thead>
                   <tr>
                     <th>System</th>
-                    <th>Quality</th>
                     <th>Recall</th>
                     <th>Total</th>
-                    <th>Codegen</th>
+                    <th>Plan/code</th>
                     <th>Exec</th>
                     <th>Calls</th>
                     <th>Rerank pairs</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td>Fixed baseline</td><td>23.2</td><td>0.1857</td><td>3,231 ms</td><td>0.0 ms</td><td>3,231 ms</td><td>3.97</td><td>2,400</td></tr>
-                  <tr><td>Generated flow</td><td>23.2</td><td>0.1857</td><td>3,263 ms</td><td>0.1 ms</td><td>3,263 ms</td><td>6.97</td><td>2,400</td></tr>
-                  <tr><td>Agentic fixed-flow</td><td>33.1</td><td>0.2694</td><td>3,992 ms</td><td>0.1 ms</td><td>3,991 ms</td><td>12.71</td><td>2,687</td></tr>
-                  <tr><td>Agentic codegen</td><td>47.1</td><td>0.4712</td><td>3,362 ms</td><td>0.1 ms</td><td>3,362 ms</td><td>7.16</td><td>2,400</td></tr>
+                  <tr><td>Fixed flow</td><td>0.1857</td><td>3,557 ms</td><td>0.0 ms</td><td>3,557 ms</td><td>3.97</td><td>2,400</td></tr>
+                  <tr><td>Preset router</td><td>0.2083</td><td>1,771 ms</td><td>0.0 ms</td><td>1,771 ms</td><td>2.00</td><td>1,252</td></tr>
+                  <tr><td>One-shot codegen</td><td>0.1857</td><td>3,238 ms</td><td>0.1 ms</td><td>3,238 ms</td><td>6.97</td><td>2,400</td></tr>
+                  <tr><td>Agentic fixed-flow</td><td>0.2785</td><td>7,776 ms</td><td>0.2 ms</td><td>7,776 ms</td><td>12.39</td><td>5,189</td></tr>
+                  <tr><td>Agentic preset flow</td><td>0.4655</td><td>1,104 ms</td><td>5.4 ms</td><td>1,099 ms</td><td>6.10</td><td>733</td></tr>
+                  <tr><td>Agentic codegen</td><td>0.4712</td><td>3,338 ms</td><td>0.2 ms</td><td>3,338 ms</td><td>7.16</td><td>2,400</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="metrics">
-            <div class="metric"><span>Quality winner</span><strong>47.1</strong><p>Agentic codegen quality score</p></div>
-            <div class="metric"><span>Codegen gain</span><strong>+0.2855</strong><p>Recall@10 delta vs fixed and one-shot generated flow</p></div>
-            <div class="metric"><span>Fixed-tool gain</span><strong>+0.0837</strong><p>Agentic fixed-flow delta vs fixed baseline</p></div>
-            <div class="metric"><span>Real LLM retest</span><strong>0.3086</strong><p>Agentic real codegen Recall@10; 158.5s total</p></div>
+            <div class="metric"><span>Top recall</span><strong>0.4712</strong><p>Agentic codegen Recall@10</p></div>
+            <div class="metric"><span>Fast agentic</span><strong>1.10s</strong><p>Agentic preset flow latency</p></div>
+            <div class="metric"><span>Reflection lift</span><strong>+0.2855</strong><p>Agentic codegen vs one-shot codegen</p></div>
+            <div class="metric"><span>Preset lift</span><strong>+0.2572</strong><p>Agentic preset vs single preset router</p></div>
           </div>
         </div>
 
@@ -1346,7 +1349,7 @@
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Retrieval</strong><span>Recall@10 0.4712 vs 0.2694 for agentic fixed-flow and 0.1857 for fixed baseline.</span></div>
+              <div class="outcome-row"><strong>Retrieval</strong><span>Recall@10 0.4712 for agentic codegen, 0.4655 for agentic preset flow, and 0.1857 for fixed flow.</span></div>
               <div class="outcome-row"><strong>Answering</strong><span>Needs a context composer that keeps authoritative evidence and drops stale drafts.</span></div>
               <div class="outcome-row"><strong>Lesson</strong><span>Next evaluation should score final answers, citations, and exclusion decisions.</span></div>
             </div>
@@ -1361,7 +1364,7 @@
           <div>
             <p class="eyebrow">Current gaps</p>
             <h2>The benchmark is useful, but not yet production proof.</h2>
-            <p>We now have a better dataset and fixed-flow comparison. The remaining gaps are about model behavior, end-task success, and production cost.</p>
+            <p>We now have the right experiment matrix. The remaining gaps are about replacing rule-backed decision points with real LLM calls, scoring final answers, and proving production cost.</p>
           </div>
         </div>
         <table class="gap-table">
@@ -1374,14 +1377,14 @@
           </thead>
           <tbody>
             <tr>
-              <td>Real LLM codegen</td>
-              <td>5-query retest: real one-shot Recall@10 0.2686; real agentic 0.3086; deterministic agentic target 0.6114. Real agentic costs 158.5s total, mostly codegen.</td>
-              <td>Improve code-writing reliability before scaling: reduce invalid programs, make reflection evidence-aware, then rerun 30-100 queries with total/codegen/execution latency.</td>
+              <td>Real LLM decision points</td>
+              <td>The full matrix uses rule-backed QR, router, planner, and reflection for reproducibility. This isolates architecture, but not model decision quality.</td>
+              <td>Swap in real LLM QR/router/reflection variants and report tokens, model latency, tool calls, and stop decisions.</td>
             </tr>
             <tr>
-              <td>Real LLM tool-calling baseline</td>
-              <td>The current agentic fixed-flow baseline is deterministic. We still need the model-driven version that decides over multiple turns.</td>
-              <td>Run query understanding, rewrite, search, rerank, and reflection as model-called tools; compare quality, latency, tokens, and tool calls.</td>
+              <td>Real LLM codegen reliability</td>
+              <td>5-query retest: real one-shot Recall@10 0.2686; real agentic 0.3086. It improves, but spends most time generating code and still needs repairs.</td>
+              <td>Reduce invalid programs, strengthen evidence-aware reflection prompts, then rerun a 30-query sample with total/codegen/execution latency.</td>
             </tr>
             <tr>
               <td>Answer-level task success</td>
@@ -1390,8 +1393,8 @@
             </tr>
             <tr>
               <td>Reflection policy</td>
-              <td>Naive reflection triggered 0/31 times; evidence-coverage reflection is what created the Recall@10 lift.</td>
-              <td>Generalize the goal planner across more enterprise query types and tune when to stop iterating.</td>
+              <td>Evidence-coverage reflection drives the Recall@10 lift, but stopping too late adds cost.</td>
+              <td>Compare rule reflection vs LLM reflection and tune stop criteria against recall and latency.</td>
             </tr>
             <tr>
               <td>Production cost and safety</td>
@@ -1409,11 +1412,11 @@
           <div>
             <p class="eyebrow">Recommendation</p>
             <h2>Recommended next step: prove the architecture, not just the benchmark score.</h2>
-            <p>The demo should show generated retrieval code, different flows per query, and a fair comparison against fixed pipelines and tool-calling agents.</p>
+            <p>The demo should show generated retrieval code, different preset/codegen flows per query, and the new matrix against fixed pipelines and agentic variants.</p>
           </div>
           <ol class="next-list">
+            <li><strong>Run real LLM variants.</strong><br>Replace rule-backed QR, router, planner, and reflection with model calls on a controlled sample.</li>
             <li><strong>Harden real codegen.</strong><br>Reduce invalid programs and make reflection target missing evidence before scaling the sample.</li>
-            <li><strong>Add the agent baseline.</strong><br>Compare against multi-turn tool calling with the same APIs and the same evaluation set.</li>
             <li><strong>Score final answers.</strong><br>Measure answer accuracy, citation grounding, token cost, latency, and failure rate.</li>
             <li><strong>Harden context selection.</strong><br>Keep authoritative evidence, drop stale drafts, and track hard-negative leakage.</li>
           </ol>
@@ -1424,7 +1427,7 @@
 
   <footer class="footer">
     <div class="wrap">
-      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: sac_benchmark_dataset_intro.md, sac_benchmark_report.md, sac_benchmark_results.json, public_benchmark_report.md, real_codegen_demo_report.md, real_codegen_retest_report.md.
+      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, experiment_matrix_results.json, sac_benchmark_dataset_intro.md, public_benchmark_report.md, real_codegen_retest_report.md.
     </div>
   </footer>
 
