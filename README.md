@@ -7,8 +7,11 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `sac_benchmark_dataset/`: synthetic enterprise knowledge-base dataset with 6,010 documents, 48 tasks, BEIR exports, hard-negative labels, generator, validator, and audit tooling.
 - `real_search_stack/`: open-source search APIs built on BM25, sentence-transformers dense retrieval, spaCy query understanding/entity extraction, optional Wikidata linking, and cross-encoder reranking.
 - `run_sac_dataset_benchmark.py`: main benchmark runner for fixed BM25, dense, hybrid, hybrid+rerank, fixed enriched, one-shot generated Search-as-Code, agentic fixed-flow calls, naive reflective Search-as-Code, and iterative agentic Search-as-Code flows.
+- `run_public_benchmarks.py`: public benchmark sanity-check runner for BEIR/SciFact and HotpotQA dev-distractor slices.
 - `sac_benchmark_results.json`: latest benchmark result payload.
 - `sac_benchmark_report.md`: latest benchmark report, focused on Recall@10.
+- `public_benchmark_results.json`: latest public benchmark sanity-check payload.
+- `public_benchmark_report.md`: latest public benchmark sanity-check report.
 - `sac_benchmark_dataset_intro.md`: Chinese dataset intro with generation method, categories, statistics, and example tasks.
 - `agentic_search_presentation.html`: mobile-friendly presentation for the final Search-as-Code story.
 
@@ -31,6 +34,17 @@ Dataset: `sac-codegen-v3`
 
 v3 is deliberately harder than v2: it adds alias/code-name tasks, source-authority disambiguation, stale approval ledgers, policy near-duplicates, and thousands of same-topic distractors. The current conclusion is sharper: one-shot generated flow does not beat the fixed baseline even with richer SDK parameters. Agentic iteration helps when the agent can only call the fixed flow, but agentic codegen is materially better because it can reflect on missing evidence and directly control the search stack.
 
+## Public Benchmark Sanity Check
+
+These runs use known public benchmarks to check that the implementation behaves sensibly outside the custom enterprise dataset. They are not official leaderboard submissions.
+
+| Benchmark | Setting | Generated SaC Recall@10 | Strong fixed Recall@10 | Readout |
+|---|---|---:|---:|---|
+| BEIR/SciFact | Full BEIR corpus, 5,183 docs, 300 queries | 0.8439 | 0.8278 | Small recall lift, higher search-call cost |
+| HotpotQA dev-distractor | Official contexts pooled across 100 examples, 991 docs | 0.9550 | 0.9550 | Ties fixed enriched baseline, slightly higher cost |
+
+The public check is useful for credibility, but it does not isolate enterprise-style control problems such as source authority, alias resolution, hard-negative intrusion, and evidence-category reflection. That is why the custom dataset remains the main decision benchmark.
+
 ## Reproduce
 
 ```bash
@@ -41,6 +55,7 @@ python -m spacy download en_core_web_sm
 python sac_benchmark_dataset/validate_dataset.py
 python sac_benchmark_dataset/audit_dataset.py --write-report
 python run_sac_dataset_benchmark.py --split test
+python run_public_benchmarks.py --benchmarks beir/scifact,hotpotqa/distractor --hotpot-limit 100 --candidate-k 40 --generated-branch-top-k 20 --generated-max-rerank-candidates 40 --no-per-query
 ```
 
 The benchmark uses local deterministic code generation for reproducibility. Hosted LLM code-generation latency is not included in the checked-in result, but generation time is tracked separately in the JSON so it can be replaced with a real model latency sensitivity analysis.

@@ -1,0 +1,579 @@
+{
+  "benchmarks": [
+    "beir/scifact",
+    "hotpotqa/distractor"
+  ],
+  "top_k": 10,
+  "candidate_k": 40,
+  "fixed_small_candidate_k": 24,
+  "generated_branch_top_k": 20,
+  "generated_max_rerank_candidates": 40,
+  "generated_min_rerank_candidates": 0,
+  "systems": [
+    "fixed_bm25",
+    "fixed_hybrid_rerank",
+    "fixed_understanding_rewrite_hybrid_rerank",
+    "generated_search_as_code"
+  ],
+  "wikidata_enabled": false,
+  "offline_models": true,
+  "results": [
+    {
+      "benchmark_id": "beir/scifact",
+      "display_name": "BEIR/scifact",
+      "source_url": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/scifact.zip",
+      "setting": "Full BEIR corpus loaded locally",
+      "split": "test",
+      "documents": 5183,
+      "queries": 300,
+      "top_k": 10,
+      "candidate_k": 40,
+      "runtime_seconds": 294.222,
+      "notes": [
+        "This is a real BEIR dataset loaded through the BEIR GenericDataLoader.",
+        "Metrics are local-system sanity-check numbers, not leaderboard submissions."
+      ],
+      "systems": {
+        "fixed_bm25": {
+          "metrics": {
+            "ndcg@10": 0.5925,
+            "recall@10": 0.7228,
+            "mrr@10": 0.5557,
+            "evaluated_queries": 300
+          },
+          "latency": {
+            "total_wall_seconds": 5.0806,
+            "mean_latency_ms": 16.935,
+            "p50_latency_ms": 16.167,
+            "p95_latency_ms": 23.786,
+            "mean_generation_ms": 0.006,
+            "mean_execution_ms": 16.926,
+            "mean_query_understanding_calls": 0.0,
+            "mean_entity_linking_calls": 0.0,
+            "mean_query_rewrite_calls": 0.0,
+            "mean_search_calls": 1.0,
+            "mean_rerank_calls": 0.0,
+            "mean_rerank_pairs": 0.0,
+            "mean_candidate_pool": 10.0
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "fixed_hybrid_rerank": {
+          "metrics": {
+            "ndcg@10": 0.6906,
+            "recall@10": 0.8211,
+            "mrr@10": 0.6588,
+            "evaluated_queries": 300
+          },
+          "latency": {
+            "total_wall_seconds": 82.6419,
+            "mean_latency_ms": 275.473,
+            "p50_latency_ms": 273.408,
+            "p95_latency_ms": 301.023,
+            "mean_generation_ms": 0.009,
+            "mean_execution_ms": 275.461,
+            "mean_query_understanding_calls": 0.0,
+            "mean_entity_linking_calls": 0.0,
+            "mean_query_rewrite_calls": 0.0,
+            "mean_search_calls": 1.0,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 40.0,
+            "mean_candidate_pool": 40.0
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "fixed_understanding_rewrite_hybrid_rerank": {
+          "metrics": {
+            "ndcg@10": 0.6961,
+            "recall@10": 0.8278,
+            "mrr@10": 0.6637,
+            "evaluated_queries": 300
+          },
+          "latency": {
+            "total_wall_seconds": 95.5825,
+            "mean_latency_ms": 318.608,
+            "p50_latency_ms": 326.983,
+            "p95_latency_ms": 365.13,
+            "mean_generation_ms": 0.012,
+            "mean_execution_ms": 318.592,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 0.493,
+            "mean_query_rewrite_calls": 0.81,
+            "mean_search_calls": 3.257,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 40.0,
+            "mean_candidate_pool": 69.05
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "generated_search_as_code": {
+          "metrics": {
+            "ndcg@10": 0.7035,
+            "recall@10": 0.8439,
+            "mrr@10": 0.6691,
+            "evaluated_queries": 300
+          },
+          "latency": {
+            "total_wall_seconds": 110.9009,
+            "mean_latency_ms": 369.67,
+            "p50_latency_ms": 375.503,
+            "p95_latency_ms": 488.106,
+            "mean_generation_ms": 0.047,
+            "mean_execution_ms": 369.619,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 0.493,
+            "mean_query_rewrite_calls": 0.81,
+            "mean_search_calls": 7.033,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 38.71,
+            "mean_candidate_pool": 54.357
+          },
+          "code_samples": [
+            {
+              "qid": "1",
+              "query": "0-dimensional biomaterials show inductive properties.",
+              "code": "def run(ctx):\n    query = ctx.query\n    analysis = ctx.query_understanding.analyze(query)\n    linked_entities = []\n    if analysis.get(\"entities\"):\n        linked_entities = ctx.entity_linking.link(query)\n    rewrite_result = {\"needed\": False, \"rewrites\": []}\n    if ctx.query_rewrite.should_rewrite(query, analysis):\n        rewrite_result = ctx.query_rewrite.rewrite(\n            query,\n            analysis=analysis,\n            linked_entities=linked_entities,\n        )\n\n    plan = {'strategy': 'generated_dynamic_tool_flow', 'seed_subqueries': [], 'search_modes': ['hybrid'], 'branch_top_k': 20, 'top_k': 10, 'max_rerank_candidates': 40, 'min_rerank_candidates': 0, 'min_candidates': 35, 'fallback_modes': ['bm25', 'dense'], 'budget_fill_modes': ['hybrid', 'bm25', 'dense'], 'analysis_subquery_limit': 4, 'long_query_tokens': 12, 'rationale': ['start from hybrid retrieval']}\n    ctx.log(\"agentic_plan\", {\n        \"strategy\": plan[\"strategy\"],\n        \"initial_modes\": plan[\"search_modes\"],\n        \"seed_subqueries\": plan[\"seed_subqueries\"],\n        \"rationale\": plan[\"rationale\"],\n    })\n\n    subqueries = _unique(\n        [query]\n        + plan[\"seed_subqueries\"]\n        + analysis.get(\"subqueries\", [])[: plan[\"analysis_subquery_limit\"]]\n        + rewrite_result.get(\"rewrites\", [])\n    )\n    modes = list(plan[\"search_modes\"])\n    if \"metrics\" in analysis.get(\"intents\", []):\n        modes.append(\"bm25\")\n    if len(query.split()) >= plan[\"long_query_tokens\"]:\n        modes.append(\"dense\")\n    modes = _unique(modes)\n\n    candidate_by_id = {}\n    for subquery in subqueries:\n        for mode in modes:\n            hits = ctx.search.search(subquery, mode=mode, top_k=plan[\"branch_top_k\"])\n            _merge_candidates(candidate_by_id, hits)\n\n    followup_used = False\n    if len(candidate_by_id) < plan[\"min_candidates\"]:\n        followup_used = True\n        for mode in plan[\"fallback_modes\"]:\n            hits = ctx.search.search(query, mode=mode, top_k=plan[\"branch_top_k\"])\n            _merge_candidates(candidate_by_id, hits)\n\n    candidates = sorted(candidate_by_id.values(), key=lambda hit: hit.score, reverse=True)\n    if plan[\"min_rerank_candidates\"] and len(candidates) < plan[\"min_rerank_candidates\"]:\n        followup_used = True\n        for subquery in _unique([query] + subqueries[:2]):\n            for mode in plan[\"budget_fill_modes\"]:\n                hits = ctx.search.search(subquery, mode=mode, top_k=plan[\"min_rerank_candidates\"])\n                _merge_candidates(candidate_by_id, hits)\n        candidates = sorted(candidate_by_id.values(), key=lambda hit: hit.score, reverse=True)\n\n    ctx.candidate_pool = len(candidates)\n    rerank_candidates = candidates[: plan[\"max_rerank_candidates\"]]\n    ranked = ctx.ranking.rerank(query, rerank_candidates, top_k=plan[\"top_k\"])\n\n    ctx.log(\"reflection\", {\n        \"candidate_pool\": len(candidates),\n        \"rerank_candidates\": len(rerank_candidates),\n        \"followup_used\": followup_used,\n        \"subqueries\": subqueries,\n        \"search_modes\": modes,\n        \"query_understanding_intents\": analysis.get(\"intents\", []),\n        \"linked_entities\": linked_entities[:5],\n        \"rewrite_needed\": rewrite_result.get(\"needed\", False),\n        \"rewrites\": rewrite_result.get(\"rewrites\", []),\n    })\n    return {\"hits\": ranked, \"analysis\": analysis, \"entities\": linked_entities, \"candidates\": candidates}\n\n\ndef _unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if not item:\n            continue\n        key = item.lower()\n        if key not in seen:\n            seen.add(key)\n            result.append(item)\n    return result\n\n\ndef _merge_candidates(candidate_by_id, hits):\n    for hit in hits:\n        previous = candidate_by_id.get(hit.doc_id)\n        if previous is None or hit.score > previous.score:\n            candidate_by_id[hit.doc_id] = hit",
+              "trace": [
+                {
+                  "event": "agentic_plan",
+                  "payload": {
+                    "strategy": "generated_dynamic_tool_flow",
+                    "initial_modes": [
+                      "hybrid"
+                    ],
+                    "seed_subqueries": [],
+                    "rationale": [
+                      "start from hybrid retrieval"
+                    ]
+                  }
+                },
+                {
+                  "event": "reflection",
+                  "payload": {
+                    "candidate_pool": 41,
+                    "rerank_candidates": 40,
+                    "followup_used": true,
+                    "subqueries": [
+                      "0-dimensional biomaterials show inductive properties."
+                    ],
+                    "search_modes": [
+                      "hybrid"
+                    ],
+                    "query_understanding_intents": [
+                      "answer"
+                    ],
+                    "linked_entities": [
+                      {
+                        "mention": "0",
+                        "ner_label": "CARDINAL",
+                        "entity": "0",
+                        "confidence": 0.5,
+                        "method": "spacy_ner_fallback"
+                      }
+                    ],
+                    "rewrite_needed": false,
+                    "rewrites": []
+                  }
+                }
+              ]
+            },
+            {
+              "qid": "3",
+              "query": "1,000 genomes project enables mapping of genetic sequence variation consisting of rare variants with larger penetrance effects than common variants.",
+              "code": "def run(ctx):\n    query = ctx.query\n    analysis = ctx.query_understanding.analyze(query)\n    linked_entities = []\n    if analysis.get(\"entities\"):\n        linked_entities = ctx.entity_linking.link(query)\n    rewrite_result = {\"needed\": False, \"rewrites\": []}\n    if ctx.query_rewrite.should_rewrite(query, analysis):\n        rewrite_result = ctx.query_rewrite.rewrite(\n            query,\n            analysis=analysis,\n            linked_entities=linked_entities,\n        )\n\n    plan = {'strategy': 'generated_dynamic_tool_flow', 'seed_subqueries': ['1 000 genomes project enables mapping of genetic sequence variation'], 'search_modes': ['hybrid', 'dense', 'bm25'], 'branch_top_k': 20, 'top_k': 10, 'max_rerank_candidates': 40, 'min_rerank_candidates': 0, 'min_candidates': 35, 'fallback_modes': ['bm25', 'dense'], 'budget_fill_modes': ['hybrid', 'bm25', 'dense'], 'analysis_subquery_limit': 4, 'long_query_tokens': 12, 'rationale': ['start from hybrid retrieval', 'long/mechanistic queries get semantic expansion', 'numeric/comparison queries get exact lexical matching']}\n    ctx.log(\"agentic_plan\", {\n        \"strategy\": plan[\"strategy\"],\n        \"initial_modes\": plan[\"search_modes\"],\n        \"seed_subqueries\": plan[\"seed_subqueries\"],\n        \"rationale\": plan[\"rationale\"],\n    })\n\n    subqueries = _unique(\n        [query]\n        + plan[\"seed_subqueries\"]\n        + analysis.get(\"subqueries\", [])[: plan[\"analysis_subquery_limit\"]]\n        + rewrite_result.get(\"rewrites\", [])\n    )\n    modes = list(plan[\"search_modes\"])\n    if \"metrics\" in analysis.get(\"intents\", []):\n        modes.append(\"bm25\")\n    if len(query.split()) >= plan[\"long_query_tokens\"]:\n        modes.append(\"dense\")\n    modes = _unique(modes)\n\n    candidate_by_id = {}\n    for subquery in subqueries:\n        for mode in modes:\n            hits = ctx.search.search(subquery, mode=mode, top_k=plan[\"branch_top_k\"])\n            _merge_candidates(candidate_by_id, hits)\n\n    followup_used = False\n    if len(candidate_by_id) < plan[\"min_candidates\"]:\n        followup_used = True\n        for mode in plan[\"fallback_modes\"]:\n            hits = ctx.search.search(query, mode=mode, top_k=plan[\"branch_top_k\"])\n            _merge_candidates(candidate_by_id, hits)\n\n    candidates = sorted(candidate_by_id.values(), key=lambda hit: hit.score, reverse=True)\n    if plan[\"min_rerank_candidates\"] and len(candidates) < plan[\"min_rerank_candidates\"]:\n        followup_used = True\n        for subquery in _unique([query] + subqueries[:2]):\n            for mode in plan[\"budget_fill_modes\"]:\n                hits = ctx.search.search(subquery, mode=mode, top_k=plan[\"min_rerank_candidates\"])\n                _merge_candidates(candidate_by_id, hits)\n        candidates = sorted(candidate_by_id.values(), key=lambda hit: hit.score, reverse=True)\n\n    ctx.candidate_pool = len(candidates)\n    rerank_candidates = candidates[: plan[\"max_rerank_candidates\"]]\n    ranked = ctx.ranking.rerank(query, rerank_candidates, top_k=plan[\"top_k\"])\n\n    ctx.log(\"reflection\", {\n        \"candidate_pool\": len(candidates),\n        \"rerank_candidates\": len(rerank_candidates),\n        \"followup_used\": followup_used,\n        \"subqueries\": subqueries,\n        \"search_modes\": modes,\n        \"query_understanding_intents\": analysis.get(\"intents\", []),\n        \"linked_entities\": linked_entities[:5],\n        \"rewrite_needed\": rewrite_result.get(\"needed\", False),\n        \"rewrites\": rewrite_result.get(\"rewrites\", []),\n    })\n    return {\"hits\": ranked, \"analysis\": analysis, \"entities\": linked_entities, \"candidates\": candidates}\n\n\ndef _unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if not item:\n            continue\n        key = item.lower()\n        if key not in seen:\n            seen.add(key)\n            result.append(item)\n    return result\n\n\ndef _merge_candidates(candidate_by_id, hits):\n    for hit in hits:\n        previous = candidate_by_id.get(hit.doc_id)\n        if previous is None or hit.score > previous.score:\n            candidate_by_id[hit.doc_id] = hit",
+              "trace": [
+                {
+                  "event": "agentic_plan",
+                  "payload": {
+                    "strategy": "generated_dynamic_tool_flow",
+                    "initial_modes": [
+                      "hybrid",
+                      "dense",
+                      "bm25"
+                    ],
+                    "seed_subqueries": [
+                      "1 000 genomes project enables mapping of genetic sequence variation"
+                    ],
+                    "rationale": [
+                      "start from hybrid retrieval",
+                      "long/mechanistic queries get semantic expansion",
+                      "numeric/comparison queries get exact lexical matching"
+                    ]
+                  }
+                },
+                {
+                  "event": "reflection",
+                  "payload": {
+                    "candidate_pool": 109,
+                    "rerank_candidates": 40,
+                    "followup_used": false,
+                    "subqueries": [
+                      "1,000 genomes project enables mapping of genetic sequence variation consisting of rare variants with larger penetrance effects than common variants.",
+                      "1 000 genomes project enables mapping of genetic sequence variation",
+                      "1,000",
+                      "project mapping genetic sequence variation rare variants",
+                      "1 000 genomes project enables mapping genetic sequence variation consisting rare variants"
+                    ],
+                    "search_modes": [
+                      "hybrid",
+                      "dense",
+                      "bm25"
+                    ],
+                    "query_understanding_intents": [
+                      "answer"
+                    ],
+                    "linked_entities": [
+                      {
+                        "mention": "1,000",
+                        "ner_label": "CARDINAL",
+                        "entity": "1,000",
+                        "confidence": 0.5,
+                        "method": "spacy_ner_fallback"
+                      }
+                    ],
+                    "rewrite_needed": true,
+                    "rewrites": [
+                      "1,000",
+                      "project mapping genetic sequence variation rare variants",
+                      "1 000 genomes project enables mapping genetic sequence variation consisting rare variants"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "per_query": []
+        }
+      },
+      "summary": [
+        {
+          "system": "generated_search_as_code",
+          "recall@10": 0.8439,
+          "ndcg@10": 0.7035,
+          "mrr@10": 0.6691,
+          "mean_latency_ms": 369.67,
+          "mean_search_calls": 7.033,
+          "mean_rerank_pairs": 38.71
+        },
+        {
+          "system": "fixed_understanding_rewrite_hybrid_rerank",
+          "recall@10": 0.8278,
+          "ndcg@10": 0.6961,
+          "mrr@10": 0.6637,
+          "mean_latency_ms": 318.608,
+          "mean_search_calls": 3.257,
+          "mean_rerank_pairs": 40.0
+        },
+        {
+          "system": "fixed_hybrid_rerank",
+          "recall@10": 0.8211,
+          "ndcg@10": 0.6906,
+          "mrr@10": 0.6588,
+          "mean_latency_ms": 275.473,
+          "mean_search_calls": 1.0,
+          "mean_rerank_pairs": 40.0
+        },
+        {
+          "system": "fixed_bm25",
+          "recall@10": 0.7228,
+          "ndcg@10": 0.5925,
+          "mrr@10": 0.5557,
+          "mean_latency_ms": 16.935,
+          "mean_search_calls": 1.0,
+          "mean_rerank_pairs": 0.0
+        }
+      ]
+    },
+    {
+      "benchmark_id": "hotpotqa/distractor",
+      "display_name": "HotpotQA dev-distractor slice",
+      "source_url": "http://curtis.ml.cmu.edu/datasets/hotpot/hotpot_dev_distractor_v1.json",
+      "setting": "Official dev-distractor contexts pooled across 100 examples",
+      "split": "dev-distractor",
+      "documents": 991,
+      "queries": 100,
+      "top_k": 10,
+      "candidate_k": 40,
+      "runtime_seconds": 67.095,
+      "notes": [
+        "Uses official HotpotQA dev-distractor examples and supporting-fact labels.",
+        "Corpus is the pooled distractor context from selected examples, not HotpotQA fullwiki and not BEIR HotpotQA full corpus.",
+        "Use this as a multi-hop public sanity check, not as a leaderboard number."
+      ],
+      "systems": {
+        "fixed_bm25": {
+          "metrics": {
+            "ndcg@10": 0.7385,
+            "recall@10": 0.87,
+            "mrr@10": 0.8446,
+            "evaluated_queries": 100
+          },
+          "latency": {
+            "total_wall_seconds": 0.2003,
+            "mean_latency_ms": 2.003,
+            "p50_latency_ms": 1.924,
+            "p95_latency_ms": 2.805,
+            "mean_generation_ms": 0.002,
+            "mean_execution_ms": 1.999,
+            "mean_query_understanding_calls": 0.0,
+            "mean_entity_linking_calls": 0.0,
+            "mean_query_rewrite_calls": 0.0,
+            "mean_search_calls": 1.0,
+            "mean_rerank_calls": 0.0,
+            "mean_rerank_pairs": 0.0,
+            "mean_candidate_pool": 10.0
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "fixed_hybrid_rerank": {
+          "metrics": {
+            "ndcg@10": 0.8685,
+            "recall@10": 0.95,
+            "mrr@10": 0.9444,
+            "evaluated_queries": 100
+          },
+          "latency": {
+            "total_wall_seconds": 20.4966,
+            "mean_latency_ms": 204.966,
+            "p50_latency_ms": 204.589,
+            "p95_latency_ms": 265.371,
+            "mean_generation_ms": 0.008,
+            "mean_execution_ms": 204.954,
+            "mean_query_understanding_calls": 0.0,
+            "mean_entity_linking_calls": 0.0,
+            "mean_query_rewrite_calls": 0.0,
+            "mean_search_calls": 1.0,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 40.0,
+            "mean_candidate_pool": 40.0
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "fixed_understanding_rewrite_hybrid_rerank": {
+          "metrics": {
+            "ndcg@10": 0.8704,
+            "recall@10": 0.955,
+            "mrr@10": 0.9444,
+            "evaluated_queries": 100
+          },
+          "latency": {
+            "total_wall_seconds": 21.1155,
+            "mean_latency_ms": 211.155,
+            "p50_latency_ms": 205.699,
+            "p95_latency_ms": 299.256,
+            "mean_generation_ms": 0.012,
+            "mean_execution_ms": 211.139,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 0.95,
+            "mean_query_rewrite_calls": 0.94,
+            "mean_search_calls": 3.78,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 40.0,
+            "mean_candidate_pool": 73.09
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "generated_search_as_code": {
+          "metrics": {
+            "ndcg@10": 0.8678,
+            "recall@10": 0.955,
+            "mrr@10": 0.9444,
+            "evaluated_queries": 100
+          },
+          "latency": {
+            "total_wall_seconds": 25.2771,
+            "mean_latency_ms": 252.771,
+            "p50_latency_ms": 245.532,
+            "p95_latency_ms": 360.635,
+            "mean_generation_ms": 0.052,
+            "mean_execution_ms": 252.714,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 0.95,
+            "mean_query_rewrite_calls": 0.94,
+            "mean_search_calls": 9.8,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 39.1,
+            "mean_candidate_pool": 54.5
+          },
+          "code_samples": [
+            {
+              "qid": "5a8b57f25542995d1e6f1371",
+              "query": "Were Scott Derrickson and Ed Wood of the same nationality?",
+              "code": "def run(ctx):\n    query = ctx.query\n    analysis = ctx.query_understanding.analyze(query)\n    linked_entities = []\n    if analysis.get(\"entities\"):\n        linked_entities = ctx.entity_linking.link(query)\n    rewrite_result = {\"needed\": False, \"rewrites\": []}\n    if ctx.query_rewrite.should_rewrite(query, analysis):\n        rewrite_result = ctx.query_rewrite.rewrite(\n            query,\n            analysis=analysis,\n            linked_entities=linked_entities,\n        )\n\n    plan = {'strategy': 'generated_dynamic_tool_flow', 'seed_subqueries': [], 'search_modes': ['hybrid'], 'branch_top_k': 20, 'top_k': 10, 'max_rerank_candidates': 40, 'min_rerank_candidates': 0, 'min_candidates': 35, 'fallback_modes': ['bm25', 'dense'], 'budget_fill_modes': ['hybrid', 'bm25', 'dense'], 'analysis_subquery_limit': 4, 'long_query_tokens': 12, 'rationale': ['start from hybrid retrieval']}\n    ctx.log(\"agentic_plan\", {\n        \"strategy\": plan[\"strategy\"],\n        \"initial_modes\": plan[\"search_modes\"],\n        \"seed_subqueries\": plan[\"seed_subqueries\"],\n        \"rationale\": plan[\"rationale\"],\n    })\n\n    subqueries = _unique(\n        [query]\n        + plan[\"seed_subqueries\"]\n        + analysis.get(\"subqueries\", [])[: plan[\"analysis_subquery_limit\"]]\n        + rewrite_result.get(\"rewrites\", [])\n    )\n    modes = list(plan[\"search_modes\"])\n    if \"metrics\" in analysis.get(\"intents\", []):\n        modes.append(\"bm25\")\n    if len(query.split()) >= plan[\"long_query_tokens\"]:\n        modes.append(\"dense\")\n    modes = _unique(modes)\n\n    candidate_by_id = {}\n    for subquery in subqueries:\n        for mode in modes:\n            hits = ctx.search.search(subquery, mode=mode, top_k=plan[\"branch_top_k\"])\n            _merge_candidates(candidate_by_id, hits)\n\n    followup_used = False\n    if len(candidate_by_id) < plan[\"min_candidates\"]:\n        followup_used = True\n        for mode in plan[\"fallback_modes\"]:\n            hits = ctx.search.search(query, mode=mode, top_k=plan[\"branch_top_k\"])\n            _merge_candidates(candidate_by_id, hits)\n\n    candidates = sorted(candidate_by_id.values(), key=lambda hit: hit.score, reverse=True)\n    if plan[\"min_rerank_candidates\"] and len(candidates) < plan[\"min_rerank_candidates\"]:\n        followup_used = True\n        for subquery in _unique([query] + subqueries[:2]):\n            for mode in plan[\"budget_fill_modes\"]:\n                hits = ctx.search.search(subquery, mode=mode, top_k=plan[\"min_rerank_candidates\"])\n                _merge_candidates(candidate_by_id, hits)\n        candidates = sorted(candidate_by_id.values(), key=lambda hit: hit.score, reverse=True)\n\n    ctx.candidate_pool = len(candidates)\n    rerank_candidates = candidates[: plan[\"max_rerank_candidates\"]]\n    ranked = ctx.ranking.rerank(query, rerank_candidates, top_k=plan[\"top_k\"])\n\n    ctx.log(\"reflection\", {\n        \"candidate_pool\": len(candidates),\n        \"rerank_candidates\": len(rerank_candidates),\n        \"followup_used\": followup_used,\n        \"subqueries\": subqueries,\n        \"search_modes\": modes,\n        \"query_understanding_intents\": analysis.get(\"intents\", []),\n        \"linked_entities\": linked_entities[:5],\n        \"rewrite_needed\": rewrite_result.get(\"needed\", False),\n        \"rewrites\": rewrite_result.get(\"rewrites\", []),\n    })\n    return {\"hits\": ranked, \"analysis\": analysis, \"entities\": linked_entities, \"candidates\": candidates}\n\n\ndef _unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if not item:\n            continue\n        key = item.lower()\n        if key not in seen:\n            seen.add(key)\n            result.append(item)\n    return result\n\n\ndef _merge_candidates(candidate_by_id, hits):\n    for hit in hits:\n        previous = candidate_by_id.get(hit.doc_id)\n        if previous is None or hit.score > previous.score:\n            candidate_by_id[hit.doc_id] = hit",
+              "trace": [
+                {
+                  "event": "agentic_plan",
+                  "payload": {
+                    "strategy": "generated_dynamic_tool_flow",
+                    "initial_modes": [
+                      "hybrid"
+                    ],
+                    "seed_subqueries": [],
+                    "rationale": [
+                      "start from hybrid retrieval"
+                    ]
+                  }
+                },
+                {
+                  "event": "reflection",
+                  "payload": {
+                    "candidate_pool": 45,
+                    "rerank_candidates": 40,
+                    "followup_used": true,
+                    "subqueries": [
+                      "Were Scott Derrickson and Ed Wood of the same nationality?",
+                      "Scott Derrickson Ed Wood",
+                      "Scott Derrickson Ed Wood the same nationality",
+                      "scott derrickson ed wood same nationality"
+                    ],
+                    "search_modes": [
+                      "hybrid"
+                    ],
+                    "query_understanding_intents": [
+                      "answer"
+                    ],
+                    "linked_entities": [
+                      {
+                        "mention": "Scott Derrickson",
+                        "ner_label": "PERSON",
+                        "entity": "Scott Derrickson",
+                        "confidence": 0.5,
+                        "method": "spacy_ner_fallback"
+                      },
+                      {
+                        "mention": "Ed Wood",
+                        "ner_label": "PERSON",
+                        "entity": "Ed Wood",
+                        "confidence": 0.5,
+                        "method": "spacy_ner_fallback"
+                      }
+                    ],
+                    "rewrite_needed": true,
+                    "rewrites": [
+                      "Scott Derrickson Ed Wood",
+                      "Scott Derrickson Ed Wood the same nationality",
+                      "scott derrickson ed wood same nationality"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "qid": "5a8c7595554299585d9e36b6",
+              "query": "What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell?",
+              "code": "def run(ctx):\n    query = ctx.query\n    analysis = ctx.query_understanding.analyze(query)\n    linked_entities = []\n    if analysis.get(\"entities\"):\n        linked_entities = ctx.entity_linking.link(query)\n    rewrite_result = {\"needed\": False, \"rewrites\": []}\n    if ctx.query_rewrite.should_rewrite(query, analysis):\n        rewrite_result = ctx.query_rewrite.rewrite(\n            query,\n            analysis=analysis,\n            linked_entities=linked_entities,\n        )\n\n    plan = {'strategy': 'generated_dynamic_tool_flow', 'seed_subqueries': ['what government position was held by the woman who portrayed'], 'search_modes': ['hybrid', 'dense'], 'branch_top_k': 20, 'top_k': 10, 'max_rerank_candidates': 40, 'min_rerank_candidates': 0, 'min_candidates': 35, 'fallback_modes': ['bm25', 'dense'], 'budget_fill_modes': ['hybrid', 'bm25', 'dense'], 'analysis_subquery_limit': 4, 'long_query_tokens': 12, 'rationale': ['start from hybrid retrieval', 'long/mechanistic queries get semantic expansion']}\n    ctx.log(\"agentic_plan\", {\n        \"strategy\": plan[\"strategy\"],\n        \"initial_modes\": plan[\"search_modes\"],\n        \"seed_subqueries\": plan[\"seed_subqueries\"],\n        \"rationale\": plan[\"rationale\"],\n    })\n\n    subqueries = _unique(\n        [query]\n        + plan[\"seed_subqueries\"]\n        + analysis.get(\"subqueries\", [])[: plan[\"analysis_subquery_limit\"]]\n        + rewrite_result.get(\"rewrites\", [])\n    )\n    modes = list(plan[\"search_modes\"])\n    if \"metrics\" in analysis.get(\"intents\", []):\n        modes.append(\"bm25\")\n    if len(query.split()) >= plan[\"long_query_tokens\"]:\n        modes.append(\"dense\")\n    modes = _unique(modes)\n\n    candidate_by_id = {}\n    for subquery in subqueries:\n        for mode in modes:\n            hits = ctx.search.search(subquery, mode=mode, top_k=plan[\"branch_top_k\"])\n            _merge_candidates(candidate_by_id, hits)\n\n    followup_used = False\n    if len(candidate_by_id) < plan[\"min_candidates\"]:\n        followup_used = True\n        for mode in plan[\"fallback_modes\"]:\n            hits = ctx.search.search(query, mode=mode, top_k=plan[\"branch_top_k\"])\n            _merge_candidates(candidate_by_id, hits)\n\n    candidates = sorted(candidate_by_id.values(), key=lambda hit: hit.score, reverse=True)\n    if plan[\"min_rerank_candidates\"] and len(candidates) < plan[\"min_rerank_candidates\"]:\n        followup_used = True\n        for subquery in _unique([query] + subqueries[:2]):\n            for mode in plan[\"budget_fill_modes\"]:\n                hits = ctx.search.search(subquery, mode=mode, top_k=plan[\"min_rerank_candidates\"])\n                _merge_candidates(candidate_by_id, hits)\n        candidates = sorted(candidate_by_id.values(), key=lambda hit: hit.score, reverse=True)\n\n    ctx.candidate_pool = len(candidates)\n    rerank_candidates = candidates[: plan[\"max_rerank_candidates\"]]\n    ranked = ctx.ranking.rerank(query, rerank_candidates, top_k=plan[\"top_k\"])\n\n    ctx.log(\"reflection\", {\n        \"candidate_pool\": len(candidates),\n        \"rerank_candidates\": len(rerank_candidates),\n        \"followup_used\": followup_used,\n        \"subqueries\": subqueries,\n        \"search_modes\": modes,\n        \"query_understanding_intents\": analysis.get(\"intents\", []),\n        \"linked_entities\": linked_entities[:5],\n        \"rewrite_needed\": rewrite_result.get(\"needed\", False),\n        \"rewrites\": rewrite_result.get(\"rewrites\", []),\n    })\n    return {\"hits\": ranked, \"analysis\": analysis, \"entities\": linked_entities, \"candidates\": candidates}\n\n\ndef _unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if not item:\n            continue\n        key = item.lower()\n        if key not in seen:\n            seen.add(key)\n            result.append(item)\n    return result\n\n\ndef _merge_candidates(candidate_by_id, hits):\n    for hit in hits:\n        previous = candidate_by_id.get(hit.doc_id)\n        if previous is None or hit.score > previous.score:\n            candidate_by_id[hit.doc_id] = hit",
+              "trace": [
+                {
+                  "event": "agentic_plan",
+                  "payload": {
+                    "strategy": "generated_dynamic_tool_flow",
+                    "initial_modes": [
+                      "hybrid",
+                      "dense"
+                    ],
+                    "seed_subqueries": [
+                      "what government position was held by the woman who portrayed"
+                    ],
+                    "rationale": [
+                      "start from hybrid retrieval",
+                      "long/mechanistic queries get semantic expansion"
+                    ]
+                  }
+                },
+                {
+                  "event": "reflection",
+                  "payload": {
+                    "candidate_pool": 71,
+                    "rerank_candidates": 40,
+                    "followup_used": false,
+                    "subqueries": [
+                      "What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell?",
+                      "what government position was held by the woman who portrayed",
+                      "Corliss Archer Kiss and Tell",
+                      "What government position the woman who Corliss Archer",
+                      "government position held woman portrayed corliss archer film kiss tell"
+                    ],
+                    "search_modes": [
+                      "hybrid",
+                      "dense"
+                    ],
+                    "query_understanding_intents": [
+                      "answer"
+                    ],
+                    "linked_entities": [
+                      {
+                        "mention": "Corliss Archer",
+                        "ner_label": "PERSON",
+                        "entity": "Corliss Archer",
+                        "confidence": 0.5,
+                        "method": "spacy_ner_fallback"
+                      },
+                      {
+                        "mention": "Kiss and Tell",
+                        "ner_label": "WORK_OF_ART",
+                        "entity": "Kiss and Tell",
+                        "confidence": 0.5,
+                        "method": "spacy_ner_fallback"
+                      }
+                    ],
+                    "rewrite_needed": true,
+                    "rewrites": [
+                      "Corliss Archer Kiss and Tell",
+                      "What government position the woman who Corliss Archer",
+                      "government position held woman portrayed corliss archer film kiss tell"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "per_query": []
+        }
+      },
+      "summary": [
+        {
+          "system": "fixed_understanding_rewrite_hybrid_rerank",
+          "recall@10": 0.955,
+          "ndcg@10": 0.8704,
+          "mrr@10": 0.9444,
+          "mean_latency_ms": 211.155,
+          "mean_search_calls": 3.78,
+          "mean_rerank_pairs": 40.0
+        },
+        {
+          "system": "generated_search_as_code",
+          "recall@10": 0.955,
+          "ndcg@10": 0.8678,
+          "mrr@10": 0.9444,
+          "mean_latency_ms": 252.771,
+          "mean_search_calls": 9.8,
+          "mean_rerank_pairs": 39.1
+        },
+        {
+          "system": "fixed_hybrid_rerank",
+          "recall@10": 0.95,
+          "ndcg@10": 0.8685,
+          "mrr@10": 0.9444,
+          "mean_latency_ms": 204.966,
+          "mean_search_calls": 1.0,
+          "mean_rerank_pairs": 40.0
+        },
+        {
+          "system": "fixed_bm25",
+          "recall@10": 0.87,
+          "ndcg@10": 0.7385,
+          "mrr@10": 0.8446,
+          "mean_latency_ms": 2.003,
+          "mean_search_calls": 1.0,
+          "mean_rerank_pairs": 0.0
+        }
+      ]
+    }
+  ]
+}

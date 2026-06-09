@@ -1021,6 +1021,7 @@
         <div class="bench-tabs" role="tablist" aria-label="Benchmark tabs">
           <button class="tab-button active" type="button" data-tab="dataset">Dataset + Index</button>
           <button class="tab-button" type="button" data-tab="results">Results</button>
+          <button class="tab-button" type="button" data-tab="public">Public Check</button>
         </div>
 
         <div id="dataset" class="benchmark active" role="tabpanel">
@@ -1119,6 +1120,48 @@
             <div class="metric"><span>Codegen gain</span><strong>+0.2855</strong><p>Recall@10 delta vs fixed and one-shot generated flow</p></div>
             <div class="metric"><span>Fixed-tool gain</span><strong>+0.0837</strong><p>Agentic fixed-flow delta vs fixed baseline</p></div>
             <div class="metric"><span>Codegen latency</span><strong>3.36s</strong><p>Mean latency with 7.16 search calls/query</p></div>
+          </div>
+        </div>
+
+        <div id="public" class="benchmark" role="tabpanel">
+          <div class="card wide">
+            <h3>Public benchmark sanity check</h3>
+            <p>We also ran known public benchmarks to check external credibility. These are local sanity checks, not official leaderboard submissions.</p>
+            <div class="table-scroll">
+              <table class="leaderboard">
+                <thead>
+                  <tr>
+                    <th>Benchmark</th>
+                    <th>Setting</th>
+                    <th>Generated</th>
+                    <th>Strong fixed</th>
+                    <th>Latency readout</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>BEIR/SciFact</td>
+                    <td>5,183 docs, 300 queries</td>
+                    <td>0.8439</td>
+                    <td>0.8278</td>
+                    <td>370 ms vs 319 ms</td>
+                  </tr>
+                  <tr>
+                    <td>HotpotQA distractor</td>
+                    <td>991 pooled docs, 100 queries</td>
+                    <td>0.9550</td>
+                    <td>0.9550</td>
+                    <td>253 ms vs 211 ms</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="metrics">
+            <div class="metric"><span>SciFact lift</span><strong>+0.0161</strong><p>Recall@10 delta vs fixed enriched baseline</p></div>
+            <div class="metric"><span>HotpotQA</span><strong>tie</strong><p>Generated flow matches fixed enriched Recall@10</p></div>
+            <div class="metric"><span>Cost signal</span><strong>higher</strong><p>Generated flow uses more search calls on public IR</p></div>
+            <div class="metric"><span>Main takeaway</span><strong>credible</strong><p>Public checks validate behavior; custom eval isolates enterprise control</p></div>
           </div>
         </div>
       </div>
@@ -1379,7 +1422,7 @@
 
   <footer class="footer">
     <div class="wrap">
-      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; local artifacts: sac_benchmark_dataset_intro.md, sac_benchmark_report.md, sac_benchmark_results.json.
+      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: sac_benchmark_dataset_intro.md, sac_benchmark_report.md, sac_benchmark_results.json, public_benchmark_report.md.
     </div>
   </footer>
 
