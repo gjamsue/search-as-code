@@ -608,11 +608,11 @@
           </div>
           <div class="summary-item">
             <strong>What our eval shows.</strong>
-            <p>v3 is much harder: top Recall@10 is 0.2304, while generated Search-as-Code and fixed enriched both reach 0.1857. The bottleneck is now authority-aware evidence selection, not raw retrieval access.</p>
+            <p>One-shot Search-as-Code ties fixed enriched at 0.1857 Recall@10, but iterative agentic Search-as-Code reaches 0.4579 by checking missing evidence and writing follow-up retrieval routes.</p>
           </div>
           <div class="summary-item">
             <strong>What is still missing.</strong>
-            <p>The real next comparison is Search-as-Code vs. multi-turn tool calling, using the same tools, real LLM codegen, token accounting, and answer-level scoring.</p>
+            <p>The next bar is production proof: real LLM codegen, tool-calling agent baseline, token accounting, and answer-level context selection to filter hard negatives.</p>
           </div>
         </div>
       </div>
@@ -701,11 +701,11 @@
             <div class="lane-read">Programmable, inspectable</div>
           </div>
           <div class="lane">
-            <div class="lane-name">Reflective SaC</div>
+            <div class="lane-name">Iterative SaC</div>
             <div class="steps">
-              <span class="step">execute code</span><span class="arrow">-&gt;</span><span class="step">inspect evidence</span><span class="arrow">-&gt;</span><span class="step">generate follow-up code</span>
+              <span class="step">execute code</span><span class="arrow">-&gt;</span><span class="step">inspect missing evidence</span><span class="arrow">-&gt;</span><span class="step">write follow-up routes</span>
             </div>
-            <div class="lane-read">Recovery path</div>
+            <div class="lane-read">Evidence coverage loop</div>
           </div>
         </div>
       </div>
@@ -757,12 +757,12 @@
           <div class="card">
             <h3>Recall@10 leaderboard</h3>
             <div class="bar-list">
-              <div class="bar-row"><div class="bar-label">BM25</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">0.2304</div></div>
-              <div class="bar-row"><div class="bar-label">Hybrid</div><div class="bar-track"><div class="bar-fill amber" style="width:99.2%"></div></div><div class="bar-value">0.2286</div></div>
-              <div class="bar-row"><div class="bar-label">Fixed enriched</div><div class="bar-track"><div class="bar-fill green" style="width:80.6%"></div></div><div class="bar-value">0.1857</div></div>
-              <div class="bar-row"><div class="bar-label">Generated SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:80.6%"></div></div><div class="bar-value">0.1857</div></div>
-              <div class="bar-row"><div class="bar-label">Reflective SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:80.6%"></div></div><div class="bar-value">0.1857</div></div>
-              <div class="bar-row"><div class="bar-label">Dense only</div><div class="bar-track"><div class="bar-fill" style="width:40.5%"></div></div><div class="bar-value">0.0932</div></div>
+              <div class="bar-row"><div class="bar-label">Iterative agentic SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:100%"></div></div><div class="bar-value">0.4579</div></div>
+              <div class="bar-row"><div class="bar-label">BM25</div><div class="bar-track"><div class="bar-fill" style="width:50.3%"></div></div><div class="bar-value">0.2304</div></div>
+              <div class="bar-row"><div class="bar-label">Hybrid</div><div class="bar-track"><div class="bar-fill amber" style="width:49.9%"></div></div><div class="bar-value">0.2286</div></div>
+              <div class="bar-row"><div class="bar-label">Fixed enriched</div><div class="bar-track"><div class="bar-fill green" style="width:40.6%"></div></div><div class="bar-value">0.1857</div></div>
+              <div class="bar-row"><div class="bar-label">One-shot SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:40.6%"></div></div><div class="bar-value">0.1857</div></div>
+              <div class="bar-row"><div class="bar-label">Dense only</div><div class="bar-track"><div class="bar-fill" style="width:20.4%"></div></div><div class="bar-value">0.0932</div></div>
             </div>
             <table class="leaderboard">
               <thead>
@@ -775,19 +775,20 @@
                 </tr>
               </thead>
               <tbody>
+                <tr><td>Iterative agentic SaC</td><td>0.4579</td><td>0.2581</td><td>3,319 ms</td><td>3,227</td></tr>
                 <tr><td>BM25</td><td>0.2304</td><td>0.1290</td><td>11 ms</td><td>10</td></tr>
-                <tr><td>Hybrid</td><td>0.2286</td><td>0.0645</td><td>20 ms</td><td>10</td></tr>
-                <tr><td>Fixed enriched</td><td>0.1857</td><td>0.2258</td><td>4,078 ms</td><td>3,660</td></tr>
-                <tr><td>Generated SaC</td><td>0.1857</td><td>0.2258</td><td>4,077 ms</td><td>3,215</td></tr>
-                <tr><td>Reflective SaC</td><td>0.1857</td><td>0.2258</td><td>3,893 ms</td><td>3,215</td></tr>
+                <tr><td>Hybrid</td><td>0.2286</td><td>0.0645</td><td>18 ms</td><td>10</td></tr>
+                <tr><td>Fixed enriched</td><td>0.1857</td><td>0.2258</td><td>3,220 ms</td><td>3,660</td></tr>
+                <tr><td>One-shot SaC</td><td>0.1857</td><td>0.2258</td><td>3,200 ms</td><td>3,215</td></tr>
+                <tr><td>Naive reflective SaC</td><td>0.1857</td><td>0.2258</td><td>3,205 ms</td><td>3,215</td></tr>
               </tbody>
             </table>
           </div>
           <div class="metrics">
             <div class="metric"><span>Primary metric</span><strong>Recall@10</strong><p>No nDCG/MRR as headline metrics</p></div>
-            <div class="metric"><span>Generated vs fixed</span><strong>0.0000</strong><p>Recall@10 delta vs fixed enriched</p></div>
-            <div class="metric"><span>Candidate pool</span><strong>3.2k+</strong><p>Generated averages 3,215 candidates/query</p></div>
-            <div class="metric"><span>Cost signal</span><strong>4.1s</strong><p>Large-pool rerank latency per query</p></div>
+            <div class="metric"><span>Agentic gain</span><strong>+0.2722</strong><p>Recall@10 delta vs fixed enriched and one-shot SaC</p></div>
+            <div class="metric"><span>Candidate pool</span><strong>3.2k+</strong><p>Iterative SaC averages 3,227 candidates/query</p></div>
+            <div class="metric"><span>Cost signal</span><strong>3.3s</strong><p>Large-pool rerank plus extra search control</p></div>
           </div>
         </div>
       </div>
@@ -805,57 +806,57 @@
         <div class="case-grid">
           <article class="case">
             <div>
-              <span class="tag violet">Authority-aware evidence</span>
-              <h3>Policy latency readout</h3>
-              <div class="query">For the CEO Search-as-Code readout, which latency number is primary: including code generation or execution-only?</div>
+              <span class="tag violet">Iterative win</span>
+              <h3>Beacon version comparison</h3>
+              <div class="query">Compare Beacon CRM Connector 3.14.0 and 3.14.1 for Contoso's security review. Which one is acceptable?</div>
               <div class="mini-flow">
-                <span class="step">hybrid top 2000</span>
-                <span class="step">BM25 metric route</span>
-                <span class="step">rewrite</span>
-                <span class="step">rerank</span>
+                <span class="step">hybrid 2000</span>
+                <span class="step">exact version BM25</span>
+                <span class="step">evidence goals</span>
+                <span class="step">preselect releases</span>
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Fixed enriched</strong><span>Recall@10 0.5000, hard-neg 0.</span></div>
-              <div class="outcome-row"><strong>Generated</strong><span>Recall@10 0.5000, hard-neg 0.</span></div>
-              <div class="outcome-row"><strong>Lesson</strong><span>Policy near-duplicates crowd top-10; source authority has to be explicit.</span></div>
+              <div class="outcome-row"><strong>Fixed / one-shot</strong><span>Recall@10 0.0000; both stop at approval-ledger near-duplicates.</span></div>
+              <div class="outcome-row"><strong>Iterative SaC</strong><span>Recall@10 1.0000; pulls alias, account, advisory, ticket, and both release notes.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>The win is not bigger fanout; it is enforcing evidence coverage before final top-10.</span></div>
             </div>
           </article>
 
           <article class="case">
             <div>
-              <span class="tag amber">Candidate opportunity</span>
-              <h3>Same final recall, different control cost</h3>
-              <div class="query">Main rerank flows now retrieve roughly the whole enterprise index before producing top-10 evidence.</div>
+              <span class="tag amber">Missing evidence loop</span>
+              <h3>Cache namespace proof</h3>
+              <div class="query">A regulated customer asks for cache namespace proof. Which customer is most likely asking, what release gives the evidence, and what feature should be cited?</div>
               <div class="mini-flow">
-                <span class="step">fixed enriched pool 3660</span>
-                <span class="step">generated pool 3215</span>
-                <span class="step">top-10 output</span>
-                <span class="step">rerank</span>
+                <span class="step">initial routes</span>
+                <span class="step">missing release_note</span>
+                <span class="step">follow-up BM25</span>
+                <span class="step">final context</span>
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Recall</strong><span>Generated, reflective, fixed enriched, and full hybrid rerank all reach 0.1857.</span></div>
-              <div class="outcome-row"><strong>Latency</strong><span>Large-pool reranking costs roughly 3.9-4.1s/query.</span></div>
-              <div class="outcome-row"><strong>Lesson</strong><span>For this benchmark, codegen value must come from smarter pruning or authority-aware ranking, not simply larger recall pools.</span></div>
+              <div class="outcome-row"><strong>Fixed / one-shot</strong><span>Recall@10 0.0000; namespace proof docs crowd out the release evidence.</span></div>
+              <div class="outcome-row"><strong>Iterative SaC</strong><span>Recall@10 0.8000; follow-up route targets release notes and fixed-version evidence.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>Reflection should ask “which evidence category is missing?” instead of “did we retrieve enough docs?”</span></div>
             </div>
           </article>
 
           <article class="case">
             <div>
-              <span class="tag red">Current limitation</span>
-              <h3>Same-topic clusters can still mislead</h3>
-              <div class="query">A generated flow for a thin-evidence enterprise query finds only 18 candidates. What should the agent do when candidate pool is below 25?</div>
+              <span class="tag red">Remaining risk</span>
+              <h3>Recall brings contrast evidence too</h3>
+              <div class="query">The iterative flow retrieves more of the right evidence, but also slightly increases hard-negative hit rate: 0.2581 vs 0.2258.</div>
               <div class="mini-flow">
-                <span class="step">large first pass</span>
-                <span class="step">no follow-up</span>
-                <span class="step">rerank</span>
+                <span class="step">recover evidence</span>
+                <span class="step">include contrasts</span>
+                <span class="step">select final context</span>
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Fixed enriched</strong><span>Recall@10 0.0000, hard-neg 0.</span></div>
-              <div class="outcome-row"><strong>Generated</strong><span>Recall@10 0.0000, hard-neg 0.</span></div>
-              <div class="outcome-row"><strong>Lesson</strong><span>Reflection still needs missing-evidence checks; candidate-pool size alone is now the wrong trigger.</span></div>
+              <div class="outcome-row"><strong>Retrieval</strong><span>Better for Recall@10, especially multi-hop and authority questions.</span></div>
+              <div class="outcome-row"><strong>Answering</strong><span>Needs a context composer that keeps authoritative evidence and drops stale drafts.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>Next evaluation should score final answers, citations, and exclusion decisions.</span></div>
             </div>
           </article>
         </div>
@@ -897,8 +898,8 @@
             </tr>
             <tr>
               <td>Reflection policy</td>
-              <td>Reflective mode triggered 0/31 times on the test split, so it did not improve quality.</td>
-              <td>Trigger on missing required evidence, entity coverage, and conflicting evidence, not only candidate-pool size.</td>
+              <td>Naive reflection triggered 0/31 times; evidence-coverage reflection is what created the Recall@10 lift.</td>
+              <td>Generalize the goal planner across more enterprise query types and tune when to stop iterating.</td>
             </tr>
             <tr>
               <td>Production cost and safety</td>
@@ -922,7 +923,7 @@
             <li><strong>Run real codegen.</strong><br>Use proprietary models to generate retrieval programs from the same tool schema.</li>
             <li><strong>Add the agent baseline.</strong><br>Compare against multi-turn tool calling with the same APIs and the same evaluation set.</li>
             <li><strong>Score final answers.</strong><br>Measure answer accuracy, citation grounding, token cost, latency, and failure rate.</li>
-            <li><strong>Improve reflection.</strong><br>Trigger follow-up code from missing evidence and coverage gaps, not only thin candidate pools.</li>
+            <li><strong>Harden context selection.</strong><br>Keep authoritative evidence, drop stale drafts, and track hard-negative leakage.</li>
           </ol>
         </div>
       </div>

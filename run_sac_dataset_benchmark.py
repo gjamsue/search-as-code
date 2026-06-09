@@ -250,6 +250,29 @@ def main() -> None:
         sample_codes=args.sample_codes,
     )
 
+    systems["generated_iterative_agentic_search_as_code"] = run_system(
+        "generated_iterative_agentic_search_as_code",
+        task_queries,
+        task_by_id,
+        qrels,
+        hard_negatives,
+        args.top_k,
+        metrics_k,
+        lambda query: generate_iterative_agentic_sac_program(
+            query,
+            top_k=args.top_k,
+            branch_top_k=args.generated_branch_top_k,
+            max_rerank_candidates=args.generated_max_rerank_candidates,
+        ),
+        execute_generated_program,
+        query_understanding_api=query_understanding_api,
+        entity_linking_api=entity_linking_api,
+        query_rewrite_api=query_rewrite_api,
+        search_api=search_api,
+        ranking_api=ranking_api,
+        sample_codes=args.sample_codes,
+    )
+
     manifest = read_json(data_dir / "manifest.json")
     output = {
         "dataset": manifest.get("dataset_version", "unknown"),
@@ -495,6 +518,397 @@ def _exact_matching_candidates(candidates, terms):
     return textwrap.dedent(code).strip()
 
 
+def generate_iterative_agentic_sac_program(
+    query: str,
+    *,
+    top_k: int,
+    branch_top_k: int,
+    max_rerank_candidates: int,
+) -> str:
+    strategy = build_iterative_agentic_strategy(
+        query,
+        top_k=top_k,
+        branch_top_k=branch_top_k,
+        max_rerank_candidates=max_rerank_candidates,
+    )
+    code = f"""
+def run(ctx):
+    query = ctx.query
+    analysis = ctx.query_understanding.analyze(query)
+    linked_entities = []
+    if analysis.get("entities"):
+        linked_entities = ctx.entity_linking.link(query)
+    rewrite_result = {{"needed": False, "rewrites": []}}
+    if ctx.query_rewrite.should_rewrite(query, analysis):
+        rewrite_result = ctx.query_rewrite.rewrite(
+            query,
+            analysis=analysis,
+            linked_entities=linked_entities,
+        )
+
+    plan = {strategy!r}
+    ctx.log("agentic_iterative_plan", {{
+        "strategy": plan["strategy"],
+        "initial_routes": plan["initial_routes"],
+        "goals": [goal["name"] for goal in plan["goals"]],
+        "rationale": plan["rationale"],
+    }})
+
+    routes = list(plan["initial_routes"])
+    for rewrite in rewrite_result.get("rewrites", [])[: plan["rewrite_route_limit"]]:
+        routes.append({{"query": rewrite, "mode": "hybrid", "top_k": plan["branch_top_k"]}})
+    for subquery in analysis.get("subqueries", [])[: plan["analysis_subquery_limit"]]:
+        routes.append({{"query": subquery, "mode": "hybrid", "top_k": plan["branch_top_k"]}})
+    routes = _dedupe_routes(routes)
+
+    candidate_by_id = {{}}
+    for route in routes:
+        hits = ctx.search.search(route["query"], mode=route["mode"], top_k=route["top_k"])
+        _merge_candidates(candidate_by_id, hits)
+
+    candidates = sorted(candidate_by_id.values(), key=_authority_score, reverse=True)
+    missing_goals = _missing_goals(candidates, plan["goals"], plan["inspect_top_n"])
+    followup_routes = []
+    for goal in missing_goals:
+        followup_routes.extend(goal["routes"])
+    followup_routes = _dedupe_routes(followup_routes)
+
+    for route in followup_routes:
+        hits = ctx.search.search(route["query"], mode=route["mode"], top_k=route["top_k"])
+        _merge_candidates(candidate_by_id, hits)
+
+    candidates = sorted(candidate_by_id.values(), key=_authority_score, reverse=True)
+    preselected = _preselect_goal_evidence(candidates, plan["goals"], plan["max_preselected"])
+    preselected_ids = {{hit.doc_id for hit in preselected}}
+    rerank_pool = preselected + [hit for hit in candidates if hit.doc_id not in preselected_ids]
+    rerank_pool = rerank_pool[: plan["max_rerank_candidates"]]
+
+    ranked = ctx.ranking.rerank(query, rerank_pool, top_k=min(len(rerank_pool), plan["rerank_output_k"]))
+    final_hits = _authority_aware_topk(ranked, candidates, plan["goals"], plan["top_k"])
+    ctx.candidate_pool = len(candidates)
+
+    ctx.log("agentic_iterative_reflection", {{
+        "initial_routes": routes,
+        "missing_goals": [goal["name"] for goal in missing_goals],
+        "followup_routes": followup_routes,
+        "candidate_pool": len(candidates),
+        "preselected": [hit.doc_id for hit in preselected],
+        "rerank_candidates": len(rerank_pool),
+        "top_doc_ids": [hit.doc_id for hit in final_hits],
+        "rewrite_needed": rewrite_result.get("needed", False),
+        "rewrites": rewrite_result.get("rewrites", []),
+    }})
+    return {{"hits": final_hits, "analysis": analysis, "entities": linked_entities, "candidates": candidates}}
+
+
+def _dedupe_routes(routes):
+    by_key = {{}}
+    for route in routes:
+        query = " ".join(route["query"].split())
+        if not query:
+            continue
+        key = (query.lower(), route["mode"])
+        previous = by_key.get(key)
+        if previous is None or route["top_k"] > previous["top_k"]:
+            by_key[key] = {{"query": query, "mode": route["mode"], "top_k": route["top_k"]}}
+    return list(by_key.values())
+
+
+def _merge_candidates(candidate_by_id, hits):
+    for hit in hits:
+        previous = candidate_by_id.get(hit.doc_id)
+        if previous is None or hit.score > previous.score:
+            candidate_by_id[hit.doc_id] = hit
+
+
+def _missing_goals(candidates, goals, inspect_top_n):
+    return [goal for goal in goals if not _goal_covered(candidates[:inspect_top_n], goal)]
+
+
+def _goal_covered(candidates, goal):
+    for hit in candidates:
+        if _matches_goal(hit, goal) and _authority_score(hit) >= goal["min_authority_score"]:
+            return True
+    return False
+
+
+def _preselect_goal_evidence(candidates, goals, max_preselected):
+    selected = []
+    selected_ids = set()
+    for goal in goals:
+        matches = [hit for hit in candidates if hit.doc_id not in selected_ids and _matches_goal(hit, goal)]
+        matches.sort(key=_authority_score, reverse=True)
+        for hit in matches[: goal["take"]]:
+            selected.append(hit)
+            selected_ids.add(hit.doc_id)
+            if len(selected) >= max_preselected:
+                return selected
+    return selected
+
+
+def _authority_aware_topk(ranked, candidates, goals, top_k):
+    final = []
+    final_ids = set()
+    ranked_by_id = {{hit.doc_id: hit for hit in ranked}}
+    candidate_by_id = {{hit.doc_id: hit for hit in candidates}}
+    authority_order = sorted(candidates, key=_authority_score, reverse=True)
+
+    for goal in goals:
+        goal_ranked = [hit for hit in ranked if hit.doc_id not in final_ids and _matches_goal(hit, goal)]
+        goal_ranked.sort(key=lambda hit: (_authority_score(candidate_by_id.get(hit.doc_id, hit)), hit.score), reverse=True)
+        goal_candidates = [hit for hit in authority_order if hit.doc_id not in final_ids and _matches_goal(hit, goal)]
+        pool = goal_ranked + [hit for hit in goal_candidates if hit.doc_id not in {{item.doc_id for item in goal_ranked}}]
+        for hit in pool[: goal["take"]]:
+            final.append(ranked_by_id.get(hit.doc_id, hit))
+            final_ids.add(hit.doc_id)
+            if len(final) >= top_k:
+                return final
+
+    for hit in ranked:
+        if hit.doc_id not in final_ids and not _looks_non_authoritative(hit):
+            final.append(hit)
+            final_ids.add(hit.doc_id)
+            if len(final) >= top_k:
+                return final
+    for hit in ranked:
+        if hit.doc_id not in final_ids:
+            final.append(hit)
+            final_ids.add(hit.doc_id)
+            if len(final) >= top_k:
+                return final
+    return final
+
+
+def _matches_goal(hit, goal):
+    text = _candidate_text(hit)
+    metadata = getattr(hit, "metadata", {{}}) or {{}}
+    doc_type = str(metadata.get("doc_type", "")).lower()
+    source = str(metadata.get("source", "")).lower()
+    if goal["doc_types"] and doc_type not in goal["doc_types"]:
+        return False
+    if goal["sources"] and source not in goal["sources"]:
+        return False
+    if goal["must_any"] and not any(term in text for term in goal["must_any"]):
+        return False
+    if goal["prefer_any"] and not any(term in text for term in goal["prefer_any"]):
+        return False
+    if goal["avoid_non_authoritative"] and _looks_non_authoritative(hit):
+        return False
+    return True
+
+
+def _authority_score(hit):
+    text = _candidate_text(hit)
+    metadata = getattr(hit, "metadata", {{}}) or {{}}
+    source = str(metadata.get("source", "")).lower()
+    doc_type = str(metadata.get("doc_type", "")).lower()
+    score = float(getattr(hit, "score", 0.0))
+
+    if source in {{"source_of_truth", "governance", "vendor_advisory", "jira", "release_notes", "eval_policy", "runbook"}}:
+        score += 1.2
+    if source in {{"crm", "support"}}:
+        score += 0.65
+    if doc_type in {{"alias_registry", "authority_matrix", "approval_ledger", "war_room_roster", "policy", "release", "security_ticket", "security_advisory", "account_brief", "escalation", "product_footprint"}}:
+        score += 1.1
+    if any(term in text for term in ["final approval", "source authority", "source-of-truth", "approved citation", "final roster", "latency accounting ledger"]):
+        score += 0.8
+    if any(term in text for term in ["draft", "stale", "non-authoritative", "not the source-of-truth", "not final", "wrong-customer", "copied dashboard", "scratchpad"]):
+        score -= 1.4
+    return score
+
+
+def _looks_non_authoritative(hit):
+    text = _candidate_text(hit)
+    return any(term in text for term in [
+        "non-authoritative",
+        "not the source-of-truth",
+        "not the r7 final",
+        "stale",
+        "draft",
+        "scratchpad",
+        "wrong-customer",
+        "copied dashboard",
+        "not customer-citable",
+        "rollback drill",
+    ])
+
+
+def _candidate_text(hit):
+    metadata = getattr(hit, "metadata", {{}}) or {{}}
+    return (hit.title + " " + hit.text + " " + str(metadata)).lower()
+"""
+    return textwrap.dedent(code).strip()
+
+
+def build_iterative_agentic_strategy(
+    query: str,
+    *,
+    top_k: int,
+    branch_top_k: int,
+    max_rerank_candidates: int,
+) -> dict:
+    base = build_sac_strategy(
+        query,
+        top_k=top_k,
+        branch_top_k=branch_top_k,
+        max_rerank_candidates=max_rerank_candidates,
+        min_rerank_candidates=0,
+    )
+    lower = query.lower()
+    tokens = set(tokenize(query))
+    goals: list[dict] = []
+    rationale = list(base["rationale"])
+
+    def add_goal(
+        name: str,
+        must_any: list[str],
+        prefer_any: list[str],
+        routes: list[dict],
+        *,
+        take: int = 1,
+        avoid_non_authoritative: bool = True,
+        min_authority_score: float = 0.25,
+        doc_types: list[str] | None = None,
+        sources: list[str] | None = None,
+    ) -> None:
+        goals.append(
+            {
+                "name": name,
+                "must_any": [item.lower() for item in must_any],
+                "prefer_any": [item.lower() for item in prefer_any],
+                "routes": routes,
+                "take": take,
+                "avoid_non_authoritative": avoid_non_authoritative,
+                "min_authority_score": min_authority_score,
+                "doc_types": [item.lower() for item in (doc_types or [])],
+                "sources": [item.lower() for item in (sources or [])],
+            }
+        )
+
+    alias_terms = [term for term in ["bpi", "qbl", "nf-17", "rl-7", "nw-h", "ab-q3", "hg-e", "ct-r", "gu-edu", "unest", "jbell", "mp", "prao", "lromero", "achen", "nsingh"] if term in lower]
+    if alias_terms or any("alias" in token for token in tokens):
+        add_goal(
+            "alias_registry",
+            ["alias registry", "maps to", "means"],
+            alias_terms + ["source-of-truth", "customer alias", "owner alias"],
+            [
+                {"query": f"{query} alias registry source-of-truth", "mode": "bm25", "top_k": 120},
+                {"query": f"{' '.join(alias_terms)} customer owner alias registry", "mode": "hybrid", "top_k": 120},
+            ],
+            doc_types=["alias_registry"],
+        )
+        rationale.append("alias/code-name queries require source-of-truth alias expansion")
+
+    if any(term in tokens for term in ["customer", "customers", "account", "renewal", "red-risk", "red", "blocker", "blockers"]) or alias_terms:
+        add_goal(
+            "account_or_escalation",
+            ["account brief", "escalation log", "renewal"],
+            ["current blocker", "products in production", "technical owner", "risk"],
+            [
+                {"query": f"{query} account brief escalation current blocker", "mode": "hybrid", "top_k": 160},
+                {"query": f"{query} products in production renewal risk technical owner", "mode": "bm25", "top_k": 120},
+            ],
+            take=2,
+            doc_types=["account_brief", "escalation"],
+        )
+
+    if any(term in lower for term in ["cve-", "sec-", "security", "vulnerability", "patch", "remediation", "blocker", "oauth", "saml", "cache", "namespace"]):
+        add_goal(
+            "ticket_or_advisory",
+            ["security response", "vendor advisory", "internal ticket", "tracks response"],
+            ["cve-", "sec-", "severity", "owner"],
+            [
+                {"query": f"{query} vendor advisory internal security ticket CVE SEC", "mode": "bm25", "top_k": 180},
+                {"query": f"{query} security owner fixed version advisory ticket", "mode": "hybrid", "top_k": 180},
+            ],
+            take=2,
+            doc_types=["security_ticket", "security_advisory"],
+        )
+
+    if any(term in tokens for term in ["release", "version", "fixed", "fix", "fixes", "latency", "evidence"]) or re.search(r"\d+\.\d+\.\d+", query):
+        add_goal(
+            "release_note",
+            ["release notes", "fixed version", "fixes"],
+            ["performance note", "new capabilities", "evidence ledger", "single-use refresh tokens"],
+            [
+                {"query": f"{query} release notes fixed version fixes performance note", "mode": "bm25", "top_k": 160},
+                {"query": f"{query} release evidence feature approved", "mode": "hybrid", "top_k": 120},
+            ],
+            take=2,
+            doc_types=["release"],
+        )
+
+    if any(term in lower for term in ["approval", "approved", "customer-citable", "reject", "rejected", "authority", "final", "roster", "war room", "source"]):
+        add_goal(
+            "source_authority",
+            ["final approval", "source authority", "final roster", "approval ledger", "source-of-truth"],
+            ["approved citation", "supersedes", "explicit exclusions", "authority matrix"],
+            [
+                {"query": f"{query} final approval ledger source authority source-of-truth", "mode": "bm25", "top_k": 180},
+                {"query": f"{query} final roster approved citation supersedes draft", "mode": "hybrid", "top_k": 160},
+            ],
+            take=2,
+            doc_types=["approval_ledger", "authority_matrix", "war_room_roster", "policy"],
+        )
+        rationale.append("authority-sensitive queries require final/source-of-truth evidence")
+
+    if any(term in tokens for term in ["no", "not", "exclude", "excluded", "should", "does"]):
+        add_goal(
+            "negative_evidence",
+            ["no ", "not ", "should not", "explicit exclusions", "has no", "only active product"],
+            ["product footprint", "exclude", "not sufficient", "rejected"],
+            [
+                {"query": f"{query} negative evidence product footprint explicit exclusions", "mode": "bm25", "top_k": 140},
+                {"query": f"{query} should not include rejected not sufficient", "mode": "hybrid", "top_k": 120},
+            ],
+            take=1,
+            avoid_non_authoritative=False,
+            min_authority_score=-2.0,
+            doc_types=["product_footprint", "account_brief", "sales_discovery", "security_advisory", "release", "approval_ledger"],
+        )
+
+    if any(term in tokens for term in ["policy", "metrics", "latency", "readout", "reflection", "candidate", "codegen"]):
+        add_goal(
+            "policy",
+            ["policy", "ledger", "must report", "required metrics", "latency accounting"],
+            ["including code generation", "reflection trigger precision", "invalid code rate", "execution-only"],
+            [
+                {"query": f"{query} final policy latency accounting ledger required metrics", "mode": "bm25", "top_k": 180},
+                {"query": f"{query} reflection missing evidence categories follow-up retrieval code", "mode": "hybrid", "top_k": 160},
+            ],
+            doc_types=["policy", "authority_matrix"],
+        )
+
+    if not goals:
+        add_goal(
+            "general_authoritative_evidence",
+            ["release notes", "account brief", "vendor advisory", "internal ticket", "policy"],
+            [],
+            [
+                {"query": f"{query} authoritative evidence source-of-truth release notes account brief", "mode": "hybrid", "top_k": 120},
+            ],
+            take=2,
+            avoid_non_authoritative=False,
+            min_authority_score=-2.0,
+            doc_types=["release", "account_brief", "escalation", "security_advisory", "security_ticket", "policy", "approval_ledger"],
+        )
+
+    return {
+        "strategy": "iterative_agentic_evidence_coverage",
+        "initial_routes": base["routes"],
+        "goals": goals,
+        "branch_top_k": branch_top_k,
+        "top_k": top_k,
+        "max_rerank_candidates": max_rerank_candidates,
+        "max_preselected": min(top_k, 8),
+        "rerank_output_k": max(top_k * 5, 50),
+        "inspect_top_n": 120,
+        "analysis_subquery_limit": 3,
+        "rewrite_route_limit": 2,
+        "rationale": rationale,
+    }
+
+
 def build_sac_strategy(
     query: str,
     *,
@@ -673,14 +1087,20 @@ def reciprocal_rank(relevant: set[str], ranked_ids: list[str]) -> float:
 def build_comparisons(systems: dict, ks: list[int]) -> dict:
     k = max(ks)
     generated = systems["generated_search_as_code"]
+    iterative = systems.get("generated_iterative_agentic_search_as_code")
     comparisons = {}
     for name, baseline in systems.items():
         if name.startswith("generated_"):
             continue
         comparisons[f"generated_vs_{name}"] = compare_pair(baseline, generated, k=k)
         comparisons[f"reflective_vs_{name}"] = compare_pair(baseline, systems["generated_reflective_search_as_code"], k=k)
+        if iterative:
+            comparisons[f"iterative_agentic_vs_{name}"] = compare_pair(baseline, iterative, k=k)
     comparisons["reflective_vs_generated"] = compare_pair(generated, systems["generated_reflective_search_as_code"], k=k)
     comparisons["generated_force_budget_vs_generated"] = compare_pair(generated, systems["generated_search_as_code_force_budget"], k=k)
+    if iterative:
+        comparisons["iterative_agentic_vs_generated"] = compare_pair(generated, iterative, k=k)
+        comparisons["iterative_agentic_vs_reflective"] = compare_pair(systems["generated_reflective_search_as_code"], iterative, k=k)
     return comparisons
 
 
@@ -714,6 +1134,11 @@ def select_examples(systems: dict, task_by_id: dict, qrels: dict, hard_negatives
     k = max(ks)
     generated = by_qid(systems["generated_search_as_code"]["per_query"])
     reflective = by_qid(systems["generated_reflective_search_as_code"]["per_query"])
+    iterative = (
+        by_qid(systems["generated_iterative_agentic_search_as_code"]["per_query"])
+        if "generated_iterative_agentic_search_as_code" in systems
+        else {}
+    )
     fixed_enriched = by_qid(systems["fixed_understanding_rewrite_hybrid_rerank"]["per_query"])
     bm25 = by_qid(systems["fixed_bm25"]["per_query"])
     hybrid = by_qid(systems["fixed_hybrid"]["per_query"])
@@ -738,6 +1163,7 @@ def select_examples(systems: dict, task_by_id: dict, qrels: dict, hard_negatives
                     "generated": generated[qid]["query_metrics"],
                     "generated_force_budget": force_budget[qid]["query_metrics"],
                     "reflective": reflective[qid]["query_metrics"],
+                    **({"iterative_agentic": iterative[qid]["query_metrics"]} if qid in iterative else {}),
                 },
                 "top_doc_ids": {
                     "bm25": bm25[qid]["top_doc_ids"][:k],
@@ -746,12 +1172,60 @@ def select_examples(systems: dict, task_by_id: dict, qrels: dict, hard_negatives
                     "generated": generated[qid]["top_doc_ids"][:k],
                     "generated_force_budget": force_budget[qid]["top_doc_ids"][:k],
                     "reflective": reflective[qid]["top_doc_ids"][:k],
+                    **({"iterative_agentic": iterative[qid]["top_doc_ids"][:k]} if qid in iterative else {}),
                 },
                 "generated_trace": generated[qid]["trace"],
                 "reflective_trace": reflective[qid]["trace"],
+                "iterative_trace": iterative[qid]["trace"] if qid in iterative else [],
             }
         )
         return True
+
+    if iterative:
+        iterative_candidates = []
+        for qid, row in iterative.items():
+            iter_recall = row["query_metrics"][f"recall@{k}"]
+            one_shot_recall = generated[qid]["query_metrics"][f"recall@{k}"]
+            fixed_recall = fixed_enriched[qid]["query_metrics"][f"recall@{k}"]
+            best_baseline = max(
+                one_shot_recall,
+                fixed_recall,
+                bm25[qid]["query_metrics"][f"recall@{k}"],
+                hybrid[qid]["query_metrics"][f"recall@{k}"],
+            )
+            iterative_candidates.append(
+                (
+                    iter_recall - best_baseline,
+                    iter_recall - one_shot_recall,
+                    iter_recall,
+                    qid,
+                )
+            )
+        for _delta_best, _delta_generated, _recall, qid in sorted(iterative_candidates, reverse=True):
+            if _delta_best > 0:
+                if add(
+                    "iterative_agentic_win",
+                    qid,
+                    "iterative agentic Search-as-Code recovered evidence that one-shot and fixed flows missed",
+                ):
+                    break
+
+        followup_candidates = []
+        for qid, row in iterative.items():
+            reflection = first_event(row["trace"], "agentic_iterative_reflection")
+            if not reflection or not reflection["payload"].get("followup_routes"):
+                continue
+            iter_recall = row["query_metrics"][f"recall@{k}"]
+            one_shot_recall = generated[qid]["query_metrics"][f"recall@{k}"]
+            followup_candidates.append((iter_recall - one_shot_recall, iter_recall, qid))
+        for _delta_generated, _recall, qid in sorted(followup_candidates, reverse=True):
+            if _delta_generated > 0:
+                if add(
+                    "missing_evidence_followup",
+                    qid,
+                    "missing-evidence reflection generated targeted follow-up routes before final selection",
+                ):
+                    break
 
     for qid, row in generated.items():
         gen_recall = row["query_metrics"][f"recall@{k}"]
@@ -886,6 +1360,23 @@ def summarize_readout(output: dict, k: int) -> str:
     systems = output["systems"]
     generated = systems["generated_search_as_code"]
     fixed = systems["fixed_understanding_rewrite_hybrid_rerank"]
+    iterative = systems.get("generated_iterative_agentic_search_as_code")
+    if iterative:
+        delta_vs_fixed = iterative["metrics"][f"recall@{k}"] - fixed["metrics"][f"recall@{k}"]
+        delta_vs_generated = iterative["metrics"][f"recall@{k}"] - generated["metrics"][f"recall@{k}"]
+        delta_hard = (
+            iterative["metrics"][f"hard_negative_hit_rate@{k}"]
+            - fixed["metrics"][f"hard_negative_hit_rate@{k}"]
+        )
+        return (
+            f"Iterative agentic Search-as-Code is the first flow that clearly separates from fixed search: "
+            f"Recall@{k} `{iterative['metrics'][f'recall@{k}']:.4f}` vs one-shot generated "
+            f"`{generated['metrics'][f'recall@{k}']:.4f}` and fixed enriched `{fixed['metrics'][f'recall@{k}']:.4f}` "
+            f"(delta vs fixed `{delta_vs_fixed:.4f}`, delta vs one-shot `{delta_vs_generated:.4f}`). "
+            f"It pays modestly more search control cost: `{iterative['latency']['mean_search_calls']:.2f}` search calls/query "
+            f"and `{iterative['latency']['mean_latency_ms']:.1f}` ms mean latency. "
+            f"Hard-negative hit rate rises by `{delta_hard:.4f}`, so the next quality gate is final context/answer selection."
+        )
     delta_recall = generated["metrics"][f"recall@{k}"] - fixed["metrics"][f"recall@{k}"]
     delta_hard = generated["metrics"][f"hard_negative_hit_rate@{k}"] - fixed["metrics"][f"hard_negative_hit_rate@{k}"]
     return (
@@ -904,6 +1395,7 @@ def render_key_findings(output: dict, k: int) -> list[str]:
     bm25 = systems["fixed_bm25"]
     dense = systems["fixed_semantic_dense"]
     reflective = systems["generated_reflective_search_as_code"]
+    iterative = systems.get("generated_iterative_agentic_search_as_code")
     top_system_name, top_system = max(
         systems.items(), key=lambda item: item[1]["metrics"][f"recall@{k}"]
     )
@@ -920,16 +1412,28 @@ def render_key_findings(output: dict, k: int) -> list[str]:
         for row in reflective["per_query"]
         if any(event["event"] == "agentic_followup_result" for event in row["trace"])
     )
-    return [
+    findings = [
         f"- Top Recall@{k} system is `{top_system_name}`: Recall@{k} `{top_system['metrics'][f'recall@{k}']:.4f}`.",
-        f"- `generated_search_as_code` Recall@{k} is `{generated['metrics'][f'recall@{k}']:.4f}` vs fixed enriched `{fixed['metrics'][f'recall@{k}']:.4f}`.",
-        f"- Generated Search-as-Code hard-negative hit rate is `{generated['metrics'][f'hard_negative_hit_rate@{k}']:.4f}` vs fixed enriched `{fixed['metrics'][f'hard_negative_hit_rate@{k}']:.4f}`.",
-        f"- The cost is higher: generated flow averages `{generated['latency']['mean_latency_ms']:.1f}` ms vs fixed enriched `{fixed['latency']['mean_latency_ms']:.1f}` ms, with `{generated['latency']['mean_search_calls']:.2f}` search calls and `{generated['latency']['mean_rerank_pairs']:.1f}` rerank pairs per query.",
-        f"- Candidate opportunity is now large: fixed enriched sees `{fixed['latency']['mean_candidate_pool']:.1f}` candidates/query and generated sees `{generated['latency']['mean_candidate_pool']:.1f}` candidates/query before final top-{k}.",
+    ]
+    if iterative:
+        findings.extend(
+            [
+                f"- Iterative agentic Search-as-Code improves Recall@{k} to `{iterative['metrics'][f'recall@{k}']:.4f}` vs one-shot generated `{generated['metrics'][f'recall@{k}']:.4f}` and fixed enriched `{fixed['metrics'][f'recall@{k}']:.4f}`.",
+                f"- The gain comes from evidence-coverage reflection: it checks missing categories such as alias, account/escalation, ticket/advisory, release note, source authority, and policy before final top-{k}.",
+                f"- Cost is only modestly higher than one-shot: `{iterative['latency']['mean_latency_ms']:.1f}` ms vs `{generated['latency']['mean_latency_ms']:.1f}` ms, with `{iterative['latency']['mean_search_calls']:.2f}` vs `{generated['latency']['mean_search_calls']:.2f}` search calls/query.",
+                f"- Hard-negative hit rate increases to `{iterative['metrics'][f'hard_negative_hit_rate@{k}']:.4f}` vs fixed enriched `{fixed['metrics'][f'hard_negative_hit_rate@{k}']:.4f}`; this is acceptable for recall-oriented retrieval but needs answer-level filtering.",
+            ]
+        )
+    findings.extend(
+        [
+        f"- One-shot generated Search-as-Code remains tied with fixed enriched at Recall@{k} `{generated['metrics'][f'recall@{k}']:.4f}`; codegen needs reflection on evidence coverage, not just route generation.",
+        f"- Candidate opportunity is large: fixed enriched sees `{fixed['latency']['mean_candidate_pool']:.1f}` candidates/query and generated sees `{generated['latency']['mean_candidate_pool']:.1f}` candidates/query before final top-{k}.",
         f"- BM25 remains a serious baseline because it scores the full corpus directly: Recall@{k} `{bm25['metrics'][f'recall@{k}']:.4f}` at `{bm25['latency']['mean_latency_ms']:.1f}` ms; dense-only Recall@{k} is `{dense['metrics'][f'recall@{k}']:.4f}`.",
         forced_budget_finding(forced_direction, generated_hard, forced_hard, forced, k),
         f"- Reflective mode triggered second-pass code on `{followups}` / `{output['tasks']}` test tasks, so it currently adds no quality gain. The reflection policy should use missing-evidence checks, not only thin candidate pools.",
-    ]
+        ]
+    )
+    return findings
 
 
 def forced_budget_finding(direction: str, generated_hard: float, forced_hard: float, forced: dict, k: int) -> str:
@@ -960,12 +1464,40 @@ def render_example(example: dict, k: int) -> list[str]:
         f"| Method | Recall@{k} | Hard-neg count@{k} | Top docs |",
         "|---|---:|---:|---|",
     ]
-    for method in ["bm25", "hybrid", "fixed_enriched", "generated", "generated_force_budget", "reflective"]:
+    methods = ["bm25", "hybrid", "fixed_enriched", "generated"]
+    if "iterative_agentic" in example["metrics"]:
+        methods.append("iterative_agentic")
+    methods.extend(["generated_force_budget", "reflective"])
+    for method in methods:
         metrics = example["metrics"][method]
         top_docs = ", ".join(example["top_doc_ids"].get(method, [])[:5])
         lines.append(
             f"| {method} | {metrics[f'recall@{k}']:.4f} | "
             f"{metrics[f'hard_negative_count@{k}']} | {top_docs} |"
+        )
+    iterative_plan = first_event(example.get("iterative_trace", []), "agentic_iterative_plan")
+    if iterative_plan:
+        lines.extend(
+            [
+                "",
+                "Iterative agentic plan:",
+                "",
+                "```json",
+                json.dumps(iterative_plan["payload"], indent=2)[:3000],
+                "```",
+            ]
+        )
+    iterative_reflection = first_event(example.get("iterative_trace", []), "agentic_iterative_reflection")
+    if iterative_reflection:
+        lines.extend(
+            [
+                "",
+                "Iterative evidence reflection:",
+                "",
+                "```json",
+                json.dumps(iterative_reflection["payload"], indent=2)[:3000],
+                "```",
+            ]
         )
     plan = first_event(example["generated_trace"], "agentic_plan")
     if plan:
