@@ -33,6 +33,7 @@
       color: var(--ink);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.45;
+      overflow-x: hidden;
     }
     a { color: var(--blue); text-decoration: none; }
     a:hover { text-decoration: underline; }
@@ -76,6 +77,9 @@
       display: flex;
       gap: 4px;
       overflow-x: auto;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
       padding: 6px 0;
     }
     .links a {
@@ -481,6 +485,181 @@
       color: var(--muted);
     }
     .outcome-row strong { color: var(--ink); }
+    .flow-demo-grid {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .animated-case {
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 20px rgba(23, 32, 42, 0.05);
+    }
+    .animated-case-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+    .animated-case-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .score-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .score-chip {
+      min-height: 70px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+      border-radius: 6px;
+    }
+    .score-chip span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 780;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .score-chip strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--ink);
+      font-size: 20px;
+      font-variant-numeric: tabular-nums;
+    }
+    .flow-compare {
+      display: grid;
+      gap: 10px;
+    }
+    .flow-track {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr) 94px;
+      gap: 12px;
+      align-items: center;
+      min-height: 84px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .flow-track > * { min-width: 0; }
+    .track-name {
+      font-weight: 820;
+      color: #243243;
+      font-size: 14px;
+    }
+    .track-name span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 680;
+    }
+    .track-score {
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .track-score strong {
+      display: block;
+      color: var(--ink);
+      font-size: 18px;
+    }
+    .flow-path {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(112px, 1fr));
+      gap: 8px;
+      align-items: stretch;
+      min-height: 62px;
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .flow-path::before,
+    .flow-path::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 2px;
+      transform: translateY(-50%);
+      border-radius: 999px;
+    }
+    .flow-path::before { background: #dce3eb; }
+    .flow-path::after {
+      width: 100%;
+      right: auto;
+      background: var(--blue);
+      animation: flowSweep 4.8s ease-in-out infinite;
+      transform-origin: left center;
+    }
+    .flow-track.generated .flow-path::after,
+    .flow-track.codegen .flow-path::after { background: var(--violet); }
+    .flow-track.agent-fixed .flow-path::after { background: var(--amber); }
+    .flow-track.fixed .flow-path::after { background: var(--green); }
+    .flow-node {
+      position: relative;
+      z-index: 1;
+      min-height: 58px;
+      display: grid;
+      align-content: center;
+      padding: 9px;
+      border: 1px solid #cad3df;
+      background: white;
+      border-radius: 6px;
+      color: #2d3b4c;
+      font-size: 12px;
+      font-weight: 760;
+      opacity: 0.25;
+      transform: translateY(4px);
+      animation: nodePulse 4.8s ease-in-out infinite;
+      animation-delay: calc(var(--i) * 0.42s);
+    }
+    .flow-node small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+    }
+    .flow-node.win {
+      border-color: #bfb0f5;
+      background: var(--violet-soft);
+      color: var(--violet);
+    }
+    .flow-node.warn {
+      border-color: #f0c99a;
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+    .flow-node.miss {
+      border-color: #efb6b6;
+      background: var(--red-soft);
+      color: var(--red);
+    }
+    @keyframes flowSweep {
+      0% { transform: translateY(-50%) scaleX(0); opacity: 0.45; }
+      55% { transform: translateY(-50%) scaleX(1); opacity: 1; }
+      100% { transform: translateY(-50%) scaleX(1); opacity: 0.35; }
+    }
+    @keyframes nodePulse {
+      0%, 8% { opacity: 0.25; transform: translateY(4px); }
+      18%, 70% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0.45; transform: translateY(0); }
+    }
     code, pre {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     }
@@ -553,6 +732,18 @@
     }
     @media (max-width: 900px) {
       .hero-grid, .grid-2, .grid-3, .benchmark.active, .case, .decision { grid-template-columns: 1fr; }
+      .animated-case-head, .flow-track { grid-template-columns: 1fr; }
+      .score-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .track-score { text-align: left; }
+      .flow-path {
+        display: flex;
+        overflow-x: auto;
+        grid-template-columns: none;
+        padding-bottom: 2px;
+      }
+      .flow-node {
+        flex: 0 0 128px;
+      }
       .lane, .layer { grid-template-columns: 1fr; }
       .lane-read { text-align: left; }
       .bar-row { grid-template-columns: 1fr; gap: 5px; }
@@ -570,6 +761,11 @@
       .wrap { width: min(100% - 22px, 1180px); }
       section { padding: 34px 0; }
       .outcome-row { grid-template-columns: 1fr; }
+      .score-strip { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .flow-path::after, .flow-node { animation: none; opacity: 1; transform: none; }
+      .flow-path::after { transform: translateY(-50%) scaleX(1); }
     }
   </style>
 </head>
@@ -799,6 +995,123 @@
             <h2>The useful demo is not the score. It is the generated flow.</h2>
             <p>These examples show why programmable retrieval can be better than one fixed pipeline, and where it still fails.</p>
           </div>
+        </div>
+        <div class="flow-demo-grid">
+          <article class="animated-case">
+            <div class="animated-case-head">
+              <div>
+                <span class="tag violet">Animated comparison</span>
+                <h3>Example 1: cache namespace proof</h3>
+                <p>A regulated customer asks which account needs namespace proof, which release provides it, and what feature should be cited.</p>
+              </div>
+              <div class="score-strip">
+                <div class="score-chip"><span>Fixed</span><strong>0.0000</strong></div>
+                <div class="score-chip"><span>Generated</span><strong>0.0000</strong></div>
+                <div class="score-chip"><span>Agent fixed</span><strong>0.0000</strong></div>
+                <div class="score-chip"><span>Codegen</span><strong>0.8000</strong></div>
+              </div>
+            </div>
+            <div class="flow-compare">
+              <div class="flow-track fixed">
+                <div class="track-name">Fixed baseline<span>Same pipeline every time</span></div>
+                <div class="flow-path">
+                  <div class="flow-node" style="--i:0">Query rewrite<small>generic rewrite</small></div>
+                  <div class="flow-node" style="--i:1">Hybrid recall<small>large pool</small></div>
+                  <div class="flow-node" style="--i:2">Rerank<small>proof notes dominate</small></div>
+                  <div class="flow-node miss" style="--i:3">Miss release<small>no Atlas 4.9.0</small></div>
+                </div>
+                <div class="track-score"><strong>0.0000</strong>Recall@10</div>
+              </div>
+              <div class="flow-track generated">
+                <div class="track-name">Generated flow<span>More routes, one pass</span></div>
+                <div class="flow-path">
+                  <div class="flow-node" style="--i:0">Fanout routes<small>hybrid + BM25 + dense</small></div>
+                  <div class="flow-node" style="--i:1">SDK filters<small>some controls</small></div>
+                  <div class="flow-node" style="--i:2">Rerank once<small>same decoy cluster</small></div>
+                  <div class="flow-node miss" style="--i:3">Still misses<small>release not covered</small></div>
+                </div>
+                <div class="track-score"><strong>0.0000</strong>Recall@10</div>
+              </div>
+              <div class="flow-track agent-fixed">
+                <div class="track-name">Agentic fixed-flow<span>Reflects, but tool is rigid</span></div>
+                <div class="flow-path">
+                  <div class="flow-node" style="--i:0">Call fixed flow<small>proof query</small></div>
+                  <div class="flow-node" style="--i:1">Reflect missing<small>account, ticket, release</small></div>
+                  <div class="flow-node warn" style="--i:2">Call fixed again<small>many tool calls</small></div>
+                  <div class="flow-node miss" style="--i:3">Still decoys<small>no low-level filters</small></div>
+                </div>
+                <div class="track-score"><strong>0.0000</strong>Recall@10</div>
+              </div>
+              <div class="flow-track codegen">
+                <div class="track-name">Agentic codegen<span>Reflects and rewrites code</span></div>
+                <div class="flow-path">
+                  <div class="flow-node" style="--i:0">Plan evidence<small>account, ticket, release</small></div>
+                  <div class="flow-node" style="--i:1">Search with filters<small>doc_type constraints</small></div>
+                  <div class="flow-node" style="--i:2">Preselect evidence<small>release + advisory</small></div>
+                  <div class="flow-node win" style="--i:3">Answerable context<small>QuartzBio, 4.9.0</small></div>
+                </div>
+                <div class="track-score"><strong>0.8000</strong>Recall@10</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="animated-case">
+            <div class="animated-case-head">
+              <div>
+                <span class="tag amber">Animated comparison</span>
+                <h3>Example 2: CT-R OAuth approval</h3>
+                <p>The query needs alias expansion, final approval, the fixed version, and a rejection of the stale version.</p>
+              </div>
+              <div class="score-strip">
+                <div class="score-chip"><span>Fixed</span><strong>0.1429</strong></div>
+                <div class="score-chip"><span>Generated</span><strong>0.1429</strong></div>
+                <div class="score-chip"><span>Agent fixed</span><strong>0.1429</strong></div>
+                <div class="score-chip"><span>Codegen</span><strong>0.8571</strong></div>
+              </div>
+            </div>
+            <div class="flow-compare">
+              <div class="flow-track fixed">
+                <div class="track-name">Fixed baseline<span>Authority decoys crowd top-10</span></div>
+                <div class="flow-path">
+                  <div class="flow-node" style="--i:0">Query rewrite<small>CT-R unresolved</small></div>
+                  <div class="flow-node" style="--i:1">Hybrid recall<small>approval ledgers</small></div>
+                  <div class="flow-node" style="--i:2">Rerank<small>near-duplicates</small></div>
+                  <div class="flow-node miss" style="--i:3">Thin evidence<small>1 hard negative</small></div>
+                </div>
+                <div class="track-score"><strong>0.1429</strong>Recall@10</div>
+              </div>
+              <div class="flow-track generated">
+                <div class="track-name">Generated flow<span>Different routes, no recovery</span></div>
+                <div class="flow-path">
+                  <div class="flow-node" style="--i:0">Version routes<small>Beacon terms</small></div>
+                  <div class="flow-node" style="--i:1">Approval route<small>final approval</small></div>
+                  <div class="flow-node" style="--i:2">One rerank<small>approval-heavy</small></div>
+                  <div class="flow-node miss" style="--i:3">Still thin<small>misses alias + ticket</small></div>
+                </div>
+                <div class="track-score"><strong>0.1429</strong>Recall@10</div>
+              </div>
+              <div class="flow-track agent-fixed">
+                <div class="track-name">Agentic fixed-flow<span>More calls, same blind spot</span></div>
+                <div class="flow-path">
+                  <div class="flow-node" style="--i:0">Call fixed flow<small>OAuth review</small></div>
+                  <div class="flow-node" style="--i:1">Reflect goals<small>alias, release, authority</small></div>
+                  <div class="flow-node warn" style="--i:2">Call fixed again<small>tool remains broad</small></div>
+                  <div class="flow-node miss" style="--i:3">Decoys persist<small>1 hard negative</small></div>
+                </div>
+                <div class="track-score"><strong>0.1429</strong>Recall@10</div>
+              </div>
+              <div class="flow-track codegen">
+                <div class="track-name">Agentic codegen<span>Uses source-specific controls</span></div>
+                <div class="flow-path">
+                  <div class="flow-node" style="--i:0">Resolve CT-R<small>alias registry</small></div>
+                  <div class="flow-node" style="--i:1">Target sources<small>ticket + advisory + releases</small></div>
+                  <div class="flow-node" style="--i:2">Reject stale<small>3.14.0 not enough</small></div>
+                  <div class="flow-node win" style="--i:3">Clean context<small>3.14.1 citable</small></div>
+                </div>
+                <div class="track-score"><strong>0.8571</strong>Recall@10</div>
+              </div>
+            </div>
+          </article>
         </div>
         <div class="case-grid">
           <article class="case">
