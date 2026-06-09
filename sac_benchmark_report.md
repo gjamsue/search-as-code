@@ -7,7 +7,6 @@ Tasks: `31`
 Primary metric: `Recall@10`
 Candidate opportunity: rerank systems retrieve up to `2400` candidates per query before final top-10 output.
 Quality score: `100 * (0.55*Recall@10 + 0.25*nDCG@10 + 0.15*MRR@10 + 0.05*AllEvidence@10 - 0.20*HardNegativeIntrusion@10)`.
-Latency score: fastest architecture-system mean latency divided by system mean latency, scaled to 100.
 
 ## Readout
 
@@ -15,12 +14,12 @@ Iterative agentic Search-as-Code is the first flow that clearly separates from f
 
 ## Architecture Comparison
 
-| Architecture | System | Quality score | Latency score | Recall@10 | Hard-neg hit@10 | Mean latency | Search calls | Flow shape |
+| Architecture | System | Quality score | Recall@10 | Hard-neg hit@10 | Mean latency | Search calls | Rerank pairs | Flow shape |
 |---|---|---:|---:|---:|---:|---:|---:|---|
-| Fixed flow baseline | `fixed_understanding_rewrite_hybrid_rerank` | 23.2 | 100.0 | 0.1857 | 0.2258 | 3231.2 ms | 3.97 | Fixed query understanding + rewrite + hybrid retrieval + rerank |
-| Generated flow | `generated_search_as_code` | 23.2 | 99.0 | 0.1857 | 0.2258 | 3263.1 ms | 6.97 | One-shot generated route plan with SDK parameters |
-| Agentic fixed-flow calls | `agentic_fixed_flow_iterative` | 33.1 | 81.0 | 0.2694 | 0.1613 | 3991.5 ms | 12.71 | Agent iteratively calls the same fixed flow with new queries |
-| Agentic codegen | `generated_iterative_agentic_search_as_code` | 47.1 | 96.1 | 0.4712 | 0.2258 | 3362.5 ms | 7.16 | Generated code iterates with evidence-coverage reflection |
+| Fixed flow baseline | `fixed_understanding_rewrite_hybrid_rerank` | 23.2 | 0.1857 | 0.2258 | 3231.2 ms | 3.97 | 2400.0 | Fixed query understanding + rewrite + hybrid retrieval + rerank |
+| Generated flow | `generated_search_as_code` | 23.2 | 0.1857 | 0.2258 | 3263.1 ms | 6.97 | 2400.0 | One-shot generated route plan with SDK parameters |
+| Agentic fixed-flow calls | `agentic_fixed_flow_iterative` | 33.1 | 0.2694 | 0.1613 | 3991.5 ms | 12.71 | 2687.4 | Agent iteratively calls the same fixed flow with new queries |
+| Agentic codegen | `generated_iterative_agentic_search_as_code` | 47.1 | 0.4712 | 0.2258 | 3362.5 ms | 7.16 | 2400.0 | Generated code iterates with evidence-coverage reflection |
 
 ## Recall@10 Leaderboard
 

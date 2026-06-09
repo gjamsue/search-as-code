@@ -1573,20 +1573,17 @@ def build_architecture_comparison(systems: dict, ks: list[int]) -> list[dict]:
     included = [(system_id, label, note, systems[system_id]) for system_id, label, note in ARCHITECTURE_SYSTEMS if system_id in systems]
     if not included:
         return []
-    fastest_latency = min(item[3]["latency"]["mean_latency_ms"] for item in included if item[3]["latency"]["mean_latency_ms"] > 0)
     rows = []
     for system_id, label, note, result in included:
         metrics = result["metrics"]
         latency = result["latency"]
         quality = quality_score(metrics, k)
-        latency_score = round(100.0 * fastest_latency / latency["mean_latency_ms"], 1) if latency["mean_latency_ms"] else 0.0
         rows.append(
             {
                 "system": system_id,
                 "label": label,
                 "note": note,
                 f"quality_score@{k}": quality,
-                "latency_score": latency_score,
                 f"recall@{k}": metrics[f"recall@{k}"],
                 f"ndcg@{k}": metrics[f"ndcg@{k}"],
                 f"mrr@{k}": metrics[f"mrr@{k}"],
@@ -1845,7 +1842,6 @@ def render_report(output: dict) -> str:
         f"Primary metric: `Recall@{k}`",
         f"Candidate opportunity: rerank systems retrieve up to `{output['candidate_k']}` candidates per query before final top-{k} output.",
         f"Quality score: `100 * (0.55*Recall@{k} + 0.25*nDCG@{k} + 0.15*MRR@{k} + 0.05*AllEvidence@{k} - 0.20*HardNegativeIntrusion@{k})`.",
-        "Latency score: fastest architecture-system mean latency divided by system mean latency, scaled to 100.",
         "",
         "## Readout",
         "",
@@ -1897,15 +1893,15 @@ def render_report(output: dict) -> str:
 def render_architecture_comparison(output: dict, k: int) -> list[str]:
     rows = output.get("architecture_comparison") or build_architecture_comparison(output["systems"], output["metrics_k"])
     lines = [
-        f"| Architecture | System | Quality score | Latency score | Recall@{k} | Hard-neg hit@{k} | Mean latency | Search calls | Flow shape |",
+        f"| Architecture | System | Quality score | Recall@{k} | Hard-neg hit@{k} | Mean latency | Search calls | Rerank pairs | Flow shape |",
         "|---|---|---:|---:|---:|---:|---:|---:|---|",
     ]
     for row in rows:
         lines.append(
             f"| {row['label']} | `{row['system']}` | {row[f'quality_score@{k}']:.1f} | "
-            f"{row['latency_score']:.1f} | {row[f'recall@{k}']:.4f} | "
-            f"{row[f'hard_negative_hit_rate@{k}']:.4f} | {row['mean_latency_ms']:.1f} ms | "
-            f"{row['mean_search_calls']:.2f} | {row['note']} |"
+            f"{row[f'recall@{k}']:.4f} | {row[f'hard_negative_hit_rate@{k}']:.4f} | "
+            f"{row['mean_latency_ms']:.1f} ms | {row['mean_search_calls']:.2f} | "
+            f"{row['mean_rerank_pairs']:.1f} | {row['note']} |"
         )
     return lines
 

@@ -21,14 +21,13 @@ Dataset: `sac-codegen-v3`
 - Primary metric: Recall@10
 - Candidate opportunity: rerank systems retrieve up to 2,400 candidates before producing final top 10
 - Quality score: weighted Recall@10, nDCG@10, MRR@10, all-evidence recovery, and hard-negative intrusion penalty
-- Latency score: fastest architecture-system mean latency divided by system latency, scaled to 100
 
-| Architecture | System | Quality | Latency | Recall@10 | Mean latency ms | Notes |
+| Architecture | System | Quality | Recall@10 | Mean latency ms | Search calls | Notes |
 |---|---|---:|---:|---:|---:|---|
-| Fixed flow baseline | `fixed_understanding_rewrite_hybrid_rerank` | 23.2 | 100.0 | 0.1857 | 3231.2 | Fixed understanding + rewrite + hybrid retrieval + rerank |
-| Generated flow | `generated_search_as_code` | 23.2 | 99.0 | 0.1857 | 3263.1 | One-shot generated route plan with exposed SDK parameters |
-| Agentic fixed-flow calls | `agentic_fixed_flow_iterative` | 33.1 | 81.0 | 0.2694 | 3991.5 | Agent iteratively calls the same fixed flow with new queries |
-| Agentic codegen | `generated_iterative_agentic_search_as_code` | 47.1 | 96.1 | 0.4712 | 3362.5 | Generated code iterates with evidence-coverage reflection |
+| Fixed flow baseline | `fixed_understanding_rewrite_hybrid_rerank` | 23.2 | 0.1857 | 3231.2 | 3.97 | Fixed understanding + rewrite + hybrid retrieval + rerank |
+| Generated flow | `generated_search_as_code` | 23.2 | 0.1857 | 3263.1 | 6.97 | One-shot generated route plan with exposed SDK parameters |
+| Agentic fixed-flow calls | `agentic_fixed_flow_iterative` | 33.1 | 0.2694 | 3991.5 | 12.71 | Agent iteratively calls the same fixed flow with new queries |
+| Agentic codegen | `generated_iterative_agentic_search_as_code` | 47.1 | 0.4712 | 3362.5 | 7.16 | Generated code iterates with evidence-coverage reflection |
 
 v3 is deliberately harder than v2: it adds alias/code-name tasks, source-authority disambiguation, stale approval ledgers, policy near-duplicates, and thousands of same-topic distractors. The current conclusion is sharper: one-shot generated flow does not beat the fixed baseline even with richer SDK parameters. Agentic iteration helps when the agent can only call the fixed flow, but agentic codegen is materially better because it can reflect on missing evidence and directly control the search stack.
 
