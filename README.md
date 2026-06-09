@@ -8,10 +8,13 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `real_search_stack/`: open-source search APIs built on BM25, sentence-transformers dense retrieval, spaCy query understanding/entity extraction, optional Wikidata linking, and cross-encoder reranking.
 - `run_sac_dataset_benchmark.py`: main benchmark runner for fixed BM25, dense, hybrid, hybrid+rerank, fixed enriched, one-shot generated Search-as-Code, agentic fixed-flow calls, naive reflective Search-as-Code, and iterative agentic Search-as-Code flows.
 - `run_public_benchmarks.py`: public benchmark sanity-check runner for BEIR/SciFact and HotpotQA dev-distractor slices.
+- `llm_search_codegen.py`: real LLM-backed Search-as-Code generator with `codex-cli` and `openai` providers, AST validation, sandbox execution, and one-shot repair support.
+- `skills/search-as-code-codegen/`: reusable Codex skill that defines the Search-as-Code runtime/tool contract for real code generation.
 - `sac_benchmark_results.json`: latest benchmark result payload.
 - `sac_benchmark_report.md`: latest benchmark report, focused on Recall@10.
 - `public_benchmark_results.json`: latest public benchmark sanity-check payload.
 - `public_benchmark_report.md`: latest public benchmark sanity-check report.
+- `real_codegen_demo_results.json` and `real_codegen_demo_report.md`: 1-query real LLM codegen smoke using the local Codex CLI login path.
 - `sac_benchmark_dataset_intro.md`: Chinese dataset intro with generation method, categories, statistics, and example tasks.
 - `agentic_search_presentation.html`: mobile-friendly presentation for the final Search-as-Code story.
 
@@ -45,6 +48,18 @@ These runs use known public benchmarks to check that the implementation behaves 
 
 The public check is useful for credibility, but it does not isolate enterprise-style control problems such as source authority, alias resolution, hard-negative intrusion, and evidence-category reflection. That is why the custom dataset remains the main decision benchmark.
 
+## Real LLM Codegen Smoke
+
+The full benchmark tables use deterministic Search-as-Code generators for
+reproducibility. A separate smoke path now runs true model-generated code:
+
+- `real_codegen_search_as_code` calls `LLMSearchCodeGenerator`.
+- Default provider is `codex-cli`, which uses the local Codex app login and does not need `OPENAI_API_KEY`.
+- Optional provider `openai` uses the Responses API and requires `OPENAI_API_KEY`.
+- Generated code is AST-validated, executed in a restricted namespace, and can run one repair turn after a runtime error.
+
+Latest smoke: BEIR/SciFact, 5,183 documents, 1 query. Codex generated a Python retrieval program in about 49.2s; execution took about 265.5ms, made 3 search calls, and used 1 rerank call. This is proof of execution, not a quality benchmark.
+
 ## Reproduce
 
 ```bash
@@ -58,7 +73,23 @@ python run_sac_dataset_benchmark.py --split test
 python run_public_benchmarks.py --benchmarks beir/scifact,hotpotqa/distractor --hotpot-limit 100 --candidate-k 40 --generated-branch-top-k 20 --generated-max-rerank-candidates 40 --no-per-query
 ```
 
-The benchmark uses local deterministic code generation for reproducibility. Hosted LLM code-generation latency is not included in the checked-in result, but generation time is tracked separately in the JSON so it can be replaced with a real model latency sensitivity analysis.
+Run the real codegen smoke through the local Codex login path:
+
+```bash
+python run_public_benchmarks.py \
+  --benchmarks beir/scifact \
+  --beir-query-limit 1 \
+  --systems fixed_understanding_rewrite_hybrid_rerank,real_codegen_search_as_code \
+  --candidate-k 20 \
+  --real-codegen-provider codex-cli \
+  --codex-reasoning-effort low \
+  --output real_codegen_demo_results.json \
+  --report real_codegen_demo_report.md
+```
+
+The main benchmark uses local deterministic code generation for reproducibility.
+Use `real_codegen_search_as_code` when measuring true model generation latency,
+invalid-code rate, repair rate, and retrieval quality.
 
 ## Optional API Server
 

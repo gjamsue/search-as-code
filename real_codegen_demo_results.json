@@ -1,0 +1,311 @@
+{
+  "benchmarks": [
+    "beir/scifact"
+  ],
+  "top_k": 10,
+  "candidate_k": 20,
+  "fixed_small_candidate_k": 32,
+  "generated_branch_top_k": 10,
+  "generated_max_rerank_candidates": 20,
+  "generated_min_rerank_candidates": 0,
+  "systems": [
+    "fixed_understanding_rewrite_hybrid_rerank",
+    "real_codegen_search_as_code"
+  ],
+  "real_codegen_provider": "codex-cli",
+  "real_codegen_model": "",
+  "wikidata_enabled": false,
+  "offline_models": true,
+  "results": [
+    {
+      "benchmark_id": "beir/scifact",
+      "display_name": "BEIR/scifact",
+      "source_url": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/scifact.zip",
+      "setting": "Full BEIR corpus loaded locally",
+      "split": "test",
+      "documents": 5183,
+      "queries": 1,
+      "top_k": 10,
+      "candidate_k": 20,
+      "runtime_seconds": 49.72,
+      "notes": [
+        "This is a real BEIR dataset loaded through the BEIR GenericDataLoader.",
+        "Metrics are local-system sanity-check numbers, not leaderboard submissions."
+      ],
+      "systems": {
+        "fixed_understanding_rewrite_hybrid_rerank": {
+          "metrics": {
+            "ndcg@10": 0.0,
+            "recall@10": 0.0,
+            "mrr@10": 0.0,
+            "evaluated_queries": 1
+          },
+          "latency": {
+            "total_wall_seconds": 0.2244,
+            "mean_latency_ms": 224.445,
+            "p50_latency_ms": 224.445,
+            "p95_latency_ms": 224.445,
+            "mean_generation_ms": 0.013,
+            "mean_execution_ms": 224.421,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 1.0,
+            "mean_query_rewrite_calls": 0.0,
+            "mean_search_calls": 1.0,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 20.0,
+            "mean_candidate_pool": 20.0
+          },
+          "code_samples": [],
+          "per_query": [
+            {
+              "qid": "1",
+              "query": "0-dimensional biomaterials show inductive properties.",
+              "top_doc_ids": [
+                "43385013",
+                "37437064",
+                "17518195",
+                "10931595",
+                "23244529",
+                "25298276",
+                "4430962",
+                "11674596",
+                "24998637",
+                "18953920"
+              ],
+              "top_titles": [
+                "Epithelial and mesenchymal subpopulations within normal basal breast cell lines exhibit distinct stem cell/progenitor properties.",
+                "On the origin and impact of mesenchymal stem cell heterogeneity: new insights and emerging tools for single cell analysis.",
+                "The docking domain of histone H2A is required for H1 binding and RSC-mediated nucleosome remodeling",
+                "Geometry, epistasis, and developmental patterning.",
+                "A core subunit of Polycomb repressive complex 1 is broadly conserved in function but not primary sequence.",
+                "Emerging role of bisphosphonates in the clinic--antitumor activity and prevention of metastasis to bone.",
+                "Identification of human brain tumour initiating cells",
+                "Spatiotemporal control of mitosis by the conserved spindle matrix protein Megator",
+                "Interleukin 6 plays a key role in the development of antigen-induced arthritis.",
+                "The Epithelial-Mesenchymal Transition Generates Cells with Properties of Stem Cells"
+              ],
+              "relevant_doc_ids": [
+                "31715818"
+              ],
+              "query_metrics": {
+                "hits": 0,
+                "recall": 0.0,
+                "first_relevant_rank": null
+              },
+              "stats": {
+                "latency_ms": 224.44549994543195,
+                "generation_ms": 0.013416982255876064,
+                "execution_ms": 224.42129091359675,
+                "query_understanding_calls": 1,
+                "entity_linking_calls": 1,
+                "query_rewrite_calls": 0,
+                "search_calls": 1,
+                "rerank_calls": 1,
+                "rerank_pairs": 20,
+                "candidate_pool": 20
+              },
+              "trace": [
+                {
+                  "event": "fixed_enriched_flow",
+                  "payload": {
+                    "flow": "query understanding -> optional entity linking -> optional query rewrite -> hybrid search -> rerank",
+                    "rewrite_needed": false,
+                    "rewrites": [],
+                    "subqueries": [
+                      "0-dimensional biomaterials show inductive properties."
+                    ],
+                    "linked_entities": [
+                      {
+                        "mention": "0",
+                        "ner_label": "CARDINAL",
+                        "entity": "0",
+                        "confidence": 0.5,
+                        "method": "spacy_ner_fallback"
+                      }
+                    ],
+                    "candidate_pool": 20,
+                    "rerank_candidates": 20,
+                    "top_hits": [
+                      {
+                        "id": "43385013",
+                        "title": "Epithelial and mesenchymal subpopulations within normal basal breast cell lines exhibit distinct stem cell/progenitor properties.",
+                        "score": -5.4163,
+                        "bm25_score": 7.4627,
+                        "dense_score": 0.2052,
+                        "metadata": {
+                          "benchmark": "beir/scifact",
+                          "source": "beir",
+                          "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+                          "pre_rerank_score": 0.7644538879394531
+                        },
+                        "snippet": "It has been proposed that epithelial-mesenchymal transition (EMT) in mammary epithelial cells and breast cancer cells ge..."
+                      },
+                      {
+                        "id": "37437064",
+                        "title": "On the origin and impact of mesenchymal stem cell heterogeneity: new insights and emerging tools for single cell analysis.",
+                        "score": -7.1049,
+                        "bm25_score": 4.863,
+                        "dense_score": 0.1666,
+                        "metadata": {
+                          "benchmark": "beir/scifact",
+                          "source": "beir",
+                          "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+                          "pre_rerank_score": 0.5831789970397949
+                        },
+                        "snippet": "Mesenchymal stem cells (MSCs) display substantial cell-to-cell variation. This heterogeneity manifests among donors, amo..."
+                      },
+                      {
+                        "id": "17518195",
+                        "title": "The docking domain of histone H2A is required for H1 binding and RSC-mediated nucleosome remodeling",
+                        "score": -8.7479,
+                        "bm25_score": 6.7686,
+                        "dense_score": 0.0688,
+                        "metadata": {
+                          "benchmark": "beir/scifact",
+                          "source": "beir",
+                          "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+                          "pre_rerank_score": 0.61601722240448
+                        },
+                        "snippet": "Histone variants within the H2A family show high divergences in their C-terminal regions. In this work, we have studied..."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "real_codegen_search_as_code": {
+          "metrics": {
+            "ndcg@10": 0.0,
+            "recall@10": 0.0,
+            "mrr@10": 0.0,
+            "evaluated_queries": 1
+          },
+          "latency": {
+            "total_wall_seconds": 49.4955,
+            "mean_latency_ms": 49495.533,
+            "p50_latency_ms": 49495.533,
+            "p95_latency_ms": 49495.533,
+            "mean_generation_ms": 49229.962,
+            "mean_execution_ms": 265.543,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 1.0,
+            "mean_query_rewrite_calls": 1.0,
+            "mean_search_calls": 3.0,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 1.0,
+            "mean_candidate_pool": 1.0
+          },
+          "code_samples": [
+            {
+              "qid": "1",
+              "query": "0-dimensional biomaterials show inductive properties.",
+              "code": "def run(ctx):\n    TOP_K = 10\n    CANDIDATE_K = 20\n\n    query = ctx.query or \"0-dimensional biomaterials show inductive properties\"\n    analysis = ctx.query_understanding.analyze(query)\n\n    entity_texts = []\n    for entity in analysis.get(\"entities\", []):\n        text = entity.get(\"text\", \"\")\n        if text:\n            entity_texts.append(text)\n\n    linked_entities = []\n    if entity_texts:\n        linked_entities = ctx.entity_linking.link(\" \".join(entity_texts))\n\n    rewrite_result = ctx.query_rewrite.rewrite(\n        query,\n        analysis=analysis,\n        linked_entities=linked_entities,\n    )\n    rewrites = rewrite_result.get(\"rewrites\", [])\n\n    tokens = query.replace(\"-\", \" \").replace(\"/\", \" \").split()\n    lower_query = query.lower()\n    intents = analysis.get(\"intents\", [])\n    subqueries = analysis.get(\"subqueries\", [])\n    noun_chunks = analysis.get(\"noun_chunks\", [])\n\n    exact_signal = False\n    semantic_signal = False\n    if \"0-dimensional\" in lower_query or \"zero-dimensional\" in lower_query:\n        exact_signal = True\n    if len(entity_texts) >= 2 or len(tokens) > 6 or subqueries or noun_chunks:\n        semantic_signal = True\n    if \"inductive\" in lower_query or \"properties\" in lower_query or \"show\" in lower_query:\n        semantic_signal = True\n    if intents:\n        semantic_signal = True\n\n    mode = \"bm25\"\n    bm25_weight = 0.65\n    if exact_signal and semantic_signal:\n        mode = \"hybrid\"\n        bm25_weight = 0.7\n    elif semantic_signal:\n        mode = \"dense\"\n        bm25_weight = 0.45\n\n    search_queries = [query]\n    for rewritten in rewrites:\n        if rewritten and rewritten not in search_queries:\n            search_queries.append(rewritten)\n    for subquery in subqueries:\n        if subquery and subquery not in search_queries:\n            search_queries.append(subquery)\n\n    must_terms = []\n    if \"biomaterials\" in lower_query:\n        must_terms.append(\"biomaterials\")\n\n    should_terms = []\n    for term in [\"0-dimensional\", \"zero-dimensional\", \"inductive\", \"properties\"]:\n        if term in lower_query or term not in should_terms:\n            should_terms.append(term)\n\n    ctx.log(\"agentic_plan\", {\n        \"query\": query,\n        \"mode\": mode,\n        \"bm25_weight\": bm25_weight,\n        \"rewrite_method\": rewrite_result.get(\"method\", \"\"),\n        \"rewrite_count\": len(rewrites),\n        \"entity_count\": len(entity_texts),\n        \"candidate_limit\": CANDIDATE_K,\n    })\n\n    by_doc_id = {}\n    for search_query in search_queries:\n        if mode == \"hybrid\":\n            hits = ctx.search.search(\n                search_query,\n                mode=\"hybrid\",\n                top_k=CANDIDATE_K,\n                bm25_weight=bm25_weight,\n                must_terms=must_terms,\n                should_terms=should_terms,\n            )\n        elif mode == \"dense\":\n            hits = ctx.search.search(\n                search_query,\n                mode=\"dense\",\n                top_k=CANDIDATE_K,\n                should_terms=should_terms,\n            )\n        else:\n            hits = ctx.search.search(\n                search_query,\n                mode=\"bm25\",\n                top_k=CANDIDATE_K,\n                must_terms=must_terms,\n                should_terms=should_terms,\n            )\n\n        for hit in hits:\n            doc_id = hit.get(\"doc_id\", \"\")\n            if not doc_id:\n                continue\n            current = by_doc_id.get(doc_id)\n            if current is None or hit.get(\"score\", 0) > current.get(\"score\", 0):\n                by_doc_id[doc_id] = hit\n\n    candidates = list(by_doc_id.values())\n    candidates.sort(key=lambda item: item.get(\"score\", 0), reverse=True)\n    candidates = candidates[:CANDIDATE_K]\n\n    ranked_hits = ctx.ranking.rerank(query, candidates, top_k=TOP_K)\n    ctx.candidate_pool = len(candidates)\n\n    ctx.log(\"reflection\", {\n        \"selected_mode\": mode,\n        \"searched_queries\": len(search_queries),\n        \"deduped_candidates\": len(candidates),\n        \"returned_hits\": len(ranked_hits),\n        \"reason\": \"Hybrid/dense routing is used for semantic biomaterial-property matching while BM25 weight preserves exact zero-dimensional terminology.\",\n    })\n\n    return {\"hits\": ranked_hits, \"candidates\": candidates}",
+              "trace": [
+                {
+                  "event": "agentic_plan",
+                  "payload": {
+                    "query": "0-dimensional biomaterials show inductive properties.",
+                    "mode": "hybrid",
+                    "bm25_weight": 0.7,
+                    "rewrite_method": "deterministic_query_rewrite",
+                    "rewrite_count": 2,
+                    "entity_count": 1,
+                    "candidate_limit": 20
+                  }
+                },
+                {
+                  "event": "reflection",
+                  "payload": {
+                    "selected_mode": "hybrid",
+                    "searched_queries": 3,
+                    "deduped_candidates": 1,
+                    "returned_hits": 1,
+                    "reason": "Hybrid/dense routing is used for semantic biomaterial-property matching while BM25 weight preserves exact zero-dimensional terminology."
+                  }
+                }
+              ]
+            }
+          ],
+          "per_query": [
+            {
+              "qid": "1",
+              "query": "0-dimensional biomaterials show inductive properties.",
+              "top_doc_ids": [
+                "13231899"
+              ],
+              "top_titles": [
+                "In situ regulation of DC subsets and T cells mediates tumor regression in mice."
+              ],
+              "relevant_doc_ids": [
+                "31715818"
+              ],
+              "query_metrics": {
+                "hits": 0,
+                "recall": 0.0,
+                "first_relevant_rank": null
+              },
+              "stats": {
+                "latency_ms": 49495.53316598758,
+                "generation_ms": 49229.96233298909,
+                "execution_ms": 265.5431249877438,
+                "query_understanding_calls": 1,
+                "entity_linking_calls": 1,
+                "query_rewrite_calls": 1,
+                "search_calls": 3,
+                "rerank_calls": 1,
+                "rerank_pairs": 1,
+                "candidate_pool": 1
+              },
+              "trace": [
+                {
+                  "event": "agentic_plan",
+                  "payload": {
+                    "query": "0-dimensional biomaterials show inductive properties.",
+                    "mode": "hybrid",
+                    "bm25_weight": 0.7,
+                    "rewrite_method": "deterministic_query_rewrite",
+                    "rewrite_count": 2,
+                    "entity_count": 1,
+                    "candidate_limit": 20
+                  }
+                },
+                {
+                  "event": "reflection",
+                  "payload": {
+                    "selected_mode": "hybrid",
+                    "searched_queries": 3,
+                    "deduped_candidates": 1,
+                    "returned_hits": 1,
+                    "reason": "Hybrid/dense routing is used for semantic biomaterial-property matching while BM25 weight preserves exact zero-dimensional terminology."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "summary": [
+        {
+          "system": "fixed_understanding_rewrite_hybrid_rerank",
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "mrr@10": 0.0,
+          "mean_latency_ms": 224.445,
+          "mean_search_calls": 1.0,
+          "mean_rerank_pairs": 20.0
+        },
+        {
+          "system": "real_codegen_search_as_code",
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "mrr@10": 0.0,
+          "mean_latency_ms": 49495.533,
+          "mean_search_calls": 3.0,
+          "mean_rerank_pairs": 1.0
+        }
+      ]
+    }
+  ]
+}

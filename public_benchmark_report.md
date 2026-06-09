@@ -2,6 +2,8 @@
 
 These runs complement the custom enterprise Search-as-Code benchmark. They are intended to test whether the implementation behaves sensibly on known public datasets, not to claim official leaderboard numbers.
 
+Note: `generated_search_as_code` in this report is the deterministic Search-as-Code proxy used for reproducible full-batch evaluation. Use `real_codegen_search_as_code` for true model-generated Python; see `real_codegen_demo_report.md` for the current smoke test.
+
 - Top-k: `10`
 - Rerank candidate budget: `40`
 - Generated branch top-k: `20`

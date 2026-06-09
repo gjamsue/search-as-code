@@ -3,6 +3,7 @@ fastapi
 numpy
 pydantic
 rank-bm25
+requests
 sentence-transformers
 spacy
 uvicorn

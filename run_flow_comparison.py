@@ -413,6 +413,7 @@ def run_system(
         result = executor(code, ctx)
         execution_ms = (time.perf_counter() - execution_start) * 1000
         latency_ms = (time.perf_counter() - total_start) * 1000
+        executed_code = result.get("_executed_code", code)
 
         hits = result["hits"]
         top_hits = hits[:top_k]
@@ -434,7 +435,7 @@ def run_system(
                 }
             )
         if len(code_samples) < sample_codes:
-            code_samples.append({"qid": qid, "query": query, "code": code, "trace": ctx.trace[:8]})
+            code_samples.append({"qid": qid, "query": query, "code": executed_code, "trace": ctx.trace[:8]})
         if idx % 50 == 0:
             print(f"  {idx}/{len(queries)} queries")
 

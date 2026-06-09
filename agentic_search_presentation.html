@@ -902,7 +902,7 @@
           </div>
           <div class="summary-item">
             <strong>What is still missing.</strong>
-            <p>The next bar is production proof: real LLM codegen, tool-calling agent baseline, token accounting, and answer-level context selection to filter hard negatives.</p>
+            <p>The next bar is production proof: scale real LLM codegen, add a tool-calling agent baseline, count tokens, and score answer-level grounding.</p>
           </div>
         </div>
       </div>
@@ -1373,8 +1373,8 @@
           <tbody>
             <tr>
               <td>Real LLM codegen</td>
-              <td>Current generated flow is deterministic. It validates the architecture, not the model’s ability to write reliable retrieval code.</td>
-              <td>Generate Python from a tool schema; measure codegen latency, invalid-code rate, repair rate, and retrieval quality.</td>
+              <td>A true Codex CLI codegen smoke now works without an API key, but the full benchmark table still uses deterministic proxy flows for reproducibility.</td>
+              <td>Scale the real-codegen eval to 30-100 queries; measure generation latency, invalid-code rate, repair rate, retrieval quality, and tokens.</td>
             </tr>
             <tr>
               <td>Real LLM tool-calling baseline</td>
@@ -1410,7 +1410,7 @@
             <p>The demo should show generated retrieval code, different flows per query, and a fair comparison against fixed pipelines and tool-calling agents.</p>
           </div>
           <ol class="next-list">
-            <li><strong>Run real codegen.</strong><br>Use proprietary models to generate retrieval programs from the same tool schema.</li>
+            <li><strong>Scale real codegen.</strong><br>Use the Codex skill/tool schema path across a larger sample and track repair/failure rate.</li>
             <li><strong>Add the agent baseline.</strong><br>Compare against multi-turn tool calling with the same APIs and the same evaluation set.</li>
             <li><strong>Score final answers.</strong><br>Measure answer accuracy, citation grounding, token cost, latency, and failure rate.</li>
             <li><strong>Harden context selection.</strong><br>Keep authoritative evidence, drop stale drafts, and track hard-negative leakage.</li>
@@ -1422,7 +1422,7 @@
 
   <footer class="footer">
     <div class="wrap">
-      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: sac_benchmark_dataset_intro.md, sac_benchmark_report.md, sac_benchmark_results.json, public_benchmark_report.md.
+      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: sac_benchmark_dataset_intro.md, sac_benchmark_report.md, sac_benchmark_results.json, public_benchmark_report.md, real_codegen_demo_report.md.
     </div>
   </footer>
 

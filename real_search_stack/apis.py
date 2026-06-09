@@ -18,7 +18,7 @@ from dataclasses import dataclass
 import json
 import math
 import re
-from typing import Iterable
+from typing import Any, Iterable
 from urllib import parse, request
 
 import numpy as np
@@ -51,6 +51,39 @@ class SearchCandidate:
     score: float
     bm25_score: float
     dense_score: float
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "doc_id": self.doc_id,
+            "id": self.doc_id,
+            "title": self.title,
+            "text": self.text,
+            "metadata": self.metadata,
+            "score": self.score,
+            "bm25_score": self.bm25_score,
+            "dense_score": self.dense_score,
+        }
+
+    def get(self, key: str, default: Any = None) -> Any:
+        return self.as_dict().get(key, default)
+
+    def __getitem__(self, key: str) -> Any:
+        return self.as_dict()[key]
+
+    def __iter__(self):
+        return iter(self.as_dict())
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.as_dict()
+
+    def items(self):
+        return self.as_dict().items()
+
+    def keys(self):
+        return self.as_dict().keys()
+
+    def values(self):
+        return self.as_dict().values()
 
     def compact(self, max_chars: int = 240) -> dict:
         snippet = self.text[:max_chars].replace("\n", " ").strip()
@@ -469,11 +502,11 @@ class RealRankingAPI:
     def rerank(
         self,
         query: str,
-        candidates: Iterable[SearchCandidate],
+        candidates: Iterable[SearchCandidate | dict],
         *,
         top_k: int = 10,
     ) -> list[SearchCandidate]:
-        candidates = list(candidates)
+        candidates = [_coerce_candidate(candidate) for candidate in candidates]
         if not candidates:
             return []
         pairs = [(query, candidate.title + "\n" + candidate.text) for candidate in candidates]
@@ -497,6 +530,38 @@ class RealRankingAPI:
             )
         reranked.sort(key=lambda item: item.score, reverse=True)
         return reranked[:top_k]
+
+
+def _coerce_candidate(candidate: SearchCandidate | dict) -> SearchCandidate:
+    if isinstance(candidate, SearchCandidate):
+        return candidate
+    metadata = candidate.get("metadata") or {}
+    if not isinstance(metadata, dict):
+        metadata = {}
+    extras = {
+        key: value
+        for key, value in candidate.items()
+        if key
+        not in {
+            "doc_id",
+            "id",
+            "title",
+            "text",
+            "metadata",
+            "score",
+            "bm25_score",
+            "dense_score",
+        }
+    }
+    return SearchCandidate(
+        doc_id=str(candidate.get("doc_id") or candidate.get("id") or ""),
+        title=str(candidate.get("title") or ""),
+        text=str(candidate.get("text") or ""),
+        metadata={**metadata, **extras},
+        score=float(candidate.get("score") or 0.0),
+        bm25_score=float(candidate.get("bm25_score") or 0.0),
+        dense_score=float(candidate.get("dense_score") or 0.0),
+    )
 
 
 def _minmax(scores: np.ndarray) -> np.ndarray:

@@ -30,6 +30,7 @@ from real_search_stack.apis import (
     RealQueryUnderstandingAPI,
     RealRankingAPI,
 )
+from llm_search_codegen import LLMSearchCodeGenerator, execute_llm_generated_program
 from run_flow_comparison import (
     execute_generated_program,
     execute_reflective_generated_program,
@@ -87,9 +88,15 @@ def main() -> None:
         help=(
             "Comma-separated systems. Supported: fixed_bm25, fixed_semantic_dense, fixed_hybrid, "
             "fixed_hybrid_rerank, fixed_understanding_rewrite_hybrid_rerank, generated_search_as_code, "
-            "generated_reflective_search_as_code."
+            "generated_reflective_search_as_code, real_codegen_search_as_code."
         ),
     )
+    parser.add_argument("--real-codegen-provider", default="codex-cli", choices=["codex-cli", "openai"])
+    parser.add_argument("--real-codegen-model", default="")
+    parser.add_argument("--real-codegen-timeout", type=int, default=120)
+    parser.add_argument("--real-codegen-cache-dir", default=".llm_codegen_cache")
+    parser.add_argument("--codex-cli", default="/Applications/Codex.app/Contents/Resources/codex")
+    parser.add_argument("--codex-reasoning-effort", default="low")
     parser.add_argument("--data-dir", default="benchmarks")
     parser.add_argument("--output", default="public_benchmark_results.json")
     parser.add_argument("--report", default="public_benchmark_report.md")
@@ -138,6 +145,13 @@ def main() -> None:
             generated_max_rerank_candidates=args.generated_max_rerank_candidates,
             generated_min_rerank_candidates=args.generated_min_rerank_candidates,
             selected_systems=selected_systems,
+            real_codegen_provider=args.real_codegen_provider,
+            real_codegen_model=args.real_codegen_model,
+            real_codegen_timeout=args.real_codegen_timeout,
+            real_codegen_cache_dir=args.real_codegen_cache_dir,
+            codex_cli=args.codex_cli,
+            codex_reasoning_effort=args.codex_reasoning_effort,
+            benchmark_hint=f"{loaded.display_name}: {loaded.setting}",
             query_understanding_api=query_understanding_api,
             entity_linking_api=entity_linking_api,
             query_rewrite_api=query_rewrite_api,
@@ -173,6 +187,8 @@ def main() -> None:
         "generated_max_rerank_candidates": args.generated_max_rerank_candidates,
         "generated_min_rerank_candidates": args.generated_min_rerank_candidates,
         "systems": sorted(selected_systems),
+        "real_codegen_provider": args.real_codegen_provider,
+        "real_codegen_model": args.real_codegen_model,
         "wikidata_enabled": args.wikidata,
         "offline_models": args.offline_models,
         "results": results,
@@ -316,6 +332,13 @@ def run_public_systems(
     generated_max_rerank_candidates: int,
     generated_min_rerank_candidates: int,
     selected_systems: set[str],
+    real_codegen_provider: str,
+    real_codegen_model: str,
+    real_codegen_timeout: int,
+    real_codegen_cache_dir: str,
+    codex_cli: str,
+    codex_reasoning_effort: str,
+    benchmark_hint: str,
     query_understanding_api: RealQueryUnderstandingAPI,
     entity_linking_api: RealEntityLinkingAPI,
     query_rewrite_api: RealQueryRewriteAPI,
@@ -332,6 +355,7 @@ def run_public_systems(
         "fixed_understanding_rewrite_hybrid_rerank",
         "generated_search_as_code",
         "generated_reflective_search_as_code",
+        "real_codegen_search_as_code",
     }
     unknown = selected_systems - supported_systems
     if unknown:
@@ -436,6 +460,68 @@ def run_public_systems(
                 top_k=top_k,
                 max_rerank_candidates=generated_max_rerank_candidates,
             ),
+            query_understanding_api=query_understanding_api,
+            entity_linking_api=entity_linking_api,
+            query_rewrite_api=query_rewrite_api,
+            search_api=search_api,
+            ranking_api=ranking_api,
+            sample_codes=sample_codes,
+            include_per_query=include_per_query,
+        )
+    if "real_codegen_search_as_code" in selected_systems:
+        llm_generator = LLMSearchCodeGenerator(
+            provider=real_codegen_provider,
+            model=real_codegen_model,
+            timeout_seconds=real_codegen_timeout,
+            cache_dir=real_codegen_cache_dir,
+            codex_cli=codex_cli,
+            codex_reasoning_effort=codex_reasoning_effort,
+        )
+
+        def generate_real_code(query: str) -> str:
+            return llm_generator.generate(
+                query,
+                top_k=top_k,
+                candidate_k=candidate_k,
+                benchmark_hint=benchmark_hint,
+            ).code
+
+        def execute_real_code(code: str, ctx) -> dict:
+            try:
+                result = execute_llm_generated_program(code, ctx, top_k=top_k, candidate_k=candidate_k)
+                result["_executed_code"] = code
+                return result
+            except Exception as exc:
+                ctx.log("codegen_runtime_error", {"error_type": type(exc).__name__, "error": str(exc)})
+                repaired = llm_generator.repair(
+                    ctx.query,
+                    code,
+                    exc,
+                    top_k=top_k,
+                    candidate_k=candidate_k,
+                    benchmark_hint=benchmark_hint,
+                )
+                ctx.log(
+                    "codegen_repair",
+                    {
+                        "provider": repaired.provider,
+                        "model": repaired.model,
+                        "cache_hit": repaired.cache_hit,
+                        "repair_latency_ms": repaired.latency_ms,
+                        "rationale": repaired.rationale,
+                    },
+                )
+                result = execute_llm_generated_program(repaired.code, ctx, top_k=top_k, candidate_k=candidate_k)
+                result["_executed_code"] = repaired.code
+                return result
+
+        systems["real_codegen_search_as_code"] = run_system(
+            "real_codegen_search_as_code",
+            queries,
+            qrels,
+            top_k,
+            generate_real_code,
+            execute_real_code,
             query_understanding_api=query_understanding_api,
             entity_linking_api=entity_linking_api,
             query_rewrite_api=query_rewrite_api,
