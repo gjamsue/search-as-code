@@ -210,6 +210,7 @@
       border-radius: var(--radius);
       box-shadow: 0 8px 20px rgba(23, 32, 42, 0.05);
     }
+    .card.wide { grid-column: 1 / -1; }
     .card p, .card li {
       color: var(--muted);
       font-size: 14px;
@@ -457,6 +458,90 @@
       font-size: 14px;
     }
     .takeaway-list strong { color: var(--ink); }
+    .compact-steps {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+    .compact-steps li {
+      position: relative;
+      padding: 12px 12px 12px 42px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f9fc;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .compact-steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      width: 20px;
+      height: 20px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--blue);
+      color: white;
+      font-size: 12px;
+      font-weight: 820;
+    }
+    .compact-steps strong { color: var(--ink); }
+    .index-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .index-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 6px 9px;
+      border: 1px solid #cad3df;
+      border-radius: 6px;
+      background: #fbfcfe;
+      color: #344457;
+      font-size: 12px;
+      font-weight: 760;
+    }
+    .query-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .query-example {
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfe;
+    }
+    .query-example span {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--violet);
+      font-size: 11px;
+      font-weight: 840;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .query-example strong {
+      display: block;
+      color: #243243;
+      font-size: 14px;
+      line-height: 1.28;
+    }
+    .query-example p {
+      margin: 8px 0 0;
+      font-size: 13px;
+    }
     .case-grid { display: grid; gap: 14px; }
     .case {
       display: grid;
@@ -757,6 +842,7 @@
       .bar-row { grid-template-columns: 1fr; gap: 5px; }
       .bar-value { text-align: left; }
       .metrics, .stat-strip { grid-template-columns: 1fr; }
+      .query-grid { grid-template-columns: 1fr; }
       .section-head { display: block; }
     }
     @media (max-width: 560px) {
@@ -933,26 +1019,67 @@
         </div>
 
         <div class="bench-tabs" role="tablist" aria-label="Benchmark tabs">
-          <button class="tab-button active" type="button" data-tab="dataset">Dataset</button>
+          <button class="tab-button active" type="button" data-tab="dataset">Dataset + Index</button>
           <button class="tab-button" type="button" data-tab="results">Results</button>
         </div>
 
         <div id="dataset" class="benchmark active" role="tabpanel">
           <div class="card">
-            <h3>Dataset scope</h3>
-            <ul>
-              <li>Simulated enterprise knowledge base: account briefs, escalation logs, security advisories, Jira-style tickets, release notes, runbooks, alias registries, approval ledgers, and policy docs.</li>
-              <li>Tasks require joining customer, alias, product, CVE, ticket, owner, fixed version, source authority, renewal window, and blocker status.</li>
-              <li>Hard distractors are structured into same-topic clusters: draft advisories, duplicate tickets, stale snapshots, ambiguous aliases, wrong-version approvals, war-room drafts, namespace-proof notes, and policy near-duplicates.</li>
-            </ul>
+            <h3>How the dataset is built</h3>
+            <ol class="compact-steps">
+              <li><strong>Start with source-of-truth docs.</strong> 68 core or near-core documents: account briefs, escalations, security advisories, tickets, releases, runbooks, alias registries, approval ledgers, and authority matrices.</li>
+              <li><strong>Add realistic noise.</strong> 5,942 structured hard distractors in same-topic clusters: stale drafts, duplicate tickets, wrong versions, ambiguous aliases, dashboards, Slack-style notes, and near-duplicate approvals.</li>
+              <li><strong>Label the task.</strong> Each query has a gold answer, evidence doc IDs, hard-negative IDs, required operations, and expected search routes. Exports include corpus/tasks/hard negatives plus BEIR-style qrels.</li>
+            </ol>
           </div>
           <div class="card">
-            <h3>What it tests</h3>
+            <h3>Index and test stack</h3>
+            <div class="index-flow" aria-label="Index build flow">
+              <span class="index-chip">corpus.jsonl</span>
+              <span class="arrow">-&gt;</span>
+              <span class="index-chip">title + text + metadata</span>
+              <span class="arrow">-&gt;</span>
+              <span class="index-chip">BM25 token index</span>
+              <span class="arrow">-&gt;</span>
+              <span class="index-chip">MiniLM dense vectors</span>
+              <span class="arrow">-&gt;</span>
+              <span class="index-chip">hybrid search API</span>
+              <span class="arrow">-&gt;</span>
+              <span class="index-chip">CrossEncoder rerank</span>
+            </div>
             <ul class="takeaway-list">
-              <li><strong>Dynamic route selection:</strong> decide when to use hybrid, BM25, dense, rewrite, alias expansion, or exact identifier routes.</li>
-              <li><strong>Large candidate opportunity:</strong> main rerank flows can retrieve around 2,400 candidates before final top-10 output.</li>
-              <li><strong>Evidence discipline:</strong> recover missing evidence while avoiding stale or non-authoritative hard negatives.</li>
-              <li><strong>Reflection:</strong> generate follow-up retrieval code when required evidence categories are missing, not only when candidate pool is thin.</li>
+              <li><strong>Open-source components:</strong> rank_bm25, sentence-transformers all-MiniLM-L6-v2, spaCy query understanding, optional Wikidata linking, and ms-marco-MiniLM CrossEncoder reranking.</li>
+              <li><strong>Exposed controls:</strong> mode, top_k, BM25 weight, include/exclude doc types and sources, must/should/exclude terms, and rerank candidate budget.</li>
+              <li><strong>Measured costs:</strong> raw mean latency, search calls/query, candidate pool size, and rerank pairs. No normalized latency score.</li>
+            </ul>
+          </div>
+          <div class="card wide">
+            <h3>Example queries in the test set</h3>
+            <div class="query-grid">
+              <div class="query-example">
+                <span>Alias + approval</span>
+                <strong>For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?</strong>
+                <p>Requires resolving CT-R to Contoso Retail, finding the final approval ledger, citing Beacon 3.14.1, and rejecting 3.14.0.</p>
+              </div>
+              <div class="query-example">
+                <span>Regulated proof</span>
+                <strong>A regulated customer asks for cache namespace proof. Which customer, release, and feature should be cited?</strong>
+                <p>Requires joining customer, escalation, ticket, advisory, and release evidence to identify QuartzBio and AtlasSearch 4.9.0.</p>
+              </div>
+              <div class="query-example">
+                <span>Reflection policy</span>
+                <strong>A generated query found 900 candidates but no approval ledger. Should it stop or generate follow-up code?</strong>
+                <p>Tests whether reflection looks for missing evidence categories, not only candidate count.</p>
+              </div>
+            </div>
+          </div>
+          <div class="card wide">
+            <h3>What this setup stresses</h3>
+            <ul class="takeaway-list">
+              <li><strong>Dynamic route selection:</strong> decide when to use hybrid, BM25, dense, rewrite, alias expansion, exact identifiers, and metadata filters.</li>
+              <li><strong>Large candidate opportunity:</strong> main rerank flows can retrieve up to 2,400 candidates before final top-10 output.</li>
+              <li><strong>Evidence discipline:</strong> recover required evidence while avoiding stale or non-authoritative hard negatives.</li>
+              <li><strong>Reflection:</strong> generate follow-up retrieval code when customer, ticket, release, approval, or policy evidence is missing.</li>
             </ul>
           </div>
         </div>
