@@ -1101,16 +1101,18 @@
                     <th>System</th>
                     <th>Quality</th>
                     <th>Recall</th>
-                    <th>Latency</th>
+                    <th>Total</th>
+                    <th>Codegen</th>
+                    <th>Exec</th>
                     <th>Calls</th>
                     <th>Rerank pairs</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td>Fixed baseline</td><td>23.2</td><td>0.1857</td><td>3,231 ms</td><td>3.97</td><td>2,400</td></tr>
-                  <tr><td>Generated flow</td><td>23.2</td><td>0.1857</td><td>3,263 ms</td><td>6.97</td><td>2,400</td></tr>
-                  <tr><td>Agentic fixed-flow</td><td>33.1</td><td>0.2694</td><td>3,992 ms</td><td>12.71</td><td>2,687</td></tr>
-                  <tr><td>Agentic codegen</td><td>47.1</td><td>0.4712</td><td>3,362 ms</td><td>7.16</td><td>2,400</td></tr>
+                  <tr><td>Fixed baseline</td><td>23.2</td><td>0.1857</td><td>3,231 ms</td><td>0.0 ms</td><td>3,231 ms</td><td>3.97</td><td>2,400</td></tr>
+                  <tr><td>Generated flow</td><td>23.2</td><td>0.1857</td><td>3,263 ms</td><td>0.1 ms</td><td>3,263 ms</td><td>6.97</td><td>2,400</td></tr>
+                  <tr><td>Agentic fixed-flow</td><td>33.1</td><td>0.2694</td><td>3,992 ms</td><td>0.1 ms</td><td>3,991 ms</td><td>12.71</td><td>2,687</td></tr>
+                  <tr><td>Agentic codegen</td><td>47.1</td><td>0.4712</td><td>3,362 ms</td><td>0.1 ms</td><td>3,362 ms</td><td>7.16</td><td>2,400</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1119,7 +1121,7 @@
             <div class="metric"><span>Quality winner</span><strong>47.1</strong><p>Agentic codegen quality score</p></div>
             <div class="metric"><span>Codegen gain</span><strong>+0.2855</strong><p>Recall@10 delta vs fixed and one-shot generated flow</p></div>
             <div class="metric"><span>Fixed-tool gain</span><strong>+0.0837</strong><p>Agentic fixed-flow delta vs fixed baseline</p></div>
-            <div class="metric"><span>Codegen latency</span><strong>3.36s</strong><p>Mean latency with 7.16 search calls/query</p></div>
+            <div class="metric"><span>Latency split</span><strong>3.36s</strong><p>Total: 0.1 ms codegen + 3.36s execution</p></div>
           </div>
         </div>
 
@@ -1135,7 +1137,7 @@
                     <th>Setting</th>
                     <th>Generated</th>
                     <th>Strong fixed</th>
-                    <th>Latency readout</th>
+                    <th>Total / codegen / exec</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1144,14 +1146,14 @@
                     <td>5,183 docs, 300 queries</td>
                     <td>0.8439</td>
                     <td>0.8278</td>
-                    <td>370 ms vs 319 ms</td>
+                    <td>370 / 0 / 370 ms vs 319 / 0 / 319 ms</td>
                   </tr>
                   <tr>
                     <td>HotpotQA distractor</td>
                     <td>991 pooled docs, 100 queries</td>
                     <td>0.9550</td>
                     <td>0.9550</td>
-                    <td>253 ms vs 211 ms</td>
+                    <td>253 / 0 / 253 ms vs 211 / 0 / 211 ms</td>
                   </tr>
                 </tbody>
               </table>
@@ -1373,8 +1375,8 @@
           <tbody>
             <tr>
               <td>Real LLM codegen</td>
-              <td>A true Codex CLI codegen smoke now works without an API key, but the full benchmark table still uses deterministic proxy flows for reproducibility.</td>
-              <td>Scale the real-codegen eval to 30-100 queries; measure generation latency, invalid-code rate, repair rate, retrieval quality, and tokens.</td>
+              <td>A true Codex CLI codegen smoke now works without an API key. Its latency split is 49.5s total = 49.2s codegen + 0.27s execution.</td>
+              <td>Scale the real-codegen eval to 30-100 queries; report total, codegen, and execution time alongside invalid-code rate, repair rate, quality, and tokens.</td>
             </tr>
             <tr>
               <td>Real LLM tool-calling baseline</td>

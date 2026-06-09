@@ -12,15 +12,19 @@ benchmark tables.
 
 ## Result
 
-| System | Recall@10 | Generation ms | Execution ms | Search calls | Rerank pairs | Candidate pool |
-|---|---:|---:|---:|---:|---:|---:|
-| `fixed_understanding_rewrite_hybrid_rerank` | 0.0000 | 0.0 | 224.4 | 1.0 | 20.0 | 20.0 |
-| `real_codegen_search_as_code` | 0.0000 | 49230.0 | 265.5 | 3.0 | 1.0 | 1.0 |
+| System | Recall@10 | Total ms | Codegen ms | Execution ms | Search calls | Rerank pairs | Candidate pool |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `fixed_understanding_rewrite_hybrid_rerank` | 0.0000 | 224.4 | 0.0 | 224.4 | 1.0 | 20.0 | 20.0 |
+| `real_codegen_search_as_code` | 0.0000 | 49495.5 | 49230.0 | 265.5 | 3.0 | 1.0 | 1.0 |
 
 This is intentionally a smoke test, not a benchmark claim. It verifies that
 Codex generated Python from the Search-as-Code skill/tool contract, the AST
 guard accepted it, and the generated program executed against the real local
 SciFact index.
+
+Latency is reported as total wall time, code generation time, and execution
+time. For real codegen, code generation dominates this smoke run; cached reuse
+uses the same generated program and mostly pays execution time.
 
 ## Generated Flow
 

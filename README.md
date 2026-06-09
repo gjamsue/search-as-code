@@ -28,12 +28,12 @@ Dataset: `sac-codegen-v3`
 - Candidate opportunity: rerank systems retrieve up to 2,400 candidates before producing final top 10
 - Quality score: weighted Recall@10, nDCG@10, MRR@10, all-evidence recovery, and hard-negative intrusion penalty
 
-| Architecture | System | Quality | Recall@10 | Mean latency ms | Search calls | Notes |
-|---|---|---:|---:|---:|---:|---|
-| Fixed flow baseline | `fixed_understanding_rewrite_hybrid_rerank` | 23.2 | 0.1857 | 3231.2 | 3.97 | Fixed understanding + rewrite + hybrid retrieval + rerank |
-| Generated flow | `generated_search_as_code` | 23.2 | 0.1857 | 3263.1 | 6.97 | One-shot generated route plan with exposed SDK parameters |
-| Agentic fixed-flow calls | `agentic_fixed_flow_iterative` | 33.1 | 0.2694 | 3991.5 | 12.71 | Agent iteratively calls the same fixed flow with new queries |
-| Agentic codegen | `generated_iterative_agentic_search_as_code` | 47.1 | 0.4712 | 3362.5 | 7.16 | Generated code iterates with evidence-coverage reflection |
+| Architecture | System | Quality | Recall@10 | Total ms | Codegen ms | Execution ms | Search calls | Notes |
+|---|---|---:|---:|---:|---:|---:|---:|---|
+| Fixed flow baseline | `fixed_understanding_rewrite_hybrid_rerank` | 23.2 | 0.1857 | 3231.2 | 0.0 | 3231.2 | 3.97 | Fixed understanding + rewrite + hybrid retrieval + rerank |
+| Generated flow | `generated_search_as_code` | 23.2 | 0.1857 | 3263.1 | 0.1 | 3262.9 | 6.97 | One-shot generated route plan with exposed SDK parameters |
+| Agentic fixed-flow calls | `agentic_fixed_flow_iterative` | 33.1 | 0.2694 | 3991.5 | 0.1 | 3991.4 | 12.71 | Agent iteratively calls the same fixed flow with new queries |
+| Agentic codegen | `generated_iterative_agentic_search_as_code` | 47.1 | 0.4712 | 3362.5 | 0.1 | 3362.3 | 7.16 | Generated code iterates with evidence-coverage reflection |
 
 v3 is deliberately harder than v2: it adds alias/code-name tasks, source-authority disambiguation, stale approval ledgers, policy near-duplicates, and thousands of same-topic distractors. The current conclusion is sharper: one-shot generated flow does not beat the fixed baseline even with richer SDK parameters. Agentic iteration helps when the agent can only call the fixed flow, but agentic codegen is materially better because it can reflect on missing evidence and directly control the search stack.
 
@@ -58,7 +58,7 @@ reproducibility. A separate smoke path now runs true model-generated code:
 - Optional provider `openai` uses the Responses API and requires `OPENAI_API_KEY`.
 - Generated code is AST-validated, executed in a restricted namespace, and can run one repair turn after a runtime error.
 
-Latest smoke: BEIR/SciFact, 5,183 documents, 1 query. Codex generated a Python retrieval program in about 49.2s; execution took about 265.5ms, made 3 search calls, and used 1 rerank call. This is proof of execution, not a quality benchmark.
+Latest smoke: BEIR/SciFact, 5,183 documents, 1 query. End-to-end latency was about 49.5s: 49.2s code generation plus 265.5ms execution. The generated program made 3 search calls and used 1 rerank call. This is proof of execution, not a quality benchmark.
 
 ## Reproduce
 

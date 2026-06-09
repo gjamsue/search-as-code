@@ -545,6 +545,8 @@ def summarize_public_systems(systems: dict, *, k: int) -> list[dict]:
                 f"ndcg@{k}": metrics[f"ndcg@{k}"],
                 f"mrr@{k}": metrics[f"mrr@{k}"],
                 "mean_latency_ms": latency["mean_latency_ms"],
+                "mean_generation_ms": latency["mean_generation_ms"],
+                "mean_execution_ms": latency["mean_execution_ms"],
                 "mean_search_calls": latency["mean_search_calls"],
                 "mean_rerank_pairs": latency["mean_rerank_pairs"],
             }
@@ -560,6 +562,8 @@ def render_public_report(output: dict) -> str:
         "",
         "These runs complement the custom enterprise Search-as-Code benchmark. They are intended to test whether the implementation behaves sensibly on known public datasets, not to claim official leaderboard numbers.",
         "",
+        "Note: `generated_search_as_code` in this report is the deterministic Search-as-Code proxy used for reproducible full-batch evaluation. Use `real_codegen_search_as_code` for true model-generated Python; see `real_codegen_demo_report.md` for the current smoke test.",
+        "",
         f"- Top-k: `{k}`",
         f"- Rerank candidate budget: `{output['candidate_k']}`",
         f"- Generated branch top-k: `{output['generated_branch_top_k']}`",
@@ -567,18 +571,26 @@ def render_public_report(output: dict) -> str:
         "",
         "## Summary",
         "",
-        f"| Benchmark | Setting | Docs | Queries | Best system by Recall@{k} | Recall@{k} | nDCG@{k} | MRR@{k} | Latency ms |",
-        "|---|---|---:|---:|---|---:|---:|---:|---:|",
+        f"| Benchmark | Setting | Docs | Queries | Best system by Recall@{k} | Recall@{k} | nDCG@{k} | MRR@{k} | Total ms | Codegen ms | Execution ms |",
+        "|---|---|---:|---:|---|---:|---:|---:|---:|---:|---:|",
     ]
     for result in output["results"]:
-        best = result["summary"][0]
+        summary_rows = result.get("summary", [])
+        if summary_rows and "mean_generation_ms" not in summary_rows[0]:
+            summary_rows = summarize_public_systems(result["systems"], k=k)
+        best = summary_rows[0]
         lines.append(
             f"| {result['display_name']} | {result['setting']} | {result['documents']} | {result['queries']} | "
             f"`{best['system']}` | {best[f'recall@{k}']:.4f} | {best[f'ndcg@{k}']:.4f} | "
-            f"{best[f'mrr@{k}']:.4f} | {best['mean_latency_ms']:.1f} |"
+            f"{best[f'mrr@{k}']:.4f} | {best['mean_latency_ms']:.1f} | "
+            f"{best['mean_generation_ms']:.1f} | {best['mean_execution_ms']:.1f} |"
         )
     lines.extend(["", "## Detailed Results", ""])
     for result in output["results"]:
+        summary_rows = result.get("summary", [])
+        if summary_rows and "mean_generation_ms" not in summary_rows[0]:
+            summary_rows = summarize_public_systems(result["systems"], k=k)
+        result_for_interpretation = {**result, "summary": summary_rows}
         lines.extend(
             [
                 f"### {result['display_name']}",
@@ -594,17 +606,18 @@ def render_public_report(output: dict) -> str:
         lines.extend(
             [
                 "",
-                f"| System | Recall@{k} | nDCG@{k} | MRR@{k} | Mean latency ms | Search calls | Rerank pairs |",
-                "|---|---:|---:|---:|---:|---:|---:|",
+                f"| System | Recall@{k} | nDCG@{k} | MRR@{k} | Total ms | Codegen ms | Execution ms | Search calls | Rerank pairs |",
+                "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
             ]
         )
-        for row in result["summary"]:
+        for row in summary_rows:
             lines.append(
                 f"| `{row['system']}` | {row[f'recall@{k}']:.4f} | {row[f'ndcg@{k}']:.4f} | "
                 f"{row[f'mrr@{k}']:.4f} | {row['mean_latency_ms']:.1f} | "
+                f"{row['mean_generation_ms']:.1f} | {row['mean_execution_ms']:.1f} | "
                 f"{row['mean_search_calls']:.2f} | {row['mean_rerank_pairs']:.1f} |"
             )
-        lines.extend(["", *render_public_interpretation(result, k), ""])
+        lines.extend(["", *render_public_interpretation(result_for_interpretation, k), ""])
     return "\n".join(lines).rstrip() + "\n"
 
 

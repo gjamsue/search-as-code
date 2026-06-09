@@ -256,7 +256,9 @@
           "mrr@10": 0.6691,
           "mean_latency_ms": 369.67,
           "mean_search_calls": 7.033,
-          "mean_rerank_pairs": 38.71
+          "mean_rerank_pairs": 38.71,
+          "mean_generation_ms": 0.047,
+          "mean_execution_ms": 369.619
         },
         {
           "system": "fixed_understanding_rewrite_hybrid_rerank",
@@ -265,7 +267,9 @@
           "mrr@10": 0.6637,
           "mean_latency_ms": 318.608,
           "mean_search_calls": 3.257,
-          "mean_rerank_pairs": 40.0
+          "mean_rerank_pairs": 40.0,
+          "mean_generation_ms": 0.012,
+          "mean_execution_ms": 318.592
         },
         {
           "system": "fixed_hybrid_rerank",
@@ -274,7 +278,9 @@
           "mrr@10": 0.6588,
           "mean_latency_ms": 275.473,
           "mean_search_calls": 1.0,
-          "mean_rerank_pairs": 40.0
+          "mean_rerank_pairs": 40.0,
+          "mean_generation_ms": 0.009,
+          "mean_execution_ms": 275.461
         },
         {
           "system": "fixed_bm25",
@@ -283,7 +289,9 @@
           "mrr@10": 0.5557,
           "mean_latency_ms": 16.935,
           "mean_search_calls": 1.0,
-          "mean_rerank_pairs": 0.0
+          "mean_rerank_pairs": 0.0,
+          "mean_generation_ms": 0.006,
+          "mean_execution_ms": 16.926
         }
       ]
     },
@@ -544,7 +552,9 @@
           "mrr@10": 0.9444,
           "mean_latency_ms": 211.155,
           "mean_search_calls": 3.78,
-          "mean_rerank_pairs": 40.0
+          "mean_rerank_pairs": 40.0,
+          "mean_generation_ms": 0.012,
+          "mean_execution_ms": 211.139
         },
         {
           "system": "generated_search_as_code",
@@ -553,7 +563,9 @@
           "mrr@10": 0.9444,
           "mean_latency_ms": 252.771,
           "mean_search_calls": 9.8,
-          "mean_rerank_pairs": 39.1
+          "mean_rerank_pairs": 39.1,
+          "mean_generation_ms": 0.052,
+          "mean_execution_ms": 252.714
         },
         {
           "system": "fixed_hybrid_rerank",
@@ -562,7 +574,9 @@
           "mrr@10": 0.9444,
           "mean_latency_ms": 204.966,
           "mean_search_calls": 1.0,
-          "mean_rerank_pairs": 40.0
+          "mean_rerank_pairs": 40.0,
+          "mean_generation_ms": 0.008,
+          "mean_execution_ms": 204.954
         },
         {
           "system": "fixed_bm25",
@@ -571,7 +585,9 @@
           "mrr@10": 0.8446,
           "mean_latency_ms": 2.003,
           "mean_search_calls": 1.0,
-          "mean_rerank_pairs": 0.0
+          "mean_rerank_pairs": 0.0,
+          "mean_generation_ms": 0.002,
+          "mean_execution_ms": 1.999
         }
       ]
     }

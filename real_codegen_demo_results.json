@@ -294,7 +294,9 @@
           "mrr@10": 0.0,
           "mean_latency_ms": 224.445,
           "mean_search_calls": 1.0,
-          "mean_rerank_pairs": 20.0
+          "mean_rerank_pairs": 20.0,
+          "mean_generation_ms": 0.013,
+          "mean_execution_ms": 224.421
         },
         {
           "system": "real_codegen_search_as_code",
@@ -303,7 +305,9 @@
           "mrr@10": 0.0,
           "mean_latency_ms": 49495.533,
           "mean_search_calls": 3.0,
-          "mean_rerank_pairs": 1.0
+          "mean_rerank_pairs": 1.0,
+          "mean_generation_ms": 49229.962,
+          "mean_execution_ms": 265.543
         }
       ]
     }

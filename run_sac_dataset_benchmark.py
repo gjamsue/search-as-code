@@ -1590,6 +1590,8 @@ def build_architecture_comparison(systems: dict, ks: list[int]) -> list[dict]:
                 f"hard_negative_hit_rate@{k}": metrics[f"hard_negative_hit_rate@{k}"],
                 f"hard_negative_intrusion_rate@{k}": metrics[f"hard_negative_intrusion_rate@{k}"],
                 "mean_latency_ms": latency["mean_latency_ms"],
+                "mean_generation_ms": latency["mean_generation_ms"],
+                "mean_execution_ms": latency["mean_execution_ms"],
                 "mean_search_calls": latency["mean_search_calls"],
                 "mean_rerank_pairs": latency["mean_rerank_pairs"],
                 "mean_candidate_pool": latency["mean_candidate_pool"],
@@ -1853,15 +1855,16 @@ def render_report(output: dict) -> str:
         "",
         "## Recall@10 Leaderboard",
         "",
-        f"| System | Recall@{k} | Hard-neg hit@{k} | Mean latency ms | Candidate pool | Search calls | Rerank pairs |",
-        "|---|---:|---:|---:|---:|---:|---:|",
+        f"| System | Recall@{k} | Hard-neg hit@{k} | Total ms | Codegen ms | Execution ms | Candidate pool | Search calls | Rerank pairs |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for name, result in leaderboard:
         m = result["metrics"]
         l = result["latency"]
         lines.append(
             f"| {name} | {m[f'recall@{k}']:.4f} | {m[f'hard_negative_hit_rate@{k}']:.4f} | "
-            f"{l['mean_latency_ms']:.1f} | {l['mean_candidate_pool']:.1f} | "
+            f"{l['mean_latency_ms']:.1f} | {l['mean_generation_ms']:.1f} | {l['mean_execution_ms']:.1f} | "
+            f"{l['mean_candidate_pool']:.1f} | "
             f"{l['mean_search_calls']:.2f} | {l['mean_rerank_pairs']:.1f} |"
         )
     lines.extend(
@@ -1892,15 +1895,18 @@ def render_report(output: dict) -> str:
 
 def render_architecture_comparison(output: dict, k: int) -> list[str]:
     rows = output.get("architecture_comparison") or build_architecture_comparison(output["systems"], output["metrics_k"])
+    if rows and "mean_generation_ms" not in rows[0]:
+        rows = build_architecture_comparison(output["systems"], output["metrics_k"])
     lines = [
-        f"| Architecture | System | Quality score | Recall@{k} | Hard-neg hit@{k} | Mean latency | Search calls | Rerank pairs | Flow shape |",
-        "|---|---|---:|---:|---:|---:|---:|---:|---|",
+        f"| Architecture | System | Quality score | Recall@{k} | Hard-neg hit@{k} | Total ms | Codegen ms | Execution ms | Search calls | Rerank pairs | Flow shape |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|",
     ]
     for row in rows:
         lines.append(
             f"| {row['label']} | `{row['system']}` | {row[f'quality_score@{k}']:.1f} | "
             f"{row[f'recall@{k}']:.4f} | {row[f'hard_negative_hit_rate@{k}']:.4f} | "
-            f"{row['mean_latency_ms']:.1f} ms | {row['mean_search_calls']:.2f} | "
+            f"{row['mean_latency_ms']:.1f} | {row['mean_generation_ms']:.1f} | {row['mean_execution_ms']:.1f} | "
+            f"{row['mean_search_calls']:.2f} | "
             f"{row['mean_rerank_pairs']:.1f} | {row['note']} |"
         )
     return lines
@@ -1936,7 +1942,9 @@ def summarize_readout(output: dict, k: int) -> str:
             + (f", delta vs agentic fixed-flow `{delta_vs_agentic_fixed:.4f}`" if agentic_fixed else "")
             + "). "
             f"It pays modestly more search control cost: `{iterative['latency']['mean_search_calls']:.2f}` search calls/query "
-            f"and `{iterative['latency']['mean_latency_ms']:.1f}` ms mean latency. "
+            f"and `{iterative['latency']['mean_latency_ms']:.1f}` ms total latency "
+            f"(`{iterative['latency']['mean_generation_ms']:.1f}` ms codegen + "
+            f"`{iterative['latency']['mean_execution_ms']:.1f}` ms execution). "
             f"Hard-negative hit-rate delta is `{delta_hard:.4f}` and intrusion-rate delta is `{delta_intrusion:.4f}`, "
             "so the next quality gate is final context/answer selection."
         )
@@ -1984,7 +1992,7 @@ def render_key_findings(output: dict, k: int) -> list[str]:
             [
                 f"- Iterative agentic Search-as-Code improves Recall@{k} to `{iterative['metrics'][f'recall@{k}']:.4f}` vs one-shot generated `{generated['metrics'][f'recall@{k}']:.4f}` and fixed enriched `{fixed['metrics'][f'recall@{k}']:.4f}`.",
                 f"- The gain comes from evidence-coverage reflection: it checks missing categories such as alias, account/escalation, ticket/advisory, release note, source authority, and policy before final top-{k}.",
-                f"- Cost is only modestly higher than one-shot: `{iterative['latency']['mean_latency_ms']:.1f}` ms vs `{generated['latency']['mean_latency_ms']:.1f}` ms, with `{iterative['latency']['mean_search_calls']:.2f}` vs `{generated['latency']['mean_search_calls']:.2f}` search calls/query.",
+                f"- Cost is only modestly higher than one-shot: total `{iterative['latency']['mean_latency_ms']:.1f}` ms (`{iterative['latency']['mean_generation_ms']:.1f}` codegen + `{iterative['latency']['mean_execution_ms']:.1f}` execution) vs `{generated['latency']['mean_latency_ms']:.1f}` ms (`{generated['latency']['mean_generation_ms']:.1f}` codegen + `{generated['latency']['mean_execution_ms']:.1f}` execution), with `{iterative['latency']['mean_search_calls']:.2f}` vs `{generated['latency']['mean_search_calls']:.2f}` search calls/query.",
                 f"- Hard-negative hit rate is `{iterative['metrics'][f'hard_negative_hit_rate@{k}']:.4f}` vs fixed enriched `{fixed['metrics'][f'hard_negative_hit_rate@{k}']:.4f}`; intrusion rate is `{iterative['metrics'][f'hard_negative_intrusion_rate@{k}']:.4f}` vs `{fixed['metrics'][f'hard_negative_intrusion_rate@{k}']:.4f}`, so answer-level filtering still matters.",
             ]
         )

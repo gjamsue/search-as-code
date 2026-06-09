@@ -10,39 +10,39 @@ Quality score: `100 * (0.55*Recall@10 + 0.25*nDCG@10 + 0.15*MRR@10 + 0.05*AllEvi
 
 ## Readout
 
-Iterative agentic Search-as-Code is the first flow that clearly separates from fixed search: Recall@10 `0.4712` vs one-shot generated `0.1857` and fixed enriched `0.1857` (delta vs fixed `0.2855`, delta vs one-shot `0.2855`, delta vs agentic fixed-flow `0.2018`). It pays modestly more search control cost: `7.16` search calls/query and `3362.5` ms mean latency. Hard-negative hit-rate delta is `0.0000` and intrusion-rate delta is `0.0033`, so the next quality gate is final context/answer selection.
+Iterative agentic Search-as-Code is the first flow that clearly separates from fixed search: Recall@10 `0.4712` vs one-shot generated `0.1857` and fixed enriched `0.1857` (delta vs fixed `0.2855`, delta vs one-shot `0.2855`, delta vs agentic fixed-flow `0.2018`). It pays modestly more search control cost: `7.16` search calls/query and `3362.5` ms total latency (`0.1` ms codegen + `3362.3` ms execution). Hard-negative hit-rate delta is `0.0000` and intrusion-rate delta is `0.0033`, so the next quality gate is final context/answer selection.
 
 ## Architecture Comparison
 
-| Architecture | System | Quality score | Recall@10 | Hard-neg hit@10 | Mean latency | Search calls | Rerank pairs | Flow shape |
-|---|---|---:|---:|---:|---:|---:|---:|---|
-| Fixed flow baseline | `fixed_understanding_rewrite_hybrid_rerank` | 23.2 | 0.1857 | 0.2258 | 3231.2 ms | 3.97 | 2400.0 | Fixed query understanding + rewrite + hybrid retrieval + rerank |
-| Generated flow | `generated_search_as_code` | 23.2 | 0.1857 | 0.2258 | 3263.1 ms | 6.97 | 2400.0 | One-shot generated route plan with SDK parameters |
-| Agentic fixed-flow calls | `agentic_fixed_flow_iterative` | 33.1 | 0.2694 | 0.1613 | 3991.5 ms | 12.71 | 2687.4 | Agent iteratively calls the same fixed flow with new queries |
-| Agentic codegen | `generated_iterative_agentic_search_as_code` | 47.1 | 0.4712 | 0.2258 | 3362.5 ms | 7.16 | 2400.0 | Generated code iterates with evidence-coverage reflection |
+| Architecture | System | Quality score | Recall@10 | Hard-neg hit@10 | Total ms | Codegen ms | Execution ms | Search calls | Rerank pairs | Flow shape |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| Fixed flow baseline | `fixed_understanding_rewrite_hybrid_rerank` | 23.2 | 0.1857 | 0.2258 | 3231.2 | 0.0 | 3231.2 | 3.97 | 2400.0 | Fixed query understanding + rewrite + hybrid retrieval + rerank |
+| Generated flow | `generated_search_as_code` | 23.2 | 0.1857 | 0.2258 | 3263.1 | 0.1 | 3262.9 | 6.97 | 2400.0 | One-shot generated route plan with SDK parameters |
+| Agentic fixed-flow calls | `agentic_fixed_flow_iterative` | 33.1 | 0.2694 | 0.1613 | 3991.5 | 0.1 | 3991.4 | 12.71 | 2687.4 | Agent iteratively calls the same fixed flow with new queries |
+| Agentic codegen | `generated_iterative_agentic_search_as_code` | 47.1 | 0.4712 | 0.2258 | 3362.5 | 0.1 | 3362.3 | 7.16 | 2400.0 | Generated code iterates with evidence-coverage reflection |
 
 ## Recall@10 Leaderboard
 
-| System | Recall@10 | Hard-neg hit@10 | Mean latency ms | Candidate pool | Search calls | Rerank pairs |
-|---|---:|---:|---:|---:|---:|---:|
-| generated_iterative_agentic_search_as_code | 0.4712 | 0.2258 | 3362.5 | 3341.9 | 7.16 | 2400.0 |
-| agentic_fixed_flow_iterative | 0.2694 | 0.1613 | 3991.5 | 57.9 | 12.71 | 2687.4 |
-| fixed_bm25 | 0.2350 | 0.2258 | 13.3 | 10.0 | 1.00 | 0.0 |
-| fixed_hybrid | 0.2286 | 0.0645 | 19.6 | 10.0 | 1.00 | 0.0 |
-| fixed_hybrid_rerank | 0.1857 | 0.2258 | 3211.5 | 2400.0 | 1.00 | 2400.0 |
-| fixed_understanding_rewrite_hybrid_rerank | 0.1857 | 0.2258 | 3231.2 | 3659.9 | 3.97 | 2400.0 |
-| generated_reflective_search_as_code | 0.1857 | 0.2258 | 3256.6 | 3340.1 | 6.97 | 2400.0 |
-| generated_search_as_code_force_budget | 0.1857 | 0.2258 | 3258.4 | 3340.1 | 6.97 | 2400.0 |
-| generated_search_as_code | 0.1857 | 0.2258 | 3263.1 | 3340.1 | 6.97 | 2400.0 |
-| fixed_hybrid_rerank_small_budget | 0.1714 | 0.1935 | 598.7 | 400.0 | 1.00 | 400.0 |
-| fixed_semantic_dense | 0.0932 | 0.0323 | 16.6 | 10.0 | 1.00 | 0.0 |
+| System | Recall@10 | Hard-neg hit@10 | Total ms | Codegen ms | Execution ms | Candidate pool | Search calls | Rerank pairs |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| generated_iterative_agentic_search_as_code | 0.4712 | 0.2258 | 3362.5 | 0.1 | 3362.3 | 3341.9 | 7.16 | 2400.0 |
+| agentic_fixed_flow_iterative | 0.2694 | 0.1613 | 3991.5 | 0.1 | 3991.4 | 57.9 | 12.71 | 2687.4 |
+| fixed_bm25 | 0.2350 | 0.2258 | 13.3 | 0.0 | 13.3 | 10.0 | 1.00 | 0.0 |
+| fixed_hybrid | 0.2286 | 0.0645 | 19.6 | 0.0 | 19.6 | 10.0 | 1.00 | 0.0 |
+| fixed_hybrid_rerank | 0.1857 | 0.2258 | 3211.5 | 0.0 | 3211.5 | 2400.0 | 1.00 | 2400.0 |
+| fixed_understanding_rewrite_hybrid_rerank | 0.1857 | 0.2258 | 3231.2 | 0.0 | 3231.2 | 3659.9 | 3.97 | 2400.0 |
+| generated_reflective_search_as_code | 0.1857 | 0.2258 | 3256.6 | 0.1 | 3256.5 | 3340.1 | 6.97 | 2400.0 |
+| generated_search_as_code_force_budget | 0.1857 | 0.2258 | 3258.4 | 0.1 | 3258.3 | 3340.1 | 6.97 | 2400.0 |
+| generated_search_as_code | 0.1857 | 0.2258 | 3263.1 | 0.1 | 3262.9 | 3340.1 | 6.97 | 2400.0 |
+| fixed_hybrid_rerank_small_budget | 0.1714 | 0.1935 | 598.7 | 0.0 | 598.7 | 400.0 | 1.00 | 400.0 |
+| fixed_semantic_dense | 0.0932 | 0.0323 | 16.6 | 0.0 | 16.6 | 10.0 | 1.00 | 0.0 |
 
 ## Key Findings
 
 - Top Recall@10 system is `generated_iterative_agentic_search_as_code`: Recall@10 `0.4712`.
 - Iterative agentic Search-as-Code improves Recall@10 to `0.4712` vs one-shot generated `0.1857` and fixed enriched `0.1857`.
 - The gain comes from evidence-coverage reflection: it checks missing categories such as alias, account/escalation, ticket/advisory, release note, source authority, and policy before final top-10.
-- Cost is only modestly higher than one-shot: `3362.5` ms vs `3263.1` ms, with `7.16` vs `6.97` search calls/query.
+- Cost is only modestly higher than one-shot: total `3362.5` ms (`0.1` codegen + `3362.3` execution) vs `3263.1` ms (`0.1` codegen + `3262.9` execution), with `7.16` vs `6.97` search calls/query.
 - Hard-negative hit rate is `0.2258` vs fixed enriched `0.2258`; intrusion rate is `0.0323` vs `0.0290`, so answer-level filtering still matters.
 - Agentic fixed-flow calls reach Recall@10 `0.2694` with `12.71` search calls/query; this isolates the value of iteration when the agent cannot control the lower-level search stack.
 - One-shot generated Search-as-Code exposes route-level SDK parameters, but still lacks evidence-coverage reflection; Recall@10 is `0.1857` vs fixed enriched `0.1857`.
