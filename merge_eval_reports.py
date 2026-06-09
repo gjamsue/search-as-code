@@ -133,23 +133,46 @@ def add_legacy_rows(rows: list[dict], artifacts: list[dict], path: Path) -> None
     payload = read_payload(path)
     if not payload:
         return
-    items = payload.get("architecture_comparison", [])
-    if not items:
+    systems = payload.get("systems", {})
+    if not systems:
         return
-    artifacts.append(artifact(path, "legacy custom architecture run", None, None))
-    for item in items:
+    note_by_system = {
+        item.get("system"): item.get("note", item.get("label", "legacy custom architecture comparison"))
+        for item in payload.get("architecture_comparison", [])
+    }
+    artifacts.append(artifact(path, "custom full extended variants", payload.get("tasks"), payload.get("documents")))
+    for system, result in systems.items():
+        item = {}
+        item.update(result.get("metrics", {}))
+        item.update(result.get("latency", {}))
         rows.append(
             normalize_row(
                 source=path.name,
-                scope="legacy custom architecture run",
+                scope="custom full extended variants",
                 scope_order=10,
-                benchmark="sac-codegen-v3/legacy",
-                queries=None,
-                system=item.get("system"),
+                benchmark="sac-codegen-v3/test",
+                queries=payload.get("tasks"),
+                system=system,
                 row=item,
-                note=item.get("note", "legacy custom architecture comparison"),
+                note=note_by_system.get(system, infer_variant_note(system)),
             )
         )
+
+
+def infer_variant_note(system: str) -> str:
+    return {
+        "fixed_bm25": "lexical BM25 baseline",
+        "fixed_semantic_dense": "dense semantic baseline",
+        "fixed_hybrid": "hybrid BM25+dense baseline",
+        "fixed_hybrid_rerank_small_budget": "hybrid + rerank with 400-candidate budget",
+        "fixed_hybrid_rerank": "hybrid + rerank with 2,400-candidate budget",
+        "fixed_understanding_rewrite_hybrid_rerank": "query understanding + rewrite + hybrid + rerank",
+        "generated_search_as_code": "one-shot generated route plan",
+        "generated_search_as_code_force_budget": "one-shot generated route plan with forced budget",
+        "agentic_fixed_flow_iterative": "agent repeatedly calls fixed flow with reflection",
+        "generated_reflective_search_as_code": "single-pass generated flow with reflection hooks",
+        "generated_iterative_agentic_search_as_code": "generated code iterates with evidence-coverage reflection",
+    }.get(system, "custom full-run variant")
 
 
 def normalize_row(
@@ -227,23 +250,28 @@ def render_report(output: dict[str, Any]) -> str:
         "|---|---|---|---:|---:|---:|---:|---:|---:|",
     ]
     for row in rows:
-        if row["scope"] == "legacy custom architecture run":
+        if row["scope"] == "custom full extended variants":
             continue
         lines.append(format_row(row))
 
-    legacy = [row for row in rows if row["scope"] == "legacy custom architecture run"]
-    if legacy:
+    extended = [row for row in rows if row["scope"] == "custom full extended variants"]
+    if extended:
         lines.extend(
             [
                 "",
-                "## Legacy Custom Run",
+                "## Full Custom Extended Variants",
                 "",
-                "| System | Recall@10 | Total ms | Note |",
-                "|---|---:|---:|---|",
+                "These are the additional full-dataset variants from `sac_benchmark_results.json` on the same 31-query test split.",
+                "",
+                "| System | Recall@10 | nDCG@10 | MRR@10 | Total ms | Search calls | Rerank pairs | Note |",
+                "|---|---:|---:|---:|---:|---:|---:|---|",
             ]
         )
-        for row in sorted(legacy, key=lambda item: item["recall@10"], reverse=True):
-            lines.append(f"| `{row['system']}` | {row['recall@10']:.4f} | {row['total_ms']:.1f} | {row['note']} |")
+        for row in sorted(extended, key=lambda item: item["recall@10"], reverse=True):
+            lines.append(
+                f"| `{row['system']}` | {row['recall@10']:.4f} | {row['ndcg@10']:.4f} | {row['mrr@10']:.4f} | "
+                f"{row['total_ms']:.1f} | {row['search_calls']:.2f} | {row['rerank_pairs']:.1f} | {row['note']} |"
+            )
 
     lines.extend(["", "## Artifacts", ""])
     for item in output["artifacts"]:
@@ -254,6 +282,7 @@ def render_report(output: dict[str, Any]) -> str:
 def render_executive_readout(output: dict[str, Any]) -> list[str]:
     deltas = output["readout"]["real_llm_key_deltas"]
     lines = [
+        "- Scope note: the real-LLM results are a focused 5-query hard sample; the full custom runs are 31-query deterministic/rule-backed evaluations.",
         "- On the focused real-LLM sample, improved planning/reflection makes agentic methods clearly win on quality.",
         f"- Agentic preset flow beats one-shot preset routing by `{deltas['agentic_preset_vs_router']['recall_delta']:+.4f}` Recall@10 with much lower latency than full agentic codegen.",
         f"- Agentic codegen reaches the highest quality, but costs `{deltas['agentic_preset_vs_agentic_codegen_latency_ratio']:.1f}x` the agentic preset latency.",

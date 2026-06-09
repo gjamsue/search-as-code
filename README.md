@@ -109,6 +109,7 @@ for the default search path.
 
 - Focused real LLM sample: agentic codegen reaches `1.0000` Recall@10, agentic preset reaches `0.8114`, one-shot codegen reaches `0.7114`.
 - Full custom deterministic test: agentic codegen `0.4712`, agentic preset `0.4655`, fixed flow `0.1857`.
+- Full custom extended variants are also listed: BM25 `0.2350`, hybrid `0.2286`, dense `0.0932`, small-budget hybrid-rerank `0.1714`, reflective one-shot `0.1857`.
 - Public sanity checks remain strong: generated Search-as-Code reaches `0.8439` on BEIR/SciFact and ties fixed enriched retrieval at `0.9550` on HotpotQA dev-distractor.
 - Practical recommendation: productize preset-stack agentic search first; keep full Search-as-Code generation for hard cases or offline/research workflows.
 
