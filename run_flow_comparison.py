@@ -92,9 +92,9 @@ class SearchProxy:
         self.ctx = ctx
         self.api = api
 
-    def search(self, query: str, *, mode: str = "hybrid", top_k: int = 20) -> list[SearchCandidate]:
+    def search(self, query: str, *, mode: str = "hybrid", top_k: int = 20, **kwargs) -> list[SearchCandidate]:
         self.ctx.search_calls += 1
-        return self.api.search(query, mode=mode, top_k=top_k)
+        return self.api.search(query, mode=mode, top_k=top_k, **kwargs)
 
 
 class RankingProxy:

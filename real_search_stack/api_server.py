@@ -64,6 +64,14 @@ class SearchRequest(BaseModel):
     query: str
     mode: str = "hybrid"
     top_k: int = 10
+    bm25_weight: float = 0.55
+    include_doc_types: list[str] | None = None
+    exclude_doc_types: list[str] | None = None
+    include_sources: list[str] | None = None
+    exclude_sources: list[str] | None = None
+    must_terms: list[str] | None = None
+    should_terms: list[str] | None = None
+    exclude_terms: list[str] | None = None
 
 
 class RerankRequest(BaseModel):
@@ -84,7 +92,19 @@ def entity_linking(req: TextRequest) -> dict:
 
 @app.post("/search")
 def search(req: SearchRequest) -> dict:
-    hits = search_api.search(req.query, top_k=req.top_k, mode=req.mode)
+    hits = search_api.search(
+        req.query,
+        top_k=req.top_k,
+        mode=req.mode,
+        bm25_weight=req.bm25_weight,
+        include_doc_types=req.include_doc_types,
+        exclude_doc_types=req.exclude_doc_types,
+        include_sources=req.include_sources,
+        exclude_sources=req.exclude_sources,
+        must_terms=req.must_terms,
+        should_terms=req.should_terms,
+        exclude_terms=req.exclude_terms,
+    )
     return {"hits": [hit.compact() for hit in hits]}
 
 

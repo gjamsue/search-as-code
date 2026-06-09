@@ -348,10 +348,18 @@ class RealHybridSearchAPI:
         top_k: int = 20,
         mode: str = "hybrid",
         bm25_weight: float = 0.55,
+        include_doc_types: Iterable[str] | None = None,
+        exclude_doc_types: Iterable[str] | None = None,
+        include_sources: Iterable[str] | None = None,
+        exclude_sources: Iterable[str] | None = None,
+        must_terms: Iterable[str] | None = None,
+        should_terms: Iterable[str] | None = None,
+        exclude_terms: Iterable[str] | None = None,
     ) -> list[SearchCandidate]:
         mode = {"text": "bm25", "vector": "dense"}.get(mode, mode)
         if mode not in {"bm25", "dense", "hybrid"}:
             raise ValueError(f"Unsupported search mode: {mode}")
+        bm25_weight = max(0.0, min(1.0, bm25_weight))
 
         if mode == "bm25":
             bm25_scores = np.asarray(self.bm25.get_scores(tokenize(query)), dtype=np.float32)
@@ -372,7 +380,24 @@ class RealHybridSearchAPI:
             dense_norm = _minmax(dense_scores)
             final = bm25_weight * bm25_norm + (1.0 - bm25_weight) * dense_norm
 
-        top_indices = np.argsort(-final)[:top_k]
+        final = np.asarray(final, dtype=np.float32).copy()
+        filtered_indices = self._filtered_indices(
+            include_doc_types=include_doc_types,
+            exclude_doc_types=exclude_doc_types,
+            include_sources=include_sources,
+            exclude_sources=exclude_sources,
+            must_terms=must_terms,
+            should_terms=should_terms,
+            exclude_terms=exclude_terms,
+        )
+        if should_terms:
+            should_tokens = _normalized_term_list(should_terms)
+            for idx in filtered_indices:
+                text = self.texts[int(idx)].lower()
+                matched = sum(1 for term in should_tokens if term in text)
+                if matched:
+                    final[int(idx)] += min(0.18, 0.04 * matched)
+        top_indices = sorted(filtered_indices, key=lambda idx: float(final[int(idx)]), reverse=True)[:top_k]
         candidates = []
         for idx in top_indices:
             doc = self.documents[int(idx)]
@@ -388,6 +413,45 @@ class RealHybridSearchAPI:
                 )
             )
         return candidates
+
+    def _filtered_indices(
+        self,
+        *,
+        include_doc_types: Iterable[str] | None,
+        exclude_doc_types: Iterable[str] | None,
+        include_sources: Iterable[str] | None,
+        exclude_sources: Iterable[str] | None,
+        must_terms: Iterable[str] | None,
+        should_terms: Iterable[str] | None,
+        exclude_terms: Iterable[str] | None,
+    ) -> list[int]:
+        include_doc_types_set = set(_normalized_term_list(include_doc_types or []))
+        exclude_doc_types_set = set(_normalized_term_list(exclude_doc_types or []))
+        include_sources_set = set(_normalized_term_list(include_sources or []))
+        exclude_sources_set = set(_normalized_term_list(exclude_sources or []))
+        must_terms_list = _normalized_term_list(must_terms or [])
+        exclude_terms_list = _normalized_term_list(exclude_terms or [])
+
+        indices: list[int] = []
+        for idx, doc in enumerate(self.documents):
+            metadata = doc.metadata or {}
+            doc_type = str(metadata.get("doc_type", "")).lower()
+            source = str(metadata.get("source", "")).lower()
+            if include_doc_types_set and doc_type not in include_doc_types_set:
+                continue
+            if exclude_doc_types_set and doc_type in exclude_doc_types_set:
+                continue
+            if include_sources_set and source not in include_sources_set:
+                continue
+            if exclude_sources_set and source in exclude_sources_set:
+                continue
+            text = self.texts[idx].lower()
+            if must_terms_list and not all(term in text for term in must_terms_list):
+                continue
+            if exclude_terms_list and any(term in text for term in exclude_terms_list):
+                continue
+            indices.append(idx)
+        return indices
 
 
 class RealRankingAPI:
@@ -452,6 +516,10 @@ def _unique(items: list[str]) -> list[str]:
             seen.add(key)
             result.append(item)
     return result
+
+
+def _normalized_term_list(items: Iterable[str]) -> list[str]:
+    return [str(item).lower().strip() for item in items if str(item).strip()]
 
 
 def _overlaps_normalized(left: str, right: str) -> bool:

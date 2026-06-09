@@ -608,7 +608,7 @@
           </div>
           <div class="summary-item">
             <strong>What our eval shows.</strong>
-            <p>One-shot Search-as-Code ties fixed enriched at 0.1857 Recall@10, but iterative agentic Search-as-Code reaches 0.4579 by checking missing evidence and writing follow-up retrieval routes.</p>
+            <p>One-shot generated flow ties fixed baseline at 0.1857 Recall@10. Agentic fixed-flow calls reach 0.2694, while agentic codegen reaches 0.4712 by reflecting on missing evidence and controlling the search stack.</p>
           </div>
           <div class="summary-item">
             <strong>What is still missing.</strong>
@@ -755,40 +755,37 @@
 
         <div id="results" class="benchmark" role="tabpanel">
           <div class="card">
-            <h3>Recall@10 leaderboard</h3>
+            <h3>Four architecture comparison</h3>
             <div class="bar-list">
-              <div class="bar-row"><div class="bar-label">Iterative agentic SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:100%"></div></div><div class="bar-value">0.4579</div></div>
-              <div class="bar-row"><div class="bar-label">BM25</div><div class="bar-track"><div class="bar-fill" style="width:50.3%"></div></div><div class="bar-value">0.2304</div></div>
-              <div class="bar-row"><div class="bar-label">Hybrid</div><div class="bar-track"><div class="bar-fill amber" style="width:49.9%"></div></div><div class="bar-value">0.2286</div></div>
-              <div class="bar-row"><div class="bar-label">Fixed enriched</div><div class="bar-track"><div class="bar-fill green" style="width:40.6%"></div></div><div class="bar-value">0.1857</div></div>
-              <div class="bar-row"><div class="bar-label">One-shot SaC</div><div class="bar-track"><div class="bar-fill violet" style="width:40.6%"></div></div><div class="bar-value">0.1857</div></div>
-              <div class="bar-row"><div class="bar-label">Dense only</div><div class="bar-track"><div class="bar-fill" style="width:20.4%"></div></div><div class="bar-value">0.0932</div></div>
+              <div class="bar-row"><div class="bar-label">Agentic codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:100%"></div></div><div class="bar-value">0.4712</div></div>
+              <div class="bar-row"><div class="bar-label">Agentic fixed-flow</div><div class="bar-track"><div class="bar-fill amber" style="width:57.2%"></div></div><div class="bar-value">0.2694</div></div>
+              <div class="bar-row"><div class="bar-label">Fixed baseline</div><div class="bar-track"><div class="bar-fill green" style="width:39.4%"></div></div><div class="bar-value">0.1857</div></div>
+              <div class="bar-row"><div class="bar-label">Generated flow</div><div class="bar-track"><div class="bar-fill violet" style="width:39.4%"></div></div><div class="bar-value">0.1857</div></div>
             </div>
             <table class="leaderboard">
               <thead>
                 <tr>
                   <th>System</th>
+                  <th>Quality</th>
+                  <th>Latency score</th>
                   <th>Recall</th>
-                  <th>Hard-neg</th>
                   <th>Latency</th>
-                  <th>Pool</th>
+                  <th>Search calls</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td>Iterative agentic SaC</td><td>0.4579</td><td>0.2581</td><td>3,319 ms</td><td>3,227</td></tr>
-                <tr><td>BM25</td><td>0.2304</td><td>0.1290</td><td>11 ms</td><td>10</td></tr>
-                <tr><td>Hybrid</td><td>0.2286</td><td>0.0645</td><td>18 ms</td><td>10</td></tr>
-                <tr><td>Fixed enriched</td><td>0.1857</td><td>0.2258</td><td>3,220 ms</td><td>3,660</td></tr>
-                <tr><td>One-shot SaC</td><td>0.1857</td><td>0.2258</td><td>3,200 ms</td><td>3,215</td></tr>
-                <tr><td>Naive reflective SaC</td><td>0.1857</td><td>0.2258</td><td>3,205 ms</td><td>3,215</td></tr>
+                <tr><td>Fixed baseline</td><td>23.2</td><td>100.0</td><td>0.1857</td><td>3,231 ms</td><td>3.97</td></tr>
+                <tr><td>Generated flow</td><td>23.2</td><td>99.0</td><td>0.1857</td><td>3,263 ms</td><td>6.97</td></tr>
+                <tr><td>Agentic fixed-flow</td><td>33.1</td><td>81.0</td><td>0.2694</td><td>3,992 ms</td><td>12.71</td></tr>
+                <tr><td>Agentic codegen</td><td>47.1</td><td>96.1</td><td>0.4712</td><td>3,362 ms</td><td>7.16</td></tr>
               </tbody>
             </table>
           </div>
           <div class="metrics">
-            <div class="metric"><span>Primary metric</span><strong>Recall@10</strong><p>No nDCG/MRR as headline metrics</p></div>
-            <div class="metric"><span>Agentic gain</span><strong>+0.2722</strong><p>Recall@10 delta vs fixed enriched and one-shot SaC</p></div>
-            <div class="metric"><span>Candidate pool</span><strong>3.2k+</strong><p>Iterative SaC averages 3,227 candidates/query</p></div>
-            <div class="metric"><span>Cost signal</span><strong>3.3s</strong><p>Large-pool rerank plus extra search control</p></div>
+            <div class="metric"><span>Quality winner</span><strong>47.1</strong><p>Agentic codegen quality score</p></div>
+            <div class="metric"><span>Codegen gain</span><strong>+0.2855</strong><p>Recall@10 delta vs fixed and one-shot generated flow</p></div>
+            <div class="metric"><span>Fixed-tool gain</span><strong>+0.0837</strong><p>Agentic fixed-flow delta vs fixed baseline</p></div>
+            <div class="metric"><span>Latency score</span><strong>96.1</strong><p>Agentic codegen vs fastest architecture system</p></div>
           </div>
         </div>
       </div>
@@ -807,38 +804,38 @@
           <article class="case">
             <div>
               <span class="tag violet">Iterative win</span>
-              <h3>Beacon version comparison</h3>
-              <div class="query">Compare Beacon CRM Connector 3.14.0 and 3.14.1 for Contoso's security review. Which one is acceptable?</div>
-              <div class="mini-flow">
-                <span class="step">hybrid 2000</span>
-                <span class="step">exact version BM25</span>
-                <span class="step">evidence goals</span>
-                <span class="step">preselect releases</span>
-              </div>
-            </div>
-            <div class="outcome">
-              <div class="outcome-row"><strong>Fixed / one-shot</strong><span>Recall@10 0.0000; both stop at approval-ledger near-duplicates.</span></div>
-              <div class="outcome-row"><strong>Iterative SaC</strong><span>Recall@10 1.0000; pulls alias, account, advisory, ticket, and both release notes.</span></div>
-              <div class="outcome-row"><strong>Lesson</strong><span>The win is not bigger fanout; it is enforcing evidence coverage before final top-10.</span></div>
-            </div>
-          </article>
-
-          <article class="case">
-            <div>
-              <span class="tag amber">Missing evidence loop</span>
               <h3>Cache namespace proof</h3>
               <div class="query">A regulated customer asks for cache namespace proof. Which customer is most likely asking, what release gives the evidence, and what feature should be cited?</div>
               <div class="mini-flow">
                 <span class="step">initial routes</span>
                 <span class="step">missing release_note</span>
-                <span class="step">follow-up BM25</span>
+                <span class="step">doc-type filters</span>
                 <span class="step">final context</span>
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Fixed / one-shot</strong><span>Recall@10 0.0000; namespace proof docs crowd out the release evidence.</span></div>
-              <div class="outcome-row"><strong>Iterative SaC</strong><span>Recall@10 0.8000; follow-up route targets release notes and fixed-version evidence.</span></div>
-              <div class="outcome-row"><strong>Lesson</strong><span>Reflection should ask “which evidence category is missing?” instead of “did we retrieve enough docs?”</span></div>
+              <div class="outcome-row"><strong>Fixed / generated / fixed-agent</strong><span>Recall@10 0.0000; proof notes crowd out release evidence.</span></div>
+              <div class="outcome-row"><strong>Agentic codegen</strong><span>Recall@10 0.8000; pulls escalation, account, ticket, advisory, and release.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>Codegen wins when reflection can target a missing evidence type, not just rerun the same flow.</span></div>
+            </div>
+          </article>
+
+          <article class="case">
+            <div>
+              <span class="tag amber">Tool access matters</span>
+              <h3>CT-R OAuth approval</h3>
+              <div class="query">For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?</div>
+              <div class="mini-flow">
+                <span class="step">alias registry</span>
+                <span class="step">approval ledger</span>
+                <span class="step">release notes</span>
+                <span class="step">reject stale version</span>
+              </div>
+            </div>
+            <div class="outcome">
+              <div class="outcome-row"><strong>Agentic fixed-flow</strong><span>Recall@10 0.1429 with 1 hard negative; repeated fixed calls stay trapped near approval decoys.</span></div>
+              <div class="outcome-row"><strong>Agentic codegen</strong><span>Recall@10 0.8571 with 0 hard negatives; route filters pull alias, customer, ticket, advisory, and release evidence.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>When the plan needs source-specific evidence, low-level stack control matters.</span></div>
             </div>
           </article>
 
@@ -846,7 +843,7 @@
             <div>
               <span class="tag red">Remaining risk</span>
               <h3>Recall brings contrast evidence too</h3>
-              <div class="query">The iterative flow retrieves more of the right evidence, but also slightly increases hard-negative hit rate: 0.2581 vs 0.2258.</div>
+              <div class="query">Agentic codegen has the best quality score, but final answer quality still depends on selecting authoritative context from a larger evidence pool.</div>
               <div class="mini-flow">
                 <span class="step">recover evidence</span>
                 <span class="step">include contrasts</span>
@@ -854,7 +851,7 @@
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Retrieval</strong><span>Better for Recall@10, especially multi-hop and authority questions.</span></div>
+              <div class="outcome-row"><strong>Retrieval</strong><span>Recall@10 0.4712 vs 0.2694 for agentic fixed-flow and 0.1857 for fixed baseline.</span></div>
               <div class="outcome-row"><strong>Answering</strong><span>Needs a context composer that keeps authoritative evidence and drops stale drafts.</span></div>
               <div class="outcome-row"><strong>Lesson</strong><span>Next evaluation should score final answers, citations, and exclusion decisions.</span></div>
             </div>
@@ -887,9 +884,9 @@
               <td>Generate Python from a tool schema; measure codegen latency, invalid-code rate, repair rate, and retrieval quality.</td>
             </tr>
             <tr>
-              <td>Tool-calling agent baseline</td>
-              <td>This is the real alternative architecture: same tools, but the model decides over multiple turns instead of writing one retrieval program.</td>
-              <td>Run query understanding, rewrite, search, rerank, and reflection as tools; compare quality, latency, tokens, and tool calls.</td>
+              <td>Real LLM tool-calling baseline</td>
+              <td>The current agentic fixed-flow baseline is deterministic. We still need the model-driven version that decides over multiple turns.</td>
+              <td>Run query understanding, rewrite, search, rerank, and reflection as model-called tools; compare quality, latency, tokens, and tool calls.</td>
             </tr>
             <tr>
               <td>Answer-level task success</td>

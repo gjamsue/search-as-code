@@ -6,7 +6,7 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 
 - `sac_benchmark_dataset/`: synthetic enterprise knowledge-base dataset with 6,010 documents, 48 tasks, BEIR exports, hard-negative labels, generator, validator, and audit tooling.
 - `real_search_stack/`: open-source search APIs built on BM25, sentence-transformers dense retrieval, spaCy query understanding/entity extraction, optional Wikidata linking, and cross-encoder reranking.
-- `run_sac_dataset_benchmark.py`: main benchmark runner for fixed BM25, dense, hybrid, hybrid+rerank, fixed enriched, one-shot generated Search-as-Code, naive reflective Search-as-Code, and iterative agentic Search-as-Code flows.
+- `run_sac_dataset_benchmark.py`: main benchmark runner for fixed BM25, dense, hybrid, hybrid+rerank, fixed enriched, one-shot generated Search-as-Code, agentic fixed-flow calls, naive reflective Search-as-Code, and iterative agentic Search-as-Code flows.
 - `sac_benchmark_results.json`: latest benchmark result payload.
 - `sac_benchmark_report.md`: latest benchmark report, focused on Recall@10.
 - `sac_benchmark_dataset_intro.md`: Chinese dataset intro with generation method, categories, statistics, and example tasks.
@@ -20,20 +20,17 @@ Dataset: `sac-codegen-v3`
 - Corpus: 6,010 documents
 - Primary metric: Recall@10
 - Candidate opportunity: rerank systems retrieve up to 2,400 candidates before producing final top 10
+- Quality score: weighted Recall@10, nDCG@10, MRR@10, all-evidence recovery, and hard-negative intrusion penalty
+- Latency score: fastest architecture-system mean latency divided by system latency, scaled to 100
 
-| System | Recall@10 | Mean latency ms | Notes |
-|---|---:|---:|---|
-| `generated_iterative_agentic_search_as_code` | 0.4579 | 3318.9 | Evidence-coverage loop: plan, search, inspect missing goals, add follow-up routes, select context |
-| `fixed_bm25` | 0.2304 | 11.0 | Strong lexical baseline across full corpus |
-| `fixed_hybrid` | 0.2286 | 17.6 | No reranking |
-| `generated_search_as_code` | 0.1857 | 3199.6 | One-shot dynamic routes, search modes, budgets, and rerank set |
-| `generated_reflective_search_as_code` | 0.1857 | 3205.1 | Naive reflection only checks thin candidate pools |
-| `fixed_understanding_rewrite_hybrid_rerank` | 0.1857 | 3220.5 | Fixed enriched flow with understanding, entity linking, rewrite, hybrid, rerank |
-| `fixed_hybrid_rerank` | 0.1857 | 3204.0 | 2,400-candidate rerank budget |
-| `fixed_hybrid_rerank_small_budget` | 0.1714 | 609.1 | 400-candidate rerank budget |
-| `fixed_semantic_dense` | 0.0932 | 14.1 | Dense-only |
+| Architecture | System | Quality | Latency | Recall@10 | Mean latency ms | Notes |
+|---|---|---:|---:|---:|---:|---|
+| Fixed flow baseline | `fixed_understanding_rewrite_hybrid_rerank` | 23.2 | 100.0 | 0.1857 | 3231.2 | Fixed understanding + rewrite + hybrid retrieval + rerank |
+| Generated flow | `generated_search_as_code` | 23.2 | 99.0 | 0.1857 | 3263.1 | One-shot generated route plan with exposed SDK parameters |
+| Agentic fixed-flow calls | `agentic_fixed_flow_iterative` | 33.1 | 81.0 | 0.2694 | 3991.5 | Agent iteratively calls the same fixed flow with new queries |
+| Agentic codegen | `generated_iterative_agentic_search_as_code` | 47.1 | 96.1 | 0.4712 | 3362.5 | Generated code iterates with evidence-coverage reflection |
 
-v3 is deliberately harder than v2: it adds alias/code-name tasks, source-authority disambiguation, stale approval ledgers, policy near-duplicates, and thousands of same-topic distractors. The current conclusion is sharper: one-shot Search-as-Code does not beat a strong fixed enriched baseline, but iterative agentic Search-as-Code does. When the generated program reflects on missing evidence categories and writes targeted follow-up retrieval routes, Recall@10 improves by `+0.2722` over both one-shot generated and fixed enriched flows. The remaining risk is final context selection: higher recall also brings slightly more hard-negative exposure.
+v3 is deliberately harder than v2: it adds alias/code-name tasks, source-authority disambiguation, stale approval ledgers, policy near-duplicates, and thousands of same-topic distractors. The current conclusion is sharper: one-shot generated flow does not beat the fixed baseline even with richer SDK parameters. Agentic iteration helps when the agent can only call the fixed flow, but agentic codegen is materially better because it can reflect on missing evidence and directly control the search stack.
 
 ## Reproduce
 
