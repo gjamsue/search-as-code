@@ -10,6 +10,7 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `run_experiment_matrix.py`: presentation-aligned matrix runner for fixed flow, agentic fixed flow, preset flow, agentic preset flow, one-shot codegen, and agentic codegen.
 - `run_real_llm_matrix.py`: focused real-LLM matrix runner that uses Codex CLI for QR/router/planner/reflection decisions and real codegen.
 - `run_public_benchmarks.py`: public benchmark sanity-check runner for BEIR/SciFact and HotpotQA dev-distractor slices.
+- `merge_eval_reports.py`: merges custom, real LLM, real codegen, public, and legacy eval outputs into one executive report.
 - `llm_search_codegen.py`: real LLM-backed Search-as-Code generator with `codex-cli` and `openai` providers, AST validation, sandbox execution, and one-shot repair support.
 - `skills/search-as-code-codegen/`: reusable Codex skill that defines the Search-as-Code runtime/tool contract for real code generation.
 - `experiment_matrix_results.json`: latest presentation-aligned experiment matrix payload.
@@ -21,6 +22,7 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `real_codegen_demo_results.json` and `real_codegen_demo_report.md`: 1-query real LLM codegen smoke using the local Codex CLI login path.
 - `real_codegen_retest_results.json` and `real_codegen_retest_report.md`: 5-query real LLM retest comparing one-shot codegen and agentic codegen.
 - `real_llm_matrix_results.json` and `real_llm_matrix_report.md`: 5-query real LLM matrix for QR, router, planner/reflection, and codegen variants.
+- `combined_eval_results.json` and `combined_eval_report.md`: merged view across custom full matrix, focused real LLM matrix, real codegen retest, public benchmark checks, and legacy runs.
 - `sac_benchmark_dataset_intro.md`: Chinese dataset intro with generation method, categories, statistics, and example tasks.
 - `agentic_search_presentation.html`: mobile-friendly presentation for the final Search-as-Code story.
 
@@ -74,17 +76,17 @@ and reflection with structured Codex CLI calls, then compares with real codegen.
 
 | System | Recall@10 | Total ms | LLM ms | Execution ms | Readout |
 |---|---:|---:|---:|---:|---|
-| Real preset router | 0.4400 | 9370.0 | 9255.8 | 114.2 | Best real-LLM result on this sample; one model routing call can beat fixed/codegen |
-| Real agentic preset | 0.3686 | 20311.6 | 20057.5 | 254.2 | Reflection added cost and did not improve over initial routing |
-| Real agentic codegen | 0.3086 | 158909.7 | 158026.3 | 883.4 | Better than one-shot codegen, but expensive and still below the rule-backed target |
-| Real fixed flow + LLM QR | 0.2686 | 9544.9 | 9255.8 | 289.1 | Same recall as one-shot codegen at much lower latency |
-| Real one-shot codegen | 0.2686 | 48706.3 | 48327.9 | 378.4 | Codegen did not beat LLM QR fixed flow on this sample |
-| Real agentic fixed flow | 0.2286 | 19996.4 | 18835.7 | 1160.7 | Planner/reflection over a rigid fixed tool underperformed |
+| Real agentic codegen | 1.0000 | 136271.9 | 135929.4 | 342.5 | Highest quality, but too slow for the main path |
+| Real agentic preset | 0.8114 | 28692.8 | 28436.5 | 256.4 | Best practical path: strong quality without full code generation |
+| Real one-shot codegen | 0.7114 | 62041.8 | 61891.1 | 150.7 | Good quality after prompt/API hardening, but slower than preset-agentic |
+| Real agentic fixed flow | 0.4686 | 30620.5 | 29223.8 | 1396.7 | Reflection helps, but fixed-flow tools are too rigid |
+| Real preset router | 0.4400 | 11638.1 | 11523.4 | 114.7 | Strong single-router baseline |
+| Real fixed flow + LLM QR | 0.1686 | 11817.1 | 11523.4 | 293.7 | LLM rewrite alone is not enough on hard enterprise queries |
 
-Existing rule-backed subset results on the same five qids: agentic codegen
-`0.6114`, agentic preset `0.6000`, agentic fixed flow `0.2686`. The immediate
-gap is model decision reliability: real LLM routing can help, but real reflection
-and codegen are not yet matching the rule-backed evidence-coverage target.
+Compared with the prior real-LLM run, agentic preset improved from `0.3686` to
+`0.8114`, and real agentic codegen improved from `0.3086` to `1.0000`. The
+changes were stronger planning/reflection prompts, real metadata constraints,
+immutable `SearchCandidate` handling, and evidence-aware final selection.
 
 ## Real LLM Codegen Retest
 
@@ -93,12 +95,22 @@ with candidate budget `120`.
 
 | System | Recall@10 | Total ms | Codegen ms | Execution ms | Repairs | Readout |
 |---|---:|---:|---:|---:|---:|---|
-| Deterministic agentic codegen | 0.6114 | 353.4 | 0.2 | 353.3 | 0 | Upper-bound design target |
-| Real agentic codegen | 0.3086 | 158504.5 | 157409.1 | 1093.9 | 4 | Small lift over real one-shot, high latency/reliability cost |
-| Real one-shot codegen | 0.2686 | 48775.0 | 48328.6 | 446.4 | 0 | Matches fixed/deterministic one-shot on recall |
+| Real agentic codegen | 1.0000 | 136272.4 | 135929.5 | 342.9 | 0 | Full evidence recovery, but high generation cost |
+| Real one-shot codegen | 0.7114 | 62038.7 | 61891.3 | 147.4 | 0 | Stronger after metadata/API prompt hardening |
+| Deterministic agentic codegen | 0.6114 | 325.4 | 0.2 | 325.1 | 0 | Fast proxy, lower quality than real agentic on focused sample |
 
-The current gap is not the search stack. It is the model's reliability at
-writing the right evidence-coverage program and doing useful reflection.
+The current gap is now cost, not basic reliability: real codegen can produce
+high-quality retrieval programs, but generation/reflection latency is too high
+for the default search path.
+
+## Combined Eval Readout
+
+`combined_eval_report.md` merges all major eval artifacts. The current readout:
+
+- Focused real LLM sample: agentic codegen reaches `1.0000` Recall@10, agentic preset reaches `0.8114`, one-shot codegen reaches `0.7114`.
+- Full custom deterministic test: agentic codegen `0.4712`, agentic preset `0.4655`, fixed flow `0.1857`.
+- Public sanity checks remain strong: generated Search-as-Code reaches `0.8439` on BEIR/SciFact and ties fixed enriched retrieval at `0.9550` on HotpotQA dev-distractor.
+- Practical recommendation: productize preset-stack agentic search first; keep full Search-as-Code generation for hard cases or offline/research workflows.
 
 ## Reproduce
 
@@ -112,6 +124,7 @@ python sac_benchmark_dataset/audit_dataset.py --write-report
 python run_experiment_matrix.py --split test
 python run_sac_dataset_benchmark.py --split test
 python run_real_llm_matrix.py --candidate-k 120 --tool-candidate-k 120
+python merge_eval_reports.py
 python run_public_benchmarks.py --benchmarks beir/scifact,hotpotqa/distractor --hotpot-limit 100 --candidate-k 40 --generated-branch-top-k 20 --generated-max-rerank-candidates 40 --no-per-query
 ```
 

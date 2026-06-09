@@ -17,10 +17,51 @@ from typing import Any
 
 import requests
 
+from real_search_stack.apis import SearchCandidate
+
 
 ROOT = Path(__file__).resolve().parent
 DEFAULT_CODEX_CLI = "/Applications/Codex.app/Contents/Resources/codex"
 DEFAULT_OPENAI_MODEL = "gpt-4.1-mini"
+VALID_DOC_TYPES = [
+    "account_brief",
+    "alias_registry",
+    "approval_ledger",
+    "authority_matrix",
+    "escalation",
+    "guide",
+    "meeting_note",
+    "policy",
+    "product_footprint",
+    "release",
+    "roadmap",
+    "runbook",
+    "sales_discovery",
+    "security_advisory",
+    "security_ticket",
+    "war_room_roster",
+]
+VALID_SOURCES = [
+    "crm",
+    "eval_policy",
+    "governance",
+    "jira",
+    "release_notes",
+    "roadmap",
+    "runbook",
+    "security",
+    "source_of_truth",
+    "support",
+    "vendor_advisory",
+]
+COMMON_DISTRACTOR_HINTS = [
+    "dashboard_snapshot_distractor",
+    "draft_policy_distractor",
+    "meeting_note_distractor",
+    "memo_distractor",
+    "review_note_distractor",
+    "slack_thread_distractor",
+]
 
 CODEGEN_RESPONSE_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -279,7 +320,7 @@ class LLMSearchCodeGenerator:
             "top_k": top_k,
             "candidate_k": candidate_k,
             "benchmark_hint": benchmark_hint,
-            "prompt_version": 4,
+            "prompt_version": 5,
         }
         return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()[:24]
 
@@ -376,14 +417,20 @@ def build_codegen_prompt(
             Query: {query}
             Benchmark: {benchmark_hint or "general retrieval benchmark"}
             Constants: TOP_K={top_k}, CANDIDATE_K={candidate_k}
+            Real doc_types: {", ".join(VALID_DOC_TYPES)}
+            Real sources: {", ".join(VALID_SOURCES)}
+            Common distractors: {", ".join(COMMON_DISTRACTOR_HINTS)}
 
             Must:
             - dynamically choose BM25/dense/hybrid/search rewrites based on the query
+            - use actual doc_type/source values listed above; do not invent values like ticket, issue, release_note, changelog, advisory, or customer_status
             - call ctx.query_rewrite.rewrite(query, analysis=analysis, linked_entities=linked_entities)
             - treat rewrite_result as dict and use rewrite_result.get("rewrites", [])
             - analysis["entities"] contains dicts; join entity.get("text", ""), not raw dicts
-            - search hits are dict-like SearchCandidate objects with doc_id/title/text/metadata/score
+            - search hits are immutable SearchCandidate objects; never assign into hit[...] or hit.attr
+            - if you need route annotations or adjusted scores, keep side dictionaries keyed by doc_id or copy hit.as_dict()
             - dedupe by doc_id, rerank at most CANDIDATE_K, set ctx.candidate_pool
+            - preserve high-confidence evidence before rerank; do not let follow-up noise bury exact IDs or source-of-truth docs
             - log agentic_plan and reflection
             - return {{"hits": ranked_hits, "candidates": candidates}}
             - no imports, files, network, subprocess, eval, exec, globals, locals, or dunder/private access
@@ -422,17 +469,25 @@ def build_codegen_prompt(
         - ctx.ranking.rerank(query, candidates, top_k=N)
         - ctx.log(event, payload)
 
+        Real metadata values:
+        - Authoritative doc_types: {", ".join(VALID_DOC_TYPES)}
+        - Authoritative sources: {", ".join(VALID_SOURCES)}
+        - Common distractor doc_types to avoid/downweight: {", ".join(COMMON_DISTRACTOR_HINTS)}
+
         Program requirements:
         - Define exactly one entrypoint: def run(ctx):
         - Use dynamic control flow and route choices based on the query.
         - Use BM25 for exact names, IDs, dates, versions, and short entity-heavy queries.
         - Use hybrid or dense for long, semantic, multi-hop, or paraphrased queries.
+        - Use actual doc_type/source values listed above; do not invent metadata filters such as ticket, issue, release_note, changelog, advisory, or customer_status.
         - Use query understanding and rewrite when it is likely useful.
         - Treat query rewrite output as a dict; read rewrite_result.get("rewrites", []).
         - Extract entity text with entity.get("text", "") before joining entities.
-        - Search hits are dict-like SearchCandidate objects with doc_id/title/text/metadata/score.
+        - Search hits are immutable SearchCandidate objects with doc_id/title/text/metadata/score.
+        - Never assign into hit[...] or hit.attr. If you need route annotations or adjusted scores, keep side dictionaries keyed by doc_id or copy hit.as_dict().
         - Merge candidates by doc_id and dedupe before reranking.
         - Keep reranking bounded to at most CANDIDATE_K candidates.
+        - Preserve high-confidence evidence across branches before rerank; do not let follow-up noise bury exact IDs or source-of-truth docs.
         - Set ctx.candidate_pool.
         - Log agentic_plan and reflection events.
         - Return {{"hits": ranked_hits, "candidates": merged_candidates}}.
@@ -485,7 +540,9 @@ def build_repair_prompt(
         Important SDK facts:
         - analysis["entities"] is a list of dicts; use entity.get("text", "") before joining.
         - query rewrite returns a dict; use rewrite_result.get("rewrites", []).
-        - search hits are dict-like SearchCandidate objects with doc_id/title/text/metadata/score.
+        - search hits are immutable SearchCandidate objects; never assign into hit[...] or hit.attr.
+        - if annotations are needed, keep side dictionaries keyed by doc_id or copy hit.as_dict().
+        - use real doc_types only: {", ".join(VALID_DOC_TYPES)}.
         - No imports, files, network, subprocess, eval, exec, globals, locals, or dunder/private access.
         """
     ).strip()
@@ -534,9 +591,11 @@ def build_reflection_prompt(
         Task:
         - Reflect on whether the observed evidence looks complete for the query.
         - Generate a complete replacement `def run(ctx):` program.
+        - First preserve any observed high-confidence authoritative docs, exact identifiers, final approval/policy/release docs, and customer/account evidence.
         - If the initial evidence looks incomplete, add targeted follow-up retrieval:
           exact identifier routes, source-authority filters, alias expansion,
           policy/ledger searches, release/advisory/ticket fanout, or negative-evidence routes as needed.
+        - If top hits are mostly distractors or decoys, add filters/downweighting for those doc_types but keep broader fallback routes.
         - If the initial evidence looks sufficient, you may return a cleaned-up equivalent program.
         - Do not use ground truth labels; infer from query, trace, top hits, doc metadata, and missing evidence categories.
         - Log both `agentic_plan` and `reflection`.
@@ -544,7 +603,11 @@ def build_reflection_prompt(
         Important SDK facts:
         - analysis["entities"] is a list of dicts; use entity.get("text", "") before joining.
         - query rewrite returns a dict; use rewrite_result.get("rewrites", []).
-        - search hits are dict-like SearchCandidate objects with doc_id/title/text/metadata/score.
+        - search hits are immutable SearchCandidate objects with doc_id/title/text/metadata/score.
+        - Never assign into hit[...] or hit.attr. If you need route annotations or adjusted scores, keep side dictionaries keyed by doc_id or copy hit.as_dict().
+        - Use actual doc_type/source values only:
+          doc_types={VALID_DOC_TYPES}
+          sources={VALID_SOURCES}
         - No imports, files, network, subprocess, eval, exec, globals, locals, or dunder/private access.
         """
     ).strip()
@@ -698,4 +761,31 @@ def execute_llm_generated_program(code: str, ctx, *, top_k: int, candidate_k: in
     result = namespace["run"](ctx)
     if not isinstance(result, dict) or "hits" not in result:
         raise ValueError("Generated run(ctx) must return a dict with a 'hits' key")
+    result["hits"] = [coerce_generated_candidate(hit) for hit in result.get("hits", [])]
+    if "candidates" in result:
+        result["candidates"] = [coerce_generated_candidate(hit) for hit in result.get("candidates", [])]
     return result
+
+
+def coerce_generated_candidate(candidate: SearchCandidate | dict) -> SearchCandidate:
+    if isinstance(candidate, SearchCandidate):
+        return candidate
+    if not isinstance(candidate, dict):
+        raise ValueError(f"Generated candidate must be SearchCandidate or dict, got {type(candidate).__name__}")
+    metadata = candidate.get("metadata") or {}
+    if not isinstance(metadata, dict):
+        metadata = {}
+    extras = {
+        key: value
+        for key, value in candidate.items()
+        if key not in {"doc_id", "id", "title", "text", "metadata", "score", "bm25_score", "dense_score"}
+    }
+    return SearchCandidate(
+        doc_id=str(candidate.get("doc_id") or candidate.get("id") or ""),
+        title=str(candidate.get("title") or ""),
+        text=str(candidate.get("text") or ""),
+        metadata={**metadata, **extras},
+        score=float(candidate.get("score") or 0.0),
+        bm25_score=float(candidate.get("bm25_score") or 0.0),
+        dense_score=float(candidate.get("dense_score") or 0.0),
+    )

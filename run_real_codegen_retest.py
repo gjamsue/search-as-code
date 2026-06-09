@@ -10,7 +10,13 @@ from pathlib import Path
 import shutil
 import time
 
-from llm_search_codegen import LLMSearchCodeGenerator, execute_llm_generated_program
+from llm_search_codegen import (
+    COMMON_DISTRACTOR_HINTS,
+    LLMSearchCodeGenerator,
+    VALID_DOC_TYPES,
+    VALID_SOURCES,
+    execute_llm_generated_program,
+)
 from real_search_stack.apis import (
     RealEntityLinkingAPI,
     RealHybridSearchAPI,
@@ -160,9 +166,9 @@ def main() -> None:
             top_k=args.top_k,
             candidate_k=args.candidate_k,
             benchmark_hint=benchmark_hint,
-        ).code,
-        lambda code, ctx: execute_real_code_with_repair(
-            code,
+        ),
+        lambda generated, ctx: execute_real_codegen_result(
+            generated,
             ctx,
             one_shot_generator,
             top_k=args.top_k,
@@ -177,9 +183,9 @@ def main() -> None:
             top_k=args.top_k,
             candidate_k=args.candidate_k,
             benchmark_hint=f"{benchmark_hint}; agentic mode with post-execution reflection",
-        ).code,
-        lambda code, ctx: execute_real_agentic_code(
-            code,
+        ),
+        lambda generated, ctx: execute_real_agentic_codegen_result(
+            generated,
             ctx,
             agentic_generator,
             top_k=args.top_k,
@@ -188,6 +194,7 @@ def main() -> None:
         ),
     )
 
+    normalize_real_codegen_latency(systems)
     manifest = read_json(data_dir / "manifest.json")
     output = {
         "dataset": manifest.get("dataset_version", "unknown"),
@@ -214,6 +221,16 @@ def main() -> None:
     print(f"Wrote {args.report}")
 
 
+def normalize_real_codegen_latency(systems: dict) -> None:
+    for name, result in systems.items():
+        if not name.startswith("real_"):
+            continue
+        latency = result.get("latency", {})
+        generation_ms = float(latency.get("mean_generation_ms", 0.0))
+        execution_ms = float(latency.get("mean_execution_ms", 0.0))
+        latency["mean_latency_ms"] = round(generation_ms + execution_ms, 3)
+
+
 def build_generator(args, *, suffix: str) -> LLMSearchCodeGenerator:
     return LLMSearchCodeGenerator(
         provider=args.real_codegen_provider,
@@ -223,6 +240,34 @@ def build_generator(args, *, suffix: str) -> LLMSearchCodeGenerator:
         codex_cli=args.codex_cli,
         codex_reasoning_effort=args.codex_reasoning_effort,
     )
+
+
+def execute_real_codegen_result(generated, ctx, generator: LLMSearchCodeGenerator, *, top_k: int, candidate_k: int, benchmark_hint: str) -> dict:
+    result = execute_real_code_with_repair(
+        generated.code,
+        ctx,
+        generator,
+        top_k=top_k,
+        candidate_k=candidate_k,
+        benchmark_hint=benchmark_hint,
+    )
+    result["_additional_generation_ms"] = float(result.get("_additional_generation_ms", 0.0)) + generated.latency_ms
+    result["_executed_code"] = result.get("_executed_code", generated.code)
+    return result
+
+
+def execute_real_agentic_codegen_result(generated, ctx, generator: LLMSearchCodeGenerator, *, top_k: int, candidate_k: int, benchmark_hint: str) -> dict:
+    result = execute_real_agentic_code(
+        generated.code,
+        ctx,
+        generator,
+        top_k=top_k,
+        candidate_k=candidate_k,
+        benchmark_hint=benchmark_hint,
+    )
+    result["_additional_generation_ms"] = float(result.get("_additional_generation_ms", 0.0)) + generated.latency_ms
+    result["_executed_code"] = result.get("_executed_code", generated.code)
+    return result
 
 
 def execute_real_code_with_repair(code: str, ctx, generator: LLMSearchCodeGenerator, *, top_k: int, candidate_k: int, benchmark_hint: str) -> dict:
@@ -319,12 +364,25 @@ def execute_real_agentic_code(code: str, ctx, generator: LLMSearchCodeGenerator,
 def build_reflection_observation(ctx, result: dict) -> dict:
     hits = result.get("hits", [])
     candidates = result.get("candidates", [])
+    doc_type_counts: dict[str, int] = {}
+    source_counts: dict[str, int] = {}
+    for hit in candidates[:200]:
+        metadata = getattr(hit, "metadata", {}) or {}
+        doc_type = str(metadata.get("doc_type", "unknown"))
+        source = str(metadata.get("source", "unknown"))
+        doc_type_counts[doc_type] = doc_type_counts.get(doc_type, 0) + 1
+        source_counts[source] = source_counts.get(source, 0) + 1
     return {
         "query": ctx.query,
         "candidate_pool": ctx.candidate_pool,
         "top_doc_ids": [hit.doc_id for hit in hits[:10]],
         "top_hits": [compact_observed_hit(hit, 220) for hit in hits[:8]],
         "candidate_sample": [compact_observed_hit(hit, 160) for hit in candidates[:8]],
+        "doc_type_counts": sorted(doc_type_counts.items(), key=lambda item: item[1], reverse=True)[:12],
+        "source_counts": sorted(source_counts.items(), key=lambda item: item[1], reverse=True)[:12],
+        "valid_doc_types": VALID_DOC_TYPES,
+        "valid_sources": VALID_SOURCES,
+        "common_distractor_doc_types": COMMON_DISTRACTOR_HINTS,
         "tool_counts": {
             "query_understanding": ctx.query_understanding_calls,
             "entity_linking": ctx.entity_linking_calls,
@@ -515,10 +573,17 @@ def render_readout(output: dict, k: int) -> list[str]:
             f"this is the main reliability and latency gap to close."
         )
     if deterministic_agentic and real_agentic:
-        lines.append(
-            f"- Deterministic agentic codegen remains the upper-bound design target on this sample: "
-            f"Recall@{k} `{deterministic_agentic[f'recall@{k}']:.4f}` at `{deterministic_agentic['mean_latency_ms']:.1f}` ms total."
-        )
+        delta = real_agentic[f"recall@{k}"] - deterministic_agentic[f"recall@{k}"]
+        if delta >= 0:
+            lines.append(
+                f"- Real agentic codegen now exceeds the deterministic proxy by `{delta:+.4f}` Recall@{k}, "
+                f"but costs `{real_agentic['mean_latency_ms']:.1f}` ms vs `{deterministic_agentic['mean_latency_ms']:.1f}` ms."
+            )
+        else:
+            lines.append(
+                f"- Deterministic agentic codegen remains the quality target on this sample: "
+                f"Recall@{k} `{deterministic_agentic[f'recall@{k}']:.4f}` at `{deterministic_agentic['mean_latency_ms']:.1f}` ms total."
+            )
     if deterministic_one and real_one and deterministic_one[f"recall@{k}"] == real_one[f"recall@{k}"]:
         lines.append(
             "- The quality gap is not from the search stack itself; it is from the model's ability to write the right evidence-coverage program reliably."

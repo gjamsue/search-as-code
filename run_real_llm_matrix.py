@@ -32,9 +32,11 @@ from real_search_stack.apis import (
 )
 from run_experiment_matrix import (
     authority_score,
+    authority_aware_topk,
     candidate_to_row,
     execute_preset_stack,
     execute_preset_stacks,
+    preselect_goal_evidence,
     route_preset_stacks,
 )
 from run_flow_comparison import FlowContext, QueryStats, merge_runtime_candidates, unique_runtime
@@ -45,6 +47,7 @@ from run_real_codegen_retest import (
 )
 from run_sac_dataset_benchmark import (
     DATASET_DIR,
+    build_iterative_agentic_strategy,
     evaluate_query_at_ks,
     evaluate_results,
     load_dataset,
@@ -88,9 +91,33 @@ INITIAL_DECISION_SCHEMA: dict[str, Any] = {
             "items": {"type": "string"},
             "description": "Evidence categories that should be present before stopping.",
         },
+        "stop_requirements": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Concrete stop conditions that prove the query has enough evidence.",
+        },
+        "must_preserve_terms": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Exact IDs, aliases, versions, customer names, or negation terms to preserve.",
+        },
+        "preferred_search_style": {
+            "type": "string",
+            "enum": ["exact", "semantic", "authority", "wide_fanout", "policy", "mixed"],
+            "description": "Primary retrieval style implied by the query.",
+        },
         "rationale": {"type": "string"},
     },
-    "required": ["rewrites", "preset_stacks", "decomposed_queries", "evidence_goals", "rationale"],
+    "required": [
+        "rewrites",
+        "preset_stacks",
+        "decomposed_queries",
+        "evidence_goals",
+        "stop_requirements",
+        "must_preserve_terms",
+        "preferred_search_style",
+        "rationale",
+    ],
     "additionalProperties": False,
 }
 
@@ -108,9 +135,34 @@ REFLECTION_SCHEMA: dict[str, Any] = {
             "items": {"type": "string", "enum": STACKS},
             "description": "Additional preset stacks if evidence is incomplete.",
         },
+        "covered_evidence_goals": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Evidence goals that appear covered by observed docs.",
+        },
+        "missing_evidence_goals": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Evidence goals still missing or under-supported.",
+        },
+        "confident_doc_ids": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Observed doc ids that should be protected in final evidence ranking.",
+        },
+        "stop_reason": {"type": "string"},
         "rationale": {"type": "string"},
     },
-    "required": ["needs_followup", "followup_queries", "followup_stacks", "rationale"],
+    "required": [
+        "needs_followup",
+        "followup_queries",
+        "followup_stacks",
+        "covered_evidence_goals",
+        "missing_evidence_goals",
+        "confident_doc_ids",
+        "stop_reason",
+        "rationale",
+    ],
     "additionalProperties": False,
 }
 
@@ -165,7 +217,7 @@ class LLMDecisionGenerator:
                     "query": query,
                     "prompt": prompt,
                     "schema": schema,
-                    "prompt_version": 1,
+                    "prompt_version": 2,
                 },
                 sort_keys=True,
             ).encode("utf-8")
@@ -239,6 +291,7 @@ def main() -> None:
     parser.add_argument("--metrics-k", default="10")
     parser.add_argument("--candidate-k", type=int, default=120)
     parser.add_argument("--tool-candidate-k", type=int, default=120)
+    parser.add_argument("--max-reflection-rounds", type=int, default=2)
     parser.add_argument("--systems", default=",".join(SYSTEM_DEFINITIONS))
     parser.add_argument("--provider", default="codex-cli", choices=["codex-cli"])
     parser.add_argument("--model", default="")
@@ -365,6 +418,7 @@ def main() -> None:
             tool_candidate_k=args.tool_candidate_k,
             final_candidate_k=args.candidate_k,
             top_k=args.top_k,
+            max_reflection_rounds=args.max_reflection_rounds,
         ),
     )
     maybe_run(
@@ -376,6 +430,7 @@ def main() -> None:
             tool_candidate_k=args.tool_candidate_k,
             final_candidate_k=args.candidate_k,
             top_k=args.top_k,
+            max_reflection_rounds=args.max_reflection_rounds,
         ),
     )
     benchmark_hint = (
@@ -415,6 +470,8 @@ def main() -> None:
         "metrics_k": metrics_k,
         "candidate_k": args.candidate_k,
         "tool_candidate_k": args.tool_candidate_k,
+        "max_reflection_rounds": args.max_reflection_rounds,
+        "planning_reflection_version": 2,
         "provider": args.provider,
         "model": args.model or default_model(args.provider),
         "codex_reasoning_effort": args.codex_reasoning_effort,
@@ -566,41 +623,75 @@ def run_real_agentic_fixed_flow_llm_reflection(
     tool_candidate_k: int,
     final_candidate_k: int,
     top_k: int,
+    max_reflection_rounds: int,
 ) -> dict:
     generation_ms = float(decision.get("latency_ms", 0.0))
     candidate_by_id: dict[str, SearchCandidate] = {}
     tool_calls = []
+    reflection_rounds = []
+    confident_doc_ids: list[str] = []
     queries = unique_runtime(decision.get("decomposed_queries", [])[:3] or [ctx.query])
     for query in queries:
         hits = call_fixed_flow_without_extra_llm(ctx, query, candidate_k=tool_candidate_k, top_k=max(top_k * 2, 20))
         tool_calls.append({"query": query, "returned": len(hits)})
         merge_runtime_candidates(candidate_by_id, hits)
 
-    candidates = sorted(candidate_by_id.values(), key=authority_score, reverse=True)
-    observation = build_observation(ctx, candidates, tool_calls=tool_calls, mode="fixed_flow")
-    reflection = decider.reflection(ctx.query, observation, mode="fixed_flow")
-    generation_ms += float(reflection.get("latency_ms", 0.0))
-    followup_queries = unique_runtime(reflection.get("followup_queries", [])[:3])
-    if reflection.get("needs_followup"):
+    used_queries = set(queries)
+    for round_index in range(max_reflection_rounds):
+        candidates = sorted(candidate_by_id.values(), key=authority_score, reverse=True)
+        observation = build_observation(
+            ctx,
+            candidates,
+            tool_calls=tool_calls,
+            mode="fixed_flow",
+            decision=decision,
+            round_index=round_index + 1,
+        )
+        reflection = decider.reflection(ctx.query, observation, mode="fixed_flow")
+        generation_ms += float(reflection.get("latency_ms", 0.0))
+        confident_doc_ids = unique_runtime(confident_doc_ids + reflection.get("confident_doc_ids", []))
+        followup_queries = [
+            query
+            for query in unique_runtime(reflection.get("followup_queries", [])[:3])
+            if query not in used_queries
+        ]
+        reflection_rounds.append(
+            {
+                "round": round_index + 1,
+                "reflection": reflection,
+                "followup_queries": followup_queries,
+                "candidate_pool_before": len(candidates),
+            }
+        )
+        if not reflection.get("needs_followup") or not followup_queries:
+            break
         for query in followup_queries:
             hits = call_fixed_flow_without_extra_llm(ctx, query, candidate_k=tool_candidate_k, top_k=max(top_k * 2, 20))
-            tool_calls.append({"query": query, "returned": len(hits), "followup": True})
+            used_queries.add(query)
+            tool_calls.append({"query": query, "returned": len(hits), "followup": True, "round": round_index + 1})
             merge_runtime_candidates(candidate_by_id, hits)
 
     candidates = sorted(candidate_by_id.values(), key=authority_score, reverse=True)
     ctx.candidate_pool = len(candidates)
-    ranked = ctx.ranking.rerank(ctx.query, candidates[:final_candidate_k], top_k=top_k)
+    final_hits, rerank_pool, finalizer = finalize_agentic_hits(
+        ctx,
+        candidates,
+        final_candidate_k=final_candidate_k,
+        top_k=top_k,
+        confident_doc_ids=confident_doc_ids,
+    )
     ctx.log(
         "real_agentic_fixed_flow_llm_reflection",
         {
             "initial_queries": queries,
             "tool_calls": tool_calls,
-            "reflection": reflection,
+            "reflection_rounds": reflection_rounds,
             "candidate_pool": len(candidates),
-            "rerank_candidates": min(len(candidates), final_candidate_k),
+            "finalizer": finalizer,
+            "rerank_candidates": len(rerank_pool),
         },
     )
-    return {"hits": ranked, "candidates": candidates, "_additional_generation_ms": generation_ms}
+    return {"hits": final_hits, "candidates": candidates, "_additional_generation_ms": generation_ms}
 
 
 def run_real_agentic_preset_flow_llm_reflection(
@@ -611,48 +702,76 @@ def run_real_agentic_preset_flow_llm_reflection(
     tool_candidate_k: int,
     final_candidate_k: int,
     top_k: int,
+    max_reflection_rounds: int,
 ) -> dict:
     generation_ms = float(decision.get("latency_ms", 0.0))
     stacks = normalize_stacks(decision.get("preset_stacks", []), fallback=route_preset_stacks(ctx.query, allow_multiple=True))[:3]
     used_stacks = set()
     candidate_by_id: dict[str, SearchCandidate] = {}
     stack_calls = []
+    reflection_rounds = []
+    confident_doc_ids: list[str] = []
     for stack in stacks:
         hits = execute_preset_stack(ctx, ctx.query, stack, candidate_k=tool_candidate_k)
         used_stacks.add(stack)
         stack_calls.append({"stack": stack, "returned": len(hits)})
         merge_runtime_candidates(candidate_by_id, hits)
 
-    candidates = sorted(candidate_by_id.values(), key=authority_score, reverse=True)
-    observation = build_observation(ctx, candidates, tool_calls=stack_calls, mode="preset_flow")
-    reflection = decider.reflection(ctx.query, observation, mode="preset_flow")
-    generation_ms += float(reflection.get("latency_ms", 0.0))
-    followup_stacks = [
-        stack
-        for stack in normalize_stacks(reflection.get("followup_stacks", []), fallback=[])
-        if stack not in used_stacks
-    ][:3]
-    if reflection.get("needs_followup"):
+    for round_index in range(max_reflection_rounds):
+        candidates = sorted(candidate_by_id.values(), key=authority_score, reverse=True)
+        observation = build_observation(
+            ctx,
+            candidates,
+            tool_calls=stack_calls,
+            mode="preset_flow",
+            decision=decision,
+            round_index=round_index + 1,
+        )
+        reflection = decider.reflection(ctx.query, observation, mode="preset_flow")
+        generation_ms += float(reflection.get("latency_ms", 0.0))
+        confident_doc_ids = unique_runtime(confident_doc_ids + reflection.get("confident_doc_ids", []))
+        followup_stacks = [
+            stack
+            for stack in normalize_stacks(reflection.get("followup_stacks", []), fallback=[])
+            if stack not in used_stacks
+        ][:3]
+        reflection_rounds.append(
+            {
+                "round": round_index + 1,
+                "reflection": reflection,
+                "followup_stacks": followup_stacks,
+                "candidate_pool_before": len(candidates),
+            }
+        )
+        if not reflection.get("needs_followup") or not followup_stacks:
+            break
         for stack in followup_stacks:
             hits = execute_preset_stack(ctx, ctx.query, stack, candidate_k=tool_candidate_k)
             used_stacks.add(stack)
-            stack_calls.append({"stack": stack, "returned": len(hits), "followup": True})
+            stack_calls.append({"stack": stack, "returned": len(hits), "followup": True, "round": round_index + 1})
             merge_runtime_candidates(candidate_by_id, hits)
 
     candidates = sorted(candidate_by_id.values(), key=authority_score, reverse=True)
     ctx.candidate_pool = len(candidates)
-    ranked = ctx.ranking.rerank(ctx.query, candidates[:final_candidate_k], top_k=top_k)
+    final_hits, rerank_pool, finalizer = finalize_agentic_hits(
+        ctx,
+        candidates,
+        final_candidate_k=final_candidate_k,
+        top_k=top_k,
+        confident_doc_ids=confident_doc_ids,
+    )
     ctx.log(
         "real_agentic_preset_flow_llm_reflection",
         {
             "initial_stacks": stacks,
             "stack_calls": stack_calls,
-            "reflection": reflection,
+            "reflection_rounds": reflection_rounds,
             "candidate_pool": len(candidates),
-            "rerank_candidates": min(len(candidates), final_candidate_k),
+            "finalizer": finalizer,
+            "rerank_candidates": len(rerank_pool),
         },
     )
-    return {"hits": ranked, "candidates": candidates, "_additional_generation_ms": generation_ms}
+    return {"hits": final_hits, "candidates": candidates, "_additional_generation_ms": generation_ms}
 
 
 def run_real_one_shot_codegen(ctx: FlowContext, generator: LLMSearchCodeGenerator, *, top_k: int, candidate_k: int, benchmark_hint: str) -> dict:
@@ -676,20 +795,144 @@ def run_real_agentic_codegen(ctx: FlowContext, generator: LLMSearchCodeGenerator
 
 def call_fixed_flow_without_extra_llm(ctx: FlowContext, query: str, *, candidate_k: int, top_k: int) -> list[SearchCandidate]:
     hits = ctx.search.search(query, mode="hybrid", top_k=candidate_k, bm25_weight=0.55)
-    ranked = ctx.ranking.rerank(query, hits[:candidate_k], top_k=top_k)
-    ctx.log("fixed_flow_tool_call_no_extra_llm", {"query": query, "candidate_pool": len(hits), "returned": len(ranked)})
-    return ranked
+    rerank_top_k = min(candidate_k, max(top_k, 50))
+    ranked = ctx.ranking.rerank(query, hits[:candidate_k], top_k=rerank_top_k)
+    ranked_ids = {hit.doc_id for hit in ranked}
+    merged = ranked + [hit for hit in hits if hit.doc_id not in ranked_ids]
+    ctx.log(
+        "fixed_flow_tool_call_no_extra_llm",
+        {"query": query, "candidate_pool": len(hits), "reranked": len(ranked), "returned": len(merged)},
+    )
+    return merged
 
 
-def build_observation(ctx: FlowContext, candidates: list[SearchCandidate], *, tool_calls: list[dict], mode: str) -> dict:
-    top = candidates[:10]
+def finalize_agentic_hits(
+    ctx: FlowContext,
+    candidates: list[SearchCandidate],
+    *,
+    final_candidate_k: int,
+    top_k: int,
+    confident_doc_ids: list[str] | None = None,
+) -> tuple[list[SearchCandidate], list[SearchCandidate], dict]:
+    strategy = build_iterative_agentic_strategy(
+        ctx.query,
+        top_k=top_k,
+        branch_top_k=min(final_candidate_k, 400),
+        max_rerank_candidates=final_candidate_k,
+    )
+    by_id = {hit.doc_id: hit for hit in candidates}
+    protected = [
+        by_id[doc_id]
+        for doc_id in (confident_doc_ids or [])
+        if doc_id in by_id and authority_score(by_id[doc_id]) > 0
+    ]
+    if is_policy_query(ctx.query):
+        policy_docs = [
+            hit
+            for hit in candidates
+            if str((hit.metadata or {}).get("doc_type", "")).lower() == "policy"
+        ]
+        authority_docs = [
+            hit
+            for hit in candidates
+            if str((hit.metadata or {}).get("doc_type", "")).lower() == "authority_matrix"
+        ]
+        policy_docs.sort(key=authority_score, reverse=True)
+        authority_docs.sort(key=authority_score, reverse=True)
+        protected = unique_candidates(protected + policy_docs[:2] + authority_docs[:2])
+    goal_preselected = preselect_goal_evidence(
+        candidates,
+        strategy["goals"],
+        max_preselected=min(top_k, 8),
+    )
+    rerank_pool = unique_candidates(protected + goal_preselected + candidates)[:final_candidate_k]
+    ranked = ctx.ranking.rerank(ctx.query, rerank_pool, top_k=max(top_k * 5, 50))
+    final_hits = authority_aware_topk(ranked, candidates, strategy["goals"], top_k)
+    final_hits = protect_confident_hits(final_hits, protected, top_k=top_k)
+    finalizer = {
+        "goals": [goal["name"] for goal in strategy["goals"]],
+        "protected_doc_ids": [hit.doc_id for hit in protected],
+        "goal_preselected_doc_ids": [hit.doc_id for hit in goal_preselected],
+        "rerank_candidates": len(rerank_pool),
+    }
+    return final_hits, rerank_pool, finalizer
+
+
+def is_policy_query(query: str) -> bool:
+    lower = query.lower()
+    return any(term in lower for term in ["policy", "latency", "metric", "readout", "reflection", "candidate", "codegen", "follow-up code"])
+
+
+def protect_confident_hits(
+    final_hits: list[SearchCandidate],
+    protected: list[SearchCandidate],
+    *,
+    top_k: int,
+) -> list[SearchCandidate]:
+    if not protected:
+        return final_hits[:top_k]
+    selected: list[SearchCandidate] = []
+    selected_ids = set()
+    for hit in protected:
+        if hit.doc_id not in selected_ids:
+            selected.append(hit)
+            selected_ids.add(hit.doc_id)
+        if len(selected) >= min(4, top_k):
+            break
+    for hit in final_hits:
+        if hit.doc_id not in selected_ids:
+            selected.append(hit)
+            selected_ids.add(hit.doc_id)
+        if len(selected) >= top_k:
+            break
+    return selected[:top_k]
+
+
+def unique_candidates(candidates: list[SearchCandidate]) -> list[SearchCandidate]:
+    seen = set()
+    result = []
+    for hit in candidates:
+        if hit.doc_id in seen:
+            continue
+        seen.add(hit.doc_id)
+        result.append(hit)
+    return result
+
+
+def build_observation(
+    ctx: FlowContext,
+    candidates: list[SearchCandidate],
+    *,
+    tool_calls: list[dict],
+    mode: str,
+    decision: dict | None = None,
+    round_index: int = 1,
+) -> dict:
+    top = candidates[:12]
+    by_authority = sorted(candidates, key=authority_score, reverse=True)[:12]
+    doc_type_counts: dict[str, int] = {}
+    source_counts: dict[str, int] = {}
+    for hit in candidates[:200]:
+        metadata = hit.metadata or {}
+        doc_type = str(metadata.get("doc_type", "unknown"))
+        source = str(metadata.get("source", "unknown"))
+        doc_type_counts[doc_type] = doc_type_counts.get(doc_type, 0) + 1
+        source_counts[source] = source_counts.get(source, 0) + 1
     return {
         "mode": mode,
         "query": ctx.query,
+        "round": round_index,
+        "planned_evidence_goals": (decision or {}).get("evidence_goals", []),
+        "stop_requirements": (decision or {}).get("stop_requirements", []),
+        "must_preserve_terms": (decision or {}).get("must_preserve_terms", []),
         "tool_calls": tool_calls,
         "candidate_pool": len(candidates),
         "top_doc_ids": [hit.doc_id for hit in top],
-        "top_hits": [hit.compact(180) for hit in top[:6]],
+        "top_hits": [hit.compact(220) for hit in top[:8]],
+        "authority_order_doc_ids": [hit.doc_id for hit in by_authority],
+        "authority_hits": [hit.compact(180) for hit in by_authority[:8]],
+        "doc_type_counts": sorted(doc_type_counts.items(), key=lambda item: item[1], reverse=True)[:12],
+        "source_counts": sorted(source_counts.items(), key=lambda item: item[1], reverse=True)[:12],
         "available_followup_stacks": STACKS,
         "evidence_categories_to_check": [
             "alias registry",
@@ -707,7 +950,7 @@ def build_observation(ctx: FlowContext, candidates: list[SearchCandidate], *, to
 def build_initial_decision_prompt(query: str, *, analysis: dict, category: str, difficulty: str) -> str:
     return textwrap.dedent(
         f"""
-        You are controlling enterprise retrieval tools. Return JSON only.
+        You are controlling enterprise retrieval tools for agentic search. Return JSON only.
 
         Query:
         {query}
@@ -729,14 +972,24 @@ def build_initial_decision_prompt(query: str, *, analysis: dict, category: str, 
         - policy: policy, metrics, latency, required evaluation rules
         - semantic_multihop: dense/hybrid retrieval for long semantic or multi-hop evidence
 
+        Planning rules:
+        - Identify the evidence facets needed to answer, not just keywords.
+        - Preserve exact IDs, aliases, versions, product names, customer names, and negation terms.
+        - Choose routes that can retrieve all facets: exact identifiers, customer/account impact, release/advisory/ticket evidence, source authority, policy, and negative evidence.
+        - For hard/multi-hop queries, decompose into subqueries that can be independently checked.
+        - Stop conditions must be evidence-based. A large candidate pool alone is not enough if a required evidence type is missing.
+
         Return:
         - rewrites: 1-3 concise retrieval rewrites for a fixed multi-query hybrid search.
         - preset_stacks: 1-3 stacks to run initially.
         - decomposed_queries: 1-3 subqueries for an agent that can repeatedly call fixed search.
         - evidence_goals: the evidence categories that must be present before stopping.
+        - stop_requirements: concrete proof conditions for stopping.
+        - must_preserve_terms: exact terms that must survive rewrite/decomposition.
+        - preferred_search_style: exact, semantic, authority, wide_fanout, policy, or mixed.
         - rationale: short reason.
 
-        Be specific. Preserve exact IDs, product versions, customer names, and negation.
+        Be specific and conservative.
         """
     ).strip()
 
@@ -756,10 +1009,14 @@ def build_reflection_prompt(query: str, observation: dict, *, mode: str) -> str:
         {json.dumps(observation, indent=2, default=str)[:9000]}
 
         Decide whether enough evidence is present. If not:
-        - for fixed_flow mode, return followup_queries that target missing evidence.
+        - name the missing evidence goals.
+        - for fixed_flow mode, return concrete followup_queries that target missing evidence and preserve exact terms.
         - for preset_flow mode, return followup_stacks from the available stack list.
+        - protect confident_doc_ids that already look authoritative or directly relevant.
 
-        Stop if the top evidence already covers the likely answer categories.
+        Stop only if observed docs cover the planned evidence goals and stop requirements.
+        If top hits are mostly distractors/decoys, or if release/advisory/account/approval/policy evidence is missing, continue.
+        Do not over-search once all required evidence is present; preserve good evidence instead of letting follow-up noise bury it.
         Do not use ground-truth labels. Infer only from query, observed titles, metadata, snippets, and tool calls.
         """
     ).strip()
@@ -770,7 +1027,17 @@ def sanitize_decision_payload(payload: dict) -> dict:
         payload["preset_stacks"] = normalize_stacks(payload.get("preset_stacks", []), fallback=["general_hybrid"])
     if "followup_stacks" in payload:
         payload["followup_stacks"] = normalize_stacks(payload.get("followup_stacks", []), fallback=[])
-    for key in ["rewrites", "decomposed_queries", "evidence_goals", "followup_queries"]:
+    for key in [
+        "rewrites",
+        "decomposed_queries",
+        "evidence_goals",
+        "stop_requirements",
+        "must_preserve_terms",
+        "followup_queries",
+        "covered_evidence_goals",
+        "missing_evidence_goals",
+        "confident_doc_ids",
+    ]:
         if key in payload:
             payload[key] = clean_string_list(payload.get(key, []), limit=4)
     return payload
@@ -781,6 +1048,10 @@ def normalize_initial_decision(decision: dict, *, fallback_query: str) -> dict:
     decision["preset_stacks"] = normalize_stacks(decision.get("preset_stacks", []), fallback=route_preset_stacks(fallback_query, allow_multiple=True))[:3]
     decision["decomposed_queries"] = clean_string_list(decision.get("decomposed_queries", []), limit=3) or [fallback_query]
     decision["evidence_goals"] = clean_string_list(decision.get("evidence_goals", []), limit=8)
+    decision["stop_requirements"] = clean_string_list(decision.get("stop_requirements", []), limit=6)
+    decision["must_preserve_terms"] = clean_string_list(decision.get("must_preserve_terms", []), limit=8)
+    if decision.get("preferred_search_style") not in {"exact", "semantic", "authority", "wide_fanout", "policy", "mixed"}:
+        decision["preferred_search_style"] = "mixed"
     return decision
 
 
@@ -943,10 +1214,17 @@ def render_report(output: dict) -> str:
             "this tests whether model reflection can choose useful follow-up stacks without writing code."
         )
     if "agentic_code_gen_rule_reflection" in rules:
-        lines.append(
-            f"- Existing rule-backed agentic codegen subset Recall@{k} is `{rules['agentic_code_gen_rule_reflection'][f'subset_recall@{k}']:.4f}`. "
-            "The gap to real LLM codegen is a direct reliability target."
-        )
+        rule_recall = rules["agentic_code_gen_rule_reflection"][f"subset_recall@{k}"]
+        if "real_agentic_code_gen" in real and real["real_agentic_code_gen"][f"recall@{k}"] >= rule_recall:
+            lines.append(
+                f"- Real LLM agentic codegen now exceeds the existing rule-backed subset (`{real['real_agentic_code_gen'][f'recall@{k}']:.4f}` vs `{rule_recall:.4f}`), "
+                "but at much higher LLM generation latency."
+            )
+        else:
+            lines.append(
+                f"- Existing rule-backed agentic codegen subset Recall@{k} is `{rule_recall:.4f}`. "
+                "The gap to real LLM codegen is a direct reliability target."
+            )
 
     lines.extend(["", "## Per-Query", ""])
     for row in output["per_query_comparison"]:

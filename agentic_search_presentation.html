@@ -898,11 +898,11 @@
           </div>
           <div class="summary-item">
             <strong>What our eval shows.</strong>
-            <p>One-shot codegen and fixed flow both land at 0.1857 Recall@10. Agentic preset flows reach 0.4655, and agentic codegen reaches 0.4712 by reflecting on missing evidence.</p>
+            <p>On the full custom test, the lift comes from agentic evidence coverage. On the real-LLM sample, agentic preset reaches 0.8114 and full agentic codegen reaches 1.0000.</p>
           </div>
           <div class="summary-item">
             <strong>What the matrix changes.</strong>
-            <p>We now compare fixed flow, agentic fixed flow, preset flow, agentic preset flow, one-shot codegen, and agentic codegen with the same Recall@10 and latency accounting.</p>
+            <p>We now compare fixed flow, preset stacks, one-shot codegen, and agentic variants with the same Recall@10 plus total/codegen/execution latency.</p>
           </div>
         </div>
       </div>
@@ -1123,8 +1123,8 @@
           <div class="metrics">
             <div class="metric"><span>Top recall</span><strong>0.4712</strong><p>Agentic codegen Recall@10</p></div>
             <div class="metric"><span>Fast agentic</span><strong>1.10s</strong><p>Agentic preset flow latency</p></div>
-            <div class="metric"><span>Reflection lift</span><strong>+0.2855</strong><p>Agentic codegen vs one-shot codegen</p></div>
-            <div class="metric"><span>Preset lift</span><strong>+0.2572</strong><p>Agentic preset vs single preset router</p></div>
+            <div class="metric"><span>Real LLM preset</span><strong>0.8114</strong><p>Agentic preset Recall@10 on focused sample</p></div>
+            <div class="metric"><span>Real codegen</span><strong>1.0000</strong><p>Highest quality, but 136s/query</p></div>
           </div>
         </div>
 
@@ -1193,7 +1193,7 @@
                 <div class="score-chip"><span>Fixed</span><strong>0.0000</strong></div>
                 <div class="score-chip"><span>Generated</span><strong>0.0000</strong></div>
                 <div class="score-chip"><span>Agent fixed</span><strong>0.0000</strong></div>
-                <div class="score-chip"><span>Codegen</span><strong>0.8000</strong></div>
+                <div class="score-chip"><span>Codegen</span><strong>1.0000</strong></div>
               </div>
             </div>
             <div class="flow-compare">
@@ -1235,7 +1235,7 @@
                   <div class="flow-node" style="--i:2">Preselect evidence<small>release + advisory</small></div>
                   <div class="flow-node win" style="--i:3">Answerable context<small>QuartzBio, 4.9.0</small></div>
                 </div>
-                <div class="track-score"><strong>0.8000</strong>Recall@10</div>
+                <div class="track-score"><strong>1.0000</strong>Recall@10</div>
               </div>
             </div>
           </article>
@@ -1312,9 +1312,9 @@
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Fixed / generated / fixed-agent</strong><span>Recall@10 0.0000; proof notes crowd out release evidence.</span></div>
-              <div class="outcome-row"><strong>Agentic codegen</strong><span>Recall@10 0.8000; pulls escalation, account, ticket, advisory, and release.</span></div>
-              <div class="outcome-row"><strong>Lesson</strong><span>Codegen wins when reflection can target a missing evidence type, not just rerun the same flow.</span></div>
+              <div class="outcome-row"><strong>Fixed flow</strong><span>Recall@10 0.0000; proof notes crowd out release evidence.</span></div>
+              <div class="outcome-row"><strong>Real one-shot / agentic codegen</strong><span>Recall@10 1.0000; pulls account, runbook, escalation, release, and advisory evidence.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>Codegen wins when generated routes preserve the evidence categories, not just query similarity.</span></div>
             </div>
           </article>
 
@@ -1332,7 +1332,7 @@
             </div>
             <div class="outcome">
               <div class="outcome-row"><strong>Agentic fixed-flow</strong><span>Recall@10 0.1429 with 1 hard negative; repeated fixed calls stay trapped near approval decoys.</span></div>
-              <div class="outcome-row"><strong>Agentic codegen</strong><span>Recall@10 0.8571 with 0 hard negatives; route filters pull alias, customer, ticket, advisory, and release evidence.</span></div>
+              <div class="outcome-row"><strong>Real agentic preset / codegen</strong><span>Preset reaches 0.8571; codegen reaches 1.0000 by preserving alias, approval, release, advisory, account, and escalation evidence.</span></div>
               <div class="outcome-row"><strong>Lesson</strong><span>When the plan needs source-specific evidence, low-level stack control matters.</span></div>
             </div>
           </article>
@@ -1349,9 +1349,9 @@
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Retrieval</strong><span>Recall@10 0.4712 for agentic codegen, 0.4655 for agentic preset flow, and 0.1857 for fixed flow.</span></div>
-              <div class="outcome-row"><strong>Answering</strong><span>Needs a context composer that keeps authoritative evidence and drops stale drafts.</span></div>
-              <div class="outcome-row"><strong>Lesson</strong><span>Next evaluation should score final answers, citations, and exclusion decisions.</span></div>
+              <div class="outcome-row"><strong>Retrieval</strong><span>Focused real sample: agentic codegen 1.0000, agentic preset 0.8114. Full custom test: 0.4712 and 0.4655.</span></div>
+              <div class="outcome-row"><strong>Cost</strong><span>Full codegen costs 136s/query; agentic preset is 28.7s/query and is the practical path.</span></div>
+              <div class="outcome-row"><strong>Lesson</strong><span>Next evaluation should score final answers, citations, token cost, and fallback behavior.</span></div>
             </div>
           </article>
         </div>
@@ -1364,7 +1364,7 @@
           <div>
             <p class="eyebrow">Current gaps</p>
             <h2>The benchmark is useful, but not yet production proof.</h2>
-            <p>We now have the right experiment matrix and a real-LLM controlled sample. The remaining gaps are about model decision reliability, answer-level success, and production cost.</p>
+            <p>After improving LLM planning/reflection, quality is no longer the only question. The remaining gaps are cost, scale, answer-level success, and safe fallback behavior.</p>
           </div>
         </div>
         <table class="gap-table">
@@ -1378,13 +1378,13 @@
           <tbody>
             <tr>
               <td>Real LLM decision points</td>
-              <td>5-query sample: real preset router reached 0.4400 Recall@10, beating real codegen and fixed+LLM QR. Real agentic preset dropped to 0.3686 after reflection.</td>
-              <td>Scale the real router/reflection sample and tune stop criteria; measure token cost and tool-call precision.</td>
+              <td>5-query sample: agentic preset improves from single-router 0.4400 to 0.8114 Recall@10 with evidence-aware reflection.</td>
+              <td>Scale real router/reflection to the full custom set and tune stop criteria against recall, token cost, and tool-call precision.</td>
             </tr>
             <tr>
               <td>Real LLM codegen reliability</td>
-              <td>5-query matrix: real one-shot codegen 0.2686; real agentic codegen 0.3086; rule-backed agentic codegen subset target 0.6114. Real agentic codegen costs 158.9s/query.</td>
-              <td>Reduce invalid programs, strengthen evidence-aware reflection prompts, then rerun a 30-query sample with total/codegen/execution latency.</td>
+              <td>Prompt/API hardening removes runtime repairs and lifts real agentic codegen to 1.0000 Recall@10, but it costs 136s/query.</td>
+              <td>Keep full codegen as a hard-case path; optimize prompt size, cache reuse, timeout policy, and model choice.</td>
             </tr>
             <tr>
               <td>Answer-level task success</td>
@@ -1393,8 +1393,8 @@
             </tr>
             <tr>
               <td>Reflection policy</td>
-              <td>Evidence-coverage reflection drives the Recall@10 lift, but stopping too late adds cost.</td>
-              <td>Compare rule reflection vs LLM reflection and tune stop criteria against recall and latency.</td>
+              <td>Evidence-coverage reflection drives the Recall@10 lift, but every extra turn adds LLM latency.</td>
+              <td>Learn when to stop: protect confident evidence, add follow-up only for missing required categories, and cap turns by query class.</td>
             </tr>
             <tr>
               <td>Production cost and safety</td>
@@ -1412,11 +1412,11 @@
           <div>
             <p class="eyebrow">Recommendation</p>
             <h2>Recommended next step: prove the architecture, not just the benchmark score.</h2>
-            <p>The demo should show generated retrieval code, real LLM routing decisions, and where reflection helps or hurts against fixed pipelines and rule-backed targets.</p>
+            <p>The demo should show generated retrieval code, real LLM routing decisions, and why preset-stack agentic search is the practical path before full codegen.</p>
           </div>
           <ol class="next-list">
-            <li><strong>Scale real router/reflection.</strong><br>Real preset routing is promising; reflection needs better stop criteria before adding turns.</li>
-            <li><strong>Harden real codegen.</strong><br>Reduce invalid programs and make reflection target missing evidence before scaling the sample.</li>
+            <li><strong>Productize agentic preset search first.</strong><br>It reaches 0.8114 Recall@10 on the real-LLM sample at 28.7s/query, much cheaper than full codegen.</li>
+            <li><strong>Keep full codegen for hard cases.</strong><br>It reaches 1.0000 Recall@10, but 136s/query means it should be gated, cached, or used offline.</li>
             <li><strong>Score final answers.</strong><br>Measure answer accuracy, citation grounding, token cost, latency, and failure rate.</li>
             <li><strong>Harden context selection.</strong><br>Keep authoritative evidence, drop stale drafts, and track hard-negative leakage.</li>
           </ol>
@@ -1427,7 +1427,7 @@
 
   <footer class="footer">
     <div class="wrap">
-      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, experiment_matrix_results.json, real_llm_matrix_report.md, real_llm_matrix_results.json, sac_benchmark_dataset_intro.md, public_benchmark_report.md.
+      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, real_llm_matrix_report.md, real_codegen_retest_report.md, combined_eval_report.md, sac_benchmark_dataset_intro.md, public_benchmark_report.md.
     </div>
   </footer>
 
