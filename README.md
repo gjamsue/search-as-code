@@ -15,6 +15,7 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `public_benchmark_results.json`: latest public benchmark sanity-check payload.
 - `public_benchmark_report.md`: latest public benchmark sanity-check report.
 - `real_codegen_demo_results.json` and `real_codegen_demo_report.md`: 1-query real LLM codegen smoke using the local Codex CLI login path.
+- `real_codegen_retest_results.json` and `real_codegen_retest_report.md`: 5-query real LLM retest comparing one-shot codegen and agentic codegen.
 - `sac_benchmark_dataset_intro.md`: Chinese dataset intro with generation method, categories, statistics, and example tasks.
 - `agentic_search_presentation.html`: mobile-friendly presentation for the final Search-as-Code story.
 
@@ -59,6 +60,20 @@ reproducibility. A separate smoke path now runs true model-generated code:
 - Generated code is AST-validated, executed in a restricted namespace, and can run one repair turn after a runtime error.
 
 Latest smoke: BEIR/SciFact, 5,183 documents, 1 query. End-to-end latency was about 49.5s: 49.2s code generation plus 265.5ms execution. The generated program made 3 search calls and used 1 rerank call. This is proof of execution, not a quality benchmark.
+
+## Real LLM Codegen Retest
+
+Focused enterprise sample: `sac-005, sac-028, sac-038, sac-042, sac-043`
+with candidate budget `120`.
+
+| System | Recall@10 | Total ms | Codegen ms | Execution ms | Repairs | Readout |
+|---|---:|---:|---:|---:|---:|---|
+| Deterministic agentic codegen | 0.6114 | 353.4 | 0.2 | 353.3 | 0 | Upper-bound design target |
+| Real agentic codegen | 0.3086 | 158504.5 | 157409.1 | 1093.9 | 4 | Small lift over real one-shot, high latency/reliability cost |
+| Real one-shot codegen | 0.2686 | 48775.0 | 48328.6 | 446.4 | 0 | Matches fixed/deterministic one-shot on recall |
+
+The current gap is not the search stack. It is the model's reliability at
+writing the right evidence-coverage program and doing useful reflection.
 
 ## Reproduce
 

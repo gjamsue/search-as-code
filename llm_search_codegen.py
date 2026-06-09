@@ -41,6 +41,7 @@ class LLMCodegenResult:
     model: str
     latency_ms: float
     cache_hit: bool
+    static_repairs: int = 0
 
 
 class LLMSearchCodeGenerator:
@@ -83,6 +84,7 @@ class LLMSearchCodeGenerator:
                 model=payload.get("model", self.model),
                 latency_ms=payload.get("latency_ms", 0.0),
                 cache_hit=True,
+                static_repairs=payload.get("static_repairs", 0),
             )
 
         prompt = build_codegen_prompt(
@@ -93,21 +95,32 @@ class LLMSearchCodeGenerator:
             compact=self.provider == "codex-cli",
         )
         started = time.perf_counter()
-        if self.provider == "openai":
-            payload = self._generate_openai(prompt)
-        elif self.provider == "codex-cli":
-            payload = self._generate_codex_cli(prompt)
-        else:
-            raise ValueError(f"Unsupported LLM codegen provider: {self.provider}")
+        payload = self._generate_from_prompt(prompt)
+        static_repairs = 0
+        try:
+            code = validate_generated_code(payload["code"])
+        except Exception as exc:
+            static_repairs += 1
+            repair_prompt = build_repair_prompt(
+                query,
+                payload["code"],
+                exc,
+                top_k=top_k,
+                candidate_k=candidate_k,
+                benchmark_hint=f"{benchmark_hint}; static validation failed before execution",
+                compact=self.provider == "codex-cli",
+            )
+            payload = self._generate_from_prompt(repair_prompt)
+            code = validate_generated_code(payload["code"])
         latency_ms = (time.perf_counter() - started) * 1000
 
-        code = validate_generated_code(payload["code"])
         result = {
             "code": code,
             "rationale": payload.get("rationale", ""),
             "provider": self.provider,
             "model": self.model,
             "latency_ms": round(latency_ms, 3),
+            "static_repairs": static_repairs,
         }
         cache_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
         return LLMCodegenResult(cache_hit=False, **result)
@@ -138,6 +151,7 @@ class LLMSearchCodeGenerator:
                 model=payload.get("model", self.model),
                 latency_ms=payload.get("latency_ms", 0.0),
                 cache_hit=True,
+                static_repairs=payload.get("static_repairs", 0),
             )
 
         prompt = build_repair_prompt(
@@ -150,24 +164,112 @@ class LLMSearchCodeGenerator:
             compact=self.provider == "codex-cli",
         )
         started = time.perf_counter()
-        if self.provider == "openai":
-            payload = self._generate_openai(prompt)
-        elif self.provider == "codex-cli":
-            payload = self._generate_codex_cli(prompt)
-        else:
-            raise ValueError(f"Unsupported LLM codegen provider: {self.provider}")
+        payload = self._generate_from_prompt(prompt)
+        static_repairs = 0
+        try:
+            repaired_code = validate_generated_code(payload["code"])
+        except Exception as exc:
+            static_repairs += 1
+            repair_prompt = build_repair_prompt(
+                query,
+                payload["code"],
+                exc,
+                top_k=top_k,
+                candidate_k=candidate_k,
+                benchmark_hint=f"{benchmark_hint}; static validation failed during repair",
+                compact=self.provider == "codex-cli",
+            )
+            payload = self._generate_from_prompt(repair_prompt)
+            repaired_code = validate_generated_code(payload["code"])
         latency_ms = (time.perf_counter() - started) * 1000
 
-        repaired_code = validate_generated_code(payload["code"])
         result = {
             "code": repaired_code,
             "rationale": payload.get("rationale", ""),
             "provider": self.provider,
             "model": self.model,
             "latency_ms": round(latency_ms, 3),
+            "static_repairs": static_repairs,
         }
         cache_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
         return LLMCodegenResult(cache_hit=False, **result)
+
+    def reflect(
+        self,
+        query: str,
+        code: str,
+        observation: dict[str, Any],
+        *,
+        top_k: int,
+        candidate_k: int,
+        benchmark_hint: str = "",
+    ) -> LLMCodegenResult:
+        observation_text = json.dumps(observation, sort_keys=True, default=str)
+        cache_key = self._cache_key(
+            query,
+            top_k=top_k,
+            candidate_k=candidate_k,
+            benchmark_hint=f"{benchmark_hint}\nreflection:{hashlib.sha256((code + observation_text).encode('utf-8')).hexdigest()[:16]}",
+        )
+        cache_path = self.cache_dir / f"{cache_key}.json"
+        if cache_path.exists():
+            payload = json.loads(cache_path.read_text(encoding="utf-8"))
+            return LLMCodegenResult(
+                code=payload["code"],
+                rationale=payload.get("rationale", ""),
+                provider=payload.get("provider", self.provider),
+                model=payload.get("model", self.model),
+                latency_ms=payload.get("latency_ms", 0.0),
+                cache_hit=True,
+                static_repairs=payload.get("static_repairs", 0),
+            )
+
+        prompt = build_reflection_prompt(
+            query,
+            code,
+            observation,
+            top_k=top_k,
+            candidate_k=candidate_k,
+            benchmark_hint=benchmark_hint,
+            compact=self.provider == "codex-cli",
+        )
+        started = time.perf_counter()
+        payload = self._generate_from_prompt(prompt)
+        static_repairs = 0
+        try:
+            reflected_code = validate_generated_code(payload["code"])
+        except Exception as exc:
+            static_repairs += 1
+            repair_prompt = build_repair_prompt(
+                query,
+                payload["code"],
+                exc,
+                top_k=top_k,
+                candidate_k=candidate_k,
+                benchmark_hint=f"{benchmark_hint}; static validation failed during reflection",
+                compact=self.provider == "codex-cli",
+            )
+            payload = self._generate_from_prompt(repair_prompt)
+            reflected_code = validate_generated_code(payload["code"])
+        latency_ms = (time.perf_counter() - started) * 1000
+
+        result = {
+            "code": reflected_code,
+            "rationale": payload.get("rationale", ""),
+            "provider": self.provider,
+            "model": self.model,
+            "latency_ms": round(latency_ms, 3),
+            "static_repairs": static_repairs,
+        }
+        cache_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        return LLMCodegenResult(cache_hit=False, **result)
+
+    def _generate_from_prompt(self, prompt: str) -> dict[str, str]:
+        if self.provider == "openai":
+            return self._generate_openai(prompt)
+        if self.provider == "codex-cli":
+            return self._generate_codex_cli(prompt)
+        raise ValueError(f"Unsupported LLM codegen provider: {self.provider}")
 
     def _cache_key(self, query: str, *, top_k: int, candidate_k: int, benchmark_hint: str) -> str:
         payload = {
@@ -392,6 +494,65 @@ def build_repair_prompt(
     return base + "\n\nReturn JSON matching this schema only:\n" + json.dumps(CODEGEN_RESPONSE_SCHEMA, indent=2)
 
 
+def build_reflection_prompt(
+    query: str,
+    code: str,
+    observation: dict[str, Any],
+    *,
+    top_k: int,
+    candidate_k: int,
+    benchmark_hint: str,
+    compact: bool = False,
+) -> str:
+    observation_json = json.dumps(observation, indent=2, default=str)[:12000]
+    base = textwrap.dedent(
+        f"""
+        Use the search-as-code-codegen skill. You are doing agentic Search-as-Code.
+
+        Query:
+        {query}
+
+        Benchmark hint:
+        {benchmark_hint or "enterprise retrieval benchmark"}
+
+        Runtime constants:
+        - TOP_K = {top_k}
+        - CANDIDATE_K = {candidate_k}
+
+        Initial generated program:
+        ```python
+        {code}
+        ```
+
+        Observation after running the initial program:
+        ```json
+        {observation_json}
+        ```
+
+        Return JSON only with fields code and rationale.
+
+        Task:
+        - Reflect on whether the observed evidence looks complete for the query.
+        - Generate a complete replacement `def run(ctx):` program.
+        - If the initial evidence looks incomplete, add targeted follow-up retrieval:
+          exact identifier routes, source-authority filters, alias expansion,
+          policy/ledger searches, release/advisory/ticket fanout, or negative-evidence routes as needed.
+        - If the initial evidence looks sufficient, you may return a cleaned-up equivalent program.
+        - Do not use ground truth labels; infer from query, trace, top hits, doc metadata, and missing evidence categories.
+        - Log both `agentic_plan` and `reflection`.
+
+        Important SDK facts:
+        - analysis["entities"] is a list of dicts; use entity.get("text", "") before joining.
+        - query rewrite returns a dict; use rewrite_result.get("rewrites", []).
+        - search hits are dict-like SearchCandidate objects with doc_id/title/text/metadata/score.
+        - No imports, files, network, subprocess, eval, exec, globals, locals, or dunder/private access.
+        """
+    ).strip()
+    if compact:
+        return base
+    return base + "\n\nReturn JSON matching this schema only:\n" + json.dumps(CODEGEN_RESPONSE_SCHEMA, indent=2)
+
+
 def parse_codegen_json(text: str) -> dict[str, str]:
     text = text.strip()
     if text.startswith("```"):
@@ -479,6 +640,15 @@ def safe_getattr(obj, name: str, default=None):
 
 
 SAFE_BUILTINS["getattr"] = safe_getattr
+
+
+def safe_hasattr(obj, name: str):
+    if str(name).startswith("_"):
+        return False
+    return hasattr(obj, name)
+
+
+SAFE_BUILTINS["hasattr"] = safe_hasattr
 
 
 def validate_generated_code(code: str) -> str:

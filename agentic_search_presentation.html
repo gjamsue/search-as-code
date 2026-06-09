@@ -901,8 +901,8 @@
             <p>One-shot generated flow ties fixed baseline at 0.1857 Recall@10. Agentic fixed-flow calls reach 0.2694, while agentic codegen reaches 0.4712 by reflecting on missing evidence and controlling the search stack.</p>
           </div>
           <div class="summary-item">
-            <strong>What is still missing.</strong>
-            <p>The next bar is production proof: scale real LLM codegen, add a tool-calling agent baseline, count tokens, and score answer-level grounding.</p>
+            <strong>What real codegen shows.</strong>
+            <p>On a 5-query retest, real agentic codegen improves over real one-shot, but still trails the deterministic agentic design target and spends almost all time generating code.</p>
           </div>
         </div>
       </div>
@@ -1121,7 +1121,7 @@
             <div class="metric"><span>Quality winner</span><strong>47.1</strong><p>Agentic codegen quality score</p></div>
             <div class="metric"><span>Codegen gain</span><strong>+0.2855</strong><p>Recall@10 delta vs fixed and one-shot generated flow</p></div>
             <div class="metric"><span>Fixed-tool gain</span><strong>+0.0837</strong><p>Agentic fixed-flow delta vs fixed baseline</p></div>
-            <div class="metric"><span>Latency split</span><strong>3.36s</strong><p>Total: 0.1 ms codegen + 3.36s execution</p></div>
+            <div class="metric"><span>Real LLM retest</span><strong>0.3086</strong><p>Agentic real codegen Recall@10; 158.5s total</p></div>
           </div>
         </div>
 
@@ -1375,8 +1375,8 @@
           <tbody>
             <tr>
               <td>Real LLM codegen</td>
-              <td>A true Codex CLI codegen smoke now works without an API key. Its latency split is 49.5s total = 49.2s codegen + 0.27s execution.</td>
-              <td>Scale the real-codegen eval to 30-100 queries; report total, codegen, and execution time alongside invalid-code rate, repair rate, quality, and tokens.</td>
+              <td>5-query retest: real one-shot Recall@10 0.2686; real agentic 0.3086; deterministic agentic target 0.6114. Real agentic costs 158.5s total, mostly codegen.</td>
+              <td>Improve code-writing reliability before scaling: reduce invalid programs, make reflection evidence-aware, then rerun 30-100 queries with total/codegen/execution latency.</td>
             </tr>
             <tr>
               <td>Real LLM tool-calling baseline</td>
@@ -1412,7 +1412,7 @@
             <p>The demo should show generated retrieval code, different flows per query, and a fair comparison against fixed pipelines and tool-calling agents.</p>
           </div>
           <ol class="next-list">
-            <li><strong>Scale real codegen.</strong><br>Use the Codex skill/tool schema path across a larger sample and track repair/failure rate.</li>
+            <li><strong>Harden real codegen.</strong><br>Reduce invalid programs and make reflection target missing evidence before scaling the sample.</li>
             <li><strong>Add the agent baseline.</strong><br>Compare against multi-turn tool calling with the same APIs and the same evaluation set.</li>
             <li><strong>Score final answers.</strong><br>Measure answer accuracy, citation grounding, token cost, latency, and failure rate.</li>
             <li><strong>Harden context selection.</strong><br>Keep authoritative evidence, drop stale drafts, and track hard-negative leakage.</li>
@@ -1424,7 +1424,7 @@
 
   <footer class="footer">
     <div class="wrap">
-      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: sac_benchmark_dataset_intro.md, sac_benchmark_report.md, sac_benchmark_results.json, public_benchmark_report.md, real_codegen_demo_report.md.
+      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: sac_benchmark_dataset_intro.md, sac_benchmark_report.md, sac_benchmark_results.json, public_benchmark_report.md, real_codegen_demo_report.md, real_codegen_retest_report.md.
     </div>
   </footer>
 

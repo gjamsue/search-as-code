@@ -408,8 +408,12 @@ def run_system(
         )
         execution_start = time.perf_counter()
         result = executor(code, ctx)
-        execution_ms = (time.perf_counter() - execution_start) * 1000
+        raw_execution_ms = (time.perf_counter() - execution_start) * 1000
+        additional_generation_ms = float(result.get("_additional_generation_ms", 0.0))
+        generation_ms += additional_generation_ms
+        execution_ms = float(result.get("_execution_only_ms", max(0.0, raw_execution_ms - additional_generation_ms)))
         latency_ms = (time.perf_counter() - total_start) * 1000
+        executed_code = result.get("_executed_code", code)
         hits: list[SearchCandidate] = result["hits"][:top_k]
         query_stats = ctx.stats(latency_ms=latency_ms, generation_ms=generation_ms, execution_ms=execution_ms)
         stats.append(query_stats)
@@ -432,7 +436,7 @@ def run_system(
             }
         )
         if len(code_samples) < sample_codes:
-            code_samples.append({"qid": qid, "query": query, "code": code, "trace": ctx.trace[:12]})
+            code_samples.append({"qid": qid, "query": query, "code": executed_code, "trace": ctx.trace[:12]})
         if idx % 20 == 0:
             print(f"  {idx}/{len(queries)}")
 
