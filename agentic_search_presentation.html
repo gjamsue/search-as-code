@@ -1364,7 +1364,7 @@
           <div>
             <p class="eyebrow">Current gaps</p>
             <h2>The benchmark is useful, but not yet production proof.</h2>
-            <p>We now have the right experiment matrix. The remaining gaps are about replacing rule-backed decision points with real LLM calls, scoring final answers, and proving production cost.</p>
+            <p>We now have the right experiment matrix and a real-LLM controlled sample. The remaining gaps are about model decision reliability, answer-level success, and production cost.</p>
           </div>
         </div>
         <table class="gap-table">
@@ -1378,12 +1378,12 @@
           <tbody>
             <tr>
               <td>Real LLM decision points</td>
-              <td>The full matrix uses rule-backed QR, router, planner, and reflection for reproducibility. This isolates architecture, but not model decision quality.</td>
-              <td>Swap in real LLM QR/router/reflection variants and report tokens, model latency, tool calls, and stop decisions.</td>
+              <td>5-query sample: real preset router reached 0.4400 Recall@10, beating real codegen and fixed+LLM QR. Real agentic preset dropped to 0.3686 after reflection.</td>
+              <td>Scale the real router/reflection sample and tune stop criteria; measure token cost and tool-call precision.</td>
             </tr>
             <tr>
               <td>Real LLM codegen reliability</td>
-              <td>5-query retest: real one-shot Recall@10 0.2686; real agentic 0.3086. It improves, but spends most time generating code and still needs repairs.</td>
+              <td>5-query matrix: real one-shot codegen 0.2686; real agentic codegen 0.3086; rule-backed agentic codegen subset target 0.6114. Real agentic codegen costs 158.9s/query.</td>
               <td>Reduce invalid programs, strengthen evidence-aware reflection prompts, then rerun a 30-query sample with total/codegen/execution latency.</td>
             </tr>
             <tr>
@@ -1412,10 +1412,10 @@
           <div>
             <p class="eyebrow">Recommendation</p>
             <h2>Recommended next step: prove the architecture, not just the benchmark score.</h2>
-            <p>The demo should show generated retrieval code, different preset/codegen flows per query, and the new matrix against fixed pipelines and agentic variants.</p>
+            <p>The demo should show generated retrieval code, real LLM routing decisions, and where reflection helps or hurts against fixed pipelines and rule-backed targets.</p>
           </div>
           <ol class="next-list">
-            <li><strong>Run real LLM variants.</strong><br>Replace rule-backed QR, router, planner, and reflection with model calls on a controlled sample.</li>
+            <li><strong>Scale real router/reflection.</strong><br>Real preset routing is promising; reflection needs better stop criteria before adding turns.</li>
             <li><strong>Harden real codegen.</strong><br>Reduce invalid programs and make reflection target missing evidence before scaling the sample.</li>
             <li><strong>Score final answers.</strong><br>Measure answer accuracy, citation grounding, token cost, latency, and failure rate.</li>
             <li><strong>Harden context selection.</strong><br>Keep authoritative evidence, drop stale drafts, and track hard-negative leakage.</li>
@@ -1427,7 +1427,7 @@
 
   <footer class="footer">
     <div class="wrap">
-      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, experiment_matrix_results.json, sac_benchmark_dataset_intro.md, public_benchmark_report.md, real_codegen_retest_report.md.
+      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, experiment_matrix_results.json, real_llm_matrix_report.md, real_llm_matrix_results.json, sac_benchmark_dataset_intro.md, public_benchmark_report.md.
     </div>
   </footer>
 

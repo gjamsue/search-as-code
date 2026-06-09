@@ -8,6 +8,7 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `real_search_stack/`: open-source search APIs built on BM25, sentence-transformers dense retrieval, spaCy query understanding/entity extraction, optional Wikidata linking, and cross-encoder reranking.
 - `run_sac_dataset_benchmark.py`: main benchmark runner for fixed BM25, dense, hybrid, hybrid+rerank, fixed enriched, one-shot generated Search-as-Code, agentic fixed-flow calls, naive reflective Search-as-Code, and iterative agentic Search-as-Code flows.
 - `run_experiment_matrix.py`: presentation-aligned matrix runner for fixed flow, agentic fixed flow, preset flow, agentic preset flow, one-shot codegen, and agentic codegen.
+- `run_real_llm_matrix.py`: focused real-LLM matrix runner that uses Codex CLI for QR/router/planner/reflection decisions and real codegen.
 - `run_public_benchmarks.py`: public benchmark sanity-check runner for BEIR/SciFact and HotpotQA dev-distractor slices.
 - `llm_search_codegen.py`: real LLM-backed Search-as-Code generator with `codex-cli` and `openai` providers, AST validation, sandbox execution, and one-shot repair support.
 - `skills/search-as-code-codegen/`: reusable Codex skill that defines the Search-as-Code runtime/tool contract for real code generation.
@@ -19,6 +20,7 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `public_benchmark_report.md`: latest public benchmark sanity-check report.
 - `real_codegen_demo_results.json` and `real_codegen_demo_report.md`: 1-query real LLM codegen smoke using the local Codex CLI login path.
 - `real_codegen_retest_results.json` and `real_codegen_retest_report.md`: 5-query real LLM retest comparing one-shot codegen and agentic codegen.
+- `real_llm_matrix_results.json` and `real_llm_matrix_report.md`: 5-query real LLM matrix for QR, router, planner/reflection, and codegen variants.
 - `sac_benchmark_dataset_intro.md`: Chinese dataset intro with generation method, categories, statistics, and example tasks.
 - `agentic_search_presentation.html`: mobile-friendly presentation for the final Search-as-Code story.
 
@@ -64,6 +66,26 @@ reproducibility. A separate smoke path now runs true model-generated code:
 
 Latest smoke: BEIR/SciFact, 5,183 documents, 1 query. End-to-end latency was about 49.5s: 49.2s code generation plus 265.5ms execution. The generated program made 3 search calls and used 1 rerank call. This is proof of execution, not a quality benchmark.
 
+## Real LLM Matrix
+
+Focused enterprise sample: `sac-005, sac-028, sac-038, sac-042, sac-043`
+with candidate budget `120`. This run replaces rule-backed QR/router/planner
+and reflection with structured Codex CLI calls, then compares with real codegen.
+
+| System | Recall@10 | Total ms | LLM ms | Execution ms | Readout |
+|---|---:|---:|---:|---:|---|
+| Real preset router | 0.4400 | 9370.0 | 9255.8 | 114.2 | Best real-LLM result on this sample; one model routing call can beat fixed/codegen |
+| Real agentic preset | 0.3686 | 20311.6 | 20057.5 | 254.2 | Reflection added cost and did not improve over initial routing |
+| Real agentic codegen | 0.3086 | 158909.7 | 158026.3 | 883.4 | Better than one-shot codegen, but expensive and still below the rule-backed target |
+| Real fixed flow + LLM QR | 0.2686 | 9544.9 | 9255.8 | 289.1 | Same recall as one-shot codegen at much lower latency |
+| Real one-shot codegen | 0.2686 | 48706.3 | 48327.9 | 378.4 | Codegen did not beat LLM QR fixed flow on this sample |
+| Real agentic fixed flow | 0.2286 | 19996.4 | 18835.7 | 1160.7 | Planner/reflection over a rigid fixed tool underperformed |
+
+Existing rule-backed subset results on the same five qids: agentic codegen
+`0.6114`, agentic preset `0.6000`, agentic fixed flow `0.2686`. The immediate
+gap is model decision reliability: real LLM routing can help, but real reflection
+and codegen are not yet matching the rule-backed evidence-coverage target.
+
 ## Real LLM Codegen Retest
 
 Focused enterprise sample: `sac-005, sac-028, sac-038, sac-042, sac-043`
@@ -89,6 +111,7 @@ python sac_benchmark_dataset/validate_dataset.py
 python sac_benchmark_dataset/audit_dataset.py --write-report
 python run_experiment_matrix.py --split test
 python run_sac_dataset_benchmark.py --split test
+python run_real_llm_matrix.py --candidate-k 120 --tool-candidate-k 120
 python run_public_benchmarks.py --benchmarks beir/scifact,hotpotqa/distractor --hotpot-limit 100 --candidate-k 40 --generated-branch-top-k 20 --generated-max-rerank-candidates 40 --no-per-query
 ```
 
