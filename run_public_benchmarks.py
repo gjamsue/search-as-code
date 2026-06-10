@@ -7,6 +7,8 @@ separates two settings:
 - BEIR small datasets, where full-corpus local indexing is feasible.
 - HotpotQA dev-distractor slices, where we use official HotpotQA contexts but
   do not claim a fullwiki or BEIR leaderboard number.
+- Harness-1-compatible local datasets, where public qrels can be evaluated once
+  the matching retrieval corpus/index export is available locally.
 """
 
 from __future__ import annotations
@@ -83,7 +85,10 @@ def main() -> None:
     parser.add_argument(
         "--benchmarks",
         default="beir/scifact,hotpotqa/distractor",
-        help="Comma-separated benchmarks. Supported: beir/scifact, beir/fiqa, beir/fever, beir/nq, hotpotqa/distractor.",
+        help=(
+            "Comma-separated benchmarks. Supported: beir/scifact, beir/fiqa, beir/fever, beir/nq, "
+            "hotpotqa/distractor, harness1/browsecompplus."
+        ),
     )
     parser.add_argument("--split", default="test")
     parser.add_argument("--beir-query-limit", type=int, default=0, help="0 means all queries for BEIR datasets.")
@@ -230,6 +235,8 @@ def load_benchmark(
         return load_beir_dataset(dataset, data_dir=data_dir, split=split, query_limit=beir_query_limit)
     if benchmark_id == "hotpotqa/distractor":
         return load_hotpotqa_distractor(data_dir=data_dir, limit=hotpot_limit)
+    if benchmark_id == "harness1/browsecompplus":
+        return load_harness1_browsecompplus(data_dir=data_dir)
     raise SystemExit(f"Unsupported benchmark: {benchmark_id}")
 
 
@@ -310,6 +317,134 @@ def load_hotpotqa_distractor(*, data_dir: Path, limit: int) -> LoadedBenchmark:
             "Use this as a multi-hop public sanity check, not as a leaderboard number.",
         ],
     )
+
+
+def load_harness1_browsecompplus(*, data_dir: Path) -> LoadedBenchmark:
+    """Load a local BrowseComp+ export in the format expected by Harness-1.
+
+    Harness-1 publishes evaluation code, but not the large retrieval corpus or
+    Chroma index. This loader keeps our comparison honest: it only runs when the
+    user provides qrels plus a corpus JSONL with matching document IDs.
+    """
+
+    base = data_dir / "BrowseComp-Plus"
+    queries_path = env_path("BROWSECOMPPLUS_QUERIES_PATH", base / "topics-qrels" / "queries.tsv")
+    gold_qrels_path = env_path("BROWSECOMPPLUS_QRELS_GOLD_PATH", base / "topics-qrels" / "qrel_golds.txt")
+    evidence_qrels_path = env_path(
+        "BROWSECOMPPLUS_QRELS_EVIDENCE_PATH",
+        base / "topics-qrels" / "qrel_evidence.txt",
+    )
+    corpus_path = env_path("BROWSECOMPPLUS_CORPUS_JSONL", data_dir / "harness1" / "browsecompplus_corpus.jsonl")
+
+    required = {
+        "BROWSECOMPPLUS_QUERIES_PATH": queries_path,
+        "BROWSECOMPPLUS_QRELS_GOLD_PATH": gold_qrels_path,
+        "BROWSECOMPPLUS_CORPUS_JSONL": corpus_path,
+    }
+    missing = [f"{name}={path}" for name, path in required.items() if not path.exists()]
+    if missing:
+        raise SystemExit(
+            "harness1/browsecompplus requires local BrowseComp+ files and a matching corpus JSONL. "
+            "Missing: "
+            + "; ".join(missing)
+            + ". See harness1_benchmark_feasibility.md for setup notes."
+        )
+
+    queries = load_tsv_queries(queries_path)
+    qrels = load_trec_qrels(gold_qrels_path)
+    if evidence_qrels_path.exists():
+        merge_qrels(qrels, load_trec_qrels(evidence_qrels_path))
+    documents = load_public_corpus_jsonl(corpus_path, benchmark="harness1/browsecompplus")
+
+    missing_doc_ids = sorted({doc_id for rels in qrels.values() for doc_id in rels} - {doc.doc_id for doc in documents})
+    if missing_doc_ids:
+        preview = ", ".join(missing_doc_ids[:5])
+        raise SystemExit(
+            f"harness1/browsecompplus corpus is missing {len(missing_doc_ids)} qrel doc IDs. "
+            f"Examples: {preview}"
+        )
+
+    return LoadedBenchmark(
+        benchmark_id="harness1/browsecompplus",
+        display_name="Harness-1/BrowseComp+ local",
+        source_url="https://github.com/texttron/BrowseComp-Plus",
+        setting="BrowseComp+ qrels with caller-provided local corpus JSONL; Harness-1-compatible, not an official Harness-1 Chroma run",
+        split="test",
+        documents=documents,
+        queries=queries,
+        qrels=qrels,
+        notes=[
+            "Harness-1 identifies BrowseComp+ as the public ready-to-run path, but still requires a matching retrieval corpus/index.",
+            "This repo evaluates the same architecture variants once local qrels and corpus JSONL are provided.",
+            "Use results as local comparability checks, not official Harness-1 leaderboard numbers.",
+        ],
+    )
+
+
+def env_path(name: str, default: Path) -> Path:
+    value = os.environ.get(name)
+    return Path(value).expanduser() if value else default
+
+
+def load_tsv_queries(path: Path) -> dict[str, str]:
+    queries: dict[str, str] = {}
+    for line_no, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        line = raw_line.strip()
+        if not line:
+            continue
+        parts = line.split("\t")
+        if line_no == 1 and len(parts) >= 2 and parts[0].lower() in {"qid", "query_id", "id"}:
+            continue
+        if len(parts) < 2:
+            raise ValueError(f"Invalid query TSV line {line_no} in {path}: {raw_line!r}")
+        queries[parts[0]] = parts[1]
+    return queries
+
+
+def load_trec_qrels(path: Path) -> dict[str, dict[str, int]]:
+    qrels: dict[str, dict[str, int]] = {}
+    for line_no, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        line = raw_line.strip()
+        if not line:
+            continue
+        parts = line.split()
+        if line_no == 1 and parts[0].lower() in {"qid", "query_id"}:
+            continue
+        if len(parts) >= 4:
+            qid, doc_id, relevance = parts[0], parts[2], parts[3]
+        elif len(parts) == 3:
+            qid, doc_id, relevance = parts
+        else:
+            raise ValueError(f"Invalid qrels line {line_no} in {path}: {raw_line!r}")
+        score = int(float(relevance))
+        if score > 0:
+            qrels.setdefault(qid, {})[doc_id] = max(score, qrels.get(qid, {}).get(doc_id, 0))
+    return qrels
+
+
+def merge_qrels(target: dict[str, dict[str, int]], source: dict[str, dict[str, int]]) -> None:
+    for qid, rels in source.items():
+        merged = target.setdefault(qid, {})
+        for doc_id, score in rels.items():
+            merged[doc_id] = max(score, merged.get(doc_id, 0))
+
+
+def load_public_corpus_jsonl(path: Path, *, benchmark: str) -> list[IndexedDocument]:
+    documents: list[IndexedDocument] = []
+    for line_no, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        line = raw_line.strip()
+        if not line:
+            continue
+        item = json.loads(line)
+        doc_id = item.get("doc_id") or item.get("_id") or item.get("id")
+        if not doc_id:
+            raise ValueError(f"Missing document id on line {line_no} in {path}")
+        title = item.get("title", "")
+        text = item.get("text") or item.get("contents") or item.get("content") or ""
+        metadata = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
+        metadata = {"benchmark": benchmark, "source": "local_jsonl", **metadata}
+        documents.append(IndexedDocument(doc_id=str(doc_id), title=title, text=text, metadata=metadata))
+    return documents
 
 
 def download_hotpotqa_distractor(data_dir: Path) -> Path:

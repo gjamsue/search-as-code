@@ -1250,11 +1250,12 @@
                 </tbody>
               </table>
             </div>
+            <p class="table-note">Harness-1 is a good next external benchmark reference: we already cover HotpotQA overlap, and the runner now supports BrowseComp+ once local qrels plus a matching corpus/index export are available. Web/Patents/SEC should stay labeled as deferred until compatible Chroma corpora exist.</p>
           </div>
           <div class="metrics">
             <div class="metric"><span>SciFact</span><strong>+0.0003</strong><p>Agentic codegen vs fixed flow</p></div>
             <div class="metric"><span>HotpotQA</span><strong>-0.0250</strong><p>Agentic codegen vs fixed flow</p></div>
-            <div class="metric"><span>Dataset effect</span><strong>real</strong><p>Codegen does not win universally</p></div>
+            <div class="metric"><span>Harness-1</span><strong>next</strong><p>BrowseComp+ after corpus/index setup</p></div>
             <div class="metric"><span>Main takeaway</span><strong>targeted</strong><p>Enterprise control problems are the core use case</p></div>
           </div>
         </div>
@@ -1516,7 +1517,7 @@
 
   <footer class="footer">
     <div class="wrap">
-      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, real_llm_matrix_full_report.md, named_search_baselines_report.md, real_codegen_retest_report.md, combined_eval_report.md, sac_benchmark_dataset_intro.md, public_variant_matrix_report.md.
+      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://arxiv.org/abs/2606.02373">Harness-1 paper</a>; <a href="https://github.com/pat-jj/harness-1">Harness-1 repo</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, real_llm_matrix_full_report.md, named_search_baselines_report.md, real_codegen_retest_report.md, combined_eval_report.md, sac_benchmark_dataset_intro.md, public_variant_matrix_report.md, harness1_benchmark_feasibility.md.
     </div>
   </footer>
 
