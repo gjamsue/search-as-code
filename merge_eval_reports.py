@@ -19,6 +19,7 @@ def main() -> None:
     parser.add_argument("--real-llm", default="real_llm_matrix_results.json")
     parser.add_argument("--real-llm-full", default="real_llm_matrix_full_results.json")
     parser.add_argument("--real-codegen", default="real_codegen_retest_results.json")
+    parser.add_argument("--named-baselines", default="named_search_baselines_results.json")
     parser.add_argument("--public-variant", default="public_variant_matrix_results.json")
     parser.add_argument("--public", default="public_benchmark_results.json")
     parser.add_argument("--legacy", default="sac_benchmark_results.json")
@@ -33,6 +34,7 @@ def main() -> None:
     add_real_llm_rows(rows, artifacts, Path(args.real_llm))
     add_real_llm_full_rows(rows, artifacts, Path(args.real_llm_full))
     add_real_codegen_rows(rows, artifacts, Path(args.real_codegen))
+    add_named_baseline_rows(rows, artifacts, Path(args.named_baselines))
     add_public_variant_rows(rows, artifacts, Path(args.public_variant))
     add_public_rows(rows, artifacts, Path(args.public))
     add_legacy_rows(rows, artifacts, Path(args.legacy))
@@ -151,6 +153,26 @@ def add_public_rows(rows: list[dict], artifacts: list[dict], path: Path) -> None
                     note="public sanity check, not leaderboard",
                 )
             )
+
+
+def add_named_baseline_rows(rows: list[dict], artifacts: list[dict], path: Path) -> None:
+    payload = read_payload(path)
+    if not payload:
+        return
+    artifacts.append(artifact(path, "custom named search baseline calibration", payload.get("tasks"), payload.get("documents")))
+    for item in payload.get("summary_rows", []):
+        rows.append(
+            normalize_row(
+                source=path.name,
+                scope="custom named search baselines",
+                scope_order=35,
+                benchmark="sac-codegen-v3/test",
+                queries=payload.get("tasks"),
+                system=item.get("system"),
+                row=item,
+                note=item.get("reference") or item.get("implementation") or "named search baseline",
+            )
+        )
 
 
 def add_public_variant_rows(rows: list[dict], artifacts: list[dict], path: Path) -> None:
@@ -347,10 +369,24 @@ def render_executive_readout(output: dict[str, Any]) -> list[str]:
         f"- Agentic codegen beats one-shot codegen by `{deltas['agentic_codegen_vs_one_shot']['recall_delta']:+.4f}` Recall@10.",
         f"- Agentic preset reflection beats single preset routing by `{deltas['agentic_preset_vs_router']['recall_delta']:+.4f}` Recall@10.",
         f"- Agentic codegen reaches the highest quality, but costs `{deltas['agentic_preset_vs_agentic_codegen_latency_ratio']:.1f}x` the agentic preset latency.",
+        *render_named_baseline_readout(output["rows"]),
         *render_public_variant_readout(output["rows"]),
         "- Recommended interpretation: use preset-stack agentic search as the practical product path; keep full codegen as an advanced/research path for hard cases.",
     ]
     return lines
+
+
+def render_named_baseline_readout(rows: list[dict[str, Any]]) -> list[str]:
+    named_rows = [row for row in rows if row["source"] == "named_search_baselines_results.json"]
+    if not named_rows:
+        return []
+    by_system = {row["system"]: row for row in named_rows}
+    bm25 = by_system.get("okapi_bm25_rank_bm25", {})
+    dense = by_system.get("minilm_biencoder_dense", {})
+    rerank = by_system.get("hybrid_cross_encoder_rerank", {})
+    return [
+        f"- Custom named-search calibration: Okapi BM25 reaches `{number(bm25.get('recall@10')):.4f}`, dense bi-encoder `{number(dense.get('recall@10')):.4f}`, and hybrid+CrossEncoder rerank `{number(rerank.get('recall@10')):.4f}` Recall@10.",
+    ]
 
 
 def render_public_variant_readout(rows: list[dict[str, Any]]) -> list[str]:

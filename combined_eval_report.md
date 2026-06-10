@@ -7,6 +7,7 @@
 - Agentic codegen beats one-shot codegen by `+0.1190` Recall@10.
 - Agentic preset reflection beats single preset routing by `+0.1926` Recall@10.
 - Agentic codegen reaches the highest quality, but costs `4.5x` the agentic preset latency.
+- Custom named-search calibration: Okapi BM25 reaches `0.2350`, dense bi-encoder `0.0932`, and hybrid+CrossEncoder rerank `0.1857` Recall@10.
 - Public SciFact check is effectively a tie: agentic codegen `0.8254` vs fixed flow `0.8251` Recall@10.
 - Public HotpotQA check favors fixed flow: `0.9550` vs agentic codegen `0.9300` Recall@10.
 - Recommended interpretation: use preset-stack agentic search as the practical product path; keep full codegen as an advanced/research path for hard cases.
@@ -38,6 +39,14 @@
 | custom enterprise full test | sac-codegen-v3/test | `preset_flow_model_router` | 0.2083 | 1770.7 | 0.0 | 1770.7 | 2.00 | 1251.5 |
 | custom enterprise full test | sac-codegen-v3/test | `one_shot_code_gen_rule_policy` | 0.1857 | 3238.0 | 0.1 | 3237.8 | 6.97 | 2400.0 |
 | custom enterprise full test | sac-codegen-v3/test | `fixed_flow_model_qr` | 0.1857 | 3556.8 | 0.0 | 3556.8 | 3.97 | 2400.0 |
+| custom named search baselines | sac-codegen-v3/test | `okapi_bm25_rank_bm25` | 0.2350 | 10.7 | 0.0 | 10.7 | 1.00 | 0.0 |
+| custom named search baselines | sac-codegen-v3/test | `weighted_hybrid_bm25_minilm` | 0.2286 | 20.1 | 0.0 | 20.1 | 1.00 | 0.0 |
+| custom named search baselines | sac-codegen-v3/test | `hybrid_cross_encoder_rerank` | 0.1857 | 3142.5 | 0.0 | 3142.5 | 1.00 | 2400.0 |
+| custom named search baselines | sac-codegen-v3/test | `query_rewrite_hybrid_cross_encoder` | 0.1857 | 3209.6 | 0.0 | 3209.6 | 4.19 | 2400.0 |
+| custom named search baselines | sac-codegen-v3/test | `bm25_cross_encoder_rerank` | 0.1857 | 3133.6 | 0.0 | 3133.6 | 1.00 | 2400.0 |
+| custom named search baselines | sac-codegen-v3/test | `dense_cross_encoder_rerank` | 0.1821 | 3139.6 | 0.0 | 3139.6 | 1.00 | 2400.0 |
+| custom named search baselines | sac-codegen-v3/test | `rrf_hybrid_bm25_minilm` | 0.1667 | 28.2 | 0.0 | 28.2 | 2.00 | 0.0 |
+| custom named search baselines | sac-codegen-v3/test | `minilm_biencoder_dense` | 0.0932 | 15.9 | 0.0 | 15.9 | 1.00 | 0.0 |
 | public architecture matrix | HotpotQA dev-distractor slice | `fixed_flow_model_qr` | 0.9550 | 237.6 | 0.0 | 237.6 | 3.96 | 40.0 |
 | public architecture matrix | HotpotQA dev-distractor slice | `one_shot_code_gen_rule_policy` | 0.9450 | 245.9 | 0.1 | 245.8 | 5.28 | 46.4 |
 | public architecture matrix | HotpotQA dev-distractor slice | `preset_flow_model_router` | 0.9400 | 186.1 | 0.0 | 186.0 | 1.78 | 39.6 |
@@ -83,6 +92,7 @@ These are the additional full-dataset variants from `sac_benchmark_results.json`
 - `real_llm_matrix_results.json`: focused real LLM matrix; queries=5; documents=6010
 - `real_llm_matrix_full_results.json`: full real LLM matrix; queries=31; documents=6010
 - `real_codegen_retest_results.json`: focused real codegen retest; queries=5; documents=6010
+- `named_search_baselines_results.json`: custom named search baseline calibration; queries=31; documents=6010
 - `public_variant_matrix_results.json`: public architecture matrix; queries=400; documents=None
 - `public_benchmark_results.json`: public benchmark sanity checks; queries=400; documents=None
 - `sac_benchmark_results.json`: custom full extended variants; queries=31; documents=6010

@@ -1126,6 +1126,29 @@
             <div class="metric"><span>Codegen lift</span><strong>+0.1190</strong><p>Agentic codegen over one-shot codegen</p></div>
             <div class="metric"><span>Cost tradeoff</span><strong>4.5x</strong><p>Agentic codegen vs preset latency</p></div>
           </div>
+          <div class="card wide">
+            <h3>Calibration against named search stacks</h3>
+            <p>Because fixed retrieval is already strong on public sets, we also tested the custom dataset against recognizable search baselines.</p>
+            <div class="table-scroll">
+              <table class="leaderboard">
+                <thead>
+                  <tr>
+                    <th>Search stack</th>
+                    <th>Recall</th>
+                    <th>Total</th>
+                    <th>Readout</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Okapi BM25 / Lucene-style sparse</td><td>0.2350</td><td>10.7 ms</td><td>Strongest simple baseline; exact IDs matter</td></tr>
+                  <tr><td>Weighted BM25 + MiniLM dense hybrid</td><td>0.2286</td><td>20.1 ms</td><td>Semantic signal does not solve evidence coverage</td></tr>
+                  <tr><td>Hybrid + CrossEncoder rerank</td><td>0.1857</td><td>3.14s</td><td>Rerank cannot recover missing evidence</td></tr>
+                  <tr><td>Query rewrite + hybrid + CrossEncoder</td><td>0.1857</td><td>3.21s</td><td>Fanout still lacks category-level reflection</td></tr>
+                  <tr><td>MiniLM dense bi-encoder</td><td>0.0932</td><td>15.9 ms</td><td>Weak on identifiers, aliases, versions, authority</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
         <div id="public" class="benchmark" role="tabpanel">
@@ -1439,7 +1462,7 @@
 
   <footer class="footer">
     <div class="wrap">
-      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, real_llm_matrix_full_report.md, real_codegen_retest_report.md, combined_eval_report.md, sac_benchmark_dataset_intro.md, public_variant_matrix_report.md.
+      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, real_llm_matrix_full_report.md, named_search_baselines_report.md, real_codegen_retest_report.md, combined_eval_report.md, sac_benchmark_dataset_intro.md, public_variant_matrix_report.md.
     </div>
   </footer>
 

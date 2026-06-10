@@ -10,6 +10,7 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `run_experiment_matrix.py`: presentation-aligned matrix runner for fixed flow, agentic fixed flow, preset flow, agentic preset flow, one-shot codegen, and agentic codegen.
 - `run_real_llm_matrix.py`: real-LLM matrix runner that uses Codex CLI for QR/router/planner/reflection decisions and real codegen.
 - `run_public_benchmarks.py`: public benchmark runner for the baseline+5 architecture variants on BEIR/SciFact and HotpotQA dev-distractor slices.
+- `run_named_search_baselines.py`: custom dataset calibration against recognizable search stacks such as BM25, dense bi-encoder, hybrid, RRF, and CrossEncoder rerank.
 - `merge_eval_reports.py`: merges custom, real LLM, real codegen, public architecture matrix, public sanity, and legacy eval outputs into one executive report.
 - `llm_search_codegen.py`: real LLM-backed Search-as-Code generator with `codex-cli` and `openai` providers, AST validation, sandbox execution, and one-shot repair support.
 - `skills/search-as-code-codegen/`: reusable Codex skill that defines the Search-as-Code runtime/tool contract for real code generation.
@@ -17,6 +18,7 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `experiment_matrix_report.md`: latest presentation-aligned experiment matrix report.
 - `sac_benchmark_results.json`: legacy broad benchmark result payload.
 - `sac_benchmark_report.md`: legacy broad benchmark report, focused on Recall@10.
+- `named_search_baselines_results.json` and `named_search_baselines_report.md`: custom dataset calibration against named search baselines.
 - `public_variant_matrix_results.json` and `public_variant_matrix_report.md`: baseline+5 architecture variant matrix on BEIR/SciFact and HotpotQA.
 - `public_benchmark_results.json`: latest public benchmark sanity-check payload.
 - `public_benchmark_report.md`: latest public benchmark sanity-check report.
@@ -78,6 +80,21 @@ These runs apply the same baseline+5 variant matrix to known public datasets. Th
 
 The public check is useful for credibility, but it changes the conclusion: codegen is not universally better. Its advantage shows up most clearly in the custom enterprise setting, where source authority, alias resolution, hard-negative intrusion, and evidence-category reflection are first-order problems.
 
+## Named Search Baseline Calibration
+
+Because BEIR/SciFact and HotpotQA show fixed retrieval is already strong, the custom dataset is also calibrated against recognizable search stacks. This is not an agentic or codegen comparison; it checks whether the custom dataset is hard for standard retrieval in a plausible way.
+
+| Search stack | Recall@10 | Total ms | Readout |
+|---|---:|---:|---|
+| Okapi BM25 / Lucene-style sparse retrieval | 0.2350 | 10.7 | Strongest simple baseline because exact IDs, CVEs, aliases, and versions matter |
+| Weighted BM25 + MiniLM dense hybrid | 0.2286 | 20.1 | Similar to BM25; semantic signal does not solve authority/evidence coverage |
+| Hybrid + CrossEncoder rerank | 0.1857 | 3142.5 | Rerank cannot recover evidence missing from the first-stage candidate pool |
+| Query rewrite + hybrid + CrossEncoder | 0.1857 | 3209.6 | More query fanout still behaves like fixed retrieval without evidence-category reflection |
+| RRF BM25 + dense hybrid | 0.1667 | 28.2 | Rank fusion is not enough on hard-negative/authority tasks |
+| MiniLM dense bi-encoder | 0.0932 | 15.9 | Weakest because semantic similarity misses exact identifiers and source authority |
+
+Calibration readout: the custom dataset is not just “hard because our fixed flow is weak.” BM25 is a serious baseline and still tops the standard search stacks, but all standard stacks remain far below agentic codegen (`0.4712` deterministic, `0.7058` full real LLM). The gap is consistent with the dataset design: multi-hop evidence coverage, source authority, alias resolution, and negative evidence are the hard parts.
+
 ## Real LLM Codegen Smoke
 
 The full benchmark tables use deterministic Search-as-Code generators for
@@ -133,6 +150,7 @@ for the default search path.
 - Full real LLM custom test: agentic codegen reaches `0.7058` Recall@10, one-shot codegen reaches `0.5868`, agentic preset reaches `0.5610`, and fixed flow reaches `0.1747`.
 - Focused real LLM sample: agentic codegen reaches `1.0000` Recall@10, agentic preset reaches `0.8114`, one-shot codegen reaches `0.7114`.
 - Full custom deterministic test: agentic codegen `0.4712`, agentic preset `0.4655`, fixed flow `0.1857`.
+- Named custom search baselines: Okapi BM25 `0.2350`, weighted hybrid `0.2286`, hybrid+CrossEncoder rerank `0.1857`, dense bi-encoder `0.0932`.
 - Public architecture matrix: SciFact is effectively a tie between agentic codegen `0.8254` and fixed flow `0.8251`; HotpotQA favors fixed flow `0.9550` over agentic codegen `0.9300`.
 - Full custom extended variants are also listed: BM25 `0.2350`, hybrid `0.2286`, dense `0.0932`, small-budget hybrid-rerank `0.1714`, reflective one-shot `0.1857`.
 - Practical recommendation: productize preset-stack agentic search first; keep full Search-as-Code generation for hard cases or offline/research workflows.
@@ -149,6 +167,7 @@ python sac_benchmark_dataset/audit_dataset.py --write-report
 python run_experiment_matrix.py --split test
 python run_sac_dataset_benchmark.py --split test
 python run_real_llm_matrix.py --task-ids all --candidate-k 120 --tool-candidate-k 120 --timeout 240 --output real_llm_matrix_full_results.json --report real_llm_matrix_full_report.md
+python run_named_search_baselines.py --split test --candidate-k 2400 --output named_search_baselines_results.json --report named_search_baselines_report.md
 python run_public_benchmarks.py --benchmarks beir/scifact,hotpotqa/distractor --hotpot-limit 100 --candidate-k 40 --fixed-small-candidate-k 40 --generated-branch-top-k 20 --generated-max-rerank-candidates 40 --systems fixed_flow_model_qr,preset_flow_model_router,agentic_fixed_flow_rule_reflection,agentic_preset_flows_rule_reflection,one_shot_code_gen_rule_policy,agentic_code_gen_rule_reflection --no-per-query --sample-codes 0 --output public_variant_matrix_results.json --report public_variant_matrix_report.md
 python merge_eval_reports.py
 ```
