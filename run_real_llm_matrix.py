@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Run a focused real-LLM version of the Search-as-Code matrix.
+"""Run a real-LLM version of the Search-as-Code matrix.
 
 This runner replaces the rule-backed QR/router/planner/reflection decisions
 with structured LLM calls. It intentionally defaults to the same 5-query sample
 used by the real codegen retest; full-dataset multi-turn LLM runs are expensive
-and less repeatable.
+and less repeatable, but can be run with ``--task-ids all``.
 """
 
 from __future__ import annotations
@@ -283,10 +283,10 @@ class LLMDecisionGenerator:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run focused real LLM Search-as-Code matrix.")
+    parser = argparse.ArgumentParser(description="Run real LLM Search-as-Code matrix.")
     parser.add_argument("--data-dir", default=str(DATASET_DIR))
     parser.add_argument("--split", default="test", choices=["train", "dev", "test", "all"])
-    parser.add_argument("--task-ids", default=DEFAULT_TASK_IDS)
+    parser.add_argument("--task-ids", default=DEFAULT_TASK_IDS, help="Comma-separated task IDs, or 'all' for every task in the selected split.")
     parser.add_argument("--top-k", type=int, default=10)
     parser.add_argument("--metrics-k", default="10")
     parser.add_argument("--candidate-k", type=int, default=120)
@@ -312,11 +312,14 @@ def main() -> None:
 
     data_dir = Path(args.data_dir)
     documents, tasks, qrels, hard_negatives = load_dataset(data_dir, split=args.split)
-    wanted = {item.strip() for item in args.task_ids.split(",") if item.strip()}
-    tasks = [task for task in tasks if task["task_id"] in wanted]
-    missing = wanted - {task["task_id"] for task in tasks}
-    if missing:
-        raise SystemExit(f"Unknown or filtered-out task ids: {', '.join(sorted(missing))}")
+    if args.task_ids.strip().lower() in {"all", "*"}:
+        wanted = {task["task_id"] for task in tasks}
+    else:
+        wanted = {item.strip() for item in args.task_ids.split(",") if item.strip()}
+        tasks = [task for task in tasks if task["task_id"] in wanted]
+        missing = wanted - {task["task_id"] for task in tasks}
+        if missing:
+            raise SystemExit(f"Unknown or filtered-out task ids: {', '.join(sorted(missing))}")
     if not tasks:
         raise SystemExit("No tasks selected")
     metrics_k = sorted({int(item) for item in args.metrics_k.split(",") if item.strip()})

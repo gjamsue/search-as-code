@@ -427,7 +427,9 @@ def build_codegen_prompt(
             - call ctx.query_rewrite.rewrite(query, analysis=analysis, linked_entities=linked_entities)
             - treat rewrite_result as dict and use rewrite_result.get("rewrites", [])
             - analysis["entities"] contains dicts; join entity.get("text", ""), not raw dicts
-            - search hits are immutable SearchCandidate objects; never assign into hit[...] or hit.attr
+            - ctx.search.search(...) supports mode="bm25"|"dense"|"hybrid"; ctx.search.bm25/dense/hybrid(...) are also available
+            - ctx.ranking.rerank(...) and ctx.rerank(...) are both available
+            - search hits are immutable SearchCandidate objects with doc_id/title/text/metadata/score and read-only doc_type/source/customer/product/owner/ticket/cve/version/fixed_version/severity/date properties; never assign into hit[...] or hit.attr
             - if you need route annotations or adjusted scores, keep side dictionaries keyed by doc_id or copy hit.as_dict()
             - dedupe by doc_id, rerank at most CANDIDATE_K, set ctx.candidate_pool
             - preserve high-confidence evidence before rerank; do not let follow-up noise bury exact IDs or source-of-truth docs
@@ -466,7 +468,10 @@ def build_codegen_prompt(
         - ctx.search.search(query, mode="bm25"|"dense"|"hybrid", top_k=N, bm25_weight=0.0..1.0,
           include_doc_types=[...], exclude_doc_types=[...], include_sources=[...],
           exclude_sources=[...], must_terms=[...], should_terms=[...], exclude_terms=[...])
-        - ctx.ranking.rerank(query, candidates, top_k=N)
+        - ctx.search.bm25(query, top_k=N, filters={"doc_type": [...], "source": [...]}, ...)
+        - ctx.search.dense(query, top_k=N, filters={"doc_type": [...], "source": [...]}, ...)
+        - ctx.search.hybrid(query, top_k=N, filters={"doc_type": [...], "source": [...]}, ...)
+        - ctx.ranking.rerank(query, candidates, top_k=N) or ctx.rerank(query, candidates, top_k=N)
         - ctx.log(event, payload)
 
         Real metadata values:
@@ -483,7 +488,7 @@ def build_codegen_prompt(
         - Use query understanding and rewrite when it is likely useful.
         - Treat query rewrite output as a dict; read rewrite_result.get("rewrites", []).
         - Extract entity text with entity.get("text", "") before joining entities.
-        - Search hits are immutable SearchCandidate objects with doc_id/title/text/metadata/score.
+        - Search hits are immutable SearchCandidate objects with doc_id/title/text/metadata/score plus read-only convenience properties such as doc_type/source/customer/product/owner/ticket/cve/version/fixed_version/severity/date.
         - Never assign into hit[...] or hit.attr. If you need route annotations or adjusted scores, keep side dictionaries keyed by doc_id or copy hit.as_dict().
         - Merge candidates by doc_id and dedupe before reranking.
         - Keep reranking bounded to at most CANDIDATE_K candidates.
@@ -540,7 +545,10 @@ def build_repair_prompt(
         Important SDK facts:
         - analysis["entities"] is a list of dicts; use entity.get("text", "") before joining.
         - query rewrite returns a dict; use rewrite_result.get("rewrites", []).
+        - ctx.search.search(...) supports mode="bm25"|"dense"|"hybrid"; ctx.search.bm25/dense/hybrid(...) are also available convenience wrappers.
+        - ctx.ranking.rerank(...) and ctx.rerank(...) are both available.
         - search hits are immutable SearchCandidate objects; never assign into hit[...] or hit.attr.
+        - SearchCandidate has read-only properties doc_id/title/text/metadata/score/doc_type/source/customer/product/owner/ticket/cve/version/fixed_version/severity/date.
         - if annotations are needed, keep side dictionaries keyed by doc_id or copy hit.as_dict().
         - use real doc_types only: {", ".join(VALID_DOC_TYPES)}.
         - No imports, files, network, subprocess, eval, exec, globals, locals, or dunder/private access.
@@ -603,7 +611,9 @@ def build_reflection_prompt(
         Important SDK facts:
         - analysis["entities"] is a list of dicts; use entity.get("text", "") before joining.
         - query rewrite returns a dict; use rewrite_result.get("rewrites", []).
-        - search hits are immutable SearchCandidate objects with doc_id/title/text/metadata/score.
+        - ctx.search.search(...) supports mode="bm25"|"dense"|"hybrid"; ctx.search.bm25/dense/hybrid(...) are also available convenience wrappers.
+        - ctx.ranking.rerank(...) and ctx.rerank(...) are both available.
+        - search hits are immutable SearchCandidate objects with doc_id/title/text/metadata/score plus read-only convenience properties such as doc_type/source/customer/product/owner/ticket/cve/version/fixed_version/severity/date.
         - Never assign into hit[...] or hit.attr. If you need route annotations or adjusted scores, keep side dictionaries keyed by doc_id or copy hit.as_dict().
         - Use actual doc_type/source values only:
           doc_types={VALID_DOC_TYPES}

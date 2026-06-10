@@ -52,6 +52,54 @@ class SearchCandidate:
     bm25_score: float
     dense_score: float
 
+    @property
+    def id(self) -> str:
+        return self.doc_id
+
+    @property
+    def doc_type(self) -> str:
+        return str(self.metadata.get("doc_type", ""))
+
+    @property
+    def source(self) -> str:
+        return str(self.metadata.get("source", ""))
+
+    @property
+    def customer(self) -> str:
+        return str(self.metadata.get("customer", ""))
+
+    @property
+    def product(self) -> str:
+        return str(self.metadata.get("product", ""))
+
+    @property
+    def owner(self) -> str:
+        return str(self.metadata.get("owner", ""))
+
+    @property
+    def ticket(self) -> str:
+        return str(self.metadata.get("ticket", ""))
+
+    @property
+    def cve(self) -> str:
+        return str(self.metadata.get("cve", ""))
+
+    @property
+    def version(self) -> str:
+        return str(self.metadata.get("version") or self.metadata.get("fixed_version", ""))
+
+    @property
+    def fixed_version(self) -> str:
+        return str(self.metadata.get("fixed_version") or self.metadata.get("version", ""))
+
+    @property
+    def severity(self) -> str:
+        return str(self.metadata.get("severity", ""))
+
+    @property
+    def date(self) -> str:
+        return str(self.metadata.get("date", ""))
+
     def as_dict(self) -> dict[str, Any]:
         return {
             "doc_id": self.doc_id,
@@ -314,18 +362,22 @@ class RealQueryRewriteAPI:
         query: str,
         *,
         analysis: dict | None = None,
-        linked_entities: list[dict] | None = None,
+        linked_entities: list[dict | str] | None = None,
         max_rewrites: int = 3,
     ) -> dict:
         analysis = analysis or {}
         linked_entities = linked_entities or []
 
         rewrites = []
-        entity_text = " ".join(
-            item.get("linked_text") or item.get("mention") or item.get("entity", "")
-            for item in linked_entities
-            if item.get("linked_text") or item.get("mention") or item.get("entity")
-        ).strip()
+        entity_parts = []
+        for item in linked_entities:
+            if isinstance(item, dict):
+                text = item.get("linked_text") or item.get("mention") or item.get("entity", "")
+            else:
+                text = str(item)
+            if text:
+                entity_parts.append(text)
+        entity_text = " ".join(entity_parts).strip()
         if entity_text:
             rewrites.append(entity_text)
 
@@ -583,7 +635,9 @@ def _unique(items: list[str]) -> list[str]:
     return result
 
 
-def _normalized_term_list(items: Iterable[str]) -> list[str]:
+def _normalized_term_list(items: Iterable[str] | str) -> list[str]:
+    if isinstance(items, str):
+        items = [items]
     return [str(item).lower().strip() for item in items if str(item).strip()]
 
 

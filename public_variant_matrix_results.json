@@ -1,0 +1,499 @@
+{
+  "benchmarks": [
+    "beir/scifact",
+    "hotpotqa/distractor"
+  ],
+  "top_k": 10,
+  "candidate_k": 40,
+  "fixed_small_candidate_k": 40,
+  "generated_branch_top_k": 20,
+  "generated_max_rerank_candidates": 40,
+  "generated_min_rerank_candidates": 0,
+  "systems": [
+    "agentic_code_gen_rule_reflection",
+    "agentic_fixed_flow_rule_reflection",
+    "agentic_preset_flows_rule_reflection",
+    "fixed_flow_model_qr",
+    "one_shot_code_gen_rule_policy",
+    "preset_flow_model_router"
+  ],
+  "real_codegen_provider": "codex-cli",
+  "real_codegen_model": "",
+  "wikidata_enabled": false,
+  "offline_models": true,
+  "results": [
+    {
+      "benchmark_id": "beir/scifact",
+      "display_name": "BEIR/scifact",
+      "source_url": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/scifact.zip",
+      "setting": "Full BEIR corpus loaded locally",
+      "split": "test",
+      "documents": 5183,
+      "queries": 300,
+      "top_k": 10,
+      "candidate_k": 40,
+      "runtime_seconds": 781.262,
+      "notes": [
+        "This is a real BEIR dataset loaded through the BEIR GenericDataLoader.",
+        "Metrics are local-system sanity-check numbers, not leaderboard submissions."
+      ],
+      "systems": {
+        "fixed_flow_model_qr": {
+          "metrics": {
+            "ndcg@10": 0.6954,
+            "recall@10": 0.8251,
+            "mrr@10": 0.6633,
+            "evaluated_queries": 300
+          },
+          "latency": {
+            "total_wall_seconds": 98.9637,
+            "mean_latency_ms": 329.879,
+            "p50_latency_ms": 327.933,
+            "p95_latency_ms": 376.147,
+            "mean_generation_ms": 0.002,
+            "mean_execution_ms": 329.874,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 0.493,
+            "mean_query_rewrite_calls": 1.0,
+            "mean_search_calls": 3.657,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 40.0,
+            "mean_candidate_pool": 75.08
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "preset_flow_model_router": {
+          "metrics": {
+            "ndcg@10": 0.6309,
+            "recall@10": 0.7478,
+            "mrr@10": 0.6032,
+            "evaluated_queries": 300
+          },
+          "latency": {
+            "total_wall_seconds": 74.776,
+            "mean_latency_ms": 249.253,
+            "p50_latency_ms": 266.978,
+            "p95_latency_ms": 300.838,
+            "mean_generation_ms": 0.02,
+            "mean_execution_ms": 249.23,
+            "mean_query_understanding_calls": 0.0,
+            "mean_entity_linking_calls": 0.0,
+            "mean_query_rewrite_calls": 0.0,
+            "mean_search_calls": 1.543,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 36.4,
+            "mean_candidate_pool": 36.4
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "agentic_fixed_flow_rule_reflection": {
+          "metrics": {
+            "ndcg@10": 0.6926,
+            "recall@10": 0.8234,
+            "mrr@10": 0.6598,
+            "evaluated_queries": 300
+          },
+          "latency": {
+            "total_wall_seconds": 288.9926,
+            "mean_latency_ms": 963.309,
+            "p50_latency_ms": 755.854,
+            "p95_latency_ms": 1728.888,
+            "mean_generation_ms": 0.107,
+            "mean_execution_ms": 963.198,
+            "mean_query_understanding_calls": 2.673,
+            "mean_entity_linking_calls": 1.24,
+            "mean_query_rewrite_calls": 2.337,
+            "mean_search_calls": 5.01,
+            "mean_rerank_calls": 3.673,
+            "mean_rerank_pairs": 133.34,
+            "mean_candidate_pool": 27.803
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "agentic_preset_flows_rule_reflection": {
+          "metrics": {
+            "ndcg@10": 0.6682,
+            "recall@10": 0.7944,
+            "mrr@10": 0.6376,
+            "evaluated_queries": 300
+          },
+          "latency": {
+            "total_wall_seconds": 91.382,
+            "mean_latency_ms": 304.607,
+            "p50_latency_ms": 305.933,
+            "p95_latency_ms": 378.809,
+            "mean_generation_ms": 0.017,
+            "mean_execution_ms": 304.587,
+            "mean_query_understanding_calls": 0.0,
+            "mean_entity_linking_calls": 0.0,
+            "mean_query_rewrite_calls": 0.0,
+            "mean_search_calls": 3.983,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 38.4,
+            "mean_candidate_pool": 43.693
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "one_shot_code_gen_rule_policy": {
+          "metrics": {
+            "ndcg@10": 0.6935,
+            "recall@10": 0.8196,
+            "mrr@10": 0.6633,
+            "evaluated_queries": 300
+          },
+          "latency": {
+            "total_wall_seconds": 110.3105,
+            "mean_latency_ms": 367.702,
+            "p50_latency_ms": 357.149,
+            "p95_latency_ms": 453.72,
+            "mean_generation_ms": 0.069,
+            "mean_execution_ms": 367.629,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 0.493,
+            "mean_query_rewrite_calls": 0.81,
+            "mean_search_calls": 5.027,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 40.373,
+            "mean_candidate_pool": 55.98
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "agentic_code_gen_rule_reflection": {
+          "metrics": {
+            "ndcg@10": 0.6961,
+            "recall@10": 0.8254,
+            "mrr@10": 0.6636,
+            "evaluated_queries": 300
+          },
+          "latency": {
+            "total_wall_seconds": 116.8145,
+            "mean_latency_ms": 389.382,
+            "p50_latency_ms": 378.596,
+            "p95_latency_ms": 475.235,
+            "mean_generation_ms": 0.102,
+            "mean_execution_ms": 389.276,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 0.493,
+            "mean_query_rewrite_calls": 0.81,
+            "mean_search_calls": 5.397,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 40.0,
+            "mean_candidate_pool": 169.08
+          },
+          "code_samples": [],
+          "per_query": []
+        }
+      },
+      "summary": [
+        {
+          "system": "agentic_code_gen_rule_reflection",
+          "recall@10": 0.8254,
+          "ndcg@10": 0.6961,
+          "mrr@10": 0.6636,
+          "mean_latency_ms": 389.382,
+          "mean_generation_ms": 0.102,
+          "mean_execution_ms": 389.276,
+          "mean_search_calls": 5.397,
+          "mean_rerank_pairs": 40.0
+        },
+        {
+          "system": "fixed_flow_model_qr",
+          "recall@10": 0.8251,
+          "ndcg@10": 0.6954,
+          "mrr@10": 0.6633,
+          "mean_latency_ms": 329.879,
+          "mean_generation_ms": 0.002,
+          "mean_execution_ms": 329.874,
+          "mean_search_calls": 3.657,
+          "mean_rerank_pairs": 40.0
+        },
+        {
+          "system": "agentic_fixed_flow_rule_reflection",
+          "recall@10": 0.8234,
+          "ndcg@10": 0.6926,
+          "mrr@10": 0.6598,
+          "mean_latency_ms": 963.309,
+          "mean_generation_ms": 0.107,
+          "mean_execution_ms": 963.198,
+          "mean_search_calls": 5.01,
+          "mean_rerank_pairs": 133.34
+        },
+        {
+          "system": "one_shot_code_gen_rule_policy",
+          "recall@10": 0.8196,
+          "ndcg@10": 0.6935,
+          "mrr@10": 0.6633,
+          "mean_latency_ms": 367.702,
+          "mean_generation_ms": 0.069,
+          "mean_execution_ms": 367.629,
+          "mean_search_calls": 5.027,
+          "mean_rerank_pairs": 40.373
+        },
+        {
+          "system": "agentic_preset_flows_rule_reflection",
+          "recall@10": 0.7944,
+          "ndcg@10": 0.6682,
+          "mrr@10": 0.6376,
+          "mean_latency_ms": 304.607,
+          "mean_generation_ms": 0.017,
+          "mean_execution_ms": 304.587,
+          "mean_search_calls": 3.983,
+          "mean_rerank_pairs": 38.4
+        },
+        {
+          "system": "preset_flow_model_router",
+          "recall@10": 0.7478,
+          "ndcg@10": 0.6309,
+          "mrr@10": 0.6032,
+          "mean_latency_ms": 249.253,
+          "mean_generation_ms": 0.02,
+          "mean_execution_ms": 249.23,
+          "mean_search_calls": 1.543,
+          "mean_rerank_pairs": 36.4
+        }
+      ]
+    },
+    {
+      "benchmark_id": "hotpotqa/distractor",
+      "display_name": "HotpotQA dev-distractor slice",
+      "source_url": "http://curtis.ml.cmu.edu/datasets/hotpot/hotpot_dev_distractor_v1.json",
+      "setting": "Official dev-distractor contexts pooled across 100 examples",
+      "split": "dev-distractor",
+      "documents": 991,
+      "queries": 100,
+      "top_k": 10,
+      "candidate_k": 40,
+      "runtime_seconds": 177.68,
+      "notes": [
+        "Uses official HotpotQA dev-distractor examples and supporting-fact labels.",
+        "Corpus is the pooled distractor context from selected examples, not HotpotQA fullwiki and not BEIR HotpotQA full corpus.",
+        "Use this as a multi-hop public sanity check, not as a leaderboard number."
+      ],
+      "systems": {
+        "fixed_flow_model_qr": {
+          "metrics": {
+            "ndcg@10": 0.8704,
+            "recall@10": 0.955,
+            "mrr@10": 0.9444,
+            "evaluated_queries": 100
+          },
+          "latency": {
+            "total_wall_seconds": 23.7596,
+            "mean_latency_ms": 237.596,
+            "p50_latency_ms": 225.374,
+            "p95_latency_ms": 310.169,
+            "mean_generation_ms": 0.002,
+            "mean_execution_ms": 237.591,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 0.95,
+            "mean_query_rewrite_calls": 1.0,
+            "mean_search_calls": 3.96,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 40.0,
+            "mean_candidate_pool": 75.11
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "preset_flow_model_router": {
+          "metrics": {
+            "ndcg@10": 0.86,
+            "recall@10": 0.94,
+            "mrr@10": 0.9344,
+            "evaluated_queries": 100
+          },
+          "latency": {
+            "total_wall_seconds": 18.6064,
+            "mean_latency_ms": 186.064,
+            "p50_latency_ms": 189.692,
+            "p95_latency_ms": 240.953,
+            "mean_generation_ms": 0.021,
+            "mean_execution_ms": 186.04,
+            "mean_query_understanding_calls": 0.0,
+            "mean_entity_linking_calls": 0.0,
+            "mean_query_rewrite_calls": 0.0,
+            "mean_search_calls": 1.78,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 39.6,
+            "mean_candidate_pool": 39.6
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "agentic_fixed_flow_rule_reflection": {
+          "metrics": {
+            "ndcg@10": 0.8535,
+            "recall@10": 0.935,
+            "mrr@10": 0.9294,
+            "evaluated_queries": 100
+          },
+          "latency": {
+            "total_wall_seconds": 68.9261,
+            "mean_latency_ms": 689.261,
+            "p50_latency_ms": 595.187,
+            "p95_latency_ms": 1425.472,
+            "mean_generation_ms": 0.113,
+            "mean_execution_ms": 689.145,
+            "mean_query_understanding_calls": 2.73,
+            "mean_entity_linking_calls": 2.49,
+            "mean_query_rewrite_calls": 2.48,
+            "mean_search_calls": 5.21,
+            "mean_rerank_calls": 3.73,
+            "mean_rerank_pairs": 134.54,
+            "mean_candidate_pool": 25.78
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "agentic_preset_flows_rule_reflection": {
+          "metrics": {
+            "ndcg@10": 0.8451,
+            "recall@10": 0.925,
+            "mrr@10": 0.9194,
+            "evaluated_queries": 100
+          },
+          "latency": {
+            "total_wall_seconds": 19.6067,
+            "mean_latency_ms": 196.067,
+            "p50_latency_ms": 194.605,
+            "p95_latency_ms": 261.027,
+            "mean_generation_ms": 0.017,
+            "mean_execution_ms": 196.047,
+            "mean_query_understanding_calls": 0.0,
+            "mean_entity_linking_calls": 0.0,
+            "mean_query_rewrite_calls": 0.0,
+            "mean_search_calls": 4.14,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 39.6,
+            "mean_candidate_pool": 45.98
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "one_shot_code_gen_rule_policy": {
+          "metrics": {
+            "ndcg@10": 0.8666,
+            "recall@10": 0.945,
+            "mrr@10": 0.9444,
+            "evaluated_queries": 100
+          },
+          "latency": {
+            "total_wall_seconds": 24.5905,
+            "mean_latency_ms": 245.905,
+            "p50_latency_ms": 223.244,
+            "p95_latency_ms": 404.28,
+            "mean_generation_ms": 0.074,
+            "mean_execution_ms": 245.827,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 0.95,
+            "mean_query_rewrite_calls": 0.94,
+            "mean_search_calls": 5.28,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 46.37,
+            "mean_candidate_pool": 62.12
+          },
+          "code_samples": [],
+          "per_query": []
+        },
+        "agentic_code_gen_rule_reflection": {
+          "metrics": {
+            "ndcg@10": 0.8512,
+            "recall@10": 0.93,
+            "mrr@10": 0.9294,
+            "evaluated_queries": 100
+          },
+          "latency": {
+            "total_wall_seconds": 22.1827,
+            "mean_latency_ms": 221.827,
+            "p50_latency_ms": 220.555,
+            "p95_latency_ms": 288.124,
+            "mean_generation_ms": 0.106,
+            "mean_execution_ms": 221.718,
+            "mean_query_understanding_calls": 1.0,
+            "mean_entity_linking_calls": 0.95,
+            "mean_query_rewrite_calls": 0.94,
+            "mean_search_calls": 5.79,
+            "mean_rerank_calls": 1.0,
+            "mean_rerank_pairs": 40.0,
+            "mean_candidate_pool": 155.32
+          },
+          "code_samples": [],
+          "per_query": []
+        }
+      },
+      "summary": [
+        {
+          "system": "fixed_flow_model_qr",
+          "recall@10": 0.955,
+          "ndcg@10": 0.8704,
+          "mrr@10": 0.9444,
+          "mean_latency_ms": 237.596,
+          "mean_generation_ms": 0.002,
+          "mean_execution_ms": 237.591,
+          "mean_search_calls": 3.96,
+          "mean_rerank_pairs": 40.0
+        },
+        {
+          "system": "one_shot_code_gen_rule_policy",
+          "recall@10": 0.945,
+          "ndcg@10": 0.8666,
+          "mrr@10": 0.9444,
+          "mean_latency_ms": 245.905,
+          "mean_generation_ms": 0.074,
+          "mean_execution_ms": 245.827,
+          "mean_search_calls": 5.28,
+          "mean_rerank_pairs": 46.37
+        },
+        {
+          "system": "preset_flow_model_router",
+          "recall@10": 0.94,
+          "ndcg@10": 0.86,
+          "mrr@10": 0.9344,
+          "mean_latency_ms": 186.064,
+          "mean_generation_ms": 0.021,
+          "mean_execution_ms": 186.04,
+          "mean_search_calls": 1.78,
+          "mean_rerank_pairs": 39.6
+        },
+        {
+          "system": "agentic_fixed_flow_rule_reflection",
+          "recall@10": 0.935,
+          "ndcg@10": 0.8535,
+          "mrr@10": 0.9294,
+          "mean_latency_ms": 689.261,
+          "mean_generation_ms": 0.113,
+          "mean_execution_ms": 689.145,
+          "mean_search_calls": 5.21,
+          "mean_rerank_pairs": 134.54
+        },
+        {
+          "system": "agentic_code_gen_rule_reflection",
+          "recall@10": 0.93,
+          "ndcg@10": 0.8512,
+          "mrr@10": 0.9294,
+          "mean_latency_ms": 221.827,
+          "mean_generation_ms": 0.106,
+          "mean_execution_ms": 221.718,
+          "mean_search_calls": 5.79,
+          "mean_rerank_pairs": 40.0
+        },
+        {
+          "system": "agentic_preset_flows_rule_reflection",
+          "recall@10": 0.925,
+          "ndcg@10": 0.8451,
+          "mrr@10": 0.9194,
+          "mean_latency_ms": 196.067,
+          "mean_generation_ms": 0.017,
+          "mean_execution_ms": 196.047,
+          "mean_search_calls": 4.14,
+          "mean_rerank_pairs": 39.6
+        }
+      ]
+    }
+  ]
+}

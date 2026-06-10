@@ -32,7 +32,9 @@ Available context:
   `{"needed": bool, "rewrites": [str, ...], "method": str}`. Pass `analysis` and
   `linked_entities` as keyword arguments.
 - `ctx.search.search(query, mode="bm25"|"dense"|"hybrid", top_k=N, bm25_weight=0.55, include_doc_types=[...], exclude_doc_types=[...], include_sources=[...], exclude_sources=[...], must_terms=[...], should_terms=[...], exclude_terms=[...])`.
-- `ctx.ranking.rerank(query, candidates, top_k=N)`.
+- `ctx.search.bm25(query, top_k=N, filters={"doc_type": [...], "source": [...]}, ...)`, `ctx.search.dense(...)`, and `ctx.search.hybrid(...)` are convenience wrappers over `ctx.search.search(...)`.
+- Search hits are immutable `SearchCandidate` objects with `doc_id`, `title`, `text`, `metadata`, `score`, plus read-only convenience properties such as `doc_type`, `source`, `customer`, `product`, `owner`, `ticket`, `cve`, `version`, `fixed_version`, `severity`, and `date`.
+- `ctx.ranking.rerank(query, candidates, top_k=N)` or `ctx.rerank(query, candidates, top_k=N)`.
 - `ctx.log(event, payload)` for plan/reflection traces.
 - Set `ctx.candidate_pool = len(candidates)` before returning.
 

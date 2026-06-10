@@ -2,16 +2,25 @@
 
 ## Executive Readout
 
-- Scope note: the real-LLM results are a focused 5-query hard sample; the full custom runs are 31-query deterministic/rule-backed evaluations.
-- On the focused real-LLM sample, improved planning/reflection makes agentic methods clearly win on quality.
-- Agentic preset flow beats one-shot preset routing by `+0.3714` Recall@10 with much lower latency than full agentic codegen.
-- Agentic codegen reaches the highest quality, but costs `4.8x` the agentic preset latency.
+- Scope note: the main real-LLM result is now the full 31-query custom enterprise test; the older 5-query focused sample remains as a debugging artifact.
+- Full real-LLM eval confirms the ordering: agentic codegen is highest quality, followed by one-shot codegen and agentic preset search.
+- Agentic codegen beats one-shot codegen by `+0.1190` Recall@10.
+- Agentic preset reflection beats single preset routing by `+0.1926` Recall@10.
+- Agentic codegen reaches the highest quality, but costs `4.5x` the agentic preset latency.
+- Public SciFact check is effectively a tie: agentic codegen `0.8254` vs fixed flow `0.8251` Recall@10.
+- Public HotpotQA check favors fixed flow: `0.9550` vs agentic codegen `0.9300` Recall@10.
 - Recommended interpretation: use preset-stack agentic search as the practical product path; keep full codegen as an advanced/research path for hard cases.
 
 ## Main Results
 
 | Scope | Benchmark | System | Recall@10 | Total ms | LLM/codegen ms | Exec ms | Search calls | Rerank pairs |
 |---|---|---|---:|---:|---:|---:|---:|---:|
+| full real LLM custom test | sac-codegen-v3/test-real-llm | `real_agentic_code_gen` | 0.7058 | 159693.9 | 159078.5 | 615.5 | 32.81 | 76.1 |
+| full real LLM custom test | sac-codegen-v3/test-real-llm | `real_one_shot_code_gen` | 0.5868 | 60593.7 | 60383.1 | 210.6 | 8.64 | 39.6 |
+| full real LLM custom test | sac-codegen-v3/test-real-llm | `real_agentic_preset_flow_llm_reflection` | 0.5610 | 35676.2 | 35349.2 | 327.0 | 7.58 | 114.8 |
+| full real LLM custom test | sac-codegen-v3/test-real-llm | `real_agentic_fixed_flow_llm_reflection` | 0.4256 | 40660.4 | 38583.4 | 2077.0 | 7.93 | 1072.3 |
+| full real LLM custom test | sac-codegen-v3/test-real-llm | `real_preset_flow_llm_router` | 0.3684 | 13156.5 | 12991.1 | 165.4 | 1.90 | 67.9 |
+| full real LLM custom test | sac-codegen-v3/test-real-llm | `real_fixed_flow_llm_qr` | 0.1747 | 13317.2 | 12991.1 | 326.1 | 4.00 | 120.0 |
 | focused real LLM sample | sac-codegen-v3/focused-5 | `real_agentic_code_gen` | 1.0000 | 136271.9 | 135929.4 | 342.5 | 21.20 | 69.2 |
 | focused real LLM sample | sac-codegen-v3/focused-5 | `real_agentic_preset_flow_llm_reflection` | 0.8114 | 28692.8 | 28436.5 | 256.4 | 6.20 | 97.6 |
 | focused real LLM sample | sac-codegen-v3/focused-5 | `real_one_shot_code_gen` | 0.7114 | 62041.8 | 61891.1 | 150.7 | 6.60 | 39.2 |
@@ -29,6 +38,18 @@
 | custom enterprise full test | sac-codegen-v3/test | `preset_flow_model_router` | 0.2083 | 1770.7 | 0.0 | 1770.7 | 2.00 | 1251.5 |
 | custom enterprise full test | sac-codegen-v3/test | `one_shot_code_gen_rule_policy` | 0.1857 | 3238.0 | 0.1 | 3237.8 | 6.97 | 2400.0 |
 | custom enterprise full test | sac-codegen-v3/test | `fixed_flow_model_qr` | 0.1857 | 3556.8 | 0.0 | 3556.8 | 3.97 | 2400.0 |
+| public architecture matrix | HotpotQA dev-distractor slice | `fixed_flow_model_qr` | 0.9550 | 237.6 | 0.0 | 237.6 | 3.96 | 40.0 |
+| public architecture matrix | HotpotQA dev-distractor slice | `one_shot_code_gen_rule_policy` | 0.9450 | 245.9 | 0.1 | 245.8 | 5.28 | 46.4 |
+| public architecture matrix | HotpotQA dev-distractor slice | `preset_flow_model_router` | 0.9400 | 186.1 | 0.0 | 186.0 | 1.78 | 39.6 |
+| public architecture matrix | HotpotQA dev-distractor slice | `agentic_fixed_flow_rule_reflection` | 0.9350 | 689.3 | 0.1 | 689.1 | 5.21 | 134.5 |
+| public architecture matrix | HotpotQA dev-distractor slice | `agentic_code_gen_rule_reflection` | 0.9300 | 221.8 | 0.1 | 221.7 | 5.79 | 40.0 |
+| public architecture matrix | HotpotQA dev-distractor slice | `agentic_preset_flows_rule_reflection` | 0.9250 | 196.1 | 0.0 | 196.0 | 4.14 | 39.6 |
+| public architecture matrix | BEIR/scifact | `agentic_code_gen_rule_reflection` | 0.8254 | 389.4 | 0.1 | 389.3 | 5.40 | 40.0 |
+| public architecture matrix | BEIR/scifact | `fixed_flow_model_qr` | 0.8251 | 329.9 | 0.0 | 329.9 | 3.66 | 40.0 |
+| public architecture matrix | BEIR/scifact | `agentic_fixed_flow_rule_reflection` | 0.8234 | 963.3 | 0.1 | 963.2 | 5.01 | 133.3 |
+| public architecture matrix | BEIR/scifact | `one_shot_code_gen_rule_policy` | 0.8196 | 367.7 | 0.1 | 367.6 | 5.03 | 40.4 |
+| public architecture matrix | BEIR/scifact | `agentic_preset_flows_rule_reflection` | 0.7944 | 304.6 | 0.0 | 304.6 | 3.98 | 38.4 |
+| public architecture matrix | BEIR/scifact | `preset_flow_model_router` | 0.7478 | 249.3 | 0.0 | 249.2 | 1.54 | 36.4 |
 | public sanity check | HotpotQA dev-distractor slice | `fixed_understanding_rewrite_hybrid_rerank` | 0.9550 | 211.2 | 0.0 | 211.1 | 3.78 | 40.0 |
 | public sanity check | HotpotQA dev-distractor slice | `generated_search_as_code` | 0.9550 | 252.8 | 0.1 | 252.7 | 9.80 | 39.1 |
 | public sanity check | HotpotQA dev-distractor slice | `fixed_hybrid_rerank` | 0.9500 | 205.0 | 0.0 | 205.0 | 1.00 | 40.0 |
@@ -60,6 +81,8 @@ These are the additional full-dataset variants from `sac_benchmark_results.json`
 
 - `experiment_matrix_results.json`: custom full matrix; queries=31; documents=6010
 - `real_llm_matrix_results.json`: focused real LLM matrix; queries=5; documents=6010
+- `real_llm_matrix_full_results.json`: full real LLM matrix; queries=31; documents=6010
 - `real_codegen_retest_results.json`: focused real codegen retest; queries=5; documents=6010
+- `public_variant_matrix_results.json`: public architecture matrix; queries=400; documents=None
 - `public_benchmark_results.json`: public benchmark sanity checks; queries=400; documents=None
 - `sac_benchmark_results.json`: custom full extended variants; queries=31; documents=6010

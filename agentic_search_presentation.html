@@ -898,7 +898,7 @@
           </div>
           <div class="summary-item">
             <strong>What our eval shows.</strong>
-            <p>On the full custom test, the lift comes from agentic evidence coverage. On the real-LLM sample, agentic preset reaches 0.8114 and full agentic codegen reaches 1.0000.</p>
+            <p>On the full real-LLM custom test, agentic codegen reaches 0.7058 Recall@10; one-shot codegen reaches 0.5868; agentic preset reaches 0.5610.</p>
           </div>
           <div class="summary-item">
             <strong>What the matrix changes.</strong>
@@ -1087,14 +1087,14 @@
 
         <div id="results" class="benchmark" role="tabpanel">
           <div class="card">
-            <h3>Architecture matrix</h3>
+            <h3>Full real-LLM architecture matrix</h3>
             <div class="bar-list">
-              <div class="bar-row"><div class="bar-label">Agentic codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:100%"></div></div><div class="bar-value">0.4712</div></div>
-              <div class="bar-row"><div class="bar-label">Agentic preset flow</div><div class="bar-track"><div class="bar-fill blue" style="width:98.8%"></div></div><div class="bar-value">0.4655</div></div>
-              <div class="bar-row"><div class="bar-label">Agentic fixed-flow</div><div class="bar-track"><div class="bar-fill amber" style="width:59.1%"></div></div><div class="bar-value">0.2785</div></div>
-              <div class="bar-row"><div class="bar-label">Preset router</div><div class="bar-track"><div class="bar-fill green" style="width:44.2%"></div></div><div class="bar-value">0.2083</div></div>
-              <div class="bar-row"><div class="bar-label">One-shot codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:39.4%"></div></div><div class="bar-value">0.1857</div></div>
-              <div class="bar-row"><div class="bar-label">Fixed flow</div><div class="bar-track"><div class="bar-fill green" style="width:39.4%"></div></div><div class="bar-value">0.1857</div></div>
+              <div class="bar-row"><div class="bar-label">Agentic codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:100%"></div></div><div class="bar-value">0.7058</div></div>
+              <div class="bar-row"><div class="bar-label">One-shot codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:83.1%"></div></div><div class="bar-value">0.5868</div></div>
+              <div class="bar-row"><div class="bar-label">Agentic preset flow</div><div class="bar-track"><div class="bar-fill blue" style="width:79.5%"></div></div><div class="bar-value">0.5610</div></div>
+              <div class="bar-row"><div class="bar-label">Agentic fixed-flow</div><div class="bar-track"><div class="bar-fill amber" style="width:60.3%"></div></div><div class="bar-value">0.4256</div></div>
+              <div class="bar-row"><div class="bar-label">Preset router</div><div class="bar-track"><div class="bar-fill green" style="width:52.2%"></div></div><div class="bar-value">0.3684</div></div>
+              <div class="bar-row"><div class="bar-label">Fixed flow</div><div class="bar-track"><div class="bar-fill green" style="width:24.8%"></div></div><div class="bar-value">0.1747</div></div>
             </div>
             <div class="table-scroll">
               <table class="leaderboard">
@@ -1110,63 +1110,75 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td>Fixed flow</td><td>0.1857</td><td>3,557 ms</td><td>0.0 ms</td><td>3,557 ms</td><td>3.97</td><td>2,400</td></tr>
-                  <tr><td>Preset router</td><td>0.2083</td><td>1,771 ms</td><td>0.0 ms</td><td>1,771 ms</td><td>2.00</td><td>1,252</td></tr>
-                  <tr><td>One-shot codegen</td><td>0.1857</td><td>3,238 ms</td><td>0.1 ms</td><td>3,238 ms</td><td>6.97</td><td>2,400</td></tr>
-                  <tr><td>Agentic fixed-flow</td><td>0.2785</td><td>7,776 ms</td><td>0.2 ms</td><td>7,776 ms</td><td>12.39</td><td>5,189</td></tr>
-                  <tr><td>Agentic preset flow</td><td>0.4655</td><td>1,104 ms</td><td>5.4 ms</td><td>1,099 ms</td><td>6.10</td><td>733</td></tr>
-                  <tr><td>Agentic codegen</td><td>0.4712</td><td>3,338 ms</td><td>0.2 ms</td><td>3,338 ms</td><td>7.16</td><td>2,400</td></tr>
+                  <tr><td>Fixed flow</td><td>0.1747</td><td>13.3s</td><td>13.0s</td><td>326 ms</td><td>4.00</td><td>120</td></tr>
+                  <tr><td>Preset router</td><td>0.3684</td><td>13.2s</td><td>13.0s</td><td>165 ms</td><td>1.90</td><td>67.9</td></tr>
+                  <tr><td>Agentic fixed-flow</td><td>0.4256</td><td>40.7s</td><td>38.6s</td><td>2.1s</td><td>7.93</td><td>1,072</td></tr>
+                  <tr><td>Agentic preset flow</td><td>0.5610</td><td>35.7s</td><td>35.3s</td><td>327 ms</td><td>7.58</td><td>114.8</td></tr>
+                  <tr><td>One-shot codegen</td><td>0.5868</td><td>60.6s</td><td>60.4s</td><td>211 ms</td><td>8.64</td><td>39.6</td></tr>
+                  <tr><td>Agentic codegen</td><td>0.7058</td><td>159.7s</td><td>159.1s</td><td>615 ms</td><td>32.81</td><td>76.1</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="metrics">
-            <div class="metric"><span>Top recall</span><strong>0.4712</strong><p>Agentic codegen Recall@10</p></div>
-            <div class="metric"><span>Fast agentic</span><strong>1.10s</strong><p>Agentic preset flow latency</p></div>
-            <div class="metric"><span>Real LLM preset</span><strong>0.8114</strong><p>Agentic preset Recall@10 on focused sample</p></div>
-            <div class="metric"><span>Real codegen</span><strong>1.0000</strong><p>Highest quality, but 136s/query</p></div>
+            <div class="metric"><span>Top recall</span><strong>0.7058</strong><p>Agentic codegen on full real-LLM test</p></div>
+            <div class="metric"><span>Practical agentic</span><strong>0.5610</strong><p>Preset reflection, 35.7s/query</p></div>
+            <div class="metric"><span>Codegen lift</span><strong>+0.1190</strong><p>Agentic codegen over one-shot codegen</p></div>
+            <div class="metric"><span>Cost tradeoff</span><strong>4.5x</strong><p>Agentic codegen vs preset latency</p></div>
           </div>
         </div>
 
         <div id="public" class="benchmark" role="tabpanel">
           <div class="card wide">
-            <h3>Public benchmark sanity check</h3>
-            <p>We also ran known public benchmarks to check external credibility. These are local sanity checks, not official leaderboard submissions.</p>
+            <h3>Public architecture matrix</h3>
+            <p>We also ran the same baseline + 5 variants on public datasets. These are local sanity checks, not official leaderboard submissions.</p>
             <div class="table-scroll">
               <table class="leaderboard">
                 <thead>
                   <tr>
                     <th>Benchmark</th>
                     <th>Setting</th>
-                    <th>Generated</th>
-                    <th>Strong fixed</th>
-                    <th>Total / codegen / exec</th>
+                    <th>Fixed</th>
+                    <th>Preset</th>
+                    <th>Agent fixed</th>
+                    <th>Agent preset</th>
+                    <th>One-shot code</th>
+                    <th>Agent code</th>
+                    <th>Readout</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>BEIR/SciFact</td>
                     <td>5,183 docs, 300 queries</td>
-                    <td>0.8439</td>
-                    <td>0.8278</td>
-                    <td>370 / 0 / 370 ms vs 319 / 0 / 319 ms</td>
+                    <td>0.8251</td>
+                    <td>0.7478</td>
+                    <td>0.8234</td>
+                    <td>0.7944</td>
+                    <td>0.8196</td>
+                    <td>0.8254</td>
+                    <td>Effectively tied</td>
                   </tr>
                   <tr>
                     <td>HotpotQA distractor</td>
                     <td>991 pooled docs, 100 queries</td>
                     <td>0.9550</td>
-                    <td>0.9550</td>
-                    <td>253 / 0 / 253 ms vs 211 / 0 / 211 ms</td>
+                    <td>0.9400</td>
+                    <td>0.9350</td>
+                    <td>0.9250</td>
+                    <td>0.9450</td>
+                    <td>0.9300</td>
+                    <td>Fixed wins</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="metrics">
-            <div class="metric"><span>SciFact lift</span><strong>+0.0161</strong><p>Recall@10 delta vs fixed enriched baseline</p></div>
-            <div class="metric"><span>HotpotQA</span><strong>tie</strong><p>Generated flow matches fixed enriched Recall@10</p></div>
-            <div class="metric"><span>Cost signal</span><strong>higher</strong><p>Generated flow uses more search calls on public IR</p></div>
-            <div class="metric"><span>Main takeaway</span><strong>credible</strong><p>Public checks validate behavior; custom eval isolates enterprise control</p></div>
+            <div class="metric"><span>SciFact</span><strong>+0.0003</strong><p>Agentic codegen vs fixed flow</p></div>
+            <div class="metric"><span>HotpotQA</span><strong>-0.0250</strong><p>Agentic codegen vs fixed flow</p></div>
+            <div class="metric"><span>Dataset effect</span><strong>real</strong><p>Codegen does not win universally</p></div>
+            <div class="metric"><span>Main takeaway</span><strong>targeted</strong><p>Enterprise control problems are the core use case</p></div>
           </div>
         </div>
       </div>
@@ -1191,7 +1203,7 @@
               </div>
               <div class="score-strip">
                 <div class="score-chip"><span>Fixed</span><strong>0.0000</strong></div>
-                <div class="score-chip"><span>Generated</span><strong>0.0000</strong></div>
+                <div class="score-chip"><span>One-shot</span><strong>1.0000</strong></div>
                 <div class="score-chip"><span>Agent fixed</span><strong>0.0000</strong></div>
                 <div class="score-chip"><span>Codegen</span><strong>1.0000</strong></div>
               </div>
@@ -1208,14 +1220,14 @@
                 <div class="track-score"><strong>0.0000</strong>Recall@10</div>
               </div>
               <div class="flow-track generated">
-                <div class="track-name">Generated flow<span>More routes, one pass</span></div>
+                <div class="track-name">One-shot codegen<span>More routes, one pass</span></div>
                 <div class="flow-path">
                   <div class="flow-node" style="--i:0">Fanout routes<small>hybrid + BM25 + dense</small></div>
-                  <div class="flow-node" style="--i:1">SDK filters<small>some controls</small></div>
-                  <div class="flow-node" style="--i:2">Rerank once<small>same decoy cluster</small></div>
-                  <div class="flow-node miss" style="--i:3">Still misses<small>release not covered</small></div>
+                  <div class="flow-node" style="--i:1">SDK filters<small>customer + release hints</small></div>
+                  <div class="flow-node" style="--i:2">Rerank once<small>approval + account evidence</small></div>
+                  <div class="flow-node win" style="--i:3">Complete set<small>5 of 5 docs</small></div>
                 </div>
-                <div class="track-score"><strong>0.0000</strong>Recall@10</div>
+                <div class="track-score"><strong>1.0000</strong>Recall@10</div>
               </div>
               <div class="flow-track agent-fixed">
                 <div class="track-name">Agentic fixed-flow<span>Reflects, but tool is rigid</span></div>
@@ -1249,9 +1261,9 @@
               </div>
               <div class="score-strip">
                 <div class="score-chip"><span>Fixed</span><strong>0.1429</strong></div>
-                <div class="score-chip"><span>Generated</span><strong>0.1429</strong></div>
+                <div class="score-chip"><span>One-shot</span><strong>0.8571</strong></div>
                 <div class="score-chip"><span>Agent fixed</span><strong>0.1429</strong></div>
-                <div class="score-chip"><span>Codegen</span><strong>0.8571</strong></div>
+                <div class="score-chip"><span>Codegen</span><strong>1.0000</strong></div>
               </div>
             </div>
             <div class="flow-compare">
@@ -1266,14 +1278,14 @@
                 <div class="track-score"><strong>0.1429</strong>Recall@10</div>
               </div>
               <div class="flow-track generated">
-                <div class="track-name">Generated flow<span>Different routes, no recovery</span></div>
+                <div class="track-name">One-shot codegen<span>Mostly recovers evidence</span></div>
                 <div class="flow-path">
                   <div class="flow-node" style="--i:0">Version routes<small>Beacon terms</small></div>
                   <div class="flow-node" style="--i:1">Approval route<small>final approval</small></div>
-                  <div class="flow-node" style="--i:2">One rerank<small>approval-heavy</small></div>
-                  <div class="flow-node miss" style="--i:3">Still thin<small>misses alias + ticket</small></div>
+                  <div class="flow-node" style="--i:2">One rerank<small>account + advisory</small></div>
+                  <div class="flow-node warn" style="--i:3">Near complete<small>6 of 7 docs</small></div>
                 </div>
-                <div class="track-score"><strong>0.1429</strong>Recall@10</div>
+                <div class="track-score"><strong>0.8571</strong>Recall@10</div>
               </div>
               <div class="flow-track agent-fixed">
                 <div class="track-name">Agentic fixed-flow<span>More calls, same blind spot</span></div>
@@ -1289,11 +1301,11 @@
                 <div class="track-name">Agentic codegen<span>Uses source-specific controls</span></div>
                 <div class="flow-path">
                   <div class="flow-node" style="--i:0">Resolve CT-R<small>alias registry</small></div>
-                  <div class="flow-node" style="--i:1">Target sources<small>ticket + advisory + releases</small></div>
+                  <div class="flow-node" style="--i:1">Target sources<small>approval + advisory + releases</small></div>
                   <div class="flow-node" style="--i:2">Reject stale<small>3.14.0 not enough</small></div>
-                  <div class="flow-node win" style="--i:3">Clean context<small>3.14.1 citable</small></div>
+                  <div class="flow-node win" style="--i:3">Full recall<small>7 of 7 docs</small></div>
                 </div>
-                <div class="track-score"><strong>0.8571</strong>Recall@10</div>
+                <div class="track-score"><strong>1.0000</strong>Recall@10</div>
               </div>
             </div>
           </article>
@@ -1332,7 +1344,7 @@
             </div>
             <div class="outcome">
               <div class="outcome-row"><strong>Agentic fixed-flow</strong><span>Recall@10 0.1429 with 1 hard negative; repeated fixed calls stay trapped near approval decoys.</span></div>
-              <div class="outcome-row"><strong>Real agentic preset / codegen</strong><span>Preset reaches 0.8571; codegen reaches 1.0000 by preserving alias, approval, release, advisory, account, and escalation evidence.</span></div>
+              <div class="outcome-row"><strong>Real one-shot / agentic codegen</strong><span>One-shot reaches 0.8571; agentic codegen reaches 1.0000 by recovering all required evidence in top 10.</span></div>
               <div class="outcome-row"><strong>Lesson</strong><span>When the plan needs source-specific evidence, low-level stack control matters.</span></div>
             </div>
           </article>
@@ -1349,8 +1361,8 @@
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Retrieval</strong><span>Focused real sample: agentic codegen 1.0000, agentic preset 0.8114. Full custom test: 0.4712 and 0.4655.</span></div>
-              <div class="outcome-row"><strong>Cost</strong><span>Full codegen costs 136s/query; agentic preset is 28.7s/query and is the practical path.</span></div>
+              <div class="outcome-row"><strong>Retrieval</strong><span>Full real-LLM test: agentic codegen 0.7058, one-shot codegen 0.5868, agentic preset 0.5610.</span></div>
+              <div class="outcome-row"><strong>Cost</strong><span>Full codegen costs 159.7s/query; agentic preset is 35.7s/query and is the practical path.</span></div>
               <div class="outcome-row"><strong>Lesson</strong><span>Next evaluation should score final answers, citations, token cost, and fallback behavior.</span></div>
             </div>
           </article>
@@ -1378,12 +1390,12 @@
           <tbody>
             <tr>
               <td>Real LLM decision points</td>
-              <td>5-query sample: agentic preset improves from single-router 0.4400 to 0.8114 Recall@10 with evidence-aware reflection.</td>
-              <td>Scale real router/reflection to the full custom set and tune stop criteria against recall, token cost, and tool-call precision.</td>
+              <td>Full test: agentic preset improves from single-router 0.3684 to 0.5610 Recall@10 with evidence-aware reflection.</td>
+              <td>Tune stop criteria against recall, token cost, and tool-call precision.</td>
             </tr>
             <tr>
               <td>Real LLM codegen reliability</td>
-              <td>Prompt/API hardening removes runtime repairs and lifts real agentic codegen to 1.0000 Recall@10, but it costs 136s/query.</td>
+              <td>Full test: real agentic codegen reaches 0.7058 Recall@10, but it costs 159.7s/query.</td>
               <td>Keep full codegen as a hard-case path; optimize prompt size, cache reuse, timeout policy, and model choice.</td>
             </tr>
             <tr>
@@ -1415,8 +1427,8 @@
             <p>The demo should show generated retrieval code, real LLM routing decisions, and why preset-stack agentic search is the practical path before full codegen.</p>
           </div>
           <ol class="next-list">
-            <li><strong>Productize agentic preset search first.</strong><br>It reaches 0.8114 Recall@10 on the real-LLM sample at 28.7s/query, much cheaper than full codegen.</li>
-            <li><strong>Keep full codegen for hard cases.</strong><br>It reaches 1.0000 Recall@10, but 136s/query means it should be gated, cached, or used offline.</li>
+            <li><strong>Productize agentic preset search first.</strong><br>It reaches 0.5610 Recall@10 on the full real-LLM test at 35.7s/query, much cheaper than full codegen.</li>
+            <li><strong>Keep full codegen for hard cases.</strong><br>It reaches 0.7058 Recall@10, but 159.7s/query means it should be gated, cached, or used offline.</li>
             <li><strong>Score final answers.</strong><br>Measure answer accuracy, citation grounding, token cost, latency, and failure rate.</li>
             <li><strong>Harden context selection.</strong><br>Keep authoritative evidence, drop stale drafts, and track hard-negative leakage.</li>
           </ol>
@@ -1427,7 +1439,7 @@
 
   <footer class="footer">
     <div class="wrap">
-      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, real_llm_matrix_report.md, real_codegen_retest_report.md, combined_eval_report.md, sac_benchmark_dataset_intro.md, public_benchmark_report.md.
+      Sources: <a href="https://research.perplexity.ai/articles/rethinking-search-as-code-generation">Perplexity Research “Rethinking Search as Code Generation”</a>; <a href="https://github.com/beir-cellar/beir">BEIR benchmark</a>; <a href="https://hotpotqa.github.io/">HotpotQA</a>; local artifacts: experiment_matrix_report.md, real_llm_matrix_full_report.md, real_codegen_retest_report.md, combined_eval_report.md, sac_benchmark_dataset_intro.md, public_variant_matrix_report.md.
     </div>
   </footer>
 

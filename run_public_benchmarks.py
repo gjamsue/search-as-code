@@ -44,7 +44,19 @@ from run_flow_comparison import (
     run_fixed_search,
     run_system,
 )
+from run_experiment_matrix import (
+    fixed_flow_model_qr_code,
+    preset_flow_code,
+    run_agentic_preset_flow,
+    run_fixed_flow_model_qr,
+    run_preset_flow,
+)
 from run_real_benchmark import BEIR_DATASETS, download_dataset
+from run_sac_dataset_benchmark import (
+    generate_agentic_fixed_flow_program,
+    generate_iterative_agentic_sac_program,
+    generate_sac_program,
+)
 
 
 HOTPOTQA_DISTRACTOR_URLS = [
@@ -84,9 +96,15 @@ def main() -> None:
     parser.add_argument("--generated-min-rerank-candidates", type=int, default=0)
     parser.add_argument(
         "--systems",
-        default="fixed_bm25,fixed_hybrid_rerank,fixed_understanding_rewrite_hybrid_rerank,generated_search_as_code",
+        default=(
+            "fixed_flow_model_qr,preset_flow_model_router,agentic_fixed_flow_rule_reflection,"
+            "agentic_preset_flows_rule_reflection,one_shot_code_gen_rule_policy,agentic_code_gen_rule_reflection"
+        ),
         help=(
-            "Comma-separated systems. Supported: fixed_bm25, fixed_semantic_dense, fixed_hybrid, "
+            "Comma-separated systems. Supported architecture matrix systems: fixed_flow_model_qr, "
+            "preset_flow_model_router, agentic_fixed_flow_rule_reflection, agentic_preset_flows_rule_reflection, "
+            "one_shot_code_gen_rule_policy, agentic_code_gen_rule_reflection. Also supported sanity-check systems: "
+            "fixed_bm25, fixed_semantic_dense, fixed_hybrid, "
             "fixed_hybrid_rerank, fixed_understanding_rewrite_hybrid_rerank, generated_search_as_code, "
             "generated_reflective_search_as_code, real_codegen_search_as_code."
         ),
@@ -348,6 +366,12 @@ def run_public_systems(
     include_per_query: bool,
 ) -> dict:
     supported_systems = {
+        "fixed_flow_model_qr",
+        "preset_flow_model_router",
+        "agentic_fixed_flow_rule_reflection",
+        "agentic_preset_flows_rule_reflection",
+        "one_shot_code_gen_rule_policy",
+        "agentic_code_gen_rule_reflection",
         "fixed_bm25",
         "fixed_semantic_dense",
         "fixed_hybrid",
@@ -362,6 +386,125 @@ def run_public_systems(
         raise SystemExit(f"Unsupported systems: {', '.join(sorted(unknown))}")
 
     systems = {}
+    if "fixed_flow_model_qr" in selected_systems:
+        systems["fixed_flow_model_qr"] = run_system(
+            "fixed_flow_model_qr",
+            queries,
+            qrels,
+            top_k,
+            lambda query: fixed_flow_model_qr_code(candidate_k),
+            lambda _code, ctx: run_fixed_flow_model_qr(ctx, candidate_k=candidate_k, top_k=top_k),
+            query_understanding_api=query_understanding_api,
+            entity_linking_api=entity_linking_api,
+            query_rewrite_api=query_rewrite_api,
+            search_api=search_api,
+            ranking_api=ranking_api,
+            sample_codes=0,
+            include_per_query=include_per_query,
+        )
+
+    if "preset_flow_model_router" in selected_systems:
+        systems["preset_flow_model_router"] = run_system(
+            "preset_flow_model_router",
+            queries,
+            qrels,
+            top_k,
+            lambda query: preset_flow_code(query, allow_multiple=False, candidate_k=candidate_k),
+            lambda _code, ctx: run_preset_flow(ctx, candidate_k=candidate_k, top_k=top_k, allow_multiple=False),
+            query_understanding_api=query_understanding_api,
+            entity_linking_api=entity_linking_api,
+            query_rewrite_api=query_rewrite_api,
+            search_api=search_api,
+            ranking_api=ranking_api,
+            sample_codes=0,
+            include_per_query=include_per_query,
+        )
+
+    if "agentic_fixed_flow_rule_reflection" in selected_systems:
+        systems["agentic_fixed_flow_rule_reflection"] = run_system(
+            "agentic_fixed_flow_rule_reflection",
+            queries,
+            qrels,
+            top_k,
+            lambda query: generate_agentic_fixed_flow_program(query, top_k=top_k, candidate_k=candidate_k),
+            execute_generated_program,
+            query_understanding_api=query_understanding_api,
+            entity_linking_api=entity_linking_api,
+            query_rewrite_api=query_rewrite_api,
+            search_api=search_api,
+            ranking_api=ranking_api,
+            sample_codes=sample_codes,
+            include_per_query=include_per_query,
+        )
+
+    if "agentic_preset_flows_rule_reflection" in selected_systems:
+        systems["agentic_preset_flows_rule_reflection"] = run_system(
+            "agentic_preset_flows_rule_reflection",
+            queries,
+            qrels,
+            top_k,
+            lambda query: preset_flow_code(query, allow_multiple=True, candidate_k=candidate_k),
+            lambda _code, ctx: run_agentic_preset_flow(
+                ctx,
+                candidate_k=candidate_k,
+                final_candidate_k=candidate_k,
+                top_k=top_k,
+                max_rounds=2,
+            ),
+            query_understanding_api=query_understanding_api,
+            entity_linking_api=entity_linking_api,
+            query_rewrite_api=query_rewrite_api,
+            search_api=search_api,
+            ranking_api=ranking_api,
+            sample_codes=0,
+            include_per_query=include_per_query,
+        )
+
+    if "one_shot_code_gen_rule_policy" in selected_systems:
+        systems["one_shot_code_gen_rule_policy"] = run_system(
+            "one_shot_code_gen_rule_policy",
+            queries,
+            qrels,
+            top_k,
+            lambda query: generate_sac_program(
+                query,
+                top_k=top_k,
+                branch_top_k=generated_branch_top_k,
+                max_rerank_candidates=generated_max_rerank_candidates,
+                min_rerank_candidates=generated_min_rerank_candidates,
+            ),
+            execute_generated_program,
+            query_understanding_api=query_understanding_api,
+            entity_linking_api=entity_linking_api,
+            query_rewrite_api=query_rewrite_api,
+            search_api=search_api,
+            ranking_api=ranking_api,
+            sample_codes=sample_codes,
+            include_per_query=include_per_query,
+        )
+
+    if "agentic_code_gen_rule_reflection" in selected_systems:
+        systems["agentic_code_gen_rule_reflection"] = run_system(
+            "agentic_code_gen_rule_reflection",
+            queries,
+            qrels,
+            top_k,
+            lambda query: generate_iterative_agentic_sac_program(
+                query,
+                top_k=top_k,
+                branch_top_k=generated_branch_top_k,
+                max_rerank_candidates=generated_max_rerank_candidates,
+            ),
+            execute_generated_program,
+            query_understanding_api=query_understanding_api,
+            entity_linking_api=entity_linking_api,
+            query_rewrite_api=query_rewrite_api,
+            search_api=search_api,
+            ranking_api=ranking_api,
+            sample_codes=sample_codes,
+            include_per_query=include_per_query,
+        )
+
     for mode, label in [
         ("bm25", "fixed_bm25"),
         ("dense", "fixed_semantic_dense"),
@@ -558,11 +701,11 @@ def summarize_public_systems(systems: dict, *, k: int) -> list[dict]:
 def render_public_report(output: dict) -> str:
     k = output["top_k"]
     lines = [
-        "# Public Benchmark Sanity Check",
+        "# Public Architecture Matrix / Sanity Check",
         "",
-        "These runs complement the custom enterprise Search-as-Code benchmark. They are intended to test whether the implementation behaves sensibly on known public datasets, not to claim official leaderboard numbers.",
+        "These runs complement the custom enterprise Search-as-Code benchmark. They compare the selected architecture variants on known public datasets, not to claim official leaderboard numbers.",
         "",
-        "Note: `generated_search_as_code` in this report is the deterministic Search-as-Code proxy used for reproducible full-batch evaluation. Use `real_codegen_search_as_code` for true model-generated Python; see `real_codegen_demo_report.md` for the current smoke test.",
+        "Note: deterministic codegen variants are proxies used for reproducible full-batch evaluation. Use `real_codegen_search_as_code` for true model-generated Python; see `real_codegen_demo_report.md` for the current smoke test.",
         "",
         f"- Top-k: `{k}`",
         f"- Rerank candidate budget: `{output['candidate_k']}`",

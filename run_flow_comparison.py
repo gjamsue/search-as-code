@@ -92,9 +92,37 @@ class SearchProxy:
         self.ctx = ctx
         self.api = api
 
-    def search(self, query: str, *, mode: str = "hybrid", top_k: int = 20, **kwargs) -> list[SearchCandidate]:
+    def search(
+        self,
+        query: str,
+        *,
+        mode: str = "hybrid",
+        top_k: int = 20,
+        filters: dict | None = None,
+        **kwargs,
+    ) -> list[SearchCandidate]:
+        kwargs = self._normalize_filters(filters, kwargs)
         self.ctx.search_calls += 1
         return self.api.search(query, mode=mode, top_k=top_k, **kwargs)
+
+    def bm25(self, query: str, *, top_k: int = 20, filters: dict | None = None, **kwargs) -> list[SearchCandidate]:
+        return self.search(query, mode="bm25", top_k=top_k, filters=filters, **kwargs)
+
+    def dense(self, query: str, *, top_k: int = 20, filters: dict | None = None, **kwargs) -> list[SearchCandidate]:
+        return self.search(query, mode="dense", top_k=top_k, filters=filters, **kwargs)
+
+    def hybrid(self, query: str, *, top_k: int = 20, filters: dict | None = None, **kwargs) -> list[SearchCandidate]:
+        return self.search(query, mode="hybrid", top_k=top_k, filters=filters, **kwargs)
+
+    def _normalize_filters(self, filters: dict | None, kwargs: dict) -> dict:
+        normalized = dict(kwargs)
+        if not filters:
+            return normalized
+        if "include_doc_types" not in normalized:
+            normalized["include_doc_types"] = filters.get("doc_type") or filters.get("doc_types")
+        if "include_sources" not in normalized:
+            normalized["include_sources"] = filters.get("source") or filters.get("sources")
+        return normalized
 
 
 class RankingProxy:
@@ -132,7 +160,7 @@ class FlowContext:
         self.search_calls = 0
         self.rerank_calls = 0
         self.rerank_pairs = 0
-        self.candidate_pool = 0
+        self._candidate_pool = 0
         self.trace: list[dict] = []
         self.query_understanding = QueryUnderstandingProxy(self, query_understanding_api)
         self.entity_linking = EntityLinkingProxy(self, entity_linking_api)
@@ -140,8 +168,31 @@ class FlowContext:
         self.search = SearchProxy(self, search_api)
         self.ranking = RankingProxy(self, ranking_api)
 
+    @property
+    def candidate_pool(self) -> int:
+        return self._candidate_pool
+
+    @candidate_pool.setter
+    def candidate_pool(self, value) -> None:
+        if isinstance(value, (list, tuple, set, dict)):
+            self._candidate_pool = len(value)
+            return
+        try:
+            self._candidate_pool = int(value or 0)
+        except (TypeError, ValueError):
+            self._candidate_pool = 0
+
     def log(self, event: str, payload: dict) -> None:
         self.trace.append({"event": event, "payload": payload})
+
+    def rerank(
+        self,
+        query: str,
+        candidates: list[SearchCandidate],
+        *,
+        top_k: int = 10,
+    ) -> list[SearchCandidate]:
+        return self.ranking.rerank(query, candidates, top_k=top_k)
 
     def stats(self, *, latency_ms: float, generation_ms: float, execution_ms: float) -> QueryStats:
         return QueryStats(
