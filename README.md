@@ -9,6 +9,7 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `run_sac_dataset_benchmark.py`: main benchmark runner for fixed BM25, dense, hybrid, hybrid+rerank, fixed enriched, one-shot generated Search-as-Code, agentic fixed-flow calls, naive reflective Search-as-Code, and iterative agentic Search-as-Code flows.
 - `run_experiment_matrix.py`: presentation-aligned matrix runner for fixed flow, agentic fixed flow, preset flow, agentic preset flow, one-shot codegen, and agentic codegen.
 - `run_real_llm_matrix.py`: real-LLM matrix runner that uses Codex CLI for QR/router/planner/reflection decisions and real codegen.
+- `run_public_eval_suite.py`: canonical wrapper for the reusable public eval suite.
 - `run_public_benchmarks.py`: public benchmark runner for the baseline+5 architecture variants on BEIR/SciFact, HotpotQA dev-distractor slices, and local Harness-1/BrowseComp+ exports.
 - `run_named_search_baselines.py`: custom dataset calibration against recognizable search stacks such as BM25, dense bi-encoder, hybrid, RRF, and CrossEncoder rerank.
 - `run_search_baseline_diagnostics.py`: separates first-stage candidate recall from CrossEncoder rerank recall to debug baseline validity.
@@ -30,7 +31,9 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `real_llm_matrix_full_results.json` and `real_llm_matrix_full_report.md`: 31-query full real LLM matrix across the same variants.
 - `combined_eval_results.json` and `combined_eval_report.md`: merged view across custom full matrix, full/focused real LLM matrices, real codegen retest, public architecture matrix, public benchmark checks, and legacy runs.
 - `sac_benchmark_dataset_intro.md`: Chinese dataset intro with generation method, categories, statistics, and example tasks.
+- `public_eval_suite.md`: reusable public benchmark guide with dataset scope, systems, commands, results, and extension rules.
 - `harness1_benchmark_feasibility.md`: mapping from the Harness-1 paper benchmarks to what this repo can run now, add next, or must defer until corpora/indexes exist.
+- `harness1_reproduction_todo.md`: step-by-step backlog for reproducing Harness-1 datasets, baselines, harness ablations, and comparison methods.
 - `agentic_search_presentation.html`: mobile-friendly presentation for the final Search-as-Code story.
 
 ## Latest Result
@@ -82,6 +85,12 @@ These runs apply the same baseline+5 variant matrix to known public datasets. Th
 | HotpotQA dev-distractor, 991 docs, 100 queries | 0.9550 | 0.9400 | 0.9350 | 0.9250 | 0.9450 | 0.9300 | Fixed flow wins; public multi-hop does not need enterprise-style source control |
 
 The public check is useful for credibility, but it changes the conclusion: codegen is not universally better. Its advantage shows up most clearly in the custom enterprise setting, where source authority, alias resolution, hard-negative intrusion, and evidence-category reflection are first-order problems.
+
+`public_eval_suite.md` is the reusable public-set guide. Run the canonical suite with:
+
+```bash
+python run_public_eval_suite.py
+```
 
 ### Harness-1 Compatibility
 
@@ -187,7 +196,7 @@ python run_sac_dataset_benchmark.py --split test
 python run_real_llm_matrix.py --task-ids all --candidate-k 120 --tool-candidate-k 120 --timeout 240 --output real_llm_matrix_full_results.json --report real_llm_matrix_full_report.md
 python run_named_search_baselines.py --split test --candidate-k 2400 --output named_search_baselines_results.json --report named_search_baselines_report.md
 python run_search_baseline_diagnostics.py
-python run_public_benchmarks.py --benchmarks beir/scifact,hotpotqa/distractor --hotpot-limit 100 --candidate-k 40 --fixed-small-candidate-k 40 --generated-branch-top-k 20 --generated-max-rerank-candidates 40 --systems fixed_flow_model_qr,preset_flow_model_router,agentic_fixed_flow_rule_reflection,agentic_preset_flows_rule_reflection,one_shot_code_gen_rule_policy,agentic_code_gen_rule_reflection --no-per-query --sample-codes 0 --output public_variant_matrix_results.json --report public_variant_matrix_report.md
+python run_public_eval_suite.py
 python recompute_cached_metrics.py
 python merge_eval_reports.py
 ```

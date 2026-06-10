@@ -47,18 +47,18 @@
 | custom named search baselines | sac-codegen-v3/test | `dense_cross_encoder_rerank` | 0.1986 | 4049.8 | 0.0 | 4049.8 | 1.00 | 2400.0 |
 | custom named search baselines | sac-codegen-v3/test | `rrf_hybrid_bm25_minilm` | 0.1731 | 28.1 | 0.0 | 28.1 | 2.00 | 0.0 |
 | custom named search baselines | sac-codegen-v3/test | `minilm_biencoder_dense` | 0.0949 | 18.7 | 0.0 | 18.7 | 1.00 | 0.0 |
-| public architecture matrix | HotpotQA dev-distractor slice | `fixed_flow_model_qr` | 0.9550 | 237.6 | 0.0 | 237.6 | 3.96 | 40.0 |
-| public architecture matrix | HotpotQA dev-distractor slice | `one_shot_code_gen_rule_policy` | 0.9450 | 245.9 | 0.1 | 245.8 | 5.28 | 46.4 |
-| public architecture matrix | HotpotQA dev-distractor slice | `preset_flow_model_router` | 0.9400 | 186.1 | 0.0 | 186.0 | 1.78 | 39.6 |
-| public architecture matrix | HotpotQA dev-distractor slice | `agentic_fixed_flow_rule_reflection` | 0.9350 | 689.3 | 0.1 | 689.1 | 5.21 | 134.5 |
-| public architecture matrix | HotpotQA dev-distractor slice | `agentic_code_gen_rule_reflection` | 0.9300 | 221.8 | 0.1 | 221.7 | 5.79 | 40.0 |
-| public architecture matrix | HotpotQA dev-distractor slice | `agentic_preset_flows_rule_reflection` | 0.9250 | 196.1 | 0.0 | 196.0 | 4.14 | 39.6 |
-| public architecture matrix | BEIR/scifact | `agentic_code_gen_rule_reflection` | 0.8254 | 389.4 | 0.1 | 389.3 | 5.40 | 40.0 |
-| public architecture matrix | BEIR/scifact | `fixed_flow_model_qr` | 0.8251 | 329.9 | 0.0 | 329.9 | 3.66 | 40.0 |
-| public architecture matrix | BEIR/scifact | `agentic_fixed_flow_rule_reflection` | 0.8234 | 963.3 | 0.1 | 963.2 | 5.01 | 133.3 |
-| public architecture matrix | BEIR/scifact | `one_shot_code_gen_rule_policy` | 0.8196 | 367.7 | 0.1 | 367.6 | 5.03 | 40.4 |
-| public architecture matrix | BEIR/scifact | `agentic_preset_flows_rule_reflection` | 0.7944 | 304.6 | 0.0 | 304.6 | 3.98 | 38.4 |
-| public architecture matrix | BEIR/scifact | `preset_flow_model_router` | 0.7478 | 249.3 | 0.0 | 249.2 | 1.54 | 36.4 |
+| public architecture matrix | HotpotQA dev-distractor slice | `fixed_flow_model_qr` | 0.9550 | 235.5 | 0.0 | 235.5 | 3.96 | 40.0 |
+| public architecture matrix | HotpotQA dev-distractor slice | `one_shot_code_gen_rule_policy` | 0.9450 | 245.8 | 0.1 | 245.7 | 5.28 | 46.4 |
+| public architecture matrix | HotpotQA dev-distractor slice | `preset_flow_model_router` | 0.9400 | 185.0 | 0.0 | 185.0 | 1.78 | 39.6 |
+| public architecture matrix | HotpotQA dev-distractor slice | `agentic_fixed_flow_rule_reflection` | 0.9350 | 691.5 | 0.1 | 691.4 | 5.21 | 134.5 |
+| public architecture matrix | HotpotQA dev-distractor slice | `agentic_code_gen_rule_reflection` | 0.9300 | 229.3 | 0.1 | 229.2 | 5.79 | 40.0 |
+| public architecture matrix | HotpotQA dev-distractor slice | `agentic_preset_flows_rule_reflection` | 0.9250 | 196.3 | 0.0 | 196.3 | 4.14 | 39.6 |
+| public architecture matrix | BEIR/scifact | `agentic_code_gen_rule_reflection` | 0.8254 | 386.0 | 0.1 | 385.9 | 5.40 | 40.0 |
+| public architecture matrix | BEIR/scifact | `fixed_flow_model_qr` | 0.8251 | 325.4 | 0.0 | 325.4 | 3.66 | 40.0 |
+| public architecture matrix | BEIR/scifact | `agentic_fixed_flow_rule_reflection` | 0.8234 | 955.9 | 0.1 | 955.8 | 5.01 | 133.3 |
+| public architecture matrix | BEIR/scifact | `one_shot_code_gen_rule_policy` | 0.8196 | 365.8 | 0.1 | 365.7 | 5.03 | 40.4 |
+| public architecture matrix | BEIR/scifact | `agentic_preset_flows_rule_reflection` | 0.7944 | 303.6 | 0.0 | 303.6 | 3.98 | 38.4 |
+| public architecture matrix | BEIR/scifact | `preset_flow_model_router` | 0.7478 | 248.1 | 0.0 | 248.0 | 1.54 | 36.4 |
 | public sanity check | HotpotQA dev-distractor slice | `fixed_understanding_rewrite_hybrid_rerank` | 0.9550 | 211.2 | 0.0 | 211.1 | 3.78 | 40.0 |
 | public sanity check | HotpotQA dev-distractor slice | `generated_search_as_code` | 0.9550 | 252.8 | 0.1 | 252.7 | 9.80 | 39.1 |
 | public sanity check | HotpotQA dev-distractor slice | `fixed_hybrid_rerank` | 0.9500 | 205.0 | 0.0 | 205.0 | 1.00 | 40.0 |
