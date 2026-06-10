@@ -12,12 +12,12 @@
 
 | System | Recall@10 | Total ms | LLM ms | Exec ms | Search calls | QR calls | Rerank pairs |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| `real_agentic_code_gen` | 0.7058 | 159693.9 | 159078.5 | 615.5 | 32.81 | 2.00 | 76.1 |
-| `real_one_shot_code_gen` | 0.5868 | 60593.7 | 60383.1 | 210.6 | 8.64 | 1.00 | 39.6 |
-| `real_agentic_preset_flow_llm_reflection` | 0.5610 | 35676.2 | 35349.2 | 327.0 | 7.58 | 0.00 | 114.8 |
-| `real_agentic_fixed_flow_llm_reflection` | 0.4256 | 40660.4 | 38583.4 | 2077.0 | 7.93 | 0.00 | 1072.3 |
-| `real_preset_flow_llm_router` | 0.3684 | 13156.5 | 12991.1 | 165.4 | 1.90 | 0.00 | 67.9 |
-| `real_fixed_flow_llm_qr` | 0.1747 | 13317.2 | 12991.1 | 326.1 | 4.00 | 0.00 | 120.0 |
+| `real_agentic_code_gen` | 0.7081 | 159693.9 | 159078.5 | 615.5 | 32.81 | 2.00 | 76.1 |
+| `real_agentic_preset_flow_llm_reflection` | 0.5809 | 35676.2 | 35349.2 | 327.0 | 7.58 | 0.00 | 114.8 |
+| `real_one_shot_code_gen` | 0.5779 | 60593.7 | 60383.1 | 210.6 | 8.64 | 1.00 | 39.6 |
+| `real_agentic_fixed_flow_llm_reflection` | 0.4307 | 40660.4 | 38583.4 | 2077.0 | 7.93 | 0.00 | 1072.3 |
+| `real_preset_flow_llm_router` | 0.3689 | 13156.5 | 12991.1 | 165.4 | 1.90 | 0.00 | 67.9 |
+| `real_fixed_flow_llm_qr` | 0.1837 | 13317.2 | 12991.1 | 326.1 | 4.00 | 0.00 | 120.0 |
 
 ## Compared With Existing Rule-Backed Matrix
 
@@ -25,18 +25,18 @@ This uses the already-completed `experiment_matrix_results.json`. The subset rec
 
 | Rule-backed system | Subset Recall@10 | Full Recall@10 | Full total ms |
 |---|---:|---:|---:|
-| `agentic_code_gen_rule_reflection` | 0.4712 | 0.4712 | 3338.5 |
-| `agentic_preset_flows_rule_reflection` | 0.4655 | 0.4655 | 1104.2 |
-| `agentic_fixed_flow_rule_reflection` | 0.2785 | 0.2785 | 7775.8 |
-| `preset_flow_model_router` | 0.2083 | 0.2083 | 1770.7 |
-| `fixed_flow_model_qr` | 0.1857 | 0.1857 | 3556.8 |
-| `one_shot_code_gen_rule_policy` | 0.1857 | 0.1857 | 3238.0 |
+| `agentic_preset_flows_rule_reflection` | 0.4627 | 0.4627 | 1104.2 |
+| `agentic_code_gen_rule_reflection` | 0.4625 | 0.4625 | 3338.5 |
+| `agentic_fixed_flow_rule_reflection` | 0.2852 | 0.2852 | 7775.8 |
+| `preset_flow_model_router` | 0.2233 | 0.2233 | 1770.7 |
+| `fixed_flow_model_qr` | 0.2018 | 0.2018 | 3556.8 |
+| `one_shot_code_gen_rule_policy` | 0.2018 | 0.2018 | 3238.0 |
 
 ## Readout
 
-- Real agentic codegen reaches Recall@10 `0.7058` with `159078.5` ms/query spent in LLM generation/reflection.
-- Real agentic preset flow reaches Recall@10 `0.5610`; this tests whether model reflection can choose useful follow-up stacks without writing code.
-- Real LLM agentic codegen now exceeds the existing rule-backed subset (`0.7058` vs `0.4712`), but at much higher LLM generation latency.
+- Real agentic codegen reaches Recall@10 `0.7081` with `159078.5` ms/query spent in LLM generation/reflection.
+- Real agentic preset flow reaches Recall@10 `0.5809`; this tests whether model reflection can choose useful follow-up stacks without writing code.
+- Real LLM agentic codegen now exceeds the existing rule-backed subset (`0.7081` vs `0.4625`), but at much higher LLM generation latency.
 
 ## Per-Query
 
@@ -44,74 +44,74 @@ This uses the already-completed `experiment_matrix_results.json`. The subset rec
 
 For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?
 
-Relevant docs: `acct-northwind, adv-atlas-saml-4102, esc-northwind, rel-atlas-4-8-2, ticket-sec-1842`
+Relevant docs: `acct-northwind, adv-atlas-saml-4102, approval-atlas-northwind-final, esc-northwind, rel-atlas-4-8-2, ticket-sec-1842`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `real_fixed_flow_llm_qr` | 0.4000 | `adv-atlas-saml-4102, esc-northwind, cluster-customer-northwind-renewal-042, cluster-customer-northwind-renewal-018, cluster-customer-northwind-renewal-026` |
-| `real_preset_flow_llm_router` | 0.2000 | `adv-atlas-saml-4102, cluster-customer-northwind-renewal-042, cluster-customer-northwind-renewal-018, cluster-customer-northwind-renewal-026, cluster-customer-northwind-renewal-034` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.6000 | `acct-northwind, adv-atlas-saml-4102, approval-atlas-northwind-final, esc-northwind, meet-northwind` |
-| `real_agentic_preset_flow_llm_reflection` | 0.8000 | `acct-northwind, adv-atlas-saml-4102, ticket-sec-1842, approval-atlas-northwind-final, rel-compass-1-19-3` |
-| `real_one_shot_code_gen` | 0.8000 | `alias-customer-codenames, adv-compass-csv-1440, adv-atlas-rerank-4520, adv-atlas-saml-4102, esc-northwind` |
-| `real_agentic_code_gen` | 0.8000 | `adv-atlas-saml-4102, ticket-sec-1842, approval-atlas-northwind-final, acct-northwind, rel-rovo-5-3-0` |
+| `real_fixed_flow_llm_qr` | 0.3333 | `adv-atlas-saml-4102, esc-northwind, cluster-customer-northwind-renewal-042, cluster-customer-northwind-renewal-018, cluster-customer-northwind-renewal-026` |
+| `real_preset_flow_llm_router` | 0.1667 | `adv-atlas-saml-4102, cluster-customer-northwind-renewal-042, cluster-customer-northwind-renewal-018, cluster-customer-northwind-renewal-026, cluster-customer-northwind-renewal-034` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.6667 | `acct-northwind, adv-atlas-saml-4102, approval-atlas-northwind-final, esc-northwind, meet-northwind` |
+| `real_agentic_preset_flow_llm_reflection` | 0.8333 | `acct-northwind, adv-atlas-saml-4102, ticket-sec-1842, approval-atlas-northwind-final, rel-compass-1-19-3` |
+| `real_one_shot_code_gen` | 0.6667 | `alias-customer-codenames, adv-compass-csv-1440, adv-atlas-rerank-4520, adv-atlas-saml-4102, esc-northwind` |
+| `real_agentic_code_gen` | 0.8333 | `adv-atlas-saml-4102, ticket-sec-1842, approval-atlas-northwind-final, acct-northwind, rel-rovo-5-3-0` |
 
 ### sac-002
 
 Which red-risk customers renewing before July 1 have unresolved security or audit blockers, and what is the next action for each?
 
-Relevant docs: `acct-aster, acct-heliogrid, acct-northwind, acct-riverline, esc-aster, esc-heliogrid, esc-northwind, esc-riverline, runbook-regulated-upgrade`
+Relevant docs: `acct-aster, acct-heliogrid, acct-northwind, acct-riverline, esc-aster, esc-heliogrid, esc-northwind, esc-riverline, runbook-regulated-upgrade, warroom-r7-june-critical-roster`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `real_fixed_flow_llm_qr` | 0.3333 | `warroom-r7-june-critical-roster, esc-urbannest, meet-northwind, meet-heliogrid, meet-aster` |
-| `real_preset_flow_llm_router` | 0.7778 | `warroom-r7-june-critical-roster, esc-urbannest, esc-riverline, esc-aster, acct-northwind` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.4444 | `warroom-r7-june-critical-roster, ticket-sec-1604, ticket-sec-1899, ticket-sec-1842, esc-riverline` |
-| `real_agentic_preset_flow_llm_reflection` | 0.1111 | `warroom-r7-june-critical-roster, ticket-sec-1842, ticket-sec-1811, ticket-sec-1899, esc-urbannest` |
-| `real_one_shot_code_gen` | 0.5556 | `esc-urbannest, esc-riverline, esc-aster, esc-northwind, esc-heliogrid` |
-| `real_agentic_code_gen` | 0.8889 | `acct-northwind, acct-aster, acct-heliogrid, acct-riverline, runbook-regulated-upgrade` |
+| `real_fixed_flow_llm_qr` | 0.4000 | `warroom-r7-june-critical-roster, esc-urbannest, meet-northwind, meet-heliogrid, meet-aster` |
+| `real_preset_flow_llm_router` | 0.8000 | `warroom-r7-june-critical-roster, esc-urbannest, esc-riverline, esc-aster, acct-northwind` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.5000 | `warroom-r7-june-critical-roster, ticket-sec-1604, ticket-sec-1899, ticket-sec-1842, esc-riverline` |
+| `real_agentic_preset_flow_llm_reflection` | 0.2000 | `warroom-r7-june-critical-roster, ticket-sec-1842, ticket-sec-1811, ticket-sec-1899, esc-urbannest` |
+| `real_one_shot_code_gen` | 0.5000 | `esc-urbannest, esc-riverline, esc-aster, esc-northwind, esc-heliogrid` |
+| `real_agentic_code_gen` | 0.9000 | `acct-northwind, acct-aster, acct-heliogrid, acct-riverline, runbook-regulated-upgrade` |
 
 ### sac-004
 
 For Riverline Logistics, identify every open security exception, its CVE, fixed version, and owner.
 
-Relevant docs: `acct-riverline, adv-atlas-saml-4102, adv-meridian-path-2899, esc-riverline, rel-atlas-4-8-2, rel-meridian-2-7-5, ticket-sec-1775, ticket-sec-1842`
+Relevant docs: `acct-riverline, adv-atlas-saml-4102, adv-meridian-path-2899, esc-riverline, rel-atlas-4-8-2, rel-meridian-2-7-5, rollout-riverline-second-blocker-ledger, ticket-sec-1775, ticket-sec-1842`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `real_fixed_flow_llm_qr` | 0.1250 | `esc-riverline, meet-riverline, v3-approval-decoy-0064, v3-approval-decoy-0544, v3-approval-decoy-0034` |
-| `real_preset_flow_llm_router` | 0.1250 | `esc-riverline, meet-riverline, v3-approval-decoy-0059, v3-approval-decoy-0359, v3-approval-decoy-0449` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.6250 | `esc-riverline, acct-riverline, meet-riverline, adv-atlas-saml-4102, adv-meridian-path-2899` |
-| `real_agentic_preset_flow_llm_reflection` | 0.8750 | `esc-riverline, acct-riverline, ticket-sec-1775, ticket-sec-1842, adv-atlas-saml-4102` |
-| `real_one_shot_code_gen` | 0.6250 | `adv-atlas-saml-4102, adv-meridian-path-2899, acct-riverline, ticket-sec-1775, ticket-sec-1842` |
-| `real_agentic_code_gen` | 0.7500 | `esc-riverline, acct-riverline, adv-atlas-saml-4102, adv-meridian-path-2899, ticket-sec-1842` |
+| `real_fixed_flow_llm_qr` | 0.1111 | `esc-riverline, meet-riverline, v3-approval-decoy-0064, v3-approval-decoy-0544, v3-approval-decoy-0034` |
+| `real_preset_flow_llm_router` | 0.1111 | `esc-riverline, meet-riverline, v3-approval-decoy-0059, v3-approval-decoy-0359, v3-approval-decoy-0449` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.5556 | `esc-riverline, acct-riverline, meet-riverline, adv-atlas-saml-4102, adv-meridian-path-2899` |
+| `real_agentic_preset_flow_llm_reflection` | 0.7778 | `esc-riverline, acct-riverline, ticket-sec-1775, ticket-sec-1842, adv-atlas-saml-4102` |
+| `real_one_shot_code_gen` | 0.6667 | `adv-atlas-saml-4102, adv-meridian-path-2899, acct-riverline, ticket-sec-1775, ticket-sec-1842` |
+| `real_agentic_code_gen` | 0.7778 | `esc-riverline, acct-riverline, adv-atlas-saml-4102, adv-meridian-path-2899, ticket-sec-1842` |
 
 ### sac-005
 
 SEC-1899 is blocking which customers, which CVE does it track, and what release should they use?
 
-Relevant docs: `acct-bluepeak, acct-quartzbio, adv-atlas-rerank-4520, rel-atlas-4-9-0, ticket-sec-1899`
+Relevant docs: `acct-bluepeak, acct-quartzbio, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, rel-atlas-4-9-0, ticket-sec-1899`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `real_fixed_flow_llm_qr` | 0.2000 | `cluster-atlas-rerank-4520-release-005, cluster-atlas-rerank-4520-release-045, cluster-atlas-rerank-4520-release-015, cluster-atlas-rerank-4520-release-055, ticket-sec-1899` |
-| `real_preset_flow_llm_router` | 0.2000 | `ticket-sec-1899, decoy-ticket-sec-1902, decoy-ticket-sec-1906, decoy-ticket-sec-1211, decoy-ticket-sec-1903` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.2000 | `esc-greenhouse, esc-novafoods, ticket-sec-1899, ticket-sec-1690, cluster-atlas-rerank-4520-release-005` |
-| `real_agentic_preset_flow_llm_reflection` | 0.6000 | `ticket-sec-1899, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, warroom-r7-june-critical-roster, acct-novafoods` |
-| `real_one_shot_code_gen` | 0.2000 | `ticket-sec-1899, ticket-sec-1690, ticket-sec-1775, ticket-sec-1604, ticket-sec-1811` |
+| `real_fixed_flow_llm_qr` | 0.1667 | `cluster-atlas-rerank-4520-release-005, cluster-atlas-rerank-4520-release-045, cluster-atlas-rerank-4520-release-015, cluster-atlas-rerank-4520-release-055, ticket-sec-1899` |
+| `real_preset_flow_llm_router` | 0.1667 | `ticket-sec-1899, decoy-ticket-sec-1902, decoy-ticket-sec-1906, decoy-ticket-sec-1211, decoy-ticket-sec-1903` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.1667 | `esc-greenhouse, esc-novafoods, ticket-sec-1899, ticket-sec-1690, cluster-atlas-rerank-4520-release-005` |
+| `real_agentic_preset_flow_llm_reflection` | 0.6667 | `ticket-sec-1899, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, warroom-r7-june-critical-roster, acct-novafoods` |
+| `real_one_shot_code_gen` | 0.3333 | `ticket-sec-1899, ticket-sec-1690, ticket-sec-1775, ticket-sec-1604, ticket-sec-1811` |
 | `real_agentic_code_gen` | 1.0000 | `ticket-sec-1899, rel-atlas-4-9-0, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, esc-bluepeak` |
 
 ### sac-007
 
 Among regulated customers, which accounts need a critical security patch before a renewal call inside 30 days?
 
-Relevant docs: `acct-aster, acct-heliogrid, acct-northwind, acct-riverline, adv-atlas-saml-4102, adv-forge-ssrf-1984, adv-meridian-path-2899, runbook-regulated-upgrade`
+Relevant docs: `acct-aster, acct-heliogrid, acct-northwind, acct-riverline, adv-atlas-saml-4102, adv-forge-ssrf-1984, adv-meridian-path-2899, runbook-regulated-upgrade, warroom-r7-june-critical-roster`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `real_fixed_flow_llm_qr` | 0.1250 | `runbook-regulated-upgrade, warroom-r7-june-critical-roster, v3-warroom-decoy-0330, v3-warroom-decoy-0030, v3-warroom-decoy-0085` |
-| `real_preset_flow_llm_router` | 0.1250 | `runbook-regulated-upgrade, warroom-r7-june-critical-roster, esc-riverline, v3-warroom-decoy-0098, v3-warroom-decoy-0078` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.1250 | `runbook-regulated-upgrade, warroom-r7-june-critical-roster, esc-riverline, esc-northwind, esc-novafoods` |
-| `real_agentic_preset_flow_llm_reflection` | 0.1250 | `warroom-r7-june-critical-roster, ticket-sec-1775, ticket-sec-1690, ticket-sec-1899, esc-riverline` |
+| `real_fixed_flow_llm_qr` | 0.2222 | `runbook-regulated-upgrade, warroom-r7-june-critical-roster, v3-warroom-decoy-0330, v3-warroom-decoy-0030, v3-warroom-decoy-0085` |
+| `real_preset_flow_llm_router` | 0.2222 | `runbook-regulated-upgrade, warroom-r7-june-critical-roster, esc-riverline, v3-warroom-decoy-0098, v3-warroom-decoy-0078` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.2222 | `runbook-regulated-upgrade, warroom-r7-june-critical-roster, esc-riverline, esc-northwind, esc-novafoods` |
+| `real_agentic_preset_flow_llm_reflection` | 0.2222 | `warroom-r7-june-critical-roster, ticket-sec-1775, ticket-sec-1690, ticket-sec-1899, esc-riverline` |
 | `real_one_shot_code_gen` | 0.0000 | `esc-riverline, rel-atlas-4-8-2, rel-forge-6-2-0, rel-atlas-4-9-0, esc-novafoods` |
 | `real_agentic_code_gen` | 0.0000 | `acct-contoso, acct-urbannest, acct-novafoods, acct-quartzbio, ticket-sec-1690` |
 
@@ -119,16 +119,16 @@ Relevant docs: `acct-aster, acct-heliogrid, acct-northwind, acct-riverline, adv-
 
 Which AtlasSearch customers are blocked by rerank cache evidence, and which ones need Evidence Ledger rather than Exact Token Guard?
 
-Relevant docs: `acct-bluepeak, acct-quartzbio, adv-atlas-rerank-4520, esc-bluepeak, esc-quartzbio, rel-atlas-4-8-2, rel-atlas-4-9-0`
+Relevant docs: `acct-bluepeak, acct-quartzbio, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, esc-bluepeak, esc-quartzbio, rel-atlas-4-8-2, rel-atlas-4-9-0`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `real_fixed_flow_llm_qr` | 0.2857 | `meet-bluepeak, esc-bluepeak, decoy-guide-012, approval-quartzbio-namespace-proof, cluster-atlas-rerank-4520-approval-027` |
-| `real_preset_flow_llm_router` | 0.4286 | `meet-bluepeak, esc-bluepeak, approval-quartzbio-namespace-proof, acct-bluepeak, rel-atlas-4-9-0` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.4286 | `esc-bluepeak, ticket-sec-1899, acct-bluepeak, rel-atlas-4-9-0, meet-bluepeak` |
-| `real_agentic_preset_flow_llm_reflection` | 0.7143 | `approval-atlas-northwind-final, approval-quartzbio-namespace-proof, warroom-r7-june-critical-roster, rel-atlas-4-9-0, esc-bluepeak` |
-| `real_one_shot_code_gen` | 0.7143 | `esc-bluepeak, approval-quartzbio-namespace-proof, acct-bluepeak, rel-atlas-4-9-0, esc-quartzbio` |
-| `real_agentic_code_gen` | 0.4286 | `approval-beacon-contoso-may06, ticket-sec-1842, rel-atlas-4-8-1, acct-quartzbio, source-authority-matrix-v3` |
+| `real_fixed_flow_llm_qr` | 0.3750 | `meet-bluepeak, esc-bluepeak, decoy-guide-012, approval-quartzbio-namespace-proof, cluster-atlas-rerank-4520-approval-027` |
+| `real_preset_flow_llm_router` | 0.5000 | `meet-bluepeak, esc-bluepeak, approval-quartzbio-namespace-proof, acct-bluepeak, rel-atlas-4-9-0` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.5000 | `esc-bluepeak, ticket-sec-1899, acct-bluepeak, rel-atlas-4-9-0, meet-bluepeak` |
+| `real_agentic_preset_flow_llm_reflection` | 0.7500 | `approval-atlas-northwind-final, approval-quartzbio-namespace-proof, warroom-r7-june-critical-roster, rel-atlas-4-9-0, esc-bluepeak` |
+| `real_one_shot_code_gen` | 0.7500 | `esc-bluepeak, approval-quartzbio-namespace-proof, acct-bluepeak, rel-atlas-4-9-0, esc-quartzbio` |
+| `real_agentic_code_gen` | 0.3750 | `approval-beacon-contoso-may06, ticket-sec-1842, rel-atlas-4-8-1, acct-quartzbio, source-authority-matrix-v3` |
 
 ### sac-011
 
@@ -149,31 +149,31 @@ Relevant docs: `acct-quartzbio, acct-riverline, adv-atlas-rerank-4520, adv-atlas
 
 Compare Beacon CRM Connector 3.14.0 and 3.14.1 for Contoso's security review. Which one is acceptable?
 
-Relevant docs: `acct-contoso, adv-beacon-oauth-3771, esc-contoso, rel-beacon-3-14-0, rel-beacon-3-14-1`
+Relevant docs: `acct-contoso, adv-beacon-oauth-3771, approval-beacon-contoso-may06, esc-contoso, rel-beacon-3-14-0, rel-beacon-3-14-1`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `real_fixed_flow_llm_qr` | 0.0000 | `approval-beacon-contoso-may06, v3-approval-decoy-0076, v3-approval-decoy-0676, v3-approval-decoy-0406, v3-approval-decoy-0496` |
-| `real_preset_flow_llm_router` | 0.0000 | `approval-beacon-contoso-may06, v3-approval-decoy-0606, v3-approval-decoy-0081, v3-approval-decoy-0096, v3-approval-decoy-0681` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.6000 | `approval-beacon-contoso-may06, rel-beacon-3-14-1, rel-beacon-3-14-0, adv-beacon-oauth-3771, ticket-sec-1811` |
-| `real_agentic_preset_flow_llm_reflection` | 0.8000 | `adv-beacon-oauth-3771, rel-beacon-3-14-0, ticket-sec-1811, rel-beacon-3-14-1, acct-contoso` |
-| `real_one_shot_code_gen` | 0.6000 | `approval-beacon-contoso-may06, rel-beacon-3-14-0, adv-beacon-oauth-3771, ticket-sec-1811, rel-beacon-3-14-1` |
+| `real_fixed_flow_llm_qr` | 0.1667 | `approval-beacon-contoso-may06, v3-approval-decoy-0076, v3-approval-decoy-0676, v3-approval-decoy-0406, v3-approval-decoy-0496` |
+| `real_preset_flow_llm_router` | 0.1667 | `approval-beacon-contoso-may06, v3-approval-decoy-0606, v3-approval-decoy-0081, v3-approval-decoy-0096, v3-approval-decoy-0681` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.6667 | `approval-beacon-contoso-may06, rel-beacon-3-14-1, rel-beacon-3-14-0, adv-beacon-oauth-3771, ticket-sec-1811` |
+| `real_agentic_preset_flow_llm_reflection` | 0.8333 | `adv-beacon-oauth-3771, rel-beacon-3-14-0, ticket-sec-1811, rel-beacon-3-14-1, acct-contoso` |
+| `real_one_shot_code_gen` | 0.6667 | `approval-beacon-contoso-may06, rel-beacon-3-14-0, adv-beacon-oauth-3771, ticket-sec-1811, rel-beacon-3-14-1` |
 | `real_agentic_code_gen` | 1.0000 | `approval-beacon-contoso-may06, rel-beacon-3-14-1, rel-beacon-3-14-0, esc-contoso, adv-beacon-oauth-3771` |
 
 ### sac-014
 
 Find every high or critical CVE disclosed in May 2026, then list exposed customers and fixed versions.
 
-Relevant docs: `adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-beacon-oauth-3771, rel-atlas-4-8-2, rel-atlas-4-9-0, rel-beacon-3-14-1, ticket-sec-1811, ticket-sec-1842, ticket-sec-1899`
+Relevant docs: `adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-beacon-oauth-3771, approval-atlas-northwind-final, approval-beacon-contoso-may06, approval-quartzbio-namespace-proof, rel-atlas-4-8-2, rel-atlas-4-9-0, rel-beacon-3-14-1, ticket-sec-1811, ticket-sec-1842, ticket-sec-1899`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `real_fixed_flow_llm_qr` | 0.3333 | `adv-forge-ssrf-1984, adv-meridian-path-2899, adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-compass-csv-1440` |
-| `real_preset_flow_llm_router` | 0.3333 | `adv-forge-ssrf-1984, adv-meridian-path-2899, adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-compass-csv-1440` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.3333 | `adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-beacon-oauth-3771, cluster-atlas-rerank-4520-release-035, adv-forge-ssrf-1984` |
+| `real_fixed_flow_llm_qr` | 0.2500 | `adv-forge-ssrf-1984, adv-meridian-path-2899, adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-compass-csv-1440` |
+| `real_preset_flow_llm_router` | 0.2500 | `adv-forge-ssrf-1984, adv-meridian-path-2899, adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-compass-csv-1440` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.2500 | `adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-beacon-oauth-3771, cluster-atlas-rerank-4520-release-035, adv-forge-ssrf-1984` |
 | `real_agentic_preset_flow_llm_reflection` | 0.3333 | `adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-beacon-oauth-3771, approval-atlas-northwind-final, acct-novafoods` |
-| `real_one_shot_code_gen` | 0.6667 | `adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-meridian-path-2899, adv-beacon-oauth-3771, adv-compass-csv-1440` |
-| `real_agentic_code_gen` | 0.7778 | `adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-beacon-oauth-3771, ticket-sec-1811, ticket-sec-1842` |
+| `real_one_shot_code_gen` | 0.5000 | `adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-meridian-path-2899, adv-beacon-oauth-3771, adv-compass-csv-1440` |
+| `real_agentic_code_gen` | 0.7500 | `adv-atlas-rerank-4520, adv-atlas-saml-4102, adv-beacon-oauth-3771, ticket-sec-1811, ticket-sec-1842` |
 
 ### sac-016
 
@@ -224,16 +224,16 @@ Relevant docs: `acct-greenhouse, adv-forge-ssrf-1984, esc-greenhouse, rel-forge-
 
 For QuartzBio Labs, map the open blocker to ticket, CVE, fixed version, and technical owner.
 
-Relevant docs: `acct-quartzbio, adv-atlas-rerank-4520, esc-quartzbio, rel-atlas-4-9-0, ticket-sec-1899`
+Relevant docs: `acct-quartzbio, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, esc-quartzbio, rel-atlas-4-9-0, ticket-sec-1899`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `real_fixed_flow_llm_qr` | 0.2000 | `esc-quartzbio, cluster-atlas-rerank-4520-rollout-052, cluster-atlas-rerank-4520-rollout-012, v3-approval-decoy-0088, v3-approval-decoy-0058` |
-| `real_preset_flow_llm_router` | 0.6000 | `esc-quartzbio, ticket-sec-1899, acct-quartzbio, decoy-ticket-sec-1207, decoy-ticket-sec-1206` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.8000 | `esc-quartzbio, ticket-sec-1899, adv-atlas-rerank-4520, acct-quartzbio, cluster-meridian-path-2899-ticket-053` |
-| `real_agentic_preset_flow_llm_reflection` | 0.8000 | `esc-quartzbio, ticket-sec-1899, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, acct-quartzbio` |
-| `real_one_shot_code_gen` | 0.8000 | `ticket-sec-1899, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, esc-quartzbio, acct-quartzbio` |
-| `real_agentic_code_gen` | 0.8000 | `esc-quartzbio, ticket-sec-1899, approval-quartzbio-namespace-proof, acct-quartzbio, adv-atlas-rerank-4520` |
+| `real_fixed_flow_llm_qr` | 0.1667 | `esc-quartzbio, cluster-atlas-rerank-4520-rollout-052, cluster-atlas-rerank-4520-rollout-012, v3-approval-decoy-0088, v3-approval-decoy-0058` |
+| `real_preset_flow_llm_router` | 0.5000 | `esc-quartzbio, ticket-sec-1899, acct-quartzbio, decoy-ticket-sec-1207, decoy-ticket-sec-1206` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.6667 | `esc-quartzbio, ticket-sec-1899, adv-atlas-rerank-4520, acct-quartzbio, cluster-meridian-path-2899-ticket-053` |
+| `real_agentic_preset_flow_llm_reflection` | 0.8333 | `esc-quartzbio, ticket-sec-1899, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, acct-quartzbio` |
+| `real_one_shot_code_gen` | 0.8333 | `ticket-sec-1899, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, esc-quartzbio, acct-quartzbio` |
+| `real_agentic_code_gen` | 0.8333 | `esc-quartzbio, ticket-sec-1899, approval-quartzbio-namespace-proof, acct-quartzbio, adv-atlas-rerank-4520` |
 
 ### sac-024
 
@@ -254,16 +254,16 @@ Relevant docs: `eval-sac-policy, roadmap-rovo-sac`
 
 Should BluePeak Insurance be included in the SAML connector emergency rollout?
 
-Relevant docs: `acct-bluepeak, adv-atlas-rerank-4520, adv-atlas-saml-4102, esc-bluepeak, ticket-sec-1842`
+Relevant docs: `acct-bluepeak, adv-atlas-rerank-4520, adv-atlas-saml-4102, esc-bluepeak, ticket-sec-1842, warroom-r7-june-critical-roster`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
 | `real_fixed_flow_llm_qr` | 0.0000 | `cluster-atlas-saml-4102-postmortem-058, cluster-atlas-saml-4102-postmortem-018, cluster-atlas-saml-4102-ticket-023, cluster-atlas-saml-4102-ticket-033, cluster-atlas-saml-4102-ticket-003` |
-| `real_preset_flow_llm_router` | 0.6000 | `rel-atlas-4-8-1, approval-atlas-northwind-final, adv-atlas-saml-4102, acct-bluepeak, rel-atlas-4-8-2` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.4000 | `cluster-atlas-saml-4102-ticket-053, cluster-atlas-saml-4102-ticket-013, cluster-atlas-saml-4102-ticket-043, cluster-atlas-saml-4102-ticket-003, ticket-sec-1842` |
-| `real_agentic_preset_flow_llm_reflection` | 0.6000 | `acct-bluepeak, warroom-r7-june-critical-roster, ticket-sec-1842, adv-atlas-saml-4102, ticket-sec-1604` |
-| `real_one_shot_code_gen` | 0.6000 | `approval-atlas-northwind-final, acct-bluepeak, alias-customer-codenames, esc-bluepeak, ticket-sec-1604` |
-| `real_agentic_code_gen` | 0.6000 | `ticket-sec-1604, ticket-sec-1899, acct-bluepeak, alias-customer-codenames, esc-bluepeak` |
+| `real_preset_flow_llm_router` | 0.5000 | `rel-atlas-4-8-1, approval-atlas-northwind-final, adv-atlas-saml-4102, acct-bluepeak, rel-atlas-4-8-2` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.3333 | `cluster-atlas-saml-4102-ticket-053, cluster-atlas-saml-4102-ticket-013, cluster-atlas-saml-4102-ticket-043, cluster-atlas-saml-4102-ticket-003, ticket-sec-1842` |
+| `real_agentic_preset_flow_llm_reflection` | 0.6667 | `acct-bluepeak, warroom-r7-june-critical-roster, ticket-sec-1842, adv-atlas-saml-4102, ticket-sec-1604` |
+| `real_one_shot_code_gen` | 0.5000 | `approval-atlas-northwind-final, acct-bluepeak, alias-customer-codenames, esc-bluepeak, ticket-sec-1604` |
+| `real_agentic_code_gen` | 0.5000 | `ticket-sec-1604, ticket-sec-1899, acct-bluepeak, alias-customer-codenames, esc-bluepeak` |
 
 ### sac-027
 
@@ -284,14 +284,14 @@ Relevant docs: `acct-aster, acct-heliogrid, acct-northwind, acct-riverline, esc-
 
 A regulated customer asks for cache namespace proof. Which customer is most likely asking, what release gives the evidence, and what feature should be cited?
 
-Relevant docs: `acct-quartzbio, adv-atlas-rerank-4520, esc-quartzbio, rel-atlas-4-9-0, runbook-regulated-upgrade`
+Relevant docs: `acct-quartzbio, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, esc-quartzbio, rel-atlas-4-9-0, runbook-regulated-upgrade`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
 | `real_fixed_flow_llm_qr` | 0.0000 | `v3-namespace-decoy-0322, v3-namespace-decoy-0007, v3-namespace-decoy-0312, v3-namespace-decoy-0197, v3-namespace-decoy-0002` |
-| `real_preset_flow_llm_router` | 0.0000 | `approval-quartzbio-namespace-proof, meet-quartzbio, v3-namespace-decoy-0198, v3-namespace-decoy-0178, v3-namespace-decoy-0278` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.0000 | `approval-quartzbio-namespace-proof, v3-namespace-decoy-0005, v3-namespace-decoy-0085, v3-namespace-decoy-0035, v3-namespace-decoy-0075` |
-| `real_agentic_preset_flow_llm_reflection` | 0.6000 | `approval-quartzbio-namespace-proof, esc-quartzbio, rel-atlas-4-9-0, ticket-sec-1899, acct-quartzbio` |
+| `real_preset_flow_llm_router` | 0.1667 | `approval-quartzbio-namespace-proof, meet-quartzbio, v3-namespace-decoy-0198, v3-namespace-decoy-0178, v3-namespace-decoy-0278` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.1667 | `approval-quartzbio-namespace-proof, v3-namespace-decoy-0005, v3-namespace-decoy-0085, v3-namespace-decoy-0035, v3-namespace-decoy-0075` |
+| `real_agentic_preset_flow_llm_reflection` | 0.6667 | `approval-quartzbio-namespace-proof, esc-quartzbio, rel-atlas-4-9-0, ticket-sec-1899, acct-quartzbio` |
 | `real_one_shot_code_gen` | 1.0000 | `approval-quartzbio-namespace-proof, esc-quartzbio, acct-quartzbio, runbook-regulated-upgrade, rel-atlas-4-9-0` |
 | `real_agentic_code_gen` | 1.0000 | `approval-quartzbio-namespace-proof, ticket-sec-1899, rel-atlas-4-9-0, acct-quartzbio, alias-customer-codenames` |
 
@@ -314,31 +314,31 @@ Relevant docs: `acct-aster, acct-bluepeak, acct-contoso, acct-heliogrid, acct-no
 
 Compare Northwind Health and Riverline Logistics: which one has a single AtlasSearch blocker and which one has two product blockers?
 
-Relevant docs: `acct-northwind, acct-riverline, adv-atlas-saml-4102, adv-meridian-path-2899, esc-northwind, esc-riverline`
+Relevant docs: `acct-northwind, acct-riverline, adv-atlas-saml-4102, adv-meridian-path-2899, approval-atlas-northwind-final, esc-northwind, esc-riverline, rollout-riverline-second-blocker-ledger`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
 | `real_fixed_flow_llm_qr` | 0.5000 | `rollout-riverline-second-blocker-ledger, esc-riverline, esc-northwind, cluster-customer-riverline-risk-021, cluster-customer-riverline-risk-005` |
-| `real_preset_flow_llm_router` | 0.8333 | `esc-riverline, esc-northwind, acct-riverline, adv-atlas-saml-4102, acct-northwind` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.5000 | `esc-northwind, esc-riverline, acct-riverline, cluster-atlas-saml-4102-approval-027, cluster-customer-riverline-risk-021` |
-| `real_agentic_preset_flow_llm_reflection` | 0.8333 | `approval-atlas-northwind-final, rollout-riverline-second-blocker-ledger, acct-riverline, warroom-r7-june-critical-roster, esc-riverline` |
-| `real_one_shot_code_gen` | 0.6667 | `ticket-sec-1842, esc-riverline, esc-northwind, acct-northwind, acct-riverline` |
-| `real_agentic_code_gen` | 0.8333 | `rollout-riverline-second-blocker-ledger, esc-riverline, esc-northwind, adv-atlas-saml-4102, acct-northwind` |
+| `real_preset_flow_llm_router` | 0.6250 | `esc-riverline, esc-northwind, acct-riverline, adv-atlas-saml-4102, acct-northwind` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.3750 | `esc-northwind, esc-riverline, acct-riverline, cluster-atlas-saml-4102-approval-027, cluster-customer-riverline-risk-021` |
+| `real_agentic_preset_flow_llm_reflection` | 0.8750 | `approval-atlas-northwind-final, rollout-riverline-second-blocker-ledger, acct-riverline, warroom-r7-june-critical-roster, esc-riverline` |
+| `real_one_shot_code_gen` | 0.5000 | `ticket-sec-1842, esc-riverline, esc-northwind, acct-northwind, acct-riverline` |
+| `real_agentic_code_gen` | 0.8750 | `rollout-riverline-second-blocker-ledger, esc-riverline, esc-northwind, adv-atlas-saml-4102, acct-northwind` |
 
 ### sac-033
 
 Which customers should be excluded from a June critical-patch war room, and why?
 
-Relevant docs: `acct-bluepeak, acct-contoso, acct-greenhouse, acct-novafoods, acct-quartzbio, acct-urbannest, adv-atlas-rerank-4520, adv-beacon-oauth-3771, adv-compass-csv-1440, adv-forge-ssrf-1984`
+Relevant docs: `acct-bluepeak, acct-contoso, acct-greenhouse, acct-novafoods, acct-quartzbio, acct-urbannest, adv-atlas-rerank-4520, adv-beacon-oauth-3771, adv-compass-csv-1440, adv-forge-ssrf-1984, warroom-r7-june-critical-roster`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `real_fixed_flow_llm_qr` | 0.0000 | `warroom-r7-june-critical-roster, v3-warroom-decoy-0078, v3-warroom-decoy-0088, v3-warroom-decoy-0068, v3-warroom-decoy-0098` |
-| `real_preset_flow_llm_router` | 0.0000 | `warroom-r7-june-critical-roster, cluster-enterprise-memo-121, cluster-enterprise-memo-229, cluster-enterprise-memo-277, cluster-enterprise-memo-169` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.0000 | `warroom-r7-june-critical-roster, ticket-sec-1775, ticket-sec-1842, v3-warroom-decoy-0087, v3-warroom-decoy-0067` |
-| `real_agentic_preset_flow_llm_reflection` | 0.1000 | `warroom-r7-june-critical-roster, approval-atlas-northwind-final, approval-quartzbio-namespace-proof, ticket-sec-1775, acct-northwind` |
-| `real_one_shot_code_gen` | 0.0000 | `warroom-r7-june-critical-roster, policy-reflection-missing-evidence-v3, alias-customer-codenames, approval-atlas-northwind-final, rollout-riverline-second-blocker-ledger` |
-| `real_agentic_code_gen` | 0.0000 | `warroom-r7-june-critical-roster, alias-customer-codenames, approval-atlas-northwind-final, rollout-riverline-second-blocker-ledger, approval-quartzbio-namespace-proof` |
+| `real_fixed_flow_llm_qr` | 0.0909 | `warroom-r7-june-critical-roster, v3-warroom-decoy-0078, v3-warroom-decoy-0088, v3-warroom-decoy-0068, v3-warroom-decoy-0098` |
+| `real_preset_flow_llm_router` | 0.0909 | `warroom-r7-june-critical-roster, cluster-enterprise-memo-121, cluster-enterprise-memo-229, cluster-enterprise-memo-277, cluster-enterprise-memo-169` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.0909 | `warroom-r7-june-critical-roster, ticket-sec-1775, ticket-sec-1842, v3-warroom-decoy-0087, v3-warroom-decoy-0067` |
+| `real_agentic_preset_flow_llm_reflection` | 0.1818 | `warroom-r7-june-critical-roster, approval-atlas-northwind-final, approval-quartzbio-namespace-proof, ticket-sec-1775, acct-northwind` |
+| `real_one_shot_code_gen` | 0.0909 | `warroom-r7-june-critical-roster, policy-reflection-missing-evidence-v3, alias-customer-codenames, approval-atlas-northwind-final, rollout-riverline-second-blocker-ledger` |
+| `real_agentic_code_gen` | 0.0909 | `warroom-r7-june-critical-roster, alias-customer-codenames, approval-atlas-northwind-final, rollout-riverline-second-blocker-ledger, approval-quartzbio-namespace-proof` |
 
 ### sac-035
 
@@ -494,14 +494,14 @@ Relevant docs: `acct-quartzbio, adv-atlas-rerank-4520, alias-customer-codenames,
 
 For JBell's red renewals before July, which customers are in scope and which product blocker does each have?
 
-Relevant docs: `acct-aster, acct-riverline, adv-meridian-path-2899, alias-owner-directory, esc-aster, esc-riverline, rel-meridian-2-7-5, ticket-sec-1775`
+Relevant docs: `acct-aster, acct-riverline, adv-meridian-path-2899, alias-owner-directory, esc-aster, esc-riverline, rel-meridian-2-7-5, rollout-riverline-second-blocker-ledger, ticket-sec-1775`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
 | `real_fixed_flow_llm_qr` | 0.0000 | `warroom-r7-june-critical-roster, cluster-customer-aster-risk-005, cluster-customer-aster-risk-045, cluster-customer-aster-risk-021, cluster-customer-aster-risk-029` |
-| `real_preset_flow_llm_router` | 0.2500 | `warroom-r7-june-critical-roster, esc-urbannest, acct-riverline, acct-aster, cluster-customer-northwind-risk-005` |
-| `real_agentic_fixed_flow_llm_reflection` | 0.5000 | `rollout-riverline-second-blocker-ledger, esc-riverline, warroom-r7-june-critical-roster, cluster-customer-aster-crm-001, alias-owner-directory` |
-| `real_agentic_preset_flow_llm_reflection` | 0.3750 | `alias-owner-directory, ticket-sec-1775, rollout-riverline-second-blocker-ledger, esc-urbannest, acct-riverline` |
-| `real_one_shot_code_gen` | 0.5000 | `source-authority-matrix-v3, alias-owner-directory, alias-customer-codenames, policy-reflection-missing-evidence-v3, esc-urbannest` |
-| `real_agentic_code_gen` | 0.8750 | `acct-aster, acct-riverline, esc-riverline, alias-owner-directory, ticket-sec-1775` |
+| `real_preset_flow_llm_router` | 0.2222 | `warroom-r7-june-critical-roster, esc-urbannest, acct-riverline, acct-aster, cluster-customer-northwind-risk-005` |
+| `real_agentic_fixed_flow_llm_reflection` | 0.5556 | `rollout-riverline-second-blocker-ledger, esc-riverline, warroom-r7-june-critical-roster, cluster-customer-aster-crm-001, alias-owner-directory` |
+| `real_agentic_preset_flow_llm_reflection` | 0.4444 | `alias-owner-directory, ticket-sec-1775, rollout-riverline-second-blocker-ledger, esc-urbannest, acct-riverline` |
+| `real_one_shot_code_gen` | 0.4444 | `source-authority-matrix-v3, alias-owner-directory, alias-customer-codenames, policy-reflection-missing-evidence-v3, esc-urbannest` |
+| `real_agentic_code_gen` | 0.8889 | `acct-aster, acct-riverline, esc-riverline, alias-owner-directory, ticket-sec-1775` |
 

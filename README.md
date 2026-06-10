@@ -11,6 +11,8 @@ This repo contains the Search-as-Code prototype and benchmark artifacts for comp
 - `run_real_llm_matrix.py`: real-LLM matrix runner that uses Codex CLI for QR/router/planner/reflection decisions and real codegen.
 - `run_public_benchmarks.py`: public benchmark runner for the baseline+5 architecture variants on BEIR/SciFact and HotpotQA dev-distractor slices.
 - `run_named_search_baselines.py`: custom dataset calibration against recognizable search stacks such as BM25, dense bi-encoder, hybrid, RRF, and CrossEncoder rerank.
+- `run_search_baseline_diagnostics.py`: separates first-stage candidate recall from CrossEncoder rerank recall to debug baseline validity.
+- `recompute_cached_metrics.py`: re-scores cached custom-result files after qrels changes without rerunning search or LLM generation.
 - `merge_eval_reports.py`: merges custom, real LLM, real codegen, public architecture matrix, public sanity, and legacy eval outputs into one executive report.
 - `llm_search_codegen.py`: real LLM-backed Search-as-Code generator with `codex-cli` and `openai` providers, AST validation, sandbox execution, and one-shot repair support.
 - `skills/search-as-code-codegen/`: reusable Codex skill that defines the Search-as-Code runtime/tool contract for real code generation.
@@ -45,14 +47,14 @@ This is the main quality readout. It uses Codex CLI for real QR/router/planner/r
 
 | Architecture | System | Recall@10 | Total ms | LLM/codegen ms | Execution ms | Search calls | Rerank pairs | Notes |
 |---|---|---:|---:|---:|---:|---:|---:|---|
-| Fixed flow | `real_fixed_flow_llm_qr` | 0.1747 | 13,317 | 12,991 | 326 | 4.00 | 120 | LLM QR + multi-query hybrid + rerank |
-| Preset flow | `real_preset_flow_llm_router` | 0.3684 | 13,156 | 12,991 | 165 | 1.90 | 67.9 | LLM router picks one preset stack |
-| Agentic fixed flow | `real_agentic_fixed_flow_llm_reflection` | 0.4256 | 40,660 | 38,583 | 2,077 | 7.93 | 1,072 | LLM planner/reflection over fixed-flow calls |
-| Agentic preset flow | `real_agentic_preset_flow_llm_reflection` | 0.5610 | 35,676 | 35,349 | 327 | 7.58 | 114.8 | LLM router/reflection picks additional preset stacks |
-| One-shot codegen | `real_one_shot_code_gen` | 0.5868 | 60,594 | 60,383 | 211 | 8.64 | 39.6 | LLM writes one Python retrieval program |
-| Agentic codegen | `real_agentic_code_gen` | 0.7058 | 159,694 | 159,078 | 615 | 32.81 | 76.1 | LLM planner/codegen + reflection/codegen loop |
+| Fixed flow | `real_fixed_flow_llm_qr` | 0.1837 | 13,317 | 12,991 | 326 | 4.00 | 120 | LLM QR + multi-query hybrid + rerank |
+| Preset flow | `real_preset_flow_llm_router` | 0.3689 | 13,156 | 12,991 | 165 | 1.90 | 67.9 | LLM router picks one preset stack |
+| Agentic fixed flow | `real_agentic_fixed_flow_llm_reflection` | 0.4307 | 40,660 | 38,583 | 2,077 | 7.93 | 1,072 | LLM planner/reflection over fixed-flow calls |
+| Agentic preset flow | `real_agentic_preset_flow_llm_reflection` | 0.5809 | 35,676 | 35,349 | 327 | 7.58 | 114.8 | LLM router/reflection picks additional preset stacks |
+| One-shot codegen | `real_one_shot_code_gen` | 0.5779 | 60,594 | 60,383 | 211 | 8.64 | 39.6 | LLM writes one Python retrieval program |
+| Agentic codegen | `real_agentic_code_gen` | 0.7081 | 159,694 | 159,078 | 615 | 32.81 | 76.1 | LLM planner/codegen + reflection/codegen loop |
 
-Readout: real agentic codegen wins quality, beating one-shot codegen by `+0.1190` Recall@10 and agentic preset search by `+0.1448`. The cost is high: about `4.5x` the agentic preset latency. The practical path is still agentic preset search first, with full codegen reserved for hard cases, offline analysis, or cached workflows.
+Readout: real agentic codegen wins quality, beating one-shot codegen by `+0.1302` Recall@10 and agentic preset search by `+0.1272`. The cost is high: about `4.5x` the agentic preset latency. The practical path is still agentic preset search first, with full codegen reserved for hard cases, offline analysis, or cached workflows.
 
 ### Deterministic / Rule-Backed Matrix
 
@@ -60,12 +62,12 @@ This run is the fast, repeatable proxy used for iteration and ablations.
 
 | Architecture | System | Recall@10 | Total ms | Plan/code ms | Execution ms | Search calls | Rerank pairs | Notes |
 |---|---|---:|---:|---:|---:|---:|---:|---|
-| Fixed flow | `fixed_flow_model_qr` | 0.1857 | 3556.8 | 0.0 | 3556.8 | 3.97 | 2400 | Query rewrite + multi-query hybrid + rerank |
-| Preset flow | `preset_flow_model_router` | 0.2083 | 1770.7 | 0.0 | 1770.7 | 2.00 | 1252 | Router picks one preset search stack |
-| One-shot codegen | `one_shot_code_gen_rule_policy` | 0.1857 | 3238.0 | 0.1 | 3237.8 | 6.97 | 2400 | Python retrieval program, one execution |
-| Agentic fixed flow | `agentic_fixed_flow_rule_reflection` | 0.2785 | 7775.8 | 0.2 | 7775.5 | 12.39 | 5189 | Repeated fixed-flow calls with reflection |
-| Agentic preset flow | `agentic_preset_flows_rule_reflection` | 0.4655 | 1104.2 | 5.4 | 1098.8 | 6.10 | 733 | Reflection adds missing preset stacks |
-| Agentic codegen | `agentic_code_gen_rule_reflection` | 0.4712 | 3338.5 | 0.2 | 3338.2 | 7.16 | 2400 | Generated code with evidence-goal reflection |
+| Fixed flow | `fixed_flow_model_qr` | 0.2018 | 3556.8 | 0.0 | 3556.8 | 3.97 | 2400 | Query rewrite + multi-query hybrid + rerank |
+| Preset flow | `preset_flow_model_router` | 0.2233 | 1770.7 | 0.0 | 1770.7 | 2.00 | 1252 | Router picks one preset search stack |
+| One-shot codegen | `one_shot_code_gen_rule_policy` | 0.2018 | 3238.0 | 0.1 | 3237.8 | 6.97 | 2400 | Python retrieval program, one execution |
+| Agentic fixed flow | `agentic_fixed_flow_rule_reflection` | 0.2852 | 7775.8 | 0.2 | 7775.5 | 12.39 | 5189 | Repeated fixed-flow calls with reflection |
+| Agentic preset flow | `agentic_preset_flows_rule_reflection` | 0.4627 | 1104.2 | 5.4 | 1098.8 | 6.10 | 733 | Reflection adds missing preset stacks |
+| Agentic codegen | `agentic_code_gen_rule_reflection` | 0.4625 | 3338.5 | 0.2 | 3338.2 | 7.16 | 2400 | Generated code with evidence-goal reflection |
 
 v3 is deliberately harder than v2: it adds alias/code-name tasks, source-authority disambiguation, stale approval ledgers, policy near-duplicates, and thousands of same-topic distractors. The current conclusion is sharper: one-shot codegen does not beat the fixed baseline. The lift comes from agentic evidence coverage: either selecting additional preset stacks after reflection, or generating retrieval code that can directly control routes, filters, and evidence preselection.
 
@@ -86,14 +88,14 @@ Because BEIR/SciFact and HotpotQA show fixed retrieval is already strong, the cu
 
 | Search stack | Recall@10 | Total ms | Readout |
 |---|---:|---:|---|
-| Okapi BM25 / Lucene-style sparse retrieval | 0.2350 | 10.7 | Strongest simple baseline because exact IDs, CVEs, aliases, and versions matter |
-| Weighted BM25 + MiniLM dense hybrid | 0.2286 | 20.1 | Similar to BM25; semantic signal does not solve authority/evidence coverage |
-| Hybrid + CrossEncoder rerank | 0.1857 | 3142.5 | Rerank cannot recover evidence missing from the first-stage candidate pool |
-| Query rewrite + hybrid + CrossEncoder | 0.1857 | 3209.6 | More query fanout still behaves like fixed retrieval without evidence-category reflection |
-| RRF BM25 + dense hybrid | 0.1667 | 28.2 | Rank fusion is not enough on hard-negative/authority tasks |
-| MiniLM dense bi-encoder | 0.0932 | 15.9 | Weakest because semantic similarity misses exact identifiers and source authority |
+| Okapi BM25 / Lucene-style sparse retrieval | 0.2387 | 12.7 | Strongest simple baseline because exact IDs, CVEs, aliases, and versions matter |
+| Weighted BM25 + MiniLM dense hybrid | 0.2375 | 19.7 | Similar to BM25; semantic signal does not solve authority/evidence coverage |
+| Hybrid + CrossEncoder rerank | 0.2018 | 3154.2 | Generic MS MARCO reranker misranks multi-evidence enterprise queries |
+| Query rewrite + hybrid + CrossEncoder | 0.2018 | 3270.8 | More fanout still lacks evidence-category reflection |
+| RRF BM25 + dense hybrid | 0.1731 | 28.1 | Rank fusion is not enough on hard-negative/authority tasks |
+| MiniLM dense bi-encoder | 0.0949 | 18.7 | Weakest because semantic similarity misses exact identifiers and source authority |
 
-Calibration readout: the custom dataset is not just “hard because our fixed flow is weak.” BM25 is a serious baseline and still tops the standard search stacks, but all standard stacks remain far below agentic codegen (`0.4712` deterministic, `0.7058` full real LLM). The gap is consistent with the dataset design: multi-hop evidence coverage, source authority, alias resolution, and negative evidence are the hard parts.
+Calibration readout: the custom dataset is not just “hard because our fixed flow is weak.” BM25 and hybrid are serious baselines, and the diagnostic report shows hybrid candidate-pool Recall@2400 reaches `0.7496`. The gap is in final evidence selection and reflection: generic CrossEncoder reranking drops to `0.2018`, while real agentic codegen reaches `0.7081`.
 
 ## Real LLM Codegen Smoke
 
@@ -147,12 +149,12 @@ for the default search path.
 
 `combined_eval_report.md` merges all major eval artifacts. The current readout:
 
-- Full real LLM custom test: agentic codegen reaches `0.7058` Recall@10, one-shot codegen reaches `0.5868`, agentic preset reaches `0.5610`, and fixed flow reaches `0.1747`.
+- Full real LLM custom test: agentic codegen reaches `0.7081` Recall@10, agentic preset reaches `0.5809`, one-shot codegen reaches `0.5779`, and fixed flow reaches `0.1837`.
 - Focused real LLM sample: agentic codegen reaches `1.0000` Recall@10, agentic preset reaches `0.8114`, one-shot codegen reaches `0.7114`.
-- Full custom deterministic test: agentic codegen `0.4712`, agentic preset `0.4655`, fixed flow `0.1857`.
-- Named custom search baselines: Okapi BM25 `0.2350`, weighted hybrid `0.2286`, hybrid+CrossEncoder rerank `0.1857`, dense bi-encoder `0.0932`.
+- Full custom deterministic test: agentic preset `0.4627`, agentic codegen `0.4625`, fixed flow `0.2018`.
+- Named custom search baselines: Okapi BM25 `0.2387`, weighted hybrid `0.2375`, hybrid+CrossEncoder rerank `0.2018`, dense bi-encoder `0.0949`.
 - Public architecture matrix: SciFact is effectively a tie between agentic codegen `0.8254` and fixed flow `0.8251`; HotpotQA favors fixed flow `0.9550` over agentic codegen `0.9300`.
-- Full custom extended variants are also listed: BM25 `0.2350`, hybrid `0.2286`, dense `0.0932`, small-budget hybrid-rerank `0.1714`, reflective one-shot `0.1857`.
+- Full custom extended variants are also listed: BM25 `0.2387`, hybrid `0.2375`, dense `0.0949`, small-budget hybrid-rerank `0.1864`, reflective one-shot `0.2018`.
 - Practical recommendation: productize preset-stack agentic search first; keep full Search-as-Code generation for hard cases or offline/research workflows.
 
 ## Reproduce
@@ -168,7 +170,9 @@ python run_experiment_matrix.py --split test
 python run_sac_dataset_benchmark.py --split test
 python run_real_llm_matrix.py --task-ids all --candidate-k 120 --tool-candidate-k 120 --timeout 240 --output real_llm_matrix_full_results.json --report real_llm_matrix_full_report.md
 python run_named_search_baselines.py --split test --candidate-k 2400 --output named_search_baselines_results.json --report named_search_baselines_report.md
+python run_search_baseline_diagnostics.py
 python run_public_benchmarks.py --benchmarks beir/scifact,hotpotqa/distractor --hotpot-limit 100 --candidate-k 40 --fixed-small-candidate-k 40 --generated-branch-top-k 20 --generated-max-rerank-candidates 40 --systems fixed_flow_model_qr,preset_flow_model_router,agentic_fixed_flow_rule_reflection,agentic_preset_flows_rule_reflection,one_shot_code_gen_rule_policy,agentic_code_gen_rule_reflection --no-per-query --sample-codes 0 --output public_variant_matrix_results.json --report public_variant_matrix_report.md
+python recompute_cached_metrics.py
 python merge_eval_reports.py
 ```
 

@@ -4,6 +4,7 @@ sac-001	adv-atlas-saml-4102	2
 sac-001	ticket-sec-1842	2
 sac-001	rel-atlas-4-8-2	2
 sac-001	esc-northwind	2
+sac-001	approval-atlas-northwind-final	2
 sac-002	acct-northwind	2
 sac-002	esc-northwind	2
 sac-002	acct-aster	2
@@ -13,6 +14,7 @@ sac-002	esc-heliogrid	2
 sac-002	acct-riverline	2
 sac-002	esc-riverline	2
 sac-002	runbook-regulated-upgrade	2
+sac-002	warroom-r7-june-critical-roster	2
 sac-004	acct-riverline	2
 sac-004	esc-riverline	2
 sac-004	adv-atlas-saml-4102	2
@@ -21,11 +23,13 @@ sac-004	rel-atlas-4-8-2	2
 sac-004	adv-meridian-path-2899	2
 sac-004	ticket-sec-1775	2
 sac-004	rel-meridian-2-7-5	2
+sac-004	rollout-riverline-second-blocker-ledger	2
 sac-005	ticket-sec-1899	2
 sac-005	adv-atlas-rerank-4520	2
 sac-005	rel-atlas-4-9-0	2
 sac-005	acct-bluepeak	2
 sac-005	acct-quartzbio	2
+sac-005	approval-quartzbio-namespace-proof	2
 sac-007	runbook-regulated-upgrade	2
 sac-007	acct-northwind	2
 sac-007	adv-atlas-saml-4102	2
@@ -34,6 +38,7 @@ sac-007	adv-meridian-path-2899	2
 sac-007	acct-heliogrid	2
 sac-007	adv-forge-ssrf-1984	2
 sac-007	acct-riverline	2
+sac-007	warroom-r7-june-critical-roster	2
 sac-009	acct-bluepeak	2
 sac-009	esc-bluepeak	2
 sac-009	acct-quartzbio	2
@@ -41,6 +46,7 @@ sac-009	esc-quartzbio	2
 sac-009	adv-atlas-rerank-4520	2
 sac-009	rel-atlas-4-9-0	2
 sac-009	rel-atlas-4-8-2	2
+sac-009	approval-quartzbio-namespace-proof	2
 sac-011	acct-riverline	2
 sac-011	esc-riverline	2
 sac-011	acct-quartzbio	2
@@ -53,6 +59,7 @@ sac-013	esc-contoso	2
 sac-013	rel-beacon-3-14-1	2
 sac-013	rel-beacon-3-14-0	2
 sac-013	adv-beacon-oauth-3771	2
+sac-013	approval-beacon-contoso-may06	2
 sac-014	adv-atlas-saml-4102	2
 sac-014	rel-atlas-4-8-2	2
 sac-014	adv-beacon-oauth-3771	2
@@ -62,6 +69,9 @@ sac-014	rel-atlas-4-9-0	2
 sac-014	ticket-sec-1842	2
 sac-014	ticket-sec-1811	2
 sac-014	ticket-sec-1899	2
+sac-014	approval-atlas-northwind-final	2
+sac-014	approval-beacon-contoso-may06	2
+sac-014	approval-quartzbio-namespace-proof	2
 sac-016	roadmap-rovo-sac	2
 sac-016	eval-sac-policy	2
 sac-018	acct-heliogrid	2
@@ -79,6 +89,7 @@ sac-022	esc-quartzbio	2
 sac-022	ticket-sec-1899	2
 sac-022	adv-atlas-rerank-4520	2
 sac-022	rel-atlas-4-9-0	2
+sac-022	approval-quartzbio-namespace-proof	2
 sac-024	eval-sac-policy	2
 sac-024	roadmap-rovo-sac	2
 sac-025	acct-bluepeak	2
@@ -86,6 +97,7 @@ sac-025	esc-bluepeak	2
 sac-025	adv-atlas-rerank-4520	2
 sac-025	adv-atlas-saml-4102	2
 sac-025	ticket-sec-1842	2
+sac-025	warroom-r7-june-critical-roster	2
 sac-027	acct-northwind	2
 sac-027	acct-aster	2
 sac-027	acct-heliogrid	2
@@ -98,6 +110,7 @@ sac-028	esc-quartzbio	2
 sac-028	rel-atlas-4-9-0	2
 sac-028	adv-atlas-rerank-4520	2
 sac-028	runbook-regulated-upgrade	2
+sac-028	approval-quartzbio-namespace-proof	2
 sac-030	ticket-sec-1842	2
 sac-030	ticket-sec-1775	2
 sac-030	ticket-sec-1811	2
@@ -117,6 +130,8 @@ sac-032	acct-riverline	2
 sac-032	esc-riverline	2
 sac-032	adv-atlas-saml-4102	2
 sac-032	adv-meridian-path-2899	2
+sac-032	approval-atlas-northwind-final	2
+sac-032	rollout-riverline-second-blocker-ledger	2
 sac-033	acct-contoso	2
 sac-033	acct-urbannest	2
 sac-033	acct-bluepeak	2
@@ -127,6 +142,7 @@ sac-033	adv-beacon-oauth-3771	2
 sac-033	adv-atlas-rerank-4520	2
 sac-033	adv-compass-csv-1440	2
 sac-033	adv-forge-ssrf-1984	2
+sac-033	warroom-r7-june-critical-roster	2
 sac-035	negative-forgedeploy-novafoods	2
 sac-035	acct-novafoods	2
 sac-036	acct-northwind	2
@@ -186,3 +202,4 @@ sac-045	esc-riverline	2
 sac-045	ticket-sec-1775	2
 sac-045	adv-meridian-path-2899	2
 sac-045	rel-meridian-2-7-5	2
+sac-045	rollout-riverline-second-blocker-ledger	2

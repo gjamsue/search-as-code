@@ -354,7 +354,8 @@ def render_report(output: dict) -> str:
             "## Readout",
             "",
             "- BM25 is expected to be strong when exact identifiers matter; dense-only retrieval should be weaker on CVEs, tickets, aliases, and version strings.",
-            "- CrossEncoder rerank can improve ordering, but it cannot recover evidence that the first-stage retriever failed to include.",
+            "- The generic MS MARCO CrossEncoder is a weak fit for this benchmark's multi-evidence Recall@10 objective; it often promotes semantically similar decoys over source-of-truth coverage.",
+            "- The separate diagnostic report shows hybrid retrieval has much higher candidate-pool recall than top-10 recall, so the headroom is in final selection and evidence-aware follow-up, not just first-stage retrieval.",
             "- If agentic/codegen systems beat these baselines on the custom dataset, the lift should come from evidence coverage and controlled follow-up routes, not from a weak lexical baseline.",
         ]
     )

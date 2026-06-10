@@ -1,0 +1,217 @@
+{
+  "split": "test",
+  "documents": 6010,
+  "tasks": 31,
+  "ks": [
+    10,
+    50,
+    200,
+    2400
+  ],
+  "rerank_budgets": [
+    20,
+    50,
+    100,
+    200,
+    400,
+    2400
+  ],
+  "first_stage": {
+    "bm25": {
+      "latency_ms_total": 568.3,
+      "recall@10": 0.2387,
+      "recall@50": 0.3098,
+      "recall@200": 0.4507,
+      "recall@2400": 0.6846
+    },
+    "dense": {
+      "latency_ms_total": 537.1,
+      "recall@10": 0.0949,
+      "recall@50": 0.1186,
+      "recall@200": 0.2375,
+      "recall@2400": 0.7024
+    },
+    "hybrid": {
+      "latency_ms_total": 684.2,
+      "recall@10": 0.2375,
+      "recall@50": 0.2699,
+      "recall@200": 0.3611,
+      "recall@2400": 0.7496
+    }
+  },
+  "rerank": {
+    "hybrid": {
+      "20": {
+        "candidate_pool_recall@20": 0.2488,
+        "rerank_recall@10": 0.1798,
+        "mean_latency_ms": 75.2
+      },
+      "50": {
+        "candidate_pool_recall@50": 0.2699,
+        "rerank_recall@10": 0.1762,
+        "mean_latency_ms": 170.7
+      },
+      "100": {
+        "candidate_pool_recall@100": 0.3153,
+        "rerank_recall@10": 0.1827,
+        "mean_latency_ms": 288.2
+      },
+      "200": {
+        "candidate_pool_recall@200": 0.3611,
+        "rerank_recall@10": 0.1773,
+        "mean_latency_ms": 511.8
+      },
+      "400": {
+        "candidate_pool_recall@400": 0.4491,
+        "rerank_recall@10": 0.1864,
+        "mean_latency_ms": 936.0
+      },
+      "2400": {
+        "candidate_pool_recall@2400": 0.7496,
+        "rerank_recall@10": 0.2018,
+        "mean_latency_ms": 5340.3
+      }
+    }
+  },
+  "examples": [
+    {
+      "loss": 1.0,
+      "task_id": "sac-025",
+      "query": "Should BluePeak Insurance be included in the SAML connector emergency rollout?",
+      "candidate_pool_recall": 1.0,
+      "rerank_recall@10": 0.0,
+      "first_stage_top_docs": [
+        "cluster-customer-bluepeak-email-044",
+        "cluster-customer-bluepeak-email-004",
+        "cluster-customer-bluepeak-email-028",
+        "cluster-customer-bluepeak-email-036",
+        "cluster-customer-bluepeak-email-020",
+        "cluster-customer-bluepeak-email-012",
+        "meet-bluepeak",
+        "cluster-customer-bluepeak-escalation-035"
+      ],
+      "reranked_top_docs": [
+        "cluster-atlas-saml-4102-postmortem-058",
+        "cluster-atlas-saml-4102-postmortem-018",
+        "cluster-atlas-saml-4102-postmortem-038",
+        "cluster-atlas-saml-4102-ticket-023",
+        "cluster-atlas-saml-4102-ticket-033",
+        "cluster-atlas-saml-4102-ticket-003",
+        "cluster-atlas-saml-4102-ticket-043",
+        "cluster-atlas-saml-4102-ticket-053"
+      ],
+      "relevant_doc_ids": [
+        "acct-bluepeak",
+        "adv-atlas-rerank-4520",
+        "adv-atlas-saml-4102",
+        "esc-bluepeak",
+        "ticket-sec-1842",
+        "warroom-r7-june-critical-roster"
+      ]
+    },
+    {
+      "loss": 1.0,
+      "task_id": "sac-035",
+      "query": "If generated code finds no ForgeDeploy documents for NovaFoods, should it keep searching or answer with negative evidence?",
+      "candidate_pool_recall": 1.0,
+      "rerank_recall@10": 0.0,
+      "first_stage_top_docs": [
+        "negative-forgedeploy-novafoods",
+        "v3-approval-decoy-0060",
+        "v3-approval-decoy-0660",
+        "v3-approval-decoy-0600",
+        "v3-approval-decoy-0810",
+        "v3-approval-decoy-0510",
+        "v3-approval-decoy-0900",
+        "v3-approval-decoy-0090"
+      ],
+      "reranked_top_docs": [
+        "v3-approval-decoy-0185",
+        "v3-approval-decoy-0785",
+        "v3-approval-decoy-0665",
+        "v3-approval-decoy-0485",
+        "v3-approval-decoy-0635",
+        "v3-approval-decoy-0005",
+        "v3-approval-decoy-0215",
+        "v3-approval-decoy-0125"
+      ],
+      "relevant_doc_ids": [
+        "acct-novafoods",
+        "negative-forgedeploy-novafoods"
+      ]
+    },
+    {
+      "loss": 1.0,
+      "task_id": "sac-036",
+      "query": "Which accounts have the same technical owner for different product blockers, and what does that imply for staffing?",
+      "candidate_pool_recall": 1.0,
+      "rerank_recall@10": 0.0,
+      "first_stage_top_docs": [
+        "alias-owner-directory",
+        "decoy-acct-union-manufacturing",
+        "decoy-acct-stonegate-retail",
+        "decoy-acct-anchor-retail",
+        "decoy-acct-bayside-foods",
+        "decoy-acct-apex-foods",
+        "decoy-acct-hearth-foods",
+        "decoy-acct-sierra-labs"
+      ],
+      "reranked_top_docs": [
+        "decoy-acct-union-manufacturing",
+        "decoy-acct-anchor-retail",
+        "decoy-acct-cobalt-logistics",
+        "decoy-acct-marble-logistics",
+        "decoy-acct-evergreen-manufacturing",
+        "decoy-acct-arbor-retail",
+        "decoy-acct-cascade-logistics",
+        "decoy-acct-solstice-manufacturing"
+      ],
+      "relevant_doc_ids": [
+        "acct-bluepeak",
+        "acct-contoso",
+        "acct-greenhouse",
+        "acct-heliogrid",
+        "acct-northwind",
+        "acct-quartzbio",
+        "acct-riverline",
+        "acct-urbannest"
+      ]
+    },
+    {
+      "loss": 0.8571,
+      "task_id": "sac-027",
+      "query": "Across all red-risk accounts, which technical owners have more than one renewal blocker assigned?",
+      "candidate_pool_recall": 1.0,
+      "rerank_recall@10": 0.1429,
+      "first_stage_top_docs": [
+        "alias-owner-directory",
+        "acct-bluepeak",
+        "decoy-acct-copper-health",
+        "decoy-acct-pioneer-insurance",
+        "decoy-acct-stonegate-retail",
+        "decoy-acct-pacific-energy",
+        "decoy-acct-pinnacle-retail",
+        "decoy-acct-union-manufacturing"
+      ],
+      "reranked_top_docs": [
+        "decoy-acct-solstice-manufacturing",
+        "decoy-acct-citrine-logistics",
+        "decoy-acct-copper-health",
+        "decoy-acct-arbor-retail",
+        "decoy-acct-pinnacle-retail",
+        "decoy-acct-silver-labs",
+        "decoy-acct-sierra-labs",
+        "decoy-acct-noble-foods"
+      ],
+      "relevant_doc_ids": [
+        "acct-aster",
+        "acct-heliogrid",
+        "acct-northwind",
+        "acct-riverline",
+        "esc-aster",
+        "esc-northwind",
+        "esc-riverline"
+      ]
+    }
+  ]
+}

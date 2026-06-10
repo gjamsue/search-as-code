@@ -24,8 +24,8 @@
     "fixed_understanding_rewrite_hybrid_rerank": {
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.3681,
-        "recall@10": 0.2686,
+        "ndcg@10": 0.3608,
+        "recall@10": 0.2619,
         "mrr@10": 0.8,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2,
@@ -292,6 +292,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -304,8 +305,8 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -463,6 +464,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -1052,9 +1054,9 @@
     "generated_search_as_code": {
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.3681,
-        "recall@10": 0.2686,
-        "mrr@10": 0.8,
+        "ndcg@10": 0.4213,
+        "recall@10": 0.2952,
+        "mrr@10": 1.0,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2,
         "hard_negative_count@10": 0.2,
@@ -1419,6 +1421,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -1431,8 +1434,8 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -1642,6 +1645,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -1656,9 +1660,9 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -2348,8 +2352,8 @@
     "generated_iterative_agentic_search_as_code": {
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.5191,
-        "recall@10": 0.6114,
+        "ndcg@10": 0.5351,
+        "recall@10": 0.6381,
         "mrr@10": 0.5833,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2,
@@ -2931,6 +2935,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -2943,8 +2948,8 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3008,
-            "recall@10": 0.4,
+            "ndcg@10": 0.3692,
+            "recall@10": 0.5,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -3259,6 +3264,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -3273,8 +3279,8 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8304,
-            "recall@10": 0.8,
+            "ndcg@10": 0.8418,
+            "recall@10": 0.8333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -4344,9 +4350,9 @@
     "real_codegen_search_as_code": {
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.7133,
-        "recall@10": 0.7114,
-        "mrr@10": 0.9,
+        "ndcg@10": 0.7676,
+        "recall@10": 0.7381,
+        "mrr@10": 1.0,
         "all_evidence_recovered@10": 0.4,
         "hard_negative_hit_rate@10": 0.4,
         "hard_negative_count@10": 0.4,
@@ -4756,6 +4762,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -4768,8 +4775,8 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3901,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -4867,6 +4874,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -4881,9 +4889,9 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7629,
+            "ndcg@10": 0.9833,
             "recall@10": 1.0,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
               "rel-atlas-4-8-2"
@@ -5905,9 +5913,9 @@
     "real_agentic_codegen_search_as_code": {
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.8683,
+        "ndcg@10": 0.9201,
         "recall@10": 1.0,
-        "mrr@10": 0.8667,
+        "mrr@10": 1.0,
         "all_evidence_recovered@10": 1.0,
         "hard_negative_hit_rate@10": 0.2,
         "hard_negative_count@10": 0.2,
@@ -7346,6 +7354,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -7358,7 +7367,7 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.9566,
+            "ndcg@10": 0.9838,
             "recall@10": 1.0,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
@@ -7781,6 +7790,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -7795,9 +7805,9 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6565,
+            "ndcg@10": 0.8883,
             "recall@10": 1.0,
-            "mrr@10": 0.3333,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -10759,8 +10769,8 @@
     {
       "system": "real_agentic_codegen_search_as_code",
       "recall@10": 1.0,
-      "ndcg@10": 0.8683,
-      "mrr@10": 0.8667,
+      "ndcg@10": 0.9201,
+      "mrr@10": 1.0,
       "hard_negative_hit_rate@10": 0.2,
       "mean_latency_ms": 136272.393,
       "mean_generation_ms": 135929.53,
@@ -10773,9 +10783,9 @@
     },
     {
       "system": "real_codegen_search_as_code",
-      "recall@10": 0.7114,
-      "ndcg@10": 0.7133,
-      "mrr@10": 0.9,
+      "recall@10": 0.7381,
+      "ndcg@10": 0.7676,
+      "mrr@10": 1.0,
       "hard_negative_hit_rate@10": 0.4,
       "mean_latency_ms": 62038.691,
       "mean_generation_ms": 61891.282,
@@ -10788,8 +10798,8 @@
     },
     {
       "system": "generated_iterative_agentic_search_as_code",
-      "recall@10": 0.6114,
-      "ndcg@10": 0.5191,
+      "recall@10": 0.6381,
+      "ndcg@10": 0.5351,
       "mrr@10": 0.5833,
       "hard_negative_hit_rate@10": 0.2,
       "mean_latency_ms": 325.381,
@@ -10802,30 +10812,30 @@
       "reflections": 0
     },
     {
-      "system": "fixed_understanding_rewrite_hybrid_rerank",
-      "recall@10": 0.2686,
-      "ndcg@10": 0.3681,
-      "mrr@10": 0.8,
+      "system": "generated_search_as_code",
+      "recall@10": 0.2952,
+      "ndcg@10": 0.4213,
+      "mrr@10": 1.0,
       "hard_negative_hit_rate@10": 0.2,
-      "mean_latency_ms": 285.266,
-      "mean_generation_ms": 0.0,
-      "mean_execution_ms": 285.258,
-      "mean_search_calls": 4.0,
+      "mean_latency_ms": 277.548,
+      "mean_generation_ms": 0.141,
+      "mean_execution_ms": 277.403,
+      "mean_search_calls": 8.0,
       "mean_rerank_pairs": 120.0,
       "runtime_errors": 0,
       "repairs": 0,
       "reflections": 0
     },
     {
-      "system": "generated_search_as_code",
-      "recall@10": 0.2686,
-      "ndcg@10": 0.3681,
+      "system": "fixed_understanding_rewrite_hybrid_rerank",
+      "recall@10": 0.2619,
+      "ndcg@10": 0.3608,
       "mrr@10": 0.8,
       "hard_negative_hit_rate@10": 0.2,
-      "mean_latency_ms": 277.548,
-      "mean_generation_ms": 0.141,
-      "mean_execution_ms": 277.403,
-      "mean_search_calls": 8.0,
+      "mean_latency_ms": 285.266,
+      "mean_generation_ms": 0.0,
+      "mean_execution_ms": 285.258,
+      "mean_search_calls": 4.0,
       "mean_rerank_pairs": 120.0,
       "runtime_errors": 0,
       "repairs": 0,
@@ -10841,6 +10851,7 @@
         "acct-bluepeak",
         "acct-quartzbio",
         "adv-atlas-rerank-4520",
+        "approval-quartzbio-namespace-proof",
         "rel-atlas-4-9-0",
         "ticket-sec-1899"
       ],
@@ -10854,8 +10865,8 @@
       ],
       "systems": {
         "fixed_understanding_rewrite_hybrid_rerank": {
-          "recall": 0.2,
-          "ndcg": 0.3392,
+          "recall": 0.1667,
+          "ndcg": 0.3026,
           "hard_negative_count": 0,
           "top_doc_ids": [
             "ticket-sec-1899",
@@ -10983,8 +10994,8 @@
           ]
         },
         "generated_search_as_code": {
-          "recall": 0.2,
-          "ndcg": 0.3392,
+          "recall": 0.1667,
+          "ndcg": 0.3026,
           "hard_negative_count": 0,
           "top_doc_ids": [
             "ticket-sec-1899",
@@ -11164,8 +11175,8 @@
           ]
         },
         "generated_iterative_agentic_search_as_code": {
-          "recall": 0.4,
-          "ndcg": 0.3008,
+          "recall": 0.5,
+          "ndcg": 0.3692,
           "hard_negative_count": 0,
           "top_doc_ids": [
             "esc-northwind",
@@ -11450,8 +11461,8 @@
           ]
         },
         "real_codegen_search_as_code": {
-          "recall": 0.2,
-          "ndcg": 0.3392,
+          "recall": 0.3333,
+          "ndcg": 0.3901,
           "hard_negative_count": 0,
           "top_doc_ids": [
             "ticket-sec-1899",
@@ -11520,7 +11531,7 @@
         },
         "real_agentic_codegen_search_as_code": {
           "recall": 1.0,
-          "ndcg": 0.9566,
+          "ndcg": 0.9838,
           "hard_negative_count": 0,
           "top_doc_ids": [
             "ticket-sec-1899",
@@ -11920,6 +11931,7 @@
       "relevant_doc_ids": [
         "acct-quartzbio",
         "adv-atlas-rerank-4520",
+        "approval-quartzbio-namespace-proof",
         "esc-quartzbio",
         "rel-atlas-4-9-0",
         "runbook-regulated-upgrade"
@@ -12055,8 +12067,8 @@
           ]
         },
         "generated_search_as_code": {
-          "recall": 0.0,
-          "ndcg": 0.0,
+          "recall": 0.1667,
+          "ndcg": 0.3026,
           "hard_negative_count": 0,
           "top_doc_ids": [
             "approval-quartzbio-namespace-proof",
@@ -12222,8 +12234,8 @@
           ]
         },
         "generated_iterative_agentic_search_as_code": {
-          "recall": 0.8,
-          "ndcg": 0.8304,
+          "recall": 0.8333,
+          "ndcg": 0.8418,
           "hard_negative_count": 0,
           "top_doc_ids": [
             "esc-quartzbio",
@@ -12501,7 +12513,7 @@
         },
         "real_codegen_search_as_code": {
           "recall": 1.0,
-          "ndcg": 0.7629,
+          "ndcg": 0.9833,
           "hard_negative_count": 1,
           "top_doc_ids": [
             "approval-quartzbio-namespace-proof",
@@ -12825,7 +12837,7 @@
         },
         "real_agentic_codegen_search_as_code": {
           "recall": 1.0,
-          "ndcg": 0.6565,
+          "ndcg": 0.8883,
           "hard_negative_count": 0,
           "top_doc_ids": [
             "approval-quartzbio-namespace-proof",

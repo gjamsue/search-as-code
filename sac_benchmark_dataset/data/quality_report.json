@@ -67,15 +67,17 @@
   "errors": [],
   "evidence_count_distribution": {
     "10": 1,
+    "11": 1,
+    "12": 1,
     "13": 1,
     "2": 10,
     "3": 3,
-    "4": 3,
-    "5": 14,
-    "6": 4,
-    "7": 6,
-    "8": 4,
-    "9": 2
+    "4": 1,
+    "5": 9,
+    "6": 10,
+    "7": 5,
+    "8": 3,
+    "9": 3
   },
   "hard_negative_count_distribution": {
     "10": 2,
@@ -127,17 +129,17 @@
     "dev": {
       "non_evidence_rows": 0,
       "non_positive_rows": 0,
-      "rows": 36
+      "rows": 38
     },
     "test": {
       "non_evidence_rows": 0,
       "non_positive_rows": 0,
-      "rows": 187
+      "rows": 204
     },
     "train": {
       "non_evidence_rows": 0,
       "non_positive_rows": 0,
-      "rows": 27
+      "rows": 28
     }
   },
   "reflection_tasks": 9,

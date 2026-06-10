@@ -441,6 +441,12 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
+    .table-note {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
     .takeaway-list {
       display: grid;
       gap: 10px;
@@ -898,7 +904,7 @@
           </div>
           <div class="summary-item">
             <strong>What our eval shows.</strong>
-            <p>On the full real-LLM custom test, agentic codegen reaches 0.7058 Recall@10; one-shot codegen reaches 0.5868; agentic preset reaches 0.5610.</p>
+            <p>On the full real-LLM custom test, agentic codegen reaches 0.7081 Recall@10; agentic preset reaches 0.5809; one-shot codegen reaches 0.5779.</p>
           </div>
           <div class="summary-item">
             <strong>What the matrix changes.</strong>
@@ -1085,7 +1091,7 @@
                     <th>Hard part</th>
                     <th>Normal-search trap</th>
                     <th>Required evidence</th>
-                    <th>Fixed / best named / agent code</th>
+                    <th>Fixed / best named / real agent code</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1094,14 +1100,14 @@
                     <td>Version compare + final approval authority</td>
                     <td>Approval decoys and stale release notes rank highly unless the flow preserves both versions and the final approval ledger.</td>
                     <td>Alias, approval ledger, account, escalation, advisory, both releases</td>
-                    <td>0.0000 / 0.0000 / 1.0000</td>
+                    <td>0.1667 / 0.1667 / 1.0000</td>
                   </tr>
                   <tr>
                     <td>Regulated customer asks for cache namespace proof</td>
                     <td>Under-specified customer + release/feature join</td>
                     <td>The query does not name QuartzBio; generic search gets proof notes and nearby Atlas releases but misses the full evidence chain.</td>
-                    <td>Account, escalation, runbook, advisory, AtlasSearch 4.9.0 release</td>
-                    <td>0.0000 / 0.2000 / 1.0000</td>
+                    <td>Account, escalation, runbook, advisory, approval ledger, AtlasSearch 4.9.0 release</td>
+                    <td>0.1667 / 0.3333 / 1.0000</td>
                   </tr>
                   <tr>
                     <td>NovaFoods has a ForgeDeploy sales mention</td>
@@ -1114,8 +1120,8 @@
                     <td>Red-risk renewals before July</td>
                     <td>Temporal filter + multi-customer join</td>
                     <td>A single top-k result can find a roster or one escalation, but the answer needs four accounts, four escalations, and the regulated-upgrade runbook.</td>
-                    <td>Account briefs, escalations, renewal timing, blocker next actions, runbook</td>
-                    <td>0.3333 / 0.4444 / 0.8889</td>
+                    <td>Account briefs, escalations, renewal timing, blocker next actions, runbook, final roster</td>
+                    <td>0.4000 / 0.5000 / 0.9000</td>
                   </tr>
                 </tbody>
               </table>
@@ -1136,12 +1142,12 @@
           <div class="card">
             <h3>Full real-LLM architecture matrix</h3>
             <div class="bar-list">
-              <div class="bar-row"><div class="bar-label">Agentic codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:100%"></div></div><div class="bar-value">0.7058</div></div>
-              <div class="bar-row"><div class="bar-label">One-shot codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:83.1%"></div></div><div class="bar-value">0.5868</div></div>
-              <div class="bar-row"><div class="bar-label">Agentic preset flow</div><div class="bar-track"><div class="bar-fill blue" style="width:79.5%"></div></div><div class="bar-value">0.5610</div></div>
-              <div class="bar-row"><div class="bar-label">Agentic fixed-flow</div><div class="bar-track"><div class="bar-fill amber" style="width:60.3%"></div></div><div class="bar-value">0.4256</div></div>
-              <div class="bar-row"><div class="bar-label">Preset router</div><div class="bar-track"><div class="bar-fill green" style="width:52.2%"></div></div><div class="bar-value">0.3684</div></div>
-              <div class="bar-row"><div class="bar-label">Fixed flow</div><div class="bar-track"><div class="bar-fill green" style="width:24.8%"></div></div><div class="bar-value">0.1747</div></div>
+              <div class="bar-row"><div class="bar-label">Agentic codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:100%"></div></div><div class="bar-value">0.7081</div></div>
+              <div class="bar-row"><div class="bar-label">Agentic preset flow</div><div class="bar-track"><div class="bar-fill blue" style="width:82.0%"></div></div><div class="bar-value">0.5809</div></div>
+              <div class="bar-row"><div class="bar-label">One-shot codegen</div><div class="bar-track"><div class="bar-fill violet" style="width:81.6%"></div></div><div class="bar-value">0.5779</div></div>
+              <div class="bar-row"><div class="bar-label">Agentic fixed-flow</div><div class="bar-track"><div class="bar-fill amber" style="width:60.8%"></div></div><div class="bar-value">0.4307</div></div>
+              <div class="bar-row"><div class="bar-label">Preset router</div><div class="bar-track"><div class="bar-fill green" style="width:52.1%"></div></div><div class="bar-value">0.3689</div></div>
+              <div class="bar-row"><div class="bar-label">Fixed flow</div><div class="bar-track"><div class="bar-fill green" style="width:25.9%"></div></div><div class="bar-value">0.1837</div></div>
             </div>
             <div class="table-scroll">
               <table class="leaderboard">
@@ -1157,20 +1163,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td>Fixed flow</td><td>0.1747</td><td>13.3s</td><td>13.0s</td><td>326 ms</td><td>4.00</td><td>120</td></tr>
-                  <tr><td>Preset router</td><td>0.3684</td><td>13.2s</td><td>13.0s</td><td>165 ms</td><td>1.90</td><td>67.9</td></tr>
-                  <tr><td>Agentic fixed-flow</td><td>0.4256</td><td>40.7s</td><td>38.6s</td><td>2.1s</td><td>7.93</td><td>1,072</td></tr>
-                  <tr><td>Agentic preset flow</td><td>0.5610</td><td>35.7s</td><td>35.3s</td><td>327 ms</td><td>7.58</td><td>114.8</td></tr>
-                  <tr><td>One-shot codegen</td><td>0.5868</td><td>60.6s</td><td>60.4s</td><td>211 ms</td><td>8.64</td><td>39.6</td></tr>
-                  <tr><td>Agentic codegen</td><td>0.7058</td><td>159.7s</td><td>159.1s</td><td>615 ms</td><td>32.81</td><td>76.1</td></tr>
+                  <tr><td>Fixed flow</td><td>0.1837</td><td>13.3s</td><td>13.0s</td><td>326 ms</td><td>4.00</td><td>120</td></tr>
+                  <tr><td>Preset router</td><td>0.3689</td><td>13.2s</td><td>13.0s</td><td>165 ms</td><td>1.90</td><td>67.9</td></tr>
+                  <tr><td>Agentic fixed-flow</td><td>0.4307</td><td>40.7s</td><td>38.6s</td><td>2.1s</td><td>7.93</td><td>1,072</td></tr>
+                  <tr><td>Agentic preset flow</td><td>0.5809</td><td>35.7s</td><td>35.3s</td><td>327 ms</td><td>7.58</td><td>114.8</td></tr>
+                  <tr><td>One-shot codegen</td><td>0.5779</td><td>60.6s</td><td>60.4s</td><td>211 ms</td><td>8.64</td><td>39.6</td></tr>
+                  <tr><td>Agentic codegen</td><td>0.7081</td><td>159.7s</td><td>159.1s</td><td>615 ms</td><td>32.81</td><td>76.1</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="metrics">
-            <div class="metric"><span>Top recall</span><strong>0.7058</strong><p>Agentic codegen on full real-LLM test</p></div>
-            <div class="metric"><span>Practical agentic</span><strong>0.5610</strong><p>Preset reflection, 35.7s/query</p></div>
-            <div class="metric"><span>Codegen lift</span><strong>+0.1190</strong><p>Agentic codegen over one-shot codegen</p></div>
+            <div class="metric"><span>Top recall</span><strong>0.7081</strong><p>Agentic codegen on full real-LLM test</p></div>
+            <div class="metric"><span>Practical agentic</span><strong>0.5809</strong><p>Preset reflection, 35.7s/query</p></div>
+            <div class="metric"><span>Codegen lift</span><strong>+0.1302</strong><p>Agentic codegen over one-shot codegen</p></div>
             <div class="metric"><span>Cost tradeoff</span><strong>4.5x</strong><p>Agentic codegen vs preset latency</p></div>
           </div>
           <div class="card wide">
@@ -1187,14 +1193,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td>Okapi BM25 / Lucene-style sparse</td><td>0.2350</td><td>10.7 ms</td><td>Strongest simple baseline; exact IDs matter</td></tr>
-                  <tr><td>Weighted BM25 + MiniLM dense hybrid</td><td>0.2286</td><td>20.1 ms</td><td>Semantic signal does not solve evidence coverage</td></tr>
-                  <tr><td>Hybrid + CrossEncoder rerank</td><td>0.1857</td><td>3.14s</td><td>Rerank cannot recover missing evidence</td></tr>
-                  <tr><td>Query rewrite + hybrid + CrossEncoder</td><td>0.1857</td><td>3.21s</td><td>Fanout still lacks category-level reflection</td></tr>
-                  <tr><td>MiniLM dense bi-encoder</td><td>0.0932</td><td>15.9 ms</td><td>Weak on identifiers, aliases, versions, authority</td></tr>
+                  <tr><td>Okapi BM25 / Lucene-style sparse</td><td>0.2387</td><td>12.7 ms</td><td>Strong exact-token baseline</td></tr>
+                  <tr><td>Weighted BM25 + MiniLM dense hybrid</td><td>0.2375</td><td>19.7 ms</td><td>Similar top-10 recall; higher candidate-pool headroom</td></tr>
+                  <tr><td>Hybrid + CrossEncoder rerank</td><td>0.2018</td><td>3.15s</td><td>Generic MS MARCO reranker misranks decoy-heavy evidence tasks</td></tr>
+                  <tr><td>Query rewrite + hybrid + CrossEncoder</td><td>0.2018</td><td>3.27s</td><td>Fanout still lacks evidence-category reflection</td></tr>
+                  <tr><td>MiniLM dense bi-encoder</td><td>0.0949</td><td>18.7 ms</td><td>Weak on identifiers, aliases, versions, authority</td></tr>
                 </tbody>
               </table>
             </div>
+            <p class="table-note">Diagnostic: hybrid first-stage Recall@2400 is 0.7496, so the benchmark is not merely missing candidates; the hard part is final evidence selection and reflection.</p>
           </div>
         </div>
 
@@ -1431,7 +1438,7 @@
               </div>
             </div>
             <div class="outcome">
-              <div class="outcome-row"><strong>Retrieval</strong><span>Full real-LLM test: agentic codegen 0.7058, one-shot codegen 0.5868, agentic preset 0.5610.</span></div>
+              <div class="outcome-row"><strong>Retrieval</strong><span>Full real-LLM test: agentic codegen 0.7081, agentic preset 0.5809, one-shot codegen 0.5779.</span></div>
               <div class="outcome-row"><strong>Cost</strong><span>Full codegen costs 159.7s/query; agentic preset is 35.7s/query and is the practical path.</span></div>
               <div class="outcome-row"><strong>Lesson</strong><span>Next evaluation should score final answers, citations, token cost, and fallback behavior.</span></div>
             </div>
@@ -1460,12 +1467,12 @@
           <tbody>
             <tr>
               <td>Real LLM decision points</td>
-              <td>Full test: agentic preset improves from single-router 0.3684 to 0.5610 Recall@10 with evidence-aware reflection.</td>
+              <td>Full test: agentic preset improves from single-router 0.3689 to 0.5809 Recall@10 with evidence-aware reflection.</td>
               <td>Tune stop criteria against recall, token cost, and tool-call precision.</td>
             </tr>
             <tr>
               <td>Real LLM codegen reliability</td>
-              <td>Full test: real agentic codegen reaches 0.7058 Recall@10, but it costs 159.7s/query.</td>
+              <td>Full test: real agentic codegen reaches 0.7081 Recall@10, but it costs 159.7s/query.</td>
               <td>Keep full codegen as a hard-case path; optimize prompt size, cache reuse, timeout policy, and model choice.</td>
             </tr>
             <tr>
@@ -1497,8 +1504,8 @@
             <p>The demo should show generated retrieval code, real LLM routing decisions, and why preset-stack agentic search is the practical path before full codegen.</p>
           </div>
           <ol class="next-list">
-            <li><strong>Productize agentic preset search first.</strong><br>It reaches 0.5610 Recall@10 on the full real-LLM test at 35.7s/query, much cheaper than full codegen.</li>
-            <li><strong>Keep full codegen for hard cases.</strong><br>It reaches 0.7058 Recall@10, but 159.7s/query means it should be gated, cached, or used offline.</li>
+            <li><strong>Productize agentic preset search first.</strong><br>It reaches 0.5809 Recall@10 on the full real-LLM test at 35.7s/query, much cheaper than full codegen.</li>
+            <li><strong>Keep full codegen for hard cases.</strong><br>It reaches 0.7081 Recall@10, but 159.7s/query means it should be gated, cached, or used offline.</li>
             <li><strong>Score final answers.</strong><br>Measure answer accuracy, citation grounding, token cost, latency, and failure rate.</li>
             <li><strong>Harden context selection.</strong><br>Keep authoritative evidence, drop stale drafts, and track hard-negative leakage.</li>
           </ol>

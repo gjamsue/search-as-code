@@ -15,6 +15,7 @@ sac-017	esc-contoso	2
 sac-017	ticket-sec-1811	2
 sac-017	adv-beacon-oauth-3771	2
 sac-017	rel-beacon-3-14-1	2
+sac-017	approval-beacon-contoso-may06	2
 sac-021	acct-bluepeak	2
 sac-021	esc-bluepeak	2
 sac-021	ticket-sec-1899	2
@@ -27,6 +28,7 @@ sac-031	acct-northwind	2
 sac-031	rel-atlas-4-8-1	2
 sac-031	rel-atlas-4-8-2	2
 sac-031	adv-atlas-saml-4102	2
+sac-031	approval-atlas-northwind-final	2
 sac-046	source-authority-matrix-v3	2
 sac-046	eval-sac-policy	2
 sac-047	alias-customer-codenames	2

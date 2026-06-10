@@ -54,21 +54,21 @@
     "okapi_bm25_rank_bm25": {
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2822,
-        "recall@10": 0.235,
-        "mrr@10": 0.593,
+        "ndcg@10": 0.3096,
+        "recall@10": 0.2387,
+        "mrr@10": 0.7006,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2258,
         "hard_negative_count@10": 0.3226,
         "hard_negative_intrusion_rate@10": 0.0323
       },
       "latency": {
-        "total_wall_seconds": 0.3326,
-        "mean_latency_ms": 10.73,
-        "p50_latency_ms": 10.45,
-        "p95_latency_ms": 13.722,
+        "total_wall_seconds": 0.3943,
+        "mean_latency_ms": 12.719,
+        "p50_latency_ms": 12.481,
+        "p95_latency_ms": 15.603,
         "mean_generation_ms": 0.0,
-        "mean_execution_ms": 10.73,
+        "mean_execution_ms": 12.719,
         "mean_query_understanding_calls": 0.0,
         "mean_entity_linking_calls": 0.0,
         "mean_query_rewrite_calls": 0.0,
@@ -98,6 +98,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -119,9 +120,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 13.721834000534727,
+            "latency_ms": 15.603416999510955,
             "generation_ms": 0.0,
-            "execution_ms": 13.721834000534727,
+            "execution_ms": 15.603416999510955,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -166,7 +167,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -179,16 +181,16 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3838,
-            "recall@10": 0.4444,
-            "mrr@10": 0.3333,
+            "ndcg@10": 0.5795,
+            "recall@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 12.034416999085806,
+            "latency_ms": 14.17662499807193,
             "generation_ms": 0.0,
-            "execution_ms": 12.034416999085806,
+            "execution_ms": 14.17662499807193,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -231,6 +233,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -244,16 +247,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3794,
-            "recall@10": 0.25,
+            "ndcg@10": 0.3526,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 8.536749999620952,
+            "latency_ms": 10.908791999099776,
             "generation_ms": 0.0,
-            "execution_ms": 8.536749999620952,
+            "execution_ms": 10.908791999099776,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -293,6 +296,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -305,16 +309,16 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.33199999963108,
+            "latency_ms": 10.757667001598747,
             "generation_ms": 0.0,
-            "execution_ms": 9.33199999963108,
+            "execution_ms": 10.757667001598747,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -358,7 +362,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -371,16 +376,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 10.450499999933527,
+            "latency_ms": 12.168458000815008,
             "generation_ms": 0.0,
-            "execution_ms": 10.450499999933527,
+            "execution_ms": 12.168458000815008,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -420,6 +425,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -435,16 +441,16 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6414,
-            "recall@10": 0.5714,
+            "ndcg@10": 0.5902,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 11.300624999421416,
+            "latency_ms": 14.391790999070508,
             "generation_ms": 0.0,
-            "execution_ms": 11.300624999421416,
+            "execution_ms": 14.391790999070508,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -509,9 +515,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 11.135165999803576,
+            "latency_ms": 14.705207999213599,
             "generation_ms": 0.0,
-            "execution_ms": 11.135165999803576,
+            "execution_ms": 14.705207999213599,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -550,6 +556,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -568,18 +575,18 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
               "v3-approval-decoy-0001"
             ]
           },
           "stats": {
-            "latency_ms": 10.124000000359956,
+            "latency_ms": 11.655832997348625,
             "generation_ms": 0.0,
-            "execution_ms": 10.124000000359956,
+            "execution_ms": 11.655832997348625,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -619,6 +626,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -637,8 +647,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7137,
-            "recall@10": 0.6667,
+            "ndcg@10": 0.6683,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -648,9 +658,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 9.687750000011874,
+            "latency_ms": 12.393875000270782,
             "generation_ms": 0.0,
-            "execution_ms": 9.687750000011874,
+            "execution_ms": 12.393875000270782,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -712,9 +722,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 11.707000001479173,
+            "latency_ms": 15.432958000019426,
             "generation_ms": 0.0,
-            "execution_ms": 11.707000001479173,
+            "execution_ms": 15.432958000019426,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -774,9 +784,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.853666000708472,
+            "latency_ms": 11.542208001628751,
             "generation_ms": 0.0,
-            "execution_ms": 9.853666000708472,
+            "execution_ms": 11.542208001628751,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -836,9 +846,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.13475000015751,
+            "latency_ms": 11.151833001349587,
             "generation_ms": 0.0,
-            "execution_ms": 9.13475000015751,
+            "execution_ms": 11.151833001349587,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -877,6 +887,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -891,16 +902,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 8.576292000725516,
+            "latency_ms": 11.746707998099737,
             "generation_ms": 0.0,
-            "execution_ms": 8.576292000725516,
+            "execution_ms": 11.746707998099737,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -961,9 +972,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.175667000818066,
+            "latency_ms": 11.653834000753704,
             "generation_ms": 0.0,
-            "execution_ms": 9.175667000818066,
+            "execution_ms": 11.653834000753704,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1004,7 +1015,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -1022,9 +1034,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 7.760208000036073,
+            "latency_ms": 9.806958998524351,
             "generation_ms": 0.0,
-            "execution_ms": 7.760208000036073,
+            "execution_ms": 9.806958998524351,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1088,9 +1100,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 8.69458399938594,
+            "latency_ms": 9.881250000034925,
             "generation_ms": 0.0,
-            "execution_ms": 8.69458399938594,
+            "execution_ms": 9.881250000034925,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1129,6 +1141,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -1143,16 +1156,16 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1696,
-            "recall@10": 0.2,
-            "mrr@10": 0.3333,
+            "ndcg@10": 0.4539,
+            "recall@10": 0.3333,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 12.735333000819082,
+            "latency_ms": 16.368083000998013,
             "generation_ms": 0.0,
-            "execution_ms": 12.735333000819082,
+            "execution_ms": 16.368083000998013,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1223,9 +1236,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.957459000361268,
+            "latency_ms": 12.481416000809986,
             "generation_ms": 0.0,
-            "execution_ms": 9.957459000361268,
+            "execution_ms": 12.481416000809986,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1266,8 +1279,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -1279,16 +1294,16 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4935,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.4125,
+            "recall@10": 0.25,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 10.453124999912689,
+            "latency_ms": 13.317083998117596,
             "generation_ms": 0.0,
-            "execution_ms": 10.453124999912689,
+            "execution_ms": 13.317083998117596,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1334,7 +1349,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -1348,16 +1364,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 7.702333001361694,
+            "latency_ms": 9.7993339986715,
             "generation_ms": 0.0,
-            "execution_ms": 7.702333001361694,
+            "execution_ms": 9.7993339986715,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1421,9 +1437,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 10.582416998659028,
+            "latency_ms": 12.956875001691515,
             "generation_ms": 0.0,
-            "execution_ms": 10.582416998659028,
+            "execution_ms": 12.956875001691515,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1487,9 +1503,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.988959000111208,
+            "latency_ms": 12.729291996947723,
             "generation_ms": 0.0,
-            "execution_ms": 9.988959000111208,
+            "execution_ms": 12.729291996947723,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1548,9 +1564,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 10.349792000852176,
+            "latency_ms": 13.246000002254732,
             "generation_ms": 0.0,
-            "execution_ms": 10.349792000852176,
+            "execution_ms": 13.246000002254732,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1611,9 +1627,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 11.54020799913269,
+            "latency_ms": 13.990625000587897,
             "generation_ms": 0.0,
-            "execution_ms": 11.54020799913269,
+            "execution_ms": 13.990625000587897,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1672,9 +1688,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 10.058249999929103,
+            "latency_ms": 10.679999999410938,
             "generation_ms": 0.0,
-            "execution_ms": 10.058249999929103,
+            "execution_ms": 10.679999999410938,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1735,9 +1751,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 13.333000000784523,
+            "latency_ms": 14.769417000934482,
             "generation_ms": 0.0,
-            "execution_ms": 13.333000000784523,
+            "execution_ms": 14.769417000934482,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1795,9 +1811,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 11.974667000686168,
+            "latency_ms": 11.796167000284186,
             "generation_ms": 0.0,
-            "execution_ms": 11.974667000686168,
+            "execution_ms": 11.796167000284186,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1851,9 +1867,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 10.679791999791632,
+            "latency_ms": 11.689165999996476,
             "generation_ms": 0.0,
-            "execution_ms": 10.679791999791632,
+            "execution_ms": 11.689165999996476,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1909,9 +1925,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 14.405750000150874,
+            "latency_ms": 13.657082999998238,
             "generation_ms": 0.0,
-            "execution_ms": 14.405750000150874,
+            "execution_ms": 13.657082999998238,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -1970,9 +1986,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 15.383332998680999,
+            "latency_ms": 15.837457998713944,
             "generation_ms": 0.0,
-            "execution_ms": 15.383332998680999,
+            "execution_ms": 15.837457998713944,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2016,6 +2032,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -2026,16 +2043,16 @@
             "v3-alias-decoy-0004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1089,
-            "recall@10": 0.125,
+            "ndcg@10": 0.1012,
+            "recall@10": 0.1111,
             "mrr@10": 0.25,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 12.24766699851898,
+            "latency_ms": 13.001583000004757,
             "generation_ms": 0.0,
-            "execution_ms": 12.24766699851898,
+            "execution_ms": 13.001583000004757,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2059,21 +2076,21 @@
     "minilm_biencoder_dense": {
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.126,
-        "recall@10": 0.0932,
-        "mrr@10": 0.307,
+        "ndcg@10": 0.1336,
+        "recall@10": 0.0949,
+        "mrr@10": 0.3393,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.0323,
         "hard_negative_count@10": 0.0323,
         "hard_negative_intrusion_rate@10": 0.0032
       },
       "latency": {
-        "total_wall_seconds": 0.492,
-        "mean_latency_ms": 15.871,
-        "p50_latency_ms": 10.163,
-        "p95_latency_ms": 24.585,
+        "total_wall_seconds": 0.5784,
+        "mean_latency_ms": 18.658,
+        "p50_latency_ms": 10.562,
+        "p95_latency_ms": 23.051,
         "mean_generation_ms": 0.0,
-        "mean_execution_ms": 15.871,
+        "mean_execution_ms": 18.658,
         "mean_query_understanding_calls": 0.0,
         "mean_entity_linking_calls": 0.0,
         "mean_query_rewrite_calls": 0.0,
@@ -2103,6 +2120,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -2117,16 +2135,16 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.107,
-            "recall@10": 0.2,
+            "ndcg@10": 0.0955,
+            "recall@10": 0.1667,
             "mrr@10": 0.125,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 39.72283300026902,
+            "latency_ms": 34.39000000071246,
             "generation_ms": 0.0,
-            "execution_ms": 39.72283300026902,
+            "execution_ms": 34.39000000071246,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2171,7 +2189,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -2184,16 +2203,16 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.235,
-            "recall@10": 0.1111,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.1,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 8.377416999792331,
+            "latency_ms": 8.850000001984881,
             "generation_ms": 0.0,
-            "execution_ms": 8.377416999792331,
+            "execution_ms": 8.850000001984881,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2236,6 +2255,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -2249,16 +2269,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4125,
-            "recall@10": 0.25,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 21.233999999822117,
+            "latency_ms": 19.76387499962584,
             "generation_ms": 0.0,
-            "execution_ms": 21.233999999822117,
+            "execution_ms": 19.76387499962584,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2298,6 +2318,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -2317,9 +2338,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 24.58545900117315,
+            "latency_ms": 21.986542000377085,
             "generation_ms": 0.0,
-            "execution_ms": 24.58545900117315,
+            "execution_ms": 21.986542000377085,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2363,7 +2384,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -2376,16 +2398,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.235,
+            "recall@10": 0.1111,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 25.728750000780565,
+            "latency_ms": 19.758667000132846,
             "generation_ms": 0.0,
-            "execution_ms": 25.728750000780565,
+            "execution_ms": 19.758667000132846,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2425,6 +2447,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -2440,16 +2463,16 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1184,
-            "recall@10": 0.1429,
+            "ndcg@10": 0.1089,
+            "recall@10": 0.125,
             "mrr@10": 0.25,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.515083999271155,
+            "latency_ms": 19.945624997490086,
             "generation_ms": 0.0,
-            "execution_ms": 20.515083999271155,
+            "execution_ms": 19.945624997490086,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2514,9 +2537,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 8.010167000975343,
+            "latency_ms": 8.810499999526655,
             "generation_ms": 0.0,
-            "execution_ms": 8.010167000975343,
+            "execution_ms": 8.810499999526655,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2555,6 +2578,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -2580,9 +2604,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 23.18304199980048,
+            "latency_ms": 117.95708299905527,
             "generation_ms": 0.0,
-            "execution_ms": 23.18304199980048,
+            "execution_ms": 117.95708299905527,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2622,6 +2646,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -2647,9 +2674,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 8.523874999809777,
+            "latency_ms": 8.977333000075305,
             "generation_ms": 0.0,
-            "execution_ms": 8.523874999809777,
+            "execution_ms": 8.977333000075305,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2711,9 +2738,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.557124998958898,
+            "latency_ms": 22.614417001022957,
             "generation_ms": 0.0,
-            "execution_ms": 20.557124998958898,
+            "execution_ms": 22.614417001022957,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2773,9 +2800,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 7.276500000443775,
+            "latency_ms": 9.135415999480756,
             "generation_ms": 0.0,
-            "execution_ms": 7.276500000443775,
+            "execution_ms": 9.135415999480756,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2835,9 +2862,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 7.431083999108523,
+            "latency_ms": 8.745999999518972,
             "generation_ms": 0.0,
-            "execution_ms": 7.431083999108523,
+            "execution_ms": 8.745999999518972,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2876,6 +2903,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -2890,16 +2918,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5087,
-            "recall@10": 0.4,
+            "ndcg@10": 0.6448,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 21.35558300142293,
+            "latency_ms": 21.96854099747725,
             "generation_ms": 0.0,
-            "execution_ms": 21.35558300142293,
+            "execution_ms": 21.96854099747725,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -2960,9 +2988,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 24.422417000096175,
+            "latency_ms": 21.819667003001086,
             "generation_ms": 0.0,
-            "execution_ms": 24.422417000096175,
+            "execution_ms": 21.819667003001086,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3003,7 +3031,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -3014,16 +3043,16 @@
             "cluster-product-atlassearch-release-001"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 24.534499998480896,
+            "latency_ms": 21.196166999288835,
             "generation_ms": 0.0,
-            "execution_ms": 24.534499998480896,
+            "execution_ms": 21.196166999288835,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3087,9 +3116,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 7.39212499865971,
+            "latency_ms": 10.561667000729358,
             "generation_ms": 0.0,
-            "execution_ms": 7.39212499865971,
+            "execution_ms": 10.561667000729358,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3128,6 +3157,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -3149,9 +3179,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 7.954917000461137,
+            "latency_ms": 9.509374998742715,
             "generation_ms": 0.0,
-            "execution_ms": 7.954917000461137,
+            "execution_ms": 9.509374998742715,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3222,9 +3252,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 22.83283399992797,
+            "latency_ms": 22.71791699968162,
             "generation_ms": 0.0,
-            "execution_ms": 22.83283399992797,
+            "execution_ms": 22.71791699968162,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3265,8 +3295,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -3285,9 +3317,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 22.60108300106367,
+            "latency_ms": 20.3953750024084,
             "generation_ms": 0.0,
-            "execution_ms": 22.60108300106367,
+            "execution_ms": 20.3953750024084,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3333,7 +3365,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -3347,16 +3380,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.136750001256587,
+            "latency_ms": 21.559666998655302,
             "generation_ms": 0.0,
-            "execution_ms": 20.136750001256587,
+            "execution_ms": 21.559666998655302,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3417,9 +3450,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.090834000744508,
+            "latency_ms": 9.11712499873829,
             "generation_ms": 0.0,
-            "execution_ms": 9.090834000744508,
+            "execution_ms": 9.11712499873829,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3483,9 +3516,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 8.946124999056337,
+            "latency_ms": 9.074124998733168,
             "generation_ms": 0.0,
-            "execution_ms": 8.946124999056337,
+            "execution_ms": 9.074124998733168,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3544,9 +3577,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.643374999053776,
+            "latency_ms": 23.050832998706028,
             "generation_ms": 0.0,
-            "execution_ms": 20.643374999053776,
+            "execution_ms": 23.050832998706028,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3605,9 +3638,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 10.162917000343441,
+            "latency_ms": 8.390625000174623,
             "generation_ms": 0.0,
-            "execution_ms": 10.162917000343441,
+            "execution_ms": 8.390625000174623,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3664,9 +3697,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 8.932041000662139,
+            "latency_ms": 10.100709001562791,
             "generation_ms": 0.0,
-            "execution_ms": 8.932041000662139,
+            "execution_ms": 10.100709001562791,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3727,9 +3760,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.088458000405808,
+            "latency_ms": 8.257249999587657,
             "generation_ms": 0.0,
-            "execution_ms": 9.088458000405808,
+            "execution_ms": 8.257249999587657,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3787,9 +3820,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 21.39066699965042,
+            "latency_ms": 22.45420799954445,
             "generation_ms": 0.0,
-            "execution_ms": 21.39066699965042,
+            "execution_ms": 22.45420799954445,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3843,9 +3876,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.406125000168686,
+            "latency_ms": 8.970957998826634,
             "generation_ms": 0.0,
-            "execution_ms": 9.406125000168686,
+            "execution_ms": 8.970957998826634,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3899,9 +3932,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 8.918374998756917,
+            "latency_ms": 9.445916999538895,
             "generation_ms": 0.0,
-            "execution_ms": 8.918374998756917,
+            "execution_ms": 9.445916999538895,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -3960,9 +3993,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.769959000550443,
+            "latency_ms": 8.551625000109198,
             "generation_ms": 0.0,
-            "execution_ms": 9.769959000550443,
+            "execution_ms": 8.551625000109198,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4006,6 +4039,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -4023,9 +4057,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 9.265999999115593,
+            "latency_ms": 10.33366699994076,
             "generation_ms": 0.0,
-            "execution_ms": 9.265999999115593,
+            "execution_ms": 10.33366699994076,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4049,21 +4083,21 @@
     "weighted_hybrid_bm25_minilm": {
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2891,
-        "recall@10": 0.2286,
-        "mrr@10": 0.587,
+        "ndcg@10": 0.3187,
+        "recall@10": 0.2375,
+        "mrr@10": 0.6973,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.0645,
         "hard_negative_count@10": 0.129,
         "hard_negative_intrusion_rate@10": 0.0129
       },
       "latency": {
-        "total_wall_seconds": 0.6222,
-        "mean_latency_ms": 20.071,
-        "p50_latency_ms": 20.294,
-        "p95_latency_ms": 22.594,
+        "total_wall_seconds": 0.6112,
+        "mean_latency_ms": 19.715,
+        "p50_latency_ms": 18.961,
+        "p95_latency_ms": 24.427,
         "mean_generation_ms": 0.0,
-        "mean_execution_ms": 20.071,
+        "mean_execution_ms": 19.715,
         "mean_query_understanding_calls": 0.0,
         "mean_entity_linking_calls": 0.0,
         "mean_query_rewrite_calls": 0.0,
@@ -4093,6 +4127,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -4114,9 +4149,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 21.75829100087867,
+            "latency_ms": 20.67075000013574,
             "generation_ms": 0.0,
-            "execution_ms": 21.75829100087867,
+            "execution_ms": 20.67075000013574,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4161,7 +4196,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -4174,16 +4210,16 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.388,
-            "recall@10": 0.4444,
-            "mrr@10": 0.3333,
+            "ndcg@10": 0.5834,
+            "recall@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.569415999489138,
+            "latency_ms": 21.962708000501152,
             "generation_ms": 0.0,
-            "execution_ms": 20.569415999489138,
+            "execution_ms": 21.962708000501152,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4226,6 +4262,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -4239,16 +4276,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4125,
-            "recall@10": 0.25,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 17.41395899989584,
+            "latency_ms": 17.729457998939324,
             "generation_ms": 0.0,
-            "execution_ms": 17.41395899989584,
+            "execution_ms": 17.729457998939324,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4288,6 +4325,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -4300,16 +4338,16 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 19.01637499940989,
+            "latency_ms": 17.937042000994552,
             "generation_ms": 0.0,
-            "execution_ms": 19.01637499940989,
+            "execution_ms": 17.937042000994552,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4353,7 +4391,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -4366,16 +4405,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.294416999604437,
+            "latency_ms": 19.89266600139672,
             "generation_ms": 0.0,
-            "execution_ms": 20.294416999604437,
+            "execution_ms": 19.89266600139672,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4415,6 +4454,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -4430,16 +4470,16 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7041,
-            "recall@10": 0.5714,
+            "ndcg@10": 0.6479,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 21.99095800096984,
+            "latency_ms": 20.683457998529775,
             "generation_ms": 0.0,
-            "execution_ms": 21.99095800096984,
+            "execution_ms": 20.683457998529775,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4504,9 +4544,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.859665999523713,
+            "latency_ms": 21.61049999995157,
             "generation_ms": 0.0,
-            "execution_ms": 20.859665999523713,
+            "execution_ms": 21.61049999995157,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4545,6 +4585,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -4563,16 +4604,16 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 18.880917001297348,
+            "latency_ms": 18.640999998751795,
             "generation_ms": 0.0,
-            "execution_ms": 18.880917001297348,
+            "execution_ms": 18.640999998751795,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4612,6 +4653,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -4630,8 +4674,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.643,
-            "recall@10": 0.5556,
+            "ndcg@10": 0.6021,
+            "recall@10": 0.4167,
             "mrr@10": 1.0,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -4641,9 +4685,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 19.23433299998578,
+            "latency_ms": 18.991625001945067,
             "generation_ms": 0.0,
-            "execution_ms": 19.23433299998578,
+            "execution_ms": 18.991625001945067,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4705,9 +4749,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 21.048624999821186,
+            "latency_ms": 22.845875002531102,
             "generation_ms": 0.0,
-            "execution_ms": 21.048624999821186,
+            "execution_ms": 22.845875002531102,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4767,9 +4811,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.257166999726905,
+            "latency_ms": 18.101542002114,
             "generation_ms": 0.0,
-            "execution_ms": 20.257166999726905,
+            "execution_ms": 18.101542002114,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4829,9 +4873,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 18.837875000826898,
+            "latency_ms": 18.32283299881965,
             "generation_ms": 0.0,
-            "execution_ms": 18.837875000826898,
+            "execution_ms": 18.32283299881965,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4870,6 +4914,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -4884,16 +4929,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5531,
-            "recall@10": 0.4,
+            "ndcg@10": 0.5846,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 19.256417001088266,
+            "latency_ms": 18.436582999129314,
             "generation_ms": 0.0,
-            "execution_ms": 19.256417001088266,
+            "execution_ms": 18.436582999129314,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4954,9 +4999,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 18.444833000103245,
+            "latency_ms": 18.522292000852758,
             "generation_ms": 0.0,
-            "execution_ms": 18.444833000103245,
+            "execution_ms": 18.522292000852758,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -4997,7 +5042,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -5015,9 +5061,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 16.741666999223526,
+            "latency_ms": 17.16333299918915,
             "generation_ms": 0.0,
-            "execution_ms": 16.741666999223526,
+            "execution_ms": 17.16333299918915,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5081,9 +5127,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 17.894791999424342,
+            "latency_ms": 16.872459000296658,
             "generation_ms": 0.0,
-            "execution_ms": 17.894791999424342,
+            "execution_ms": 16.872459000296658,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5122,6 +5168,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -5136,16 +5183,16 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1461,
-            "recall@10": 0.2,
-            "mrr@10": 0.25,
+            "ndcg@10": 0.4329,
+            "recall@10": 0.3333,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 24.067999998806044,
+            "latency_ms": 24.47708399995463,
             "generation_ms": 0.0,
-            "execution_ms": 24.067999998806044,
+            "execution_ms": 24.47708399995463,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5216,9 +5263,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.358624999062158,
+            "latency_ms": 24.426791998848785,
             "generation_ms": 0.0,
-            "execution_ms": 20.358624999062158,
+            "execution_ms": 24.426791998848785,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5259,8 +5306,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -5272,16 +5321,16 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4935,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.4125,
+            "recall@10": 0.25,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.691166999313282,
+            "latency_ms": 18.919333000667393,
             "generation_ms": 0.0,
-            "execution_ms": 20.691166999313282,
+            "execution_ms": 18.919333000667393,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5327,7 +5376,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -5341,16 +5391,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 16.893250000066473,
+            "latency_ms": 15.703665998444194,
             "generation_ms": 0.0,
-            "execution_ms": 16.893250000066473,
+            "execution_ms": 15.703665998444194,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5411,9 +5461,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 21.418709000499803,
+            "latency_ms": 18.069875000946922,
             "generation_ms": 0.0,
-            "execution_ms": 21.418709000499803,
+            "execution_ms": 18.069875000946922,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5477,9 +5527,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.39537499877042,
+            "latency_ms": 24.763708999671508,
             "generation_ms": 0.0,
-            "execution_ms": 20.39537499877042,
+            "execution_ms": 24.763708999671508,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5538,9 +5588,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 21.280207998643164,
+            "latency_ms": 19.397874999413034,
             "generation_ms": 0.0,
-            "execution_ms": 21.280207998643164,
+            "execution_ms": 19.397874999413034,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5599,9 +5649,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 20.002999999633175,
+            "latency_ms": 19.512957998813363,
             "generation_ms": 0.0,
-            "execution_ms": 20.002999999633175,
+            "execution_ms": 19.512957998813363,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5658,9 +5708,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 17.472333000114304,
+            "latency_ms": 18.96133400077815,
             "generation_ms": 0.0,
-            "execution_ms": 17.472333000114304,
+            "execution_ms": 18.96133400077815,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5721,9 +5771,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 21.298625000781612,
+            "latency_ms": 21.006665996537777,
             "generation_ms": 0.0,
-            "execution_ms": 21.298625000781612,
+            "execution_ms": 21.006665996537777,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5781,9 +5831,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 18.94308299961267,
+            "latency_ms": 17.4062909973145,
             "generation_ms": 0.0,
-            "execution_ms": 18.94308299961267,
+            "execution_ms": 17.4062909973145,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5837,9 +5887,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 19.64899999984482,
+            "latency_ms": 16.648417000396876,
             "generation_ms": 0.0,
-            "execution_ms": 19.64899999984482,
+            "execution_ms": 16.648417000396876,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5893,9 +5943,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 22.594292000576388,
+            "latency_ms": 23.783208001987077,
             "generation_ms": 0.0,
-            "execution_ms": 22.594292000576388,
+            "execution_ms": 23.783208001987077,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -5954,9 +6004,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 22.86354200077767,
+            "latency_ms": 21.14866600095411,
             "generation_ms": 0.0,
-            "execution_ms": 22.86354200077767,
+            "execution_ms": 21.14866600095411,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6000,6 +6050,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -6010,16 +6061,16 @@
             "v3-alias-decoy-0004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0843,
-            "recall@10": 0.125,
+            "ndcg@10": 0.0783,
+            "recall@10": 0.1111,
             "mrr@10": 0.1429,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 21.782417001304566,
+            "latency_ms": 18.54812500096159,
             "generation_ms": 0.0,
-            "execution_ms": 21.782417001304566,
+            "execution_ms": 18.54812500096159,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6043,21 +6094,21 @@
     "rrf_hybrid_bm25_minilm": {
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2166,
-        "recall@10": 0.1667,
-        "mrr@10": 0.4803,
+        "ndcg@10": 0.2316,
+        "recall@10": 0.1731,
+        "mrr@10": 0.5233,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2258,
         "hard_negative_count@10": 0.2581,
         "hard_negative_intrusion_rate@10": 0.0258
       },
       "latency": {
-        "total_wall_seconds": 0.8741,
-        "mean_latency_ms": 28.197,
-        "p50_latency_ms": 28.736,
-        "p95_latency_ms": 31.213,
+        "total_wall_seconds": 0.8712,
+        "mean_latency_ms": 28.104,
+        "p50_latency_ms": 27.356,
+        "p95_latency_ms": 32.828,
         "mean_generation_ms": 0.0,
-        "mean_execution_ms": 28.197,
+        "mean_execution_ms": 28.104,
         "mean_query_understanding_calls": 0.0,
         "mean_entity_linking_calls": 0.0,
         "mean_query_rewrite_calls": 0.0,
@@ -6087,6 +6138,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -6108,9 +6160,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 29.22295800090069,
+            "latency_ms": 32.56370799863362,
             "generation_ms": 0.0,
-            "execution_ms": 29.22295800090069,
+            "execution_ms": 32.56370799863362,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6156,7 +6208,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -6169,16 +6222,16 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5146,
-            "recall@10": 0.4444,
+            "ndcg@10": 0.6208,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 29.323749999093707,
+            "latency_ms": 29.172334001486888,
             "generation_ms": 0.0,
-            "execution_ms": 29.323749999093707,
+            "execution_ms": 29.172334001486888,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6222,6 +6275,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -6235,16 +6289,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4125,
-            "recall@10": 0.25,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 25.123125000391155,
+            "latency_ms": 23.726375002297573,
             "generation_ms": 0.0,
-            "execution_ms": 25.123125000391155,
+            "execution_ms": 23.726375002297573,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6285,6 +6339,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -6297,16 +6352,16 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 27.381124999010353,
+            "latency_ms": 29.908583001088118,
             "generation_ms": 0.0,
-            "execution_ms": 27.381124999010353,
+            "execution_ms": 29.908583001088118,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6351,7 +6406,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -6364,16 +6420,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 28.868625000541215,
+            "latency_ms": 26.00262499981909,
             "generation_ms": 0.0,
-            "execution_ms": 28.868625000541215,
+            "execution_ms": 26.00262499981909,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6414,6 +6470,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -6429,16 +6486,16 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6685,
-            "recall@10": 0.5714,
+            "ndcg@10": 0.6151,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 30.584000000089873,
+            "latency_ms": 34.18870899986359,
             "generation_ms": 0.0,
-            "execution_ms": 30.584000000089873,
+            "execution_ms": 34.18870899986359,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6504,9 +6561,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 31.213334001222393,
+            "latency_ms": 28.77762500065728,
             "generation_ms": 0.0,
-            "execution_ms": 31.213334001222393,
+            "execution_ms": 28.77762500065728,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6546,6 +6603,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -6564,18 +6622,18 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.1513,
+            "recall@10": 0.1667,
+            "mrr@10": 0.3333,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
               "v3-approval-decoy-0001"
             ]
           },
           "stats": {
-            "latency_ms": 28.00424999986717,
+            "latency_ms": 30.4470000010042,
             "generation_ms": 0.0,
-            "execution_ms": 28.00424999986717,
+            "execution_ms": 30.4470000010042,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6616,6 +6674,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -6634,8 +6695,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6063,
-            "recall@10": 0.5556,
+            "ndcg@10": 0.5677,
+            "recall@10": 0.4167,
             "mrr@10": 1.0,
             "hard_negative_count@10": 2,
             "hard_negative_doc_ids@10": [
@@ -6644,9 +6705,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 26.87241700004961,
+            "latency_ms": 26.482165998459095,
             "generation_ms": 0.0,
-            "execution_ms": 26.87241700004961,
+            "execution_ms": 26.482165998459095,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6709,9 +6770,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 31.65462499964633,
+            "latency_ms": 32.828499999595806,
             "generation_ms": 0.0,
-            "execution_ms": 31.65462499964633,
+            "execution_ms": 32.828499999595806,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6772,9 +6833,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 26.85100000053353,
+            "latency_ms": 25.959334001527168,
             "generation_ms": 0.0,
-            "execution_ms": 26.85100000053353,
+            "execution_ms": 25.959334001527168,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6835,9 +6896,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 26.960125000186963,
+            "latency_ms": 25.616333001380553,
             "generation_ms": 0.0,
-            "execution_ms": 26.960125000186963,
+            "execution_ms": 25.616333001380553,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6877,6 +6938,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -6891,16 +6953,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5531,
-            "recall@10": 0.4,
+            "ndcg@10": 0.5846,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 28.80083300078695,
+            "latency_ms": 31.12604199850466,
             "generation_ms": 0.0,
-            "execution_ms": 28.80083300078695,
+            "execution_ms": 31.12604199850466,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -6962,9 +7024,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 29.019749999861233,
+            "latency_ms": 25.105666998570086,
             "generation_ms": 0.0,
-            "execution_ms": 29.019749999861233,
+            "execution_ms": 25.105666998570086,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7006,7 +7068,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -7024,9 +7087,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 24.893166999390814,
+            "latency_ms": 23.35066599698621,
             "generation_ms": 0.0,
-            "execution_ms": 24.893166999390814,
+            "execution_ms": 23.35066599698621,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7091,9 +7154,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 26.36112499931187,
+            "latency_ms": 24.145457999111386,
             "generation_ms": 0.0,
-            "execution_ms": 26.36112499931187,
+            "execution_ms": 24.145457999111386,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7133,6 +7196,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -7154,9 +7218,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 31.95837500061316,
+            "latency_ms": 29.577666999102803,
             "generation_ms": 0.0,
-            "execution_ms": 31.95837500061316,
+            "execution_ms": 29.577666999102803,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7228,9 +7292,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 28.28991699971084,
+            "latency_ms": 26.96083399860072,
             "generation_ms": 0.0,
-            "execution_ms": 28.28991699971084,
+            "execution_ms": 26.96083399860072,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7272,8 +7336,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -7285,16 +7351,16 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0911,
-            "recall@10": 0.1667,
+            "ndcg@10": 0.0761,
+            "recall@10": 0.125,
             "mrr@10": 0.1111,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 28.798792000088724,
+            "latency_ms": 27.904999999009306,
             "generation_ms": 0.0,
-            "execution_ms": 28.798792000088724,
+            "execution_ms": 27.904999999009306,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7341,7 +7407,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -7355,16 +7422,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 26.01558300011675,
+            "latency_ms": 26.61137500035693,
             "generation_ms": 0.0,
-            "execution_ms": 26.01558300011675,
+            "execution_ms": 26.61137500035693,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7428,9 +7495,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 29.368666000664234,
+            "latency_ms": 26.406291999592213,
             "generation_ms": 0.0,
-            "execution_ms": 29.368666000664234,
+            "execution_ms": 26.406291999592213,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7497,9 +7564,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 28.62954200099921,
+            "latency_ms": 33.04162499989616,
             "generation_ms": 0.0,
-            "execution_ms": 28.62954200099921,
+            "execution_ms": 33.04162499989616,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7559,9 +7626,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 29.356709001149284,
+            "latency_ms": 27.15462500054855,
             "generation_ms": 0.0,
-            "execution_ms": 29.356709001149284,
+            "execution_ms": 27.15462500054855,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7623,9 +7690,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 29.085084001053474,
+            "latency_ms": 31.465249998291256,
             "generation_ms": 0.0,
-            "execution_ms": 29.085084001053474,
+            "execution_ms": 31.465249998291256,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7685,9 +7752,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 24.852792001183843,
+            "latency_ms": 24.921874999563443,
             "generation_ms": 0.0,
-            "execution_ms": 24.852792001183843,
+            "execution_ms": 24.921874999563443,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7749,9 +7816,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 30.229999998482526,
+            "latency_ms": 31.92500000295695,
             "generation_ms": 0.0,
-            "execution_ms": 30.229999998482526,
+            "execution_ms": 31.92500000295695,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7810,9 +7877,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 27.805499999885797,
+            "latency_ms": 25.427458000194747,
             "generation_ms": 0.0,
-            "execution_ms": 27.805499999885797,
+            "execution_ms": 25.427458000194747,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7867,9 +7934,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 25.03604200137488,
+            "latency_ms": 28.534457997011486,
             "generation_ms": 0.0,
-            "execution_ms": 25.03604200137488,
+            "execution_ms": 28.534457997011486,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7924,9 +7991,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 29.037667000011425,
+            "latency_ms": 27.35575000042445,
             "generation_ms": 0.0,
-            "execution_ms": 29.037667000011425,
+            "execution_ms": 27.35575000042445,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -7986,9 +8053,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 28.735750000123517,
+            "latency_ms": 28.57916699940688,
             "generation_ms": 0.0,
-            "execution_ms": 28.735750000123517,
+            "execution_ms": 28.57916699940688,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8033,6 +8100,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -8050,9 +8118,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 25.78683300089324,
+            "latency_ms": 25.9635000002163,
             "generation_ms": 0.0,
-            "execution_ms": 25.78683300089324,
+            "execution_ms": 25.9635000002163,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8077,21 +8145,21 @@
     "bm25_cross_encoder_rerank": {
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2153,
-        "recall@10": 0.1857,
-        "mrr@10": 0.4972,
+        "ndcg@10": 0.2577,
+        "recall@10": 0.2018,
+        "mrr@10": 0.6377,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2258,
         "hard_negative_count@10": 0.2903,
         "hard_negative_intrusion_rate@10": 0.029
       },
       "latency": {
-        "total_wall_seconds": 97.1423,
-        "mean_latency_ms": 3133.623,
-        "p50_latency_ms": 3129.001,
-        "p95_latency_ms": 3343.688,
+        "total_wall_seconds": 160.2143,
+        "mean_latency_ms": 5168.203,
+        "p50_latency_ms": 5186.361,
+        "p95_latency_ms": 5734.619,
         "mean_generation_ms": 0.0,
-        "mean_execution_ms": 3133.623,
+        "mean_execution_ms": 5168.203,
         "mean_query_understanding_calls": 0.0,
         "mean_entity_linking_calls": 0.0,
         "mean_query_rewrite_calls": 0.0,
@@ -8121,6 +8189,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -8135,8 +8204,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4704,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4197,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -8144,9 +8213,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3720.39491599935,
+            "latency_ms": 5340.868082999805,
             "generation_ms": 0.0,
-            "execution_ms": 3720.39491599935,
+            "execution_ms": 5340.868082999805,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8192,7 +8261,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -8205,16 +8275,16 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2204,
-            "recall@10": 0.3333,
-            "mrr@10": 0.1429,
+            "ndcg@10": 0.4265,
+            "recall@10": 0.4,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3240.5908750006347,
+            "latency_ms": 4799.221916000533,
             "generation_ms": 0.0,
-            "execution_ms": 3240.5908750006347,
+            "execution_ms": 4799.221916000533,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8258,6 +8328,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -8271,16 +8342,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.235,
+            "recall@10": 0.1111,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3084.5921250001993,
+            "latency_ms": 4489.606666997133,
             "generation_ms": 0.0,
-            "execution_ms": 3084.5921250001993,
+            "execution_ms": 4489.606666997133,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8321,6 +8392,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -8340,9 +8412,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3129.0005829996517,
+            "latency_ms": 4818.6271249978745,
             "generation_ms": 0.0,
-            "execution_ms": 3129.0005829996517,
+            "execution_ms": 4818.6271249978745,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8387,7 +8459,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -8400,16 +8473,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3072.2660000010364,
+            "latency_ms": 4816.3325839996105,
             "generation_ms": 0.0,
-            "execution_ms": 3072.2660000010364,
+            "execution_ms": 4816.3325839996105,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8450,6 +8523,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -8465,8 +8539,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1734,
-            "recall@10": 0.1429,
+            "ndcg@10": 0.2685,
+            "recall@10": 0.25,
             "mrr@10": 0.5,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -8474,9 +8548,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3027.097832999061,
+            "latency_ms": 4827.510625000286,
             "generation_ms": 0.0,
-            "execution_ms": 3027.097832999061,
+            "execution_ms": 4827.510625000286,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8542,9 +8616,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3222.8839170002175,
+            "latency_ms": 5199.207666999428,
             "generation_ms": 0.0,
-            "execution_ms": 3222.8839170002175,
+            "execution_ms": 5199.207666999428,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8584,6 +8658,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -8602,16 +8677,16 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3166.0135420006554,
+            "latency_ms": 5191.374458998325,
             "generation_ms": 0.0,
-            "execution_ms": 3166.0135420006554,
+            "execution_ms": 5191.374458998325,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8652,6 +8727,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -8670,8 +8748,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3025,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.2832,
+            "recall@10": 0.25,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -8681,9 +8759,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3140.7093750003696,
+            "latency_ms": 5112.138292002783,
             "generation_ms": 0.0,
-            "execution_ms": 3140.7093750003696,
+            "execution_ms": 5112.138292002783,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8746,9 +8824,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3012.54974999938,
+            "latency_ms": 4950.894292000157,
             "generation_ms": 0.0,
-            "execution_ms": 3012.54974999938,
+            "execution_ms": 4950.894292000157,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8811,9 +8889,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 2938.6082089986303,
+            "latency_ms": 4844.9557080020895,
             "generation_ms": 0.0,
-            "execution_ms": 2938.6082089986303,
+            "execution_ms": 4844.9557080020895,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8874,9 +8952,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2900.7523330001277,
+            "latency_ms": 4800.29737500081,
             "generation_ms": 0.0,
-            "execution_ms": 2900.7523330001277,
+            "execution_ms": 4800.29737500081,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -8916,6 +8994,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -8930,16 +9009,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2934.9678329999733,
+            "latency_ms": 5133.241125000495,
             "generation_ms": 0.0,
-            "execution_ms": 2934.9678329999733,
+            "execution_ms": 5133.241125000495,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9001,9 +9080,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3122.992250000607,
+            "latency_ms": 5216.862792000029,
             "generation_ms": 0.0,
-            "execution_ms": 3122.992250000607,
+            "execution_ms": 5216.862792000029,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9045,7 +9124,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -9063,9 +9143,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3001.806166001188,
+            "latency_ms": 4995.864249998704,
             "generation_ms": 0.0,
-            "execution_ms": 3001.806166001188,
+            "execution_ms": 4995.864249998704,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9128,9 +9208,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2954.811333998805,
+            "latency_ms": 4924.972791999608,
             "generation_ms": 0.0,
-            "execution_ms": 2954.811333998805,
+            "execution_ms": 4924.972791999608,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9170,6 +9250,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -9184,16 +9265,16 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3343.6878329994215,
+            "latency_ms": 5757.224249999126,
             "generation_ms": 0.0,
-            "execution_ms": 3343.6878329994215,
+            "execution_ms": 5757.224249999126,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9265,9 +9346,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3188.3496249993186,
+            "latency_ms": 5350.646415998199,
             "generation_ms": 0.0,
-            "execution_ms": 3188.3496249993186,
+            "execution_ms": 5350.646415998199,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9309,8 +9390,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -9322,16 +9405,16 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4297,
+            "ndcg@10": 0.6121,
             "recall@10": 0.5,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3109.6719590004795,
+            "latency_ms": 5337.780707999627,
             "generation_ms": 0.0,
-            "execution_ms": 3109.6719590004795,
+            "execution_ms": 5337.780707999627,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9378,7 +9461,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -9392,16 +9476,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3185.7453330012504,
+            "latency_ms": 5375.925541997276,
             "generation_ms": 0.0,
-            "execution_ms": 3185.7453330012504,
+            "execution_ms": 5375.925541997276,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9465,9 +9549,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 2991.0143750003044,
+            "latency_ms": 5049.384875001124,
             "generation_ms": 0.0,
-            "execution_ms": 2991.0143750003044,
+            "execution_ms": 5049.384875001124,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9532,9 +9616,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2827.6835409997148,
+            "latency_ms": 4716.251999998349,
             "generation_ms": 0.0,
-            "execution_ms": 2827.6835409997148,
+            "execution_ms": 4716.251999998349,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9594,9 +9678,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3078.0227089999244,
+            "latency_ms": 5186.360540999885,
             "generation_ms": 0.0,
-            "execution_ms": 3078.0227089999244,
+            "execution_ms": 5186.360540999885,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9658,9 +9742,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3212.7123749996827,
+            "latency_ms": 5513.984917000926,
             "generation_ms": 0.0,
-            "execution_ms": 3212.7123749996827,
+            "execution_ms": 5513.984917000926,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9718,9 +9802,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3189.0277080001397,
+            "latency_ms": 5382.816459001333,
             "generation_ms": 0.0,
-            "execution_ms": 3189.0277080001397,
+            "execution_ms": 5382.816459001333,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9782,9 +9866,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3433.823041999858,
+            "latency_ms": 5796.110625000438,
             "generation_ms": 0.0,
-            "execution_ms": 3433.823041999858,
+            "execution_ms": 5796.110625000438,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9843,9 +9927,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3216.8620000011288,
+            "latency_ms": 5417.059082999913,
             "generation_ms": 0.0,
-            "execution_ms": 3216.8620000011288,
+            "execution_ms": 5417.059082999913,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9900,9 +9984,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3235.9764169996197,
+            "latency_ms": 5335.931249999703,
             "generation_ms": 0.0,
-            "execution_ms": 3235.9764169996197,
+            "execution_ms": 5335.931249999703,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -9959,9 +10043,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3260.8659579982486,
+            "latency_ms": 5696.672041001875,
             "generation_ms": 0.0,
-            "execution_ms": 3260.8659579982486,
+            "execution_ms": 5696.672041001875,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10021,9 +10105,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3312.124959000357,
+            "latency_ms": 5734.619374998147,
             "generation_ms": 0.0,
-            "execution_ms": 3312.124959000357,
+            "execution_ms": 5734.619374998147,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10068,6 +10152,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -10085,9 +10170,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2886.7015420000826,
+            "latency_ms": 5101.557707999746,
             "generation_ms": 0.0,
-            "execution_ms": 2886.7015420000826,
+            "execution_ms": 5101.557707999746,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10112,21 +10197,21 @@
     "dense_cross_encoder_rerank": {
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2263,
-        "recall@10": 0.1821,
-        "mrr@10": 0.5248,
+        "ndcg@10": 0.2689,
+        "recall@10": 0.1986,
+        "mrr@10": 0.6659,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2258,
         "hard_negative_count@10": 0.2903,
         "hard_negative_intrusion_rate@10": 0.029
       },
       "latency": {
-        "total_wall_seconds": 97.327,
-        "mean_latency_ms": 3139.58,
-        "p50_latency_ms": 3125.03,
-        "p95_latency_ms": 3336.318,
+        "total_wall_seconds": 125.5449,
+        "mean_latency_ms": 4049.835,
+        "p50_latency_ms": 3321.725,
+        "p95_latency_ms": 5613.105,
         "mean_generation_ms": 0.0,
-        "mean_execution_ms": 3139.58,
+        "mean_execution_ms": 4049.835,
         "mean_query_understanding_calls": 0.0,
         "mean_entity_linking_calls": 0.0,
         "mean_query_rewrite_calls": 0.0,
@@ -10156,6 +10241,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -10170,8 +10256,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4704,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4197,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -10179,9 +10265,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3298.2881249990896,
+            "latency_ms": 5613.104625001142,
             "generation_ms": 0.0,
-            "execution_ms": 3298.2881249990896,
+            "execution_ms": 5613.104625001142,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10227,7 +10313,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -10240,16 +10327,16 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1421,
-            "recall@10": 0.2222,
-            "mrr@10": 0.125,
+            "ndcg@10": 0.3531,
+            "recall@10": 0.3,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3172.334917000626,
+            "latency_ms": 5573.235667001427,
             "generation_ms": 0.0,
-            "execution_ms": 3172.334917000626,
+            "execution_ms": 5573.235667001427,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10293,6 +10380,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -10306,16 +10394,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.235,
+            "recall@10": 0.1111,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2983.5667079987616,
+            "latency_ms": 5049.845875000756,
             "generation_ms": 0.0,
-            "execution_ms": 2983.5667079987616,
+            "execution_ms": 5049.845875000756,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10356,6 +10444,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -10375,9 +10464,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3123.8192079999862,
+            "latency_ms": 5444.834833000641,
             "generation_ms": 0.0,
-            "execution_ms": 3123.8192079999862,
+            "execution_ms": 5444.834833000641,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10422,7 +10511,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -10435,16 +10525,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3028.9621249994525,
+            "latency_ms": 5414.616958001716,
             "generation_ms": 0.0,
-            "execution_ms": 3028.9621249994525,
+            "execution_ms": 5414.616958001716,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10485,6 +10575,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -10500,8 +10591,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1734,
-            "recall@10": 0.1429,
+            "ndcg@10": 0.2685,
+            "recall@10": 0.25,
             "mrr@10": 0.5,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -10509,9 +10600,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3112.34924999917,
+            "latency_ms": 5509.0700420005305,
             "generation_ms": 0.0,
-            "execution_ms": 3112.34924999917,
+            "execution_ms": 5509.0700420005305,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10577,9 +10668,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3182.3898340007872,
+            "latency_ms": 5556.266958003107,
             "generation_ms": 0.0,
-            "execution_ms": 3182.3898340007872,
+            "execution_ms": 5556.266958003107,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10619,6 +10710,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -10637,16 +10729,16 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3348.0125839996617,
+            "latency_ms": 5743.625832998077,
             "generation_ms": 0.0,
-            "execution_ms": 3348.0125839996617,
+            "execution_ms": 5743.625832998077,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10687,6 +10779,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -10705,8 +10800,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3025,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.2832,
+            "recall@10": 0.25,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -10716,9 +10811,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 2978.8784159991337,
+            "latency_ms": 5254.6044170012465,
             "generation_ms": 0.0,
-            "execution_ms": 2978.8784159991337,
+            "execution_ms": 5254.6044170012465,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10781,9 +10876,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3185.074541999711,
+            "latency_ms": 5659.159790997364,
             "generation_ms": 0.0,
-            "execution_ms": 3185.074541999711,
+            "execution_ms": 5659.159790997364,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10846,9 +10941,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3104.0689170004043,
+            "latency_ms": 5452.619666997634,
             "generation_ms": 0.0,
-            "execution_ms": 3104.0689170004043,
+            "execution_ms": 5452.619666997634,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10909,9 +11004,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3019.700250000824,
+            "latency_ms": 5103.127834001498,
             "generation_ms": 0.0,
-            "execution_ms": 3019.700250000824,
+            "execution_ms": 5103.127834001498,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -10951,6 +11046,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -10965,16 +11061,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3013.2226670011732,
+            "latency_ms": 3059.5753329980653,
             "generation_ms": 0.0,
-            "execution_ms": 3013.2226670011732,
+            "execution_ms": 3059.5753329980653,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11036,9 +11132,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2980.509749999328,
+            "latency_ms": 2983.12750000332,
             "generation_ms": 0.0,
-            "execution_ms": 2980.509749999328,
+            "execution_ms": 2983.12750000332,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11080,7 +11176,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -11098,9 +11195,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2975.9652499997173,
+            "latency_ms": 2939.3816250012605,
             "generation_ms": 0.0,
-            "execution_ms": 2975.9652499997173,
+            "execution_ms": 2939.3816250012605,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11163,9 +11260,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2919.1724579995935,
+            "latency_ms": 2935.3638749998936,
             "generation_ms": 0.0,
-            "execution_ms": 2919.1724579995935,
+            "execution_ms": 2935.3638749998936,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11205,6 +11302,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -11219,16 +11317,16 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3263.1696250009554,
+            "latency_ms": 3290.45566700006,
             "generation_ms": 0.0,
-            "execution_ms": 3263.1696250009554,
+            "execution_ms": 3290.45566700006,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11300,9 +11398,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3099.9936659991363,
+            "latency_ms": 3098.1071250025707,
             "generation_ms": 0.0,
-            "execution_ms": 3099.9936659991363,
+            "execution_ms": 3098.1071250025707,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11344,8 +11442,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -11357,16 +11457,16 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4297,
+            "ndcg@10": 0.6121,
             "recall@10": 0.5,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3192.371417000686,
+            "latency_ms": 3282.1385829993233,
             "generation_ms": 0.0,
-            "execution_ms": 3192.371417000686,
+            "execution_ms": 3282.1385829993233,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11413,7 +11513,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -11427,16 +11528,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2943.435541999861,
+            "latency_ms": 2958.4991659976367,
             "generation_ms": 0.0,
-            "execution_ms": 2943.435541999861,
+            "execution_ms": 2958.4991659976367,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11500,9 +11601,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3262.9311670007155,
+            "latency_ms": 3257.8448330023093,
             "generation_ms": 0.0,
-            "execution_ms": 3262.9311670007155,
+            "execution_ms": 3257.8448330023093,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11567,9 +11668,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2975.7863340000767,
+            "latency_ms": 2979.57574999964,
             "generation_ms": 0.0,
-            "execution_ms": 2975.7863340000767,
+            "execution_ms": 2979.57574999964,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11629,9 +11730,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3142.184750000524,
+            "latency_ms": 3217.619041999569,
             "generation_ms": 0.0,
-            "execution_ms": 3142.184750000524,
+            "execution_ms": 3217.619041999569,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11693,9 +11794,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3336.317750001399,
+            "latency_ms": 3366.1228340024536,
             "generation_ms": 0.0,
-            "execution_ms": 3336.317750001399,
+            "execution_ms": 3366.1228340024536,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11753,9 +11854,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3312.392457999522,
+            "latency_ms": 3339.2132920016593,
             "generation_ms": 0.0,
-            "execution_ms": 3312.392457999522,
+            "execution_ms": 3339.2132920016593,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11817,9 +11918,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3234.0554170004907,
+            "latency_ms": 3279.4756250004866,
             "generation_ms": 0.0,
-            "execution_ms": 3234.0554170004907,
+            "execution_ms": 3279.4756250004866,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11878,9 +11979,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3382.867124999393,
+            "latency_ms": 3407.228042000497,
             "generation_ms": 0.0,
-            "execution_ms": 3382.867124999393,
+            "execution_ms": 3407.228042000497,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11935,9 +12036,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3125.0300829997286,
+            "latency_ms": 3123.7990830013587,
             "generation_ms": 0.0,
-            "execution_ms": 3125.0300829997286,
+            "execution_ms": 3123.7990830013587,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -11994,9 +12095,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3308.5862919997453,
+            "latency_ms": 3321.725084002537,
             "generation_ms": 0.0,
-            "execution_ms": 3308.5862919997453,
+            "execution_ms": 3321.725084002537,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12056,9 +12157,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3219.455458000084,
+            "latency_ms": 3241.504208999686,
             "generation_ms": 0.0,
-            "execution_ms": 3219.455458000084,
+            "execution_ms": 3241.504208999686,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12103,6 +12204,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -12120,9 +12222,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3102.076582999871,
+            "latency_ms": 3090.0266249991546,
             "generation_ms": 0.0,
-            "execution_ms": 3102.076582999871,
+            "execution_ms": 3090.0266249991546,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12147,21 +12249,21 @@
     "hybrid_cross_encoder_rerank": {
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2288,
-        "recall@10": 0.1857,
-        "mrr@10": 0.5254,
+        "ndcg@10": 0.2712,
+        "recall@10": 0.2018,
+        "mrr@10": 0.6659,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2258,
         "hard_negative_count@10": 0.2903,
         "hard_negative_intrusion_rate@10": 0.029
       },
       "latency": {
-        "total_wall_seconds": 97.4169,
-        "mean_latency_ms": 3142.481,
-        "p50_latency_ms": 3156.278,
-        "p95_latency_ms": 3338.314,
+        "total_wall_seconds": 97.7795,
+        "mean_latency_ms": 3154.177,
+        "p50_latency_ms": 3151.402,
+        "p95_latency_ms": 3358.361,
         "mean_generation_ms": 0.0,
-        "mean_execution_ms": 3142.481,
+        "mean_execution_ms": 3154.177,
         "mean_query_understanding_calls": 0.0,
         "mean_entity_linking_calls": 0.0,
         "mean_query_rewrite_calls": 0.0,
@@ -12191,6 +12293,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -12205,8 +12308,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4704,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4197,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -12214,9 +12317,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3321.1174589996517,
+            "latency_ms": 3342.0792920005624,
             "generation_ms": 0.0,
-            "execution_ms": 3321.1174589996517,
+            "execution_ms": 3342.0792920005624,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12262,7 +12365,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -12275,16 +12379,16 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.217,
-            "recall@10": 0.3333,
-            "mrr@10": 0.1429,
+            "ndcg@10": 0.4233,
+            "recall@10": 0.4,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3211.118916999112,
+            "latency_ms": 3212.409749998187,
             "generation_ms": 0.0,
-            "execution_ms": 3211.118916999112,
+            "execution_ms": 3212.409749998187,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12328,6 +12432,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -12341,16 +12446,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.235,
+            "recall@10": 0.1111,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2989.8312090008403,
+            "latency_ms": 3011.5352499997243,
             "generation_ms": 0.0,
-            "execution_ms": 2989.8312090008403,
+            "execution_ms": 3011.5352499997243,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12391,6 +12496,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -12410,9 +12516,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3156.2783339995804,
+            "latency_ms": 3151.24883399767,
             "generation_ms": 0.0,
-            "execution_ms": 3156.2783339995804,
+            "execution_ms": 3151.24883399767,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12457,7 +12563,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -12470,16 +12577,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3024.21833399967,
+            "latency_ms": 3044.1256670019357,
             "generation_ms": 0.0,
-            "execution_ms": 3024.21833399967,
+            "execution_ms": 3044.1256670019357,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12520,6 +12627,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -12535,8 +12643,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1734,
-            "recall@10": 0.1429,
+            "ndcg@10": 0.2685,
+            "recall@10": 0.25,
             "mrr@10": 0.5,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -12544,9 +12652,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3115.983583000343,
+            "latency_ms": 3121.1235410009976,
             "generation_ms": 0.0,
-            "execution_ms": 3115.983583000343,
+            "execution_ms": 3121.1235410009976,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12612,9 +12720,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3167.2317079992354,
+            "latency_ms": 3181.1237080000865,
             "generation_ms": 0.0,
-            "execution_ms": 3167.2317079992354,
+            "execution_ms": 3181.1237080000865,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12654,6 +12762,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -12672,16 +12781,16 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3338.3138330009388,
+            "latency_ms": 3301.8286250007804,
             "generation_ms": 0.0,
-            "execution_ms": 3338.3138330009388,
+            "execution_ms": 3301.8286250007804,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12722,6 +12831,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -12740,8 +12852,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3025,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.2832,
+            "recall@10": 0.25,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -12751,9 +12863,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3112.644791999628,
+            "latency_ms": 3160.670375000336,
             "generation_ms": 0.0,
-            "execution_ms": 3112.644791999628,
+            "execution_ms": 3160.670375000336,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12816,9 +12928,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3087.8908750000846,
+            "latency_ms": 3062.9879999978584,
             "generation_ms": 0.0,
-            "execution_ms": 3087.8908750000846,
+            "execution_ms": 3062.9879999978584,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12881,9 +12993,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3048.7926669993612,
+            "latency_ms": 3051.1491670004034,
             "generation_ms": 0.0,
-            "execution_ms": 3048.7926669993612,
+            "execution_ms": 3051.1491670004034,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12944,9 +13056,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2928.7678339987906,
+            "latency_ms": 2945.8972080028616,
             "generation_ms": 0.0,
-            "execution_ms": 2928.7678339987906,
+            "execution_ms": 2945.8972080028616,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -12986,6 +13098,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -13000,16 +13113,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2964.472792000379,
+            "latency_ms": 2979.454917000112,
             "generation_ms": 0.0,
-            "execution_ms": 2964.472792000379,
+            "execution_ms": 2979.454917000112,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13071,9 +13184,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2990.3103340002417,
+            "latency_ms": 3018.8581669972336,
             "generation_ms": 0.0,
-            "execution_ms": 2990.3103340002417,
+            "execution_ms": 3018.8581669972336,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13115,7 +13228,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -13133,9 +13247,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3054.763374999311,
+            "latency_ms": 3070.271624997986,
             "generation_ms": 0.0,
-            "execution_ms": 3054.763374999311,
+            "execution_ms": 3070.271624997986,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13198,9 +13312,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2879.7035420011525,
+            "latency_ms": 2896.9855409995944,
             "generation_ms": 0.0,
-            "execution_ms": 2879.7035420011525,
+            "execution_ms": 2896.9855409995944,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13240,6 +13354,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -13254,16 +13369,16 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3296.4819579992763,
+            "latency_ms": 3276.0221660028037,
             "generation_ms": 0.0,
-            "execution_ms": 3296.4819579992763,
+            "execution_ms": 3276.0221660028037,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13335,9 +13450,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3149.747291001404,
+            "latency_ms": 3151.4017500012415,
             "generation_ms": 0.0,
-            "execution_ms": 3149.747291001404,
+            "execution_ms": 3151.4017500012415,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13379,8 +13494,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -13392,16 +13509,16 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4297,
+            "ndcg@10": 0.6121,
             "recall@10": 0.5,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3158.6856249996345,
+            "latency_ms": 3147.3180419998243,
             "generation_ms": 0.0,
-            "execution_ms": 3158.6856249996345,
+            "execution_ms": 3147.3180419998243,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13448,7 +13565,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -13462,16 +13580,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3128.3618329998717,
+            "latency_ms": 3139.0292920004867,
             "generation_ms": 0.0,
-            "execution_ms": 3128.3618329998717,
+            "execution_ms": 3139.0292920004867,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13535,9 +13653,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3200.021000000561,
+            "latency_ms": 3204.818250000244,
             "generation_ms": 0.0,
-            "execution_ms": 3200.021000000561,
+            "execution_ms": 3204.818250000244,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13602,9 +13720,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2850.328165999599,
+            "latency_ms": 2840.4841660012607,
             "generation_ms": 0.0,
-            "execution_ms": 2850.328165999599,
+            "execution_ms": 2840.4841660012607,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13664,9 +13782,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3173.876916998779,
+            "latency_ms": 3201.22741600062,
             "generation_ms": 0.0,
-            "execution_ms": 3173.876916998779,
+            "execution_ms": 3201.22741600062,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13728,9 +13846,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3290.237041999717,
+            "latency_ms": 3322.334292002779,
             "generation_ms": 0.0,
-            "execution_ms": 3290.237041999717,
+            "execution_ms": 3322.334292002779,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13788,9 +13906,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3344.5694589991035,
+            "latency_ms": 3363.7919159991725,
             "generation_ms": 0.0,
-            "execution_ms": 3344.5694589991035,
+            "execution_ms": 3363.7919159991725,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13852,9 +13970,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3353.6613340002077,
+            "latency_ms": 3380.9024170004705,
             "generation_ms": 0.0,
-            "execution_ms": 3353.6613340002077,
+            "execution_ms": 3380.9024170004705,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13913,9 +14031,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3291.0591669988207,
+            "latency_ms": 3328.395583001111,
             "generation_ms": 0.0,
-            "execution_ms": 3291.0591669988207,
+            "execution_ms": 3328.395583001111,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -13970,9 +14088,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3243.6855409996497,
+            "latency_ms": 3252.8352919980534,
             "generation_ms": 0.0,
-            "execution_ms": 3243.6855409996497,
+            "execution_ms": 3252.8352919980534,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -14029,9 +14147,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3305.814665998696,
+            "latency_ms": 3358.3607909968123,
             "generation_ms": 0.0,
-            "execution_ms": 3305.814665998696,
+            "execution_ms": 3358.3607909968123,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -14091,9 +14209,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3283.245374999751,
+            "latency_ms": 3285.3439999998955,
             "generation_ms": 0.0,
-            "execution_ms": 3283.245374999751,
+            "execution_ms": 3285.3439999998955,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -14138,6 +14256,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -14155,9 +14274,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2955.685250000897,
+            "latency_ms": 2975.47512500023,
             "generation_ms": 0.0,
-            "execution_ms": 2955.685250000897,
+            "execution_ms": 2975.47512500023,
             "query_understanding_calls": 0,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 0,
@@ -14182,21 +14301,21 @@
     "query_rewrite_hybrid_cross_encoder": {
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2288,
-        "recall@10": 0.1857,
-        "mrr@10": 0.5254,
+        "ndcg@10": 0.2712,
+        "recall@10": 0.2018,
+        "mrr@10": 0.6659,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2258,
         "hard_negative_count@10": 0.2903,
         "hard_negative_intrusion_rate@10": 0.029
       },
       "latency": {
-        "total_wall_seconds": 99.496,
-        "mean_latency_ms": 3209.55,
-        "p50_latency_ms": 3206.888,
-        "p95_latency_ms": 3400.66,
+        "total_wall_seconds": 101.3932,
+        "mean_latency_ms": 3270.75,
+        "p50_latency_ms": 3263.012,
+        "p95_latency_ms": 3496.405,
         "mean_generation_ms": 0.0,
-        "mean_execution_ms": 3209.55,
+        "mean_execution_ms": 3270.75,
         "mean_query_understanding_calls": 1.0,
         "mean_entity_linking_calls": 0.774,
         "mean_query_rewrite_calls": 1.0,
@@ -14226,6 +14345,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -14240,8 +14360,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4704,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4197,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -14249,9 +14369,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3400.660291999884,
+            "latency_ms": 3673.132916999748,
             "generation_ms": 0.0,
-            "execution_ms": 3400.660291999884,
+            "execution_ms": 3673.132916999748,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -14301,7 +14421,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -14314,16 +14435,16 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.217,
-            "recall@10": 0.3333,
-            "mrr@10": 0.1429,
+            "ndcg@10": 0.4233,
+            "recall@10": 0.4,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3333.9159170009225,
+            "latency_ms": 3331.1960419996467,
             "generation_ms": 0.0,
-            "execution_ms": 3333.9159170009225,
+            "execution_ms": 3331.1960419996467,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -14371,6 +14492,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -14384,16 +14506,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.235,
+            "recall@10": 0.1111,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3089.683624999452,
+            "latency_ms": 3336.524124999414,
             "generation_ms": 0.0,
-            "execution_ms": 3089.683624999452,
+            "execution_ms": 3336.524124999414,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -14438,6 +14560,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -14457,9 +14580,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3206.8880000006175,
+            "latency_ms": 3459.792416997516,
             "generation_ms": 0.0,
-            "execution_ms": 3206.8880000006175,
+            "execution_ms": 3459.792416997516,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -14508,7 +14631,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -14521,16 +14645,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3106.686625000293,
+            "latency_ms": 3101.750166999409,
             "generation_ms": 0.0,
-            "execution_ms": 3106.686625000293,
+            "execution_ms": 3101.750166999409,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -14575,6 +14699,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -14590,8 +14715,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1734,
-            "recall@10": 0.1429,
+            "ndcg@10": 0.2685,
+            "recall@10": 0.25,
             "mrr@10": 0.5,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -14599,9 +14724,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3189.283333998901,
+            "latency_ms": 3232.123917001445,
             "generation_ms": 0.0,
-            "execution_ms": 3189.283333998901,
+            "execution_ms": 3232.123917001445,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -14671,9 +14796,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3273.251041999174,
+            "latency_ms": 3537.5418330004322,
             "generation_ms": 0.0,
-            "execution_ms": 3273.251041999174,
+            "execution_ms": 3537.5418330004322,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -14717,6 +14842,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -14735,16 +14861,16 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3315.5483749997074,
+            "latency_ms": 3358.4820830001263,
             "generation_ms": 0.0,
-            "execution_ms": 3315.5483749997074,
+            "execution_ms": 3358.4820830001263,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -14789,6 +14915,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -14807,8 +14936,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3025,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.2832,
+            "recall@10": 0.25,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -14818,9 +14947,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3187.975708000522,
+            "latency_ms": 3186.5955840003153,
             "generation_ms": 0.0,
-            "execution_ms": 3187.975708000522,
+            "execution_ms": 3186.5955840003153,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -14887,9 +15016,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3132.752249999612,
+            "latency_ms": 3163.186334000784,
             "generation_ms": 0.0,
-            "execution_ms": 3132.752249999612,
+            "execution_ms": 3163.186334000784,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -14956,9 +15085,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3096.299791999627,
+            "latency_ms": 3112.3010419978527,
             "generation_ms": 0.0,
-            "execution_ms": 3096.299791999627,
+            "execution_ms": 3112.3010419978527,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -15023,9 +15152,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3071.9273750000866,
+            "latency_ms": 3076.3882499995816,
             "generation_ms": 0.0,
-            "execution_ms": 3071.9273750000866,
+            "execution_ms": 3076.3882499995816,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -15069,6 +15198,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -15083,16 +15213,16 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3028.496875000201,
+            "latency_ms": 3057.8986250002345,
             "generation_ms": 0.0,
-            "execution_ms": 3028.496875000201,
+            "execution_ms": 3057.8986250002345,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -15158,9 +15288,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3051.549875001001,
+            "latency_ms": 3117.7981670007284,
             "generation_ms": 0.0,
-            "execution_ms": 3051.549875001001,
+            "execution_ms": 3117.7981670007284,
             "query_understanding_calls": 1,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 1,
@@ -15206,7 +15336,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -15224,9 +15355,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3062.845832999301,
+            "latency_ms": 3060.20291599998,
             "generation_ms": 0.0,
-            "execution_ms": 3062.845832999301,
+            "execution_ms": 3060.20291599998,
             "query_understanding_calls": 1,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 1,
@@ -15292,9 +15423,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3111.0377080003673,
+            "latency_ms": 3111.051582996879,
             "generation_ms": 0.0,
-            "execution_ms": 3111.0377080003673,
+            "execution_ms": 3111.051582996879,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -15338,6 +15469,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -15352,16 +15484,16 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3266.9789579995268,
+            "latency_ms": 3294.3827919989417,
             "generation_ms": 0.0,
-            "execution_ms": 3266.9789579995268,
+            "execution_ms": 3294.3827919989417,
             "query_understanding_calls": 1,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 1,
@@ -15437,9 +15569,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3219.8117090010783,
+            "latency_ms": 3231.575249999878,
             "generation_ms": 0.0,
-            "execution_ms": 3219.8117090010783,
+            "execution_ms": 3231.575249999878,
             "query_understanding_calls": 1,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 1,
@@ -15485,8 +15617,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -15498,16 +15632,16 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4297,
+            "ndcg@10": 0.6121,
             "recall@10": 0.5,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3190.345500001058,
+            "latency_ms": 3231.78495799948,
             "generation_ms": 0.0,
-            "execution_ms": 3190.345500001058,
+            "execution_ms": 3231.78495799948,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -15558,7 +15692,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -15572,16 +15707,16 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3192.0557499997813,
+            "latency_ms": 3496.405333000439,
             "generation_ms": 0.0,
-            "execution_ms": 3192.0557499997813,
+            "execution_ms": 3496.405333000439,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -15649,9 +15784,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3251.673082999332,
+            "latency_ms": 3282.2849999975006,
             "generation_ms": 0.0,
-            "execution_ms": 3251.673082999332,
+            "execution_ms": 3282.2849999975006,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -15720,9 +15855,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 2958.6936670002615,
+            "latency_ms": 2952.831916001742,
             "generation_ms": 0.0,
-            "execution_ms": 2958.6936670002615,
+            "execution_ms": 2952.831916001742,
             "query_understanding_calls": 1,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 1,
@@ -15786,9 +15921,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3239.0173329986283,
+            "latency_ms": 3263.0121250003867,
             "generation_ms": 0.0,
-            "execution_ms": 3239.0173329986283,
+            "execution_ms": 3263.0121250003867,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -15854,9 +15989,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3313.2596670002386,
+            "latency_ms": 3357.9136669977743,
             "generation_ms": 0.0,
-            "execution_ms": 3313.2596670002386,
+            "execution_ms": 3357.9136669977743,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -15918,9 +16053,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3329.375457999049,
+            "latency_ms": 3351.923333000741,
             "generation_ms": 0.0,
-            "execution_ms": 3329.375457999049,
+            "execution_ms": 3351.923333000741,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -15986,9 +16121,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3470.6322080000973,
+            "latency_ms": 3495.0293750007404,
             "generation_ms": 0.0,
-            "execution_ms": 3470.6322080000973,
+            "execution_ms": 3495.0293750007404,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -16051,9 +16186,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3405.3472920004424,
+            "latency_ms": 3444.5497919987247,
             "generation_ms": 0.0,
-            "execution_ms": 3405.3472920004424,
+            "execution_ms": 3444.5497919987247,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -16112,9 +16247,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3253.2575000004726,
+            "latency_ms": 3261.816041998827,
             "generation_ms": 0.0,
-            "execution_ms": 3253.2575000004726,
+            "execution_ms": 3261.816041998827,
             "query_understanding_calls": 1,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 1,
@@ -16175,9 +16310,9 @@
             ]
           },
           "stats": {
-            "latency_ms": 3390.5415409990383,
+            "latency_ms": 3414.462917000492,
             "generation_ms": 0.0,
-            "execution_ms": 3390.5415409990383,
+            "execution_ms": 3414.462917000492,
             "query_understanding_calls": 1,
             "entity_linking_calls": 0,
             "query_rewrite_calls": 1,
@@ -16241,9 +16376,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3343.6662090007303,
+            "latency_ms": 3371.3314999986324,
             "generation_ms": 0.0,
-            "execution_ms": 3343.6662090007303,
+            "execution_ms": 3371.3314999986324,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -16292,6 +16427,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -16309,9 +16445,9 @@
             "hard_negative_doc_ids@10": []
           },
           "stats": {
-            "latency_ms": 3012.586167000336,
+            "latency_ms": 3027.966458001174,
             "generation_ms": 0.0,
-            "execution_ms": 3012.586167000336,
+            "execution_ms": 3027.966458001174,
             "query_understanding_calls": 1,
             "entity_linking_calls": 1,
             "query_rewrite_calls": 1,
@@ -16344,15 +16480,15 @@
       "label": "Okapi BM25",
       "reference": "Lucene / Elasticsearch / OpenSearch-style sparse lexical retrieval",
       "implementation": "rank_bm25 BM25Okapi over title + body text",
-      "recall@10": 0.235,
-      "ndcg@10": 0.2822,
-      "mrr@10": 0.593,
-      "total_wall_seconds": 0.3326,
-      "mean_latency_ms": 10.73,
-      "p50_latency_ms": 10.45,
-      "p95_latency_ms": 13.722,
+      "recall@10": 0.2387,
+      "ndcg@10": 0.3096,
+      "mrr@10": 0.7006,
+      "total_wall_seconds": 0.3943,
+      "mean_latency_ms": 12.719,
+      "p50_latency_ms": 12.481,
+      "p95_latency_ms": 15.603,
       "mean_generation_ms": 0.0,
-      "mean_execution_ms": 10.73,
+      "mean_execution_ms": 12.719,
       "mean_query_understanding_calls": 0.0,
       "mean_entity_linking_calls": 0.0,
       "mean_query_rewrite_calls": 0.0,
@@ -16366,15 +16502,15 @@
       "label": "Weighted BM25 + dense hybrid",
       "reference": "Common OpenSearch/Elasticsearch-style hybrid lexical + vector retrieval",
       "implementation": "min-max normalized BM25 and MiniLM scores, weighted 0.55/0.45",
-      "recall@10": 0.2286,
-      "ndcg@10": 0.2891,
-      "mrr@10": 0.587,
-      "total_wall_seconds": 0.6222,
-      "mean_latency_ms": 20.071,
-      "p50_latency_ms": 20.294,
-      "p95_latency_ms": 22.594,
+      "recall@10": 0.2375,
+      "ndcg@10": 0.3187,
+      "mrr@10": 0.6973,
+      "total_wall_seconds": 0.6112,
+      "mean_latency_ms": 19.715,
+      "p50_latency_ms": 18.961,
+      "p95_latency_ms": 24.427,
       "mean_generation_ms": 0.0,
-      "mean_execution_ms": 20.071,
+      "mean_execution_ms": 19.715,
       "mean_query_understanding_calls": 0.0,
       "mean_entity_linking_calls": 0.0,
       "mean_query_rewrite_calls": 0.0,
@@ -16388,15 +16524,15 @@
       "label": "Hybrid + CrossEncoder rerank",
       "reference": "Two-stage hybrid retrieve-and-rerank",
       "implementation": "weighted BM25+dense first stage, cross-encoder/ms-marco-MiniLM-L-6-v2 reranker",
-      "recall@10": 0.1857,
-      "ndcg@10": 0.2288,
-      "mrr@10": 0.5254,
-      "total_wall_seconds": 97.4169,
-      "mean_latency_ms": 3142.481,
-      "p50_latency_ms": 3156.278,
-      "p95_latency_ms": 3338.314,
+      "recall@10": 0.2018,
+      "ndcg@10": 0.2712,
+      "mrr@10": 0.6659,
+      "total_wall_seconds": 97.7795,
+      "mean_latency_ms": 3154.177,
+      "p50_latency_ms": 3151.402,
+      "p95_latency_ms": 3358.361,
       "mean_generation_ms": 0.0,
-      "mean_execution_ms": 3142.481,
+      "mean_execution_ms": 3154.177,
       "mean_query_understanding_calls": 0.0,
       "mean_entity_linking_calls": 0.0,
       "mean_query_rewrite_calls": 0.0,
@@ -16410,15 +16546,15 @@
       "label": "Query rewrite + hybrid + CrossEncoder",
       "reference": "Production-style query understanding/rewrite + hybrid retrieve-and-rerank",
       "implementation": "spaCy query understanding, deterministic rewrite, hybrid fanout, CrossEncoder rerank",
-      "recall@10": 0.1857,
-      "ndcg@10": 0.2288,
-      "mrr@10": 0.5254,
-      "total_wall_seconds": 99.496,
-      "mean_latency_ms": 3209.55,
-      "p50_latency_ms": 3206.888,
-      "p95_latency_ms": 3400.66,
+      "recall@10": 0.2018,
+      "ndcg@10": 0.2712,
+      "mrr@10": 0.6659,
+      "total_wall_seconds": 101.3932,
+      "mean_latency_ms": 3270.75,
+      "p50_latency_ms": 3263.012,
+      "p95_latency_ms": 3496.405,
       "mean_generation_ms": 0.0,
-      "mean_execution_ms": 3209.55,
+      "mean_execution_ms": 3270.75,
       "mean_query_understanding_calls": 1.0,
       "mean_entity_linking_calls": 0.774,
       "mean_query_rewrite_calls": 1.0,
@@ -16432,15 +16568,15 @@
       "label": "BM25 + CrossEncoder rerank",
       "reference": "Two-stage sparse retrieve-and-rerank",
       "implementation": "BM25 first stage, cross-encoder/ms-marco-MiniLM-L-6-v2 reranker",
-      "recall@10": 0.1857,
-      "ndcg@10": 0.2153,
-      "mrr@10": 0.4972,
-      "total_wall_seconds": 97.1423,
-      "mean_latency_ms": 3133.623,
-      "p50_latency_ms": 3129.001,
-      "p95_latency_ms": 3343.688,
+      "recall@10": 0.2018,
+      "ndcg@10": 0.2577,
+      "mrr@10": 0.6377,
+      "total_wall_seconds": 160.2143,
+      "mean_latency_ms": 5168.203,
+      "p50_latency_ms": 5186.361,
+      "p95_latency_ms": 5734.619,
       "mean_generation_ms": 0.0,
-      "mean_execution_ms": 3133.623,
+      "mean_execution_ms": 5168.203,
       "mean_query_understanding_calls": 0.0,
       "mean_entity_linking_calls": 0.0,
       "mean_query_rewrite_calls": 0.0,
@@ -16454,15 +16590,15 @@
       "label": "Dense + CrossEncoder rerank",
       "reference": "Two-stage dense retrieve-and-rerank",
       "implementation": "MiniLM dense first stage, cross-encoder/ms-marco-MiniLM-L-6-v2 reranker",
-      "recall@10": 0.1821,
-      "ndcg@10": 0.2263,
-      "mrr@10": 0.5248,
-      "total_wall_seconds": 97.327,
-      "mean_latency_ms": 3139.58,
-      "p50_latency_ms": 3125.03,
-      "p95_latency_ms": 3336.318,
+      "recall@10": 0.1986,
+      "ndcg@10": 0.2689,
+      "mrr@10": 0.6659,
+      "total_wall_seconds": 125.5449,
+      "mean_latency_ms": 4049.835,
+      "p50_latency_ms": 3321.725,
+      "p95_latency_ms": 5613.105,
       "mean_generation_ms": 0.0,
-      "mean_execution_ms": 3139.58,
+      "mean_execution_ms": 4049.835,
       "mean_query_understanding_calls": 0.0,
       "mean_entity_linking_calls": 0.0,
       "mean_query_rewrite_calls": 0.0,
@@ -16476,15 +16612,15 @@
       "label": "RRF BM25 + dense hybrid",
       "reference": "Reciprocal Rank Fusion hybrid retrieval",
       "implementation": "RRF over separate BM25 and MiniLM rankings with k=60",
-      "recall@10": 0.1667,
-      "ndcg@10": 0.2166,
-      "mrr@10": 0.4803,
-      "total_wall_seconds": 0.8741,
-      "mean_latency_ms": 28.197,
-      "p50_latency_ms": 28.736,
-      "p95_latency_ms": 31.213,
+      "recall@10": 0.1731,
+      "ndcg@10": 0.2316,
+      "mrr@10": 0.5233,
+      "total_wall_seconds": 0.8712,
+      "mean_latency_ms": 28.104,
+      "p50_latency_ms": 27.356,
+      "p95_latency_ms": 32.828,
       "mean_generation_ms": 0.0,
-      "mean_execution_ms": 28.197,
+      "mean_execution_ms": 28.104,
       "mean_query_understanding_calls": 0.0,
       "mean_entity_linking_calls": 0.0,
       "mean_query_rewrite_calls": 0.0,
@@ -16498,15 +16634,15 @@
       "label": "MiniLM bi-encoder dense",
       "reference": "Sentence-Transformers dense semantic retrieval",
       "implementation": "sentence-transformers/all-MiniLM-L6-v2 cosine retrieval",
-      "recall@10": 0.0932,
-      "ndcg@10": 0.126,
-      "mrr@10": 0.307,
-      "total_wall_seconds": 0.492,
-      "mean_latency_ms": 15.871,
-      "p50_latency_ms": 10.163,
-      "p95_latency_ms": 24.585,
+      "recall@10": 0.0949,
+      "ndcg@10": 0.1336,
+      "mrr@10": 0.3393,
+      "total_wall_seconds": 0.5784,
+      "mean_latency_ms": 18.658,
+      "p50_latency_ms": 10.562,
+      "p95_latency_ms": 23.051,
       "mean_generation_ms": 0.0,
-      "mean_execution_ms": 15.871,
+      "mean_execution_ms": 18.658,
       "mean_query_understanding_calls": 0.0,
       "mean_entity_linking_calls": 0.0,
       "mean_query_rewrite_calls": 0.0,

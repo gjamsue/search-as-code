@@ -26,8 +26,8 @@
       "definition": "query -> real LLM QR -> multi-query hybrid retrieval -> rerank",
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.2038,
-        "recall@10": 0.1686,
+        "ndcg@10": 0.201,
+        "recall@10": 0.1619,
         "mrr@10": 0.44,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2,
@@ -83,12 +83,13 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1312,
-            "recall@10": 0.2,
+            "ndcg@10": 0.1171,
+            "recall@10": 0.1667,
             "mrr@10": 0.2,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -154,6 +155,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -414,9 +416,9 @@
       "definition": "query -> real LLM router -> one preset search stack -> rerank",
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.4518,
-        "recall@10": 0.44,
-        "mrr@10": 0.6,
+        "ndcg@10": 0.505,
+        "recall@10": 0.4667,
+        "mrr@10": 0.8,
         "all_evidence_recovered@10": 0.4,
         "hard_negative_hit_rate@10": 0.2,
         "hard_negative_count@10": 0.2,
@@ -471,12 +473,13 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -578,14 +581,15 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -929,9 +933,9 @@
       "definition": "query -> real LLM planner -> fixed-flow calls -> real LLM reflection -> iterate",
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.4889,
-        "recall@10": 0.4686,
-        "mrr@10": 0.6667,
+        "ndcg@10": 0.5458,
+        "recall@10": 0.4952,
+        "mrr@10": 0.8667,
         "all_evidence_recovered@10": 0.4,
         "hard_negative_hit_rate@10": 0.4,
         "hard_negative_count@10": 0.4,
@@ -986,12 +990,13 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1696,
-            "recall@10": 0.2,
+            "ndcg@10": 0.1513,
+            "recall@10": 0.1667,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -1270,14 +1275,15 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -2080,9 +2086,9 @@
       "definition": "query -> real LLM router -> preset stacks -> real LLM reflection -> iterate",
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.7889,
-        "recall@10": 0.8114,
-        "mrr@10": 0.9,
+        "ndcg@10": 0.8544,
+        "recall@10": 0.8381,
+        "mrr@10": 1.0,
         "all_evidence_recovered@10": 0.4,
         "hard_negative_hit_rate@10": 0.2,
         "hard_negative_count@10": 0.2,
@@ -2137,12 +2143,13 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6552,
-            "recall@10": 0.6,
+            "ndcg@10": 0.7359,
+            "recall@10": 0.6667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -2531,14 +2538,15 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5148,
-            "recall@10": 0.6,
-            "mrr@10": 0.5,
+            "ndcg@10": 0.7619,
+            "recall@10": 0.6667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -3439,9 +3447,9 @@
       "definition": "query -> real LLM Python code generation -> execute -> results",
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.7133,
-        "recall@10": 0.7114,
-        "mrr@10": 0.9,
+        "ndcg@10": 0.7676,
+        "recall@10": 0.7381,
+        "mrr@10": 1.0,
         "all_evidence_recovered@10": 0.4,
         "hard_negative_hit_rate@10": 0.4,
         "hard_negative_count@10": 0.4,
@@ -3496,12 +3504,13 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3901,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -3591,14 +3600,15 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7629,
+            "ndcg@10": 0.9833,
             "recall@10": 1.0,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
               "rel-atlas-4-8-2"
@@ -4581,9 +4591,9 @@
       "definition": "query -> real LLM planner/codegen -> execute -> real LLM reflection/codegen -> execute",
       "metrics": {
         "evaluated_queries": 5,
-        "ndcg@10": 0.8683,
+        "ndcg@10": 0.9201,
         "recall@10": 1.0,
-        "mrr@10": 0.8667,
+        "mrr@10": 1.0,
         "all_evidence_recovered@10": 1.0,
         "hard_negative_hit_rate@10": 0.2,
         "hard_negative_count@10": 0.2,
@@ -4638,11 +4648,12 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.9566,
+            "ndcg@10": 0.9838,
             "recall@10": 1.0,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
@@ -5057,14 +5068,15 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6565,
+            "ndcg@10": 0.8883,
             "recall@10": 1.0,
-            "mrr@10": 0.3333,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -7996,7 +8008,7 @@
     },
     {
       "system": "real_agentic_preset_flow_llm_reflection",
-      "recall@10": 0.8114,
+      "recall@10": 0.8381,
       "mean_latency_ms": 28692.83,
       "mean_generation_ms": 28436.454,
       "mean_execution_ms": 256.376,
@@ -8007,7 +8019,7 @@
     },
     {
       "system": "real_one_shot_code_gen",
-      "recall@10": 0.7114,
+      "recall@10": 0.7381,
       "mean_latency_ms": 62041.786,
       "mean_generation_ms": 61891.119,
       "mean_execution_ms": 150.667,
@@ -8018,7 +8030,7 @@
     },
     {
       "system": "real_agentic_fixed_flow_llm_reflection",
-      "recall@10": 0.4686,
+      "recall@10": 0.4952,
       "mean_latency_ms": 30620.51,
       "mean_generation_ms": 29223.813,
       "mean_execution_ms": 1396.697,
@@ -8029,7 +8041,7 @@
     },
     {
       "system": "real_preset_flow_llm_router",
-      "recall@10": 0.44,
+      "recall@10": 0.4667,
       "mean_latency_ms": 11638.145,
       "mean_generation_ms": 11523.383,
       "mean_execution_ms": 114.763,
@@ -8040,7 +8052,7 @@
     },
     {
       "system": "real_fixed_flow_llm_qr",
-      "recall@10": 0.1686,
+      "recall@10": 0.1619,
       "mean_latency_ms": 11817.107,
       "mean_generation_ms": 11523.383,
       "mean_execution_ms": 293.725,
@@ -8052,44 +8064,44 @@
   ],
   "rule_matrix_subset": [
     {
-      "system": "agentic_code_gen_rule_reflection",
-      "subset_recall@10": 0.6114,
-      "full_recall@10": 0.4712,
-      "full_mean_latency_ms": 3338.47,
-      "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
-    },
-    {
       "system": "agentic_preset_flows_rule_reflection",
-      "subset_recall@10": 0.6,
-      "full_recall@10": 0.4655,
+      "subset_recall@10": 0.6333,
+      "full_recall@10": 0.4627,
       "full_mean_latency_ms": 1104.214,
       "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
     },
     {
+      "system": "agentic_code_gen_rule_reflection",
+      "subset_recall@10": 0.6047,
+      "full_recall@10": 0.4625,
+      "full_mean_latency_ms": 3338.47,
+      "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
+    },
+    {
       "system": "agentic_fixed_flow_rule_reflection",
-      "subset_recall@10": 0.2686,
-      "full_recall@10": 0.2785,
+      "subset_recall@10": 0.2953,
+      "full_recall@10": 0.2852,
       "full_mean_latency_ms": 7775.79,
       "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
     },
     {
       "system": "fixed_flow_model_qr",
-      "subset_recall@10": 0.2286,
-      "full_recall@10": 0.1857,
+      "subset_recall@10": 0.2619,
+      "full_recall@10": 0.2018,
       "full_mean_latency_ms": 3556.834,
       "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
     },
     {
       "system": "one_shot_code_gen_rule_policy",
-      "subset_recall@10": 0.2286,
-      "full_recall@10": 0.1857,
+      "subset_recall@10": 0.2619,
+      "full_recall@10": 0.2018,
       "full_mean_latency_ms": 3237.988,
       "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
     },
     {
       "system": "preset_flow_model_router",
-      "subset_recall@10": 0.1286,
-      "full_recall@10": 0.2083,
+      "subset_recall@10": 0.1619,
+      "full_recall@10": 0.2233,
       "full_mean_latency_ms": 1770.742,
       "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
     }
@@ -8303,6 +8315,55 @@
   },
   "per_query_comparison": [
     {
+      "qid": "sac-001",
+      "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
+      "category": "security_fanout_join",
+      "relevant_doc_ids": [
+        "acct-northwind",
+        "adv-atlas-saml-4102",
+        "approval-atlas-northwind-final",
+        "esc-northwind",
+        "rel-atlas-4-8-2",
+        "ticket-sec-1842"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-002",
+      "query": "Which red-risk customers renewing before July 1 have unresolved security or audit blockers, and what is the next action for each?",
+      "category": "customer_risk_join",
+      "relevant_doc_ids": [
+        "acct-aster",
+        "acct-heliogrid",
+        "acct-northwind",
+        "acct-riverline",
+        "esc-aster",
+        "esc-heliogrid",
+        "esc-northwind",
+        "esc-riverline",
+        "runbook-regulated-upgrade",
+        "warroom-r7-june-critical-roster"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-004",
+      "query": "For Riverline Logistics, identify every open security exception, its CVE, fixed version, and owner.",
+      "category": "security_fanout_join",
+      "relevant_doc_ids": [
+        "acct-riverline",
+        "adv-atlas-saml-4102",
+        "adv-meridian-path-2899",
+        "esc-riverline",
+        "rel-atlas-4-8-2",
+        "rel-meridian-2-7-5",
+        "rollout-riverline-second-blocker-ledger",
+        "ticket-sec-1775",
+        "ticket-sec-1842"
+      ],
+      "systems": {}
+    },
+    {
       "qid": "sac-005",
       "query": "SEC-1899 is blocking which customers, which CVE does it track, and what release should they use?",
       "category": "exact_identifier_lookup",
@@ -8310,12 +8371,13 @@
         "acct-bluepeak",
         "acct-quartzbio",
         "adv-atlas-rerank-4520",
+        "approval-quartzbio-namespace-proof",
         "rel-atlas-4-9-0",
         "ticket-sec-1899"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.2,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "cluster-atlas-rerank-4520-release-005",
             "cluster-atlas-rerank-4520-release-045",
@@ -8330,7 +8392,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.2,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "ticket-sec-1899",
             "decoy-ticket-sec-1902",
@@ -8345,7 +8407,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.2,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "esc-greenhouse",
             "esc-novafoods",
@@ -8360,7 +8422,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.6,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "ticket-sec-1899",
             "adv-atlas-rerank-4520",
@@ -8375,7 +8437,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.2,
+          "recall@10": 0.3333,
           "top_doc_ids": [
             "ticket-sec-1899",
             "ticket-sec-1690",
@@ -8407,12 +8469,184 @@
       }
     },
     {
+      "qid": "sac-007",
+      "query": "Among regulated customers, which accounts need a critical security patch before a renewal call inside 30 days?",
+      "category": "regulated_customer_filter",
+      "relevant_doc_ids": [
+        "acct-aster",
+        "acct-heliogrid",
+        "acct-northwind",
+        "acct-riverline",
+        "adv-atlas-saml-4102",
+        "adv-forge-ssrf-1984",
+        "adv-meridian-path-2899",
+        "runbook-regulated-upgrade",
+        "warroom-r7-june-critical-roster"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-009",
+      "query": "Which AtlasSearch customers are blocked by rerank cache evidence, and which ones need Evidence Ledger rather than Exact Token Guard?",
+      "category": "budget_control",
+      "relevant_doc_ids": [
+        "acct-bluepeak",
+        "acct-quartzbio",
+        "adv-atlas-rerank-4520",
+        "approval-quartzbio-namespace-proof",
+        "esc-bluepeak",
+        "esc-quartzbio",
+        "rel-atlas-4-8-2",
+        "rel-atlas-4-9-0"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-011",
+      "query": "For all customers using both AtlasSearch and Meridian Sync, summarize blockers and do not include customers using only one of those products.",
+      "category": "tool_calling_vs_codegen",
+      "relevant_doc_ids": [
+        "acct-quartzbio",
+        "acct-riverline",
+        "adv-atlas-rerank-4520",
+        "adv-atlas-saml-4102",
+        "adv-meridian-path-2899",
+        "esc-quartzbio",
+        "esc-riverline"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-013",
+      "query": "Compare Beacon CRM Connector 3.14.0 and 3.14.1 for Contoso's security review. Which one is acceptable?",
+      "category": "comparative_analysis",
+      "relevant_doc_ids": [
+        "acct-contoso",
+        "adv-beacon-oauth-3771",
+        "approval-beacon-contoso-may06",
+        "esc-contoso",
+        "rel-beacon-3-14-0",
+        "rel-beacon-3-14-1"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-014",
+      "query": "Find every high or critical CVE disclosed in May 2026, then list exposed customers and fixed versions.",
+      "category": "wide_fanout",
+      "relevant_doc_ids": [
+        "adv-atlas-rerank-4520",
+        "adv-atlas-saml-4102",
+        "adv-beacon-oauth-3771",
+        "approval-atlas-northwind-final",
+        "approval-beacon-contoso-may06",
+        "approval-quartzbio-namespace-proof",
+        "rel-atlas-4-8-2",
+        "rel-atlas-4-9-0",
+        "rel-beacon-3-14-1",
+        "ticket-sec-1811",
+        "ticket-sec-1842",
+        "ticket-sec-1899"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-016",
+      "query": "A generated flow for a thin-evidence enterprise query finds only 18 candidates. What should the agent do when candidate pool is below 25?",
+      "category": "reflection_required",
+      "relevant_doc_ids": [
+        "eval-sac-policy",
+        "roadmap-rovo-sac"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-018",
+      "query": "For HelioGrid Energy, map the open blocker to ticket, CVE, fixed version, and technical owner.",
+      "category": "customer_patch_mapping",
+      "relevant_doc_ids": [
+        "acct-heliogrid",
+        "adv-forge-ssrf-1984",
+        "esc-heliogrid",
+        "rel-forge-6-2-0",
+        "ticket-sec-1690"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-020",
+      "query": "For Greenhouse University, map the open blocker to ticket, CVE, fixed version, and technical owner.",
+      "category": "customer_patch_mapping",
+      "relevant_doc_ids": [
+        "acct-greenhouse",
+        "adv-forge-ssrf-1984",
+        "esc-greenhouse",
+        "rel-forge-6-2-0",
+        "ticket-sec-1690"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-022",
+      "query": "For QuartzBio Labs, map the open blocker to ticket, CVE, fixed version, and technical owner.",
+      "category": "customer_patch_mapping",
+      "relevant_doc_ids": [
+        "acct-quartzbio",
+        "adv-atlas-rerank-4520",
+        "approval-quartzbio-namespace-proof",
+        "esc-quartzbio",
+        "rel-atlas-4-9-0",
+        "ticket-sec-1899"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-024",
+      "query": "Design the minimum comparison table for evaluating whether Search-as-Code is better than a normal agent.",
+      "category": "search_as_code_eval_design",
+      "relevant_doc_ids": [
+        "eval-sac-policy",
+        "roadmap-rovo-sac"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-025",
+      "query": "Should BluePeak Insurance be included in the SAML connector emergency rollout?",
+      "category": "negative_evidence",
+      "relevant_doc_ids": [
+        "acct-bluepeak",
+        "adv-atlas-rerank-4520",
+        "adv-atlas-saml-4102",
+        "esc-bluepeak",
+        "ticket-sec-1842",
+        "warroom-r7-june-critical-roster"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-027",
+      "query": "Across all red-risk accounts, which technical owners have more than one renewal blocker assigned?",
+      "category": "wide_fanout",
+      "relevant_doc_ids": [
+        "acct-aster",
+        "acct-heliogrid",
+        "acct-northwind",
+        "acct-riverline",
+        "esc-aster",
+        "esc-northwind",
+        "esc-riverline"
+      ],
+      "systems": {}
+    },
+    {
       "qid": "sac-028",
       "query": "A regulated customer asks for cache namespace proof. Which customer is most likely asking, what release gives the evidence, and what feature should be cited?",
       "category": "multi_hop",
       "relevant_doc_ids": [
         "acct-quartzbio",
         "adv-atlas-rerank-4520",
+        "approval-quartzbio-namespace-proof",
         "esc-quartzbio",
         "rel-atlas-4-9-0",
         "runbook-regulated-upgrade"
@@ -8434,7 +8668,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.0,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "approval-quartzbio-namespace-proof",
             "meet-quartzbio",
@@ -8449,7 +8683,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.0,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "approval-quartzbio-namespace-proof",
             "v3-namespace-decoy-0005",
@@ -8464,7 +8698,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.6,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
@@ -8509,6 +8743,102 @@
           ]
         }
       }
+    },
+    {
+      "qid": "sac-030",
+      "query": "Which customers have blockers that require exact identifier matching, and what identifiers should the generated code preserve?",
+      "category": "tool_calling_vs_codegen",
+      "relevant_doc_ids": [
+        "acct-aster",
+        "acct-bluepeak",
+        "acct-contoso",
+        "acct-heliogrid",
+        "acct-northwind",
+        "acct-novafoods",
+        "acct-riverline",
+        "ticket-sec-1604",
+        "ticket-sec-1690",
+        "ticket-sec-1775",
+        "ticket-sec-1811",
+        "ticket-sec-1842",
+        "ticket-sec-1899"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-032",
+      "query": "Compare Northwind Health and Riverline Logistics: which one has a single AtlasSearch blocker and which one has two product blockers?",
+      "category": "comparative_analysis",
+      "relevant_doc_ids": [
+        "acct-northwind",
+        "acct-riverline",
+        "adv-atlas-saml-4102",
+        "adv-meridian-path-2899",
+        "approval-atlas-northwind-final",
+        "esc-northwind",
+        "esc-riverline",
+        "rollout-riverline-second-blocker-ledger"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-033",
+      "query": "Which customers should be excluded from a June critical-patch war room, and why?",
+      "category": "wide_fanout",
+      "relevant_doc_ids": [
+        "acct-bluepeak",
+        "acct-contoso",
+        "acct-greenhouse",
+        "acct-novafoods",
+        "acct-quartzbio",
+        "acct-urbannest",
+        "adv-atlas-rerank-4520",
+        "adv-beacon-oauth-3771",
+        "adv-compass-csv-1440",
+        "adv-forge-ssrf-1984",
+        "warroom-r7-june-critical-roster"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-035",
+      "query": "If generated code finds no ForgeDeploy documents for NovaFoods, should it keep searching or answer with negative evidence?",
+      "category": "reflection_required",
+      "relevant_doc_ids": [
+        "acct-novafoods",
+        "negative-forgedeploy-novafoods"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-036",
+      "query": "Which accounts have the same technical owner for different product blockers, and what does that imply for staffing?",
+      "category": "wide_fanout",
+      "relevant_doc_ids": [
+        "acct-bluepeak",
+        "acct-contoso",
+        "acct-greenhouse",
+        "acct-heliogrid",
+        "acct-northwind",
+        "acct-quartzbio",
+        "acct-riverline",
+        "acct-urbannest"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-037",
+      "query": "BPI asks for tenant isolation proof. Expand the alias, identify the blocker, and cite the release that provides the evidence.",
+      "category": "alias_resolution",
+      "relevant_doc_ids": [
+        "acct-bluepeak",
+        "adv-atlas-rerank-4520",
+        "alias-customer-codenames",
+        "esc-bluepeak",
+        "rel-atlas-4-9-0",
+        "ticket-sec-1899"
+      ],
+      "systems": {}
     },
     {
       "qid": "sac-038",
@@ -8612,6 +8942,47 @@
           ]
         }
       }
+    },
+    {
+      "qid": "sac-039",
+      "query": "NF-17 has a sales discovery note mentioning ForgeDeploy. Does that create a ForgeDeploy remediation obligation?",
+      "category": "negative_evidence",
+      "relevant_doc_ids": [
+        "acct-novafoods",
+        "alias-customer-codenames",
+        "negative-forgedeploy-novafoods",
+        "sales-novafoods-forgedeploy-discovery"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-040",
+      "query": "Use the R7 final roster, not drafts: which aliases are included in the June critical-patch war room and which are explicit exclusions?",
+      "category": "temporal_authority",
+      "relevant_doc_ids": [
+        "acct-aster",
+        "acct-heliogrid",
+        "acct-northwind",
+        "acct-riverline",
+        "alias-customer-codenames",
+        "runbook-regulated-upgrade",
+        "warroom-r7-june-critical-roster"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-041",
+      "query": "NW-H has rollback-drill notes for AtlasSearch 4.8.3. What AtlasSearch version is actually approved for the SAML blocker?",
+      "category": "authority_disambiguation",
+      "relevant_doc_ids": [
+        "acct-northwind",
+        "adv-atlas-saml-4102",
+        "alias-customer-codenames",
+        "approval-atlas-northwind-final",
+        "rel-atlas-4-8-2",
+        "ticket-sec-1842"
+      ],
+      "systems": {}
     },
     {
       "qid": "sac-042",
@@ -8799,6 +9170,38 @@
           ]
         }
       }
+    },
+    {
+      "qid": "sac-044",
+      "query": "The account asking for a namespace sample is QBL. Which release and feature should the response cite, and what nearby release is insufficient?",
+      "category": "multi_hop",
+      "relevant_doc_ids": [
+        "acct-quartzbio",
+        "adv-atlas-rerank-4520",
+        "alias-customer-codenames",
+        "approval-quartzbio-namespace-proof",
+        "esc-quartzbio",
+        "rel-atlas-4-8-2",
+        "rel-atlas-4-9-0"
+      ],
+      "systems": {}
+    },
+    {
+      "qid": "sac-045",
+      "query": "For JBell's red renewals before July, which customers are in scope and which product blocker does each have?",
+      "category": "wide_fanout",
+      "relevant_doc_ids": [
+        "acct-aster",
+        "acct-riverline",
+        "adv-meridian-path-2899",
+        "alias-owner-directory",
+        "esc-aster",
+        "esc-riverline",
+        "rel-meridian-2-7-5",
+        "rollout-riverline-second-blocker-ledger",
+        "ticket-sec-1775"
+      ],
+      "systems": {}
     }
   ]
 }

@@ -12,27 +12,27 @@ This retest compares one-shot real LLM Search-as-Code with an agentic real-codeg
 
 ## Readout
 
-- Real agentic codegen improves Recall@10 by `+0.2886` vs real one-shot (`1.0000` vs `0.7114`), but costs `136272.4` ms total (`135929.5` ms codegen + `342.9` ms execution).
-- Real one-shot codegen matches the deterministic one-shot/fixed recall on this sample at `0.7114`, but takes `62038.7` ms total with `61891.3` ms spent generating code.
+- Real agentic codegen improves Recall@10 by `+0.2619` vs real one-shot (`1.0000` vs `0.7381`), but costs `136272.4` ms total (`135929.5` ms codegen + `342.9` ms execution).
+- Real one-shot codegen matches the deterministic one-shot/fixed recall on this sample at `0.7381`, but takes `62038.7` ms total with `61891.3` ms spent generating code.
 - Real agentic generated a reflection for every query and needed `0` runtime repairs; this is the main reliability and latency gap to close.
-- Real agentic codegen now exceeds the deterministic proxy by `+0.3886` Recall@10, but costs `136272.4` ms vs `325.4` ms.
+- Real agentic codegen now exceeds the deterministic proxy by `+0.3619` Recall@10, but costs `136272.4` ms vs `325.4` ms.
 
 ## Summary
 
 | System | Recall@10 | nDCG@10 | MRR@10 | Hard-neg hit@10 | Total ms | Codegen ms | Execution ms | Search calls | Rerank pairs | Repairs | Reflections |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `real_agentic_codegen_search_as_code` | 1.0000 | 0.8683 | 0.8667 | 0.2000 | 136272.4 | 135929.5 | 342.9 | 21.20 | 69.2 | 0 | 5 |
-| `real_codegen_search_as_code` | 0.7114 | 0.7133 | 0.9000 | 0.4000 | 62038.7 | 61891.3 | 147.4 | 6.60 | 39.2 | 0 | 0 |
-| `generated_iterative_agentic_search_as_code` | 0.6114 | 0.5191 | 0.5833 | 0.2000 | 325.4 | 0.2 | 325.1 | 8.80 | 120.0 | 0 | 0 |
-| `fixed_understanding_rewrite_hybrid_rerank` | 0.2686 | 0.3681 | 0.8000 | 0.2000 | 285.3 | 0.0 | 285.3 | 4.00 | 120.0 | 0 | 0 |
-| `generated_search_as_code` | 0.2686 | 0.3681 | 0.8000 | 0.2000 | 277.5 | 0.1 | 277.4 | 8.00 | 120.0 | 0 | 0 |
+| `real_agentic_codegen_search_as_code` | 1.0000 | 0.9201 | 1.0000 | 0.2000 | 136272.4 | 135929.5 | 342.9 | 21.20 | 69.2 | 0 | 5 |
+| `real_codegen_search_as_code` | 0.7381 | 0.7676 | 1.0000 | 0.4000 | 62038.7 | 61891.3 | 147.4 | 6.60 | 39.2 | 0 | 0 |
+| `generated_iterative_agentic_search_as_code` | 0.6381 | 0.5351 | 0.5833 | 0.2000 | 325.4 | 0.2 | 325.1 | 8.80 | 120.0 | 0 | 0 |
+| `generated_search_as_code` | 0.2952 | 0.4213 | 1.0000 | 0.2000 | 277.5 | 0.1 | 277.4 | 8.00 | 120.0 | 0 | 0 |
+| `fixed_understanding_rewrite_hybrid_rerank` | 0.2619 | 0.3608 | 0.8000 | 0.2000 | 285.3 | 0.0 | 285.3 | 4.00 | 120.0 | 0 | 0 |
 
 ## Per-Query Recall
 
-| Query | Category | `real_agentic_codegen_search_as_code` | `real_codegen_search_as_code` | `generated_iterative_agentic_search_as_code` | `fixed_understanding_rewrite_hybrid_rerank` | `generated_search_as_code` |
+| Query | Category | `real_agentic_codegen_search_as_code` | `real_codegen_search_as_code` | `generated_iterative_agentic_search_as_code` | `generated_search_as_code` | `fixed_understanding_rewrite_hybrid_rerank` |
 |---|---|---:|---:|---:|---:|---:|
-| sac-005 | exact_identifier_lookup | 1.0000 | 0.2000 | 0.4000 | 0.2000 | 0.2000 |
-| sac-028 | multi_hop | 1.0000 | 1.0000 | 0.8000 | 0.0000 | 0.0000 |
+| sac-005 | exact_identifier_lookup | 1.0000 | 0.3333 | 0.5000 | 0.1667 | 0.1667 |
+| sac-028 | multi_hop | 1.0000 | 1.0000 | 0.8333 | 0.1667 | 0.0000 |
 | sac-038 | authority_disambiguation | 1.0000 | 0.8571 | 0.8571 | 0.1429 | 0.1429 |
 | sac-042 | policy_lookup | 1.0000 | 1.0000 | 0.5000 | 0.5000 | 0.5000 |
 | sac-043 | reflection_required | 1.0000 | 0.5000 | 0.5000 | 0.5000 | 0.5000 |
@@ -43,7 +43,7 @@ This retest compares one-shot real LLM Search-as-Code with an agentic real-codeg
 
 SEC-1899 is blocking which customers, which CVE does it track, and what release should they use?
 
-- Real agentic delta vs real one-shot: `+0.8000` Recall@10 (1.0000 vs 0.2000).
+- Real agentic delta vs real one-shot: `+0.6667` Recall@10 (1.0000 vs 0.3333).
 - Reflection codegen: `96781.9` ms; initial candidates `39`; initial top ids `ticket-sec-1899, approval-quartzbio-namespace-proof, acct-quartzbio, acct-bluepeak, rel-meridian-2-7-4`.
 - One-shot top ids: `ticket-sec-1899, ticket-sec-1690, ticket-sec-1775, ticket-sec-1604, ticket-sec-1811`.
 - Agentic top ids: `ticket-sec-1899, rel-atlas-4-9-0, adv-atlas-rerank-4520, approval-quartzbio-namespace-proof, esc-bluepeak`.

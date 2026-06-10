@@ -52,9 +52,9 @@
       "definition": "query -> real LLM QR -> multi-query hybrid retrieval -> rerank",
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2059,
-        "recall@10": 0.1747,
-        "mrr@10": 0.4581,
+        "ndcg@10": 0.2376,
+        "recall@10": 0.1837,
+        "mrr@10": 0.5656,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.129,
         "hard_negative_count@10": 0.1935,
@@ -108,13 +108,14 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5531,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4935,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -188,12 +189,13 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2362,
-            "recall@10": 0.3333,
-            "mrr@10": 0.1667,
+            "ndcg@10": 0.4413,
+            "recall@10": 0.4,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -262,12 +264,13 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.235,
+            "recall@10": 0.1111,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -334,12 +337,13 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1312,
-            "recall@10": 0.2,
+            "ndcg@10": 0.1171,
+            "recall@10": 0.1667,
             "mrr@10": 0.2,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -410,11 +414,12 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -481,14 +486,15 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.2857,
+            "ndcg@10": 0.3416,
+            "recall@10": 0.375,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -628,14 +634,15 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -701,6 +708,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -709,8 +719,8 @@
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3025,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.2832,
+            "recall@10": 0.25,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -993,13 +1003,14 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -1136,7 +1147,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
             "ndcg@10": 0.0,
@@ -1280,6 +1292,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -1434,13 +1447,15 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4297,
+            "ndcg@10": 0.6121,
             "recall@10": 0.5,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -1512,12 +1527,13 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -2312,6 +2328,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "query_metrics": {
@@ -2356,9 +2373,9 @@
       "definition": "query -> real LLM router -> one preset search stack -> rerank",
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.3857,
-        "recall@10": 0.3684,
-        "mrr@10": 0.6219,
+        "ndcg@10": 0.4126,
+        "recall@10": 0.3689,
+        "mrr@10": 0.7401,
         "all_evidence_recovered@10": 0.0968,
         "hard_negative_hit_rate@10": 0.1935,
         "hard_negative_count@10": 0.3871,
@@ -2412,13 +2429,14 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -2526,12 +2544,13 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6063,
-            "recall@10": 0.7778,
-            "mrr@10": 0.3333,
+            "ndcg@10": 0.7878,
+            "recall@10": 0.8,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -2631,12 +2650,13 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.235,
+            "recall@10": 0.1111,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -2737,12 +2757,13 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -2849,11 +2870,12 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -2951,14 +2973,15 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3981,
-            "recall@10": 0.4286,
+            "ndcg@10": 0.4928,
+            "recall@10": 0.5,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -3165,14 +3188,15 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -3276,6 +3300,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -3284,8 +3311,8 @@
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3025,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.2832,
+            "recall@10": 0.25,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -3684,13 +3711,14 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7227,
-            "recall@10": 0.6,
+            "ndcg@10": 0.6448,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -3885,11 +3913,12 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4287,
-            "recall@10": 0.6,
+            "ndcg@10": 0.3825,
+            "recall@10": 0.5,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 2,
             "hard_negative_doc_ids@10": [
@@ -4101,14 +4130,15 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -4313,12 +4343,14 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8922,
-            "recall@10": 0.8333,
+            "ndcg@10": 0.7458,
+            "recall@10": 0.625,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -4424,12 +4456,13 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -5531,11 +5564,12 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2354,
-            "recall@10": 0.25,
+            "ndcg@10": 0.2188,
+            "recall@10": 0.2222,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -5606,9 +5640,9 @@
       "definition": "query -> real LLM planner -> fixed-flow calls -> real LLM reflection -> iterate",
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.4706,
-        "recall@10": 0.4256,
-        "mrr@10": 0.7333,
+        "ndcg@10": 0.506,
+        "recall@10": 0.4307,
+        "mrr@10": 0.8559,
         "all_evidence_recovered@10": 0.129,
         "hard_negative_hit_rate@10": 0.1935,
         "hard_negative_count@10": 0.2581,
@@ -5662,13 +5696,14 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6992,
-            "recall@10": 0.6,
+            "ndcg@10": 0.7751,
+            "recall@10": 0.6667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -5966,12 +6001,13 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3196,
-            "recall@10": 0.4444,
-            "mrr@10": 0.2,
+            "ndcg@10": 0.5193,
+            "recall@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -6276,12 +6312,13 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7094,
-            "recall@10": 0.625,
+            "ndcg@10": 0.6592,
+            "recall@10": 0.5556,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -6579,12 +6616,13 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1696,
-            "recall@10": 0.2,
+            "ndcg@10": 0.1513,
+            "recall@10": 0.1667,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -6868,11 +6906,12 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -7175,14 +7214,15 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5307,
-            "recall@10": 0.4286,
+            "ndcg@10": 0.5727,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -7782,14 +7822,15 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5296,
-            "recall@10": 0.6,
-            "mrr@10": 0.5,
+            "ndcg@10": 0.7751,
+            "recall@10": 0.6667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
               "v3-approval-decoy-0011"
@@ -8028,6 +8069,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -8036,8 +8080,8 @@
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5009,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.469,
+            "recall@10": 0.25,
             "mrr@10": 1.0,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -9153,13 +9197,14 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8688,
-            "recall@10": 0.8,
+            "ndcg@10": 0.7751,
+            "recall@10": 0.6667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -9683,11 +9728,12 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.252,
-            "recall@10": 0.4,
+            "ndcg@10": 0.2249,
+            "recall@10": 0.3333,
             "mrr@10": 0.2,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -10278,14 +10324,15 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -10809,12 +10856,14 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6448,
-            "recall@10": 0.5,
+            "ndcg@10": 0.539,
+            "recall@10": 0.375,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -10971,12 +11020,13 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -13877,12 +13927,13 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4149,
-            "recall@10": 0.5,
-            "mrr@10": 0.5,
+            "ndcg@10": 0.6206,
+            "recall@10": 0.5556,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -14151,9 +14202,9 @@
       "definition": "query -> real LLM router -> preset stacks -> real LLM reflection -> iterate",
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.566,
-        "recall@10": 0.561,
-        "mrr@10": 0.7412,
+        "ndcg@10": 0.6215,
+        "recall@10": 0.5809,
+        "mrr@10": 0.8694,
         "all_evidence_recovered@10": 0.0645,
         "hard_negative_hit_rate@10": 0.1935,
         "hard_negative_count@10": 0.2581,
@@ -14207,13 +14258,14 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8358,
-            "recall@10": 0.8,
+            "ndcg@10": 0.876,
+            "recall@10": 0.8333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -14525,12 +14577,13 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0837,
-            "recall@10": 0.1111,
-            "mrr@10": 0.1667,
+            "ndcg@10": 0.2985,
+            "recall@10": 0.2,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -14922,12 +14975,13 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.9157,
-            "recall@10": 0.875,
+            "ndcg@10": 0.8509,
+            "recall@10": 0.7778,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -15157,12 +15211,13 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6552,
-            "recall@10": 0.6,
+            "ndcg@10": 0.7359,
+            "recall@10": 0.6667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -15556,12 +15611,13 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0761,
-            "recall@10": 0.125,
-            "mrr@10": 0.1111,
+            "ndcg@10": 0.3058,
+            "recall@10": 0.2222,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -15917,15 +15973,16 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4921,
-            "recall@10": 0.7143,
-            "mrr@10": 0.25,
+            "ndcg@10": 0.6124,
+            "recall@10": 0.75,
+            "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -16651,13 +16708,14 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8304,
-            "recall@10": 0.8,
+            "ndcg@10": 0.8418,
+            "recall@10": 0.8333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -16908,6 +16966,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -16916,7 +16977,7 @@
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5009,
+            "ndcg@10": 0.5638,
             "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 2,
@@ -17973,13 +18034,14 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8539,
-            "recall@10": 0.8,
+            "ndcg@10": 0.8922,
+            "recall@10": 0.8333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -18572,11 +18634,12 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6548,
-            "recall@10": 0.6,
+            "ndcg@10": 0.7751,
+            "recall@10": 0.6667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -19354,14 +19417,15 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5148,
-            "recall@10": 0.6,
-            "mrr@10": 0.5,
+            "ndcg@10": 0.7619,
+            "recall@10": 0.6667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -19910,13 +19974,15 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5681,
-            "recall@10": 0.8333,
-            "mrr@10": 0.3333,
+            "ndcg@10": 0.8874,
+            "recall@10": 0.875,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -20153,12 +20219,13 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0784,
-            "recall@10": 0.1,
-            "mrr@10": 0.1667,
+            "ndcg@10": 0.2985,
+            "recall@10": 0.1818,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
               "acct-northwind"
@@ -23551,11 +23618,12 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5104,
-            "recall@10": 0.375,
+            "ndcg@10": 0.5918,
+            "recall@10": 0.4444,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -23937,9 +24005,9 @@
       "definition": "query -> real LLM Python code generation -> execute -> results",
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.5622,
-        "recall@10": 0.5868,
-        "mrr@10": 0.6976,
+        "ndcg@10": 0.5823,
+        "recall@10": 0.5779,
+        "mrr@10": 0.7621,
         "all_evidence_recovered@10": 0.1613,
         "hard_negative_hit_rate@10": 0.3226,
         "hard_negative_count@10": 0.4516,
@@ -23993,13 +24061,14 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5111,
-            "recall@10": 0.8,
+            "ndcg@10": 0.456,
+            "recall@10": 0.6667,
             "mrr@10": 0.25,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -24458,11 +24527,12 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5287,
-            "recall@10": 0.5556,
+            "ndcg@10": 0.4951,
+            "recall@10": 0.5,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -24754,12 +24824,13 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7458,
-            "recall@10": 0.625,
+            "ndcg@10": 0.7767,
+            "recall@10": 0.6667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -24854,12 +24925,13 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3901,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -24954,7 +25026,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
             "ndcg@10": 0.0,
@@ -25407,14 +25480,15 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7349,
-            "recall@10": 0.7143,
+            "ndcg@10": 0.8359,
+            "recall@10": 0.75,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -25596,14 +25670,15 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5148,
-            "recall@10": 0.6,
-            "mrr@10": 0.5,
+            "ndcg@10": 0.7619,
+            "recall@10": 0.6667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
               "rel-atlas-4-8-1"
@@ -25946,6 +26021,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -25954,8 +26032,8 @@
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7174,
-            "recall@10": 0.6667,
+            "ndcg@10": 0.6718,
+            "recall@10": 0.5,
             "mrr@10": 1.0,
             "hard_negative_count@10": 2,
             "hard_negative_doc_ids@10": [
@@ -26979,13 +27057,14 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8304,
-            "recall@10": 0.8,
+            "ndcg@10": 0.8922,
+            "recall@10": 0.8333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -27677,11 +27756,12 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4581,
-            "recall@10": 0.6,
+            "ndcg@10": 0.4087,
+            "recall@10": 0.5,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -27916,14 +27996,15 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7629,
+            "ndcg@10": 0.9833,
             "recall@10": 1.0,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
               "rel-atlas-4-8-2"
@@ -28469,12 +28550,14 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5896,
-            "recall@10": 0.6667,
+            "ndcg@10": 0.4928,
+            "recall@10": 0.5,
             "mrr@10": 0.5,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -28579,12 +28662,13 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -31409,11 +31493,12 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4138,
-            "recall@10": 0.5,
+            "ndcg@10": 0.3845,
+            "recall@10": 0.4444,
             "mrr@10": 0.5,
             "hard_negative_count@10": 2,
             "hard_negative_doc_ids@10": [
@@ -31464,9 +31549,9 @@
       "definition": "query -> real LLM planner/codegen -> execute -> real LLM reflection/codegen -> execute",
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.6577,
-        "recall@10": 0.7058,
-        "mrr@10": 0.7242,
+        "ndcg@10": 0.6933,
+        "recall@10": 0.7081,
+        "mrr@10": 0.8102,
         "all_evidence_recovered@10": 0.3226,
         "hard_negative_hit_rate@10": 0.2903,
         "hard_negative_count@10": 0.3871,
@@ -31520,13 +31605,14 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.82,
-            "recall@10": 0.8,
+            "ndcg@10": 0.8829,
+            "recall@10": 0.8333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -32205,11 +32291,12 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.9059,
-            "recall@10": 0.8889,
+            "ndcg@10": 0.9216,
+            "recall@10": 0.9,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -32929,12 +33016,13 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8359,
-            "recall@10": 0.75,
+            "ndcg@10": 0.8551,
+            "recall@10": 0.7778,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -34144,11 +34232,12 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.9566,
+            "ndcg@10": 0.9838,
             "recall@10": 1.0,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
@@ -34568,7 +34657,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
             "ndcg@10": 0.0,
@@ -34720,14 +34810,15 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2806,
-            "recall@10": 0.4286,
+            "ndcg@10": 0.2582,
+            "recall@10": 0.375,
             "mrr@10": 0.25,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -37173,14 +37264,15 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7739,
+            "ndcg@10": 0.9931,
             "recall@10": 1.0,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -37329,6 +37421,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -37337,8 +37432,8 @@
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8447,
-            "recall@10": 0.7778,
+            "ndcg@10": 0.9266,
+            "recall@10": 0.75,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -42448,13 +42543,14 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8304,
-            "recall@10": 0.8,
+            "ndcg@10": 0.8922,
+            "recall@10": 0.8333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -43556,11 +43652,12 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4078,
-            "recall@10": 0.6,
+            "ndcg@10": 0.3638,
+            "recall@10": 0.5,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -45182,14 +45279,15 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6565,
+            "ndcg@10": 0.8883,
             "recall@10": 1.0,
-            "mrr@10": 0.3333,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -46875,13 +46973,15 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6905,
-            "recall@10": 0.8333,
-            "mrr@10": 0.5,
+            "ndcg@10": 0.9099,
+            "recall@10": 0.875,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -47659,12 +47759,13 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -54209,11 +54310,12 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8951,
-            "recall@10": 0.875,
+            "ndcg@10": 0.9059,
+            "recall@10": 0.8889,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -55299,7 +55401,7 @@
   "summary_rows": [
     {
       "system": "real_agentic_code_gen",
-      "recall@10": 0.7058,
+      "recall@10": 0.7081,
       "mean_latency_ms": 159693.949,
       "mean_generation_ms": 159078.456,
       "mean_execution_ms": 615.494,
@@ -55309,19 +55411,8 @@
       "definition": "query -> real LLM planner/codegen -> execute -> real LLM reflection/codegen -> execute"
     },
     {
-      "system": "real_one_shot_code_gen",
-      "recall@10": 0.5868,
-      "mean_latency_ms": 60593.739,
-      "mean_generation_ms": 60383.099,
-      "mean_execution_ms": 210.64,
-      "mean_search_calls": 8.645,
-      "mean_query_rewrite_calls": 1.0,
-      "mean_rerank_pairs": 39.645,
-      "definition": "query -> real LLM Python code generation -> execute -> results"
-    },
-    {
       "system": "real_agentic_preset_flow_llm_reflection",
-      "recall@10": 0.561,
+      "recall@10": 0.5809,
       "mean_latency_ms": 35676.195,
       "mean_generation_ms": 35349.244,
       "mean_execution_ms": 326.951,
@@ -55331,8 +55422,19 @@
       "definition": "query -> real LLM router -> preset stacks -> real LLM reflection -> iterate"
     },
     {
+      "system": "real_one_shot_code_gen",
+      "recall@10": 0.5779,
+      "mean_latency_ms": 60593.739,
+      "mean_generation_ms": 60383.099,
+      "mean_execution_ms": 210.64,
+      "mean_search_calls": 8.645,
+      "mean_query_rewrite_calls": 1.0,
+      "mean_rerank_pairs": 39.645,
+      "definition": "query -> real LLM Python code generation -> execute -> results"
+    },
+    {
       "system": "real_agentic_fixed_flow_llm_reflection",
-      "recall@10": 0.4256,
+      "recall@10": 0.4307,
       "mean_latency_ms": 40660.433,
       "mean_generation_ms": 38583.41,
       "mean_execution_ms": 2077.023,
@@ -55343,7 +55445,7 @@
     },
     {
       "system": "real_preset_flow_llm_router",
-      "recall@10": 0.3684,
+      "recall@10": 0.3689,
       "mean_latency_ms": 13156.478,
       "mean_generation_ms": 12991.069,
       "mean_execution_ms": 165.409,
@@ -55354,7 +55456,7 @@
     },
     {
       "system": "real_fixed_flow_llm_qr",
-      "recall@10": 0.1747,
+      "recall@10": 0.1837,
       "mean_latency_ms": 13317.182,
       "mean_generation_ms": 12991.069,
       "mean_execution_ms": 326.113,
@@ -55366,44 +55468,44 @@
   ],
   "rule_matrix_subset": [
     {
-      "system": "agentic_code_gen_rule_reflection",
-      "subset_recall@10": 0.4712,
-      "full_recall@10": 0.4712,
-      "full_mean_latency_ms": 3338.47,
-      "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
-    },
-    {
       "system": "agentic_preset_flows_rule_reflection",
-      "subset_recall@10": 0.4655,
-      "full_recall@10": 0.4655,
+      "subset_recall@10": 0.4627,
+      "full_recall@10": 0.4627,
       "full_mean_latency_ms": 1104.214,
       "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
     },
     {
+      "system": "agentic_code_gen_rule_reflection",
+      "subset_recall@10": 0.4625,
+      "full_recall@10": 0.4625,
+      "full_mean_latency_ms": 3338.47,
+      "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
+    },
+    {
       "system": "agentic_fixed_flow_rule_reflection",
-      "subset_recall@10": 0.2785,
-      "full_recall@10": 0.2785,
+      "subset_recall@10": 0.2852,
+      "full_recall@10": 0.2852,
       "full_mean_latency_ms": 7775.79,
       "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
     },
     {
       "system": "preset_flow_model_router",
-      "subset_recall@10": 0.2083,
-      "full_recall@10": 0.2083,
+      "subset_recall@10": 0.2233,
+      "full_recall@10": 0.2233,
       "full_mean_latency_ms": 1770.742,
       "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
     },
     {
       "system": "fixed_flow_model_qr",
-      "subset_recall@10": 0.1857,
-      "full_recall@10": 0.1857,
+      "subset_recall@10": 0.2018,
+      "full_recall@10": 0.2018,
       "full_mean_latency_ms": 3556.834,
       "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
     },
     {
       "system": "one_shot_code_gen_rule_policy",
-      "subset_recall@10": 0.1857,
-      "full_recall@10": 0.1857,
+      "subset_recall@10": 0.2018,
+      "full_recall@10": 0.2018,
       "full_mean_latency_ms": 3237.988,
       "note": "existing rule-backed full-matrix run; subset recall recomputed on selected qids"
     }
@@ -56687,13 +56789,14 @@
       "relevant_doc_ids": [
         "acct-northwind",
         "adv-atlas-saml-4102",
+        "approval-atlas-northwind-final",
         "esc-northwind",
         "rel-atlas-4-8-2",
         "ticket-sec-1842"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.4,
+          "recall@10": 0.3333,
           "top_doc_ids": [
             "adv-atlas-saml-4102",
             "esc-northwind",
@@ -56708,7 +56811,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.2,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "adv-atlas-saml-4102",
             "cluster-customer-northwind-renewal-042",
@@ -56723,7 +56826,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.6,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
@@ -56738,7 +56841,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.8,
+          "recall@10": 0.8333,
           "top_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
@@ -56753,7 +56856,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.8,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "alias-customer-codenames",
             "adv-compass-csv-1440",
@@ -56768,7 +56871,7 @@
           ]
         },
         "real_agentic_code_gen": {
-          "recall@10": 0.8,
+          "recall@10": 0.8333,
           "top_doc_ids": [
             "adv-atlas-saml-4102",
             "ticket-sec-1842",
@@ -56797,11 +56900,12 @@
         "esc-heliogrid",
         "esc-northwind",
         "esc-riverline",
-        "runbook-regulated-upgrade"
+        "runbook-regulated-upgrade",
+        "warroom-r7-june-critical-roster"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.3333,
+          "recall@10": 0.4,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "esc-urbannest",
@@ -56816,7 +56920,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.7778,
+          "recall@10": 0.8,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "esc-urbannest",
@@ -56831,7 +56935,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.4444,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "ticket-sec-1604",
@@ -56846,7 +56950,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.1111,
+          "recall@10": 0.2,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "ticket-sec-1842",
@@ -56861,7 +56965,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.5556,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "esc-urbannest",
             "esc-riverline",
@@ -56876,7 +56980,7 @@
           ]
         },
         "real_agentic_code_gen": {
-          "recall@10": 0.8889,
+          "recall@10": 0.9,
           "top_doc_ids": [
             "acct-northwind",
             "acct-aster",
@@ -56903,12 +57007,13 @@
         "esc-riverline",
         "rel-atlas-4-8-2",
         "rel-meridian-2-7-5",
+        "rollout-riverline-second-blocker-ledger",
         "ticket-sec-1775",
         "ticket-sec-1842"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.125,
+          "recall@10": 0.1111,
           "top_doc_ids": [
             "esc-riverline",
             "meet-riverline",
@@ -56923,7 +57028,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.125,
+          "recall@10": 0.1111,
           "top_doc_ids": [
             "esc-riverline",
             "meet-riverline",
@@ -56938,7 +57043,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.625,
+          "recall@10": 0.5556,
           "top_doc_ids": [
             "esc-riverline",
             "acct-riverline",
@@ -56953,7 +57058,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.875,
+          "recall@10": 0.7778,
           "top_doc_ids": [
             "esc-riverline",
             "acct-riverline",
@@ -56968,7 +57073,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.625,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
@@ -56980,7 +57085,7 @@
           ]
         },
         "real_agentic_code_gen": {
-          "recall@10": 0.75,
+          "recall@10": 0.7778,
           "top_doc_ids": [
             "esc-riverline",
             "acct-riverline",
@@ -57004,12 +57109,13 @@
         "acct-bluepeak",
         "acct-quartzbio",
         "adv-atlas-rerank-4520",
+        "approval-quartzbio-namespace-proof",
         "rel-atlas-4-9-0",
         "ticket-sec-1899"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.2,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "cluster-atlas-rerank-4520-release-005",
             "cluster-atlas-rerank-4520-release-045",
@@ -57024,7 +57130,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.2,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "ticket-sec-1899",
             "decoy-ticket-sec-1902",
@@ -57039,7 +57145,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.2,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "esc-greenhouse",
             "esc-novafoods",
@@ -57054,7 +57160,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.6,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "ticket-sec-1899",
             "adv-atlas-rerank-4520",
@@ -57069,7 +57175,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.2,
+          "recall@10": 0.3333,
           "top_doc_ids": [
             "ticket-sec-1899",
             "ticket-sec-1690",
@@ -57112,11 +57218,12 @@
         "adv-atlas-saml-4102",
         "adv-forge-ssrf-1984",
         "adv-meridian-path-2899",
-        "runbook-regulated-upgrade"
+        "runbook-regulated-upgrade",
+        "warroom-r7-june-critical-roster"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.125,
+          "recall@10": 0.2222,
           "top_doc_ids": [
             "runbook-regulated-upgrade",
             "warroom-r7-june-critical-roster",
@@ -57131,7 +57238,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.125,
+          "recall@10": 0.2222,
           "top_doc_ids": [
             "runbook-regulated-upgrade",
             "warroom-r7-june-critical-roster",
@@ -57146,7 +57253,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.125,
+          "recall@10": 0.2222,
           "top_doc_ids": [
             "runbook-regulated-upgrade",
             "warroom-r7-june-critical-roster",
@@ -57161,7 +57268,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.125,
+          "recall@10": 0.2222,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "ticket-sec-1775",
@@ -57215,6 +57322,7 @@
         "acct-bluepeak",
         "acct-quartzbio",
         "adv-atlas-rerank-4520",
+        "approval-quartzbio-namespace-proof",
         "esc-bluepeak",
         "esc-quartzbio",
         "rel-atlas-4-8-2",
@@ -57222,7 +57330,7 @@
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.2857,
+          "recall@10": 0.375,
           "top_doc_ids": [
             "meet-bluepeak",
             "esc-bluepeak",
@@ -57237,7 +57345,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.4286,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "meet-bluepeak",
             "esc-bluepeak",
@@ -57252,7 +57360,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.4286,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "esc-bluepeak",
             "ticket-sec-1899",
@@ -57267,7 +57375,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.7143,
+          "recall@10": 0.75,
           "top_doc_ids": [
             "approval-atlas-northwind-final",
             "approval-quartzbio-namespace-proof",
@@ -57282,7 +57390,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.7143,
+          "recall@10": 0.75,
           "top_doc_ids": [
             "esc-bluepeak",
             "approval-quartzbio-namespace-proof",
@@ -57297,7 +57405,7 @@
           ]
         },
         "real_agentic_code_gen": {
-          "recall@10": 0.4286,
+          "recall@10": 0.375,
           "top_doc_ids": [
             "approval-beacon-contoso-may06",
             "ticket-sec-1842",
@@ -57422,13 +57530,14 @@
       "relevant_doc_ids": [
         "acct-contoso",
         "adv-beacon-oauth-3771",
+        "approval-beacon-contoso-may06",
         "esc-contoso",
         "rel-beacon-3-14-0",
         "rel-beacon-3-14-1"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.0,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "approval-beacon-contoso-may06",
             "v3-approval-decoy-0076",
@@ -57443,7 +57552,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.0,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "approval-beacon-contoso-may06",
             "v3-approval-decoy-0606",
@@ -57458,7 +57567,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.6,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "approval-beacon-contoso-may06",
             "rel-beacon-3-14-1",
@@ -57473,7 +57582,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.8,
+          "recall@10": 0.8333,
           "top_doc_ids": [
             "adv-beacon-oauth-3771",
             "rel-beacon-3-14-0",
@@ -57488,7 +57597,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.6,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "approval-beacon-contoso-may06",
             "rel-beacon-3-14-0",
@@ -57527,6 +57636,9 @@
         "adv-atlas-rerank-4520",
         "adv-atlas-saml-4102",
         "adv-beacon-oauth-3771",
+        "approval-atlas-northwind-final",
+        "approval-beacon-contoso-may06",
+        "approval-quartzbio-namespace-proof",
         "rel-atlas-4-8-2",
         "rel-atlas-4-9-0",
         "rel-beacon-3-14-1",
@@ -57536,7 +57648,7 @@
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.3333,
+          "recall@10": 0.25,
           "top_doc_ids": [
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
@@ -57551,7 +57663,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.3333,
+          "recall@10": 0.25,
           "top_doc_ids": [
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
@@ -57566,7 +57678,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.3333,
+          "recall@10": 0.25,
           "top_doc_ids": [
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
@@ -57596,7 +57708,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.6667,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
@@ -57611,7 +57723,7 @@
           ]
         },
         "real_agentic_code_gen": {
-          "recall@10": 0.7778,
+          "recall@10": 0.75,
           "top_doc_ids": [
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
@@ -57937,13 +58049,14 @@
       "relevant_doc_ids": [
         "acct-quartzbio",
         "adv-atlas-rerank-4520",
+        "approval-quartzbio-namespace-proof",
         "esc-quartzbio",
         "rel-atlas-4-9-0",
         "ticket-sec-1899"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.2,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "esc-quartzbio",
             "cluster-atlas-rerank-4520-rollout-052",
@@ -57958,7 +58071,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.6,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "esc-quartzbio",
             "ticket-sec-1899",
@@ -57973,7 +58086,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.8,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "esc-quartzbio",
             "ticket-sec-1899",
@@ -57988,7 +58101,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.8,
+          "recall@10": 0.8333,
           "top_doc_ids": [
             "esc-quartzbio",
             "ticket-sec-1899",
@@ -58003,7 +58116,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.8,
+          "recall@10": 0.8333,
           "top_doc_ids": [
             "ticket-sec-1899",
             "adv-atlas-rerank-4520",
@@ -58018,7 +58131,7 @@
           ]
         },
         "real_agentic_code_gen": {
-          "recall@10": 0.8,
+          "recall@10": 0.8333,
           "top_doc_ids": [
             "esc-quartzbio",
             "ticket-sec-1899",
@@ -58144,7 +58257,8 @@
         "adv-atlas-rerank-4520",
         "adv-atlas-saml-4102",
         "esc-bluepeak",
-        "ticket-sec-1842"
+        "ticket-sec-1842",
+        "warroom-r7-june-critical-roster"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
@@ -58163,7 +58277,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.6,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "rel-atlas-4-8-1",
             "approval-atlas-northwind-final",
@@ -58178,7 +58292,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.4,
+          "recall@10": 0.3333,
           "top_doc_ids": [
             "cluster-atlas-saml-4102-ticket-053",
             "cluster-atlas-saml-4102-ticket-013",
@@ -58193,7 +58307,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.6,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "acct-bluepeak",
             "warroom-r7-june-critical-roster",
@@ -58208,7 +58322,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.6,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "approval-atlas-northwind-final",
             "acct-bluepeak",
@@ -58223,7 +58337,7 @@
           ]
         },
         "real_agentic_code_gen": {
-          "recall@10": 0.6,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "ticket-sec-1604",
             "ticket-sec-1899",
@@ -58352,6 +58466,7 @@
       "relevant_doc_ids": [
         "acct-quartzbio",
         "adv-atlas-rerank-4520",
+        "approval-quartzbio-namespace-proof",
         "esc-quartzbio",
         "rel-atlas-4-9-0",
         "runbook-regulated-upgrade"
@@ -58373,7 +58488,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.0,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "approval-quartzbio-namespace-proof",
             "meet-quartzbio",
@@ -58388,7 +58503,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.0,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "approval-quartzbio-namespace-proof",
             "v3-namespace-decoy-0005",
@@ -58403,7 +58518,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.6,
+          "recall@10": 0.6667,
           "top_doc_ids": [
             "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
@@ -58570,8 +58685,10 @@
         "acct-riverline",
         "adv-atlas-saml-4102",
         "adv-meridian-path-2899",
+        "approval-atlas-northwind-final",
         "esc-northwind",
-        "esc-riverline"
+        "esc-riverline",
+        "rollout-riverline-second-blocker-ledger"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
@@ -58590,7 +58707,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.8333,
+          "recall@10": 0.625,
           "top_doc_ids": [
             "esc-riverline",
             "esc-northwind",
@@ -58605,7 +58722,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.5,
+          "recall@10": 0.375,
           "top_doc_ids": [
             "esc-northwind",
             "esc-riverline",
@@ -58620,7 +58737,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.8333,
+          "recall@10": 0.875,
           "top_doc_ids": [
             "approval-atlas-northwind-final",
             "rollout-riverline-second-blocker-ledger",
@@ -58635,7 +58752,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.6667,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "ticket-sec-1842",
             "esc-riverline",
@@ -58650,7 +58767,7 @@
           ]
         },
         "real_agentic_code_gen": {
-          "recall@10": 0.8333,
+          "recall@10": 0.875,
           "top_doc_ids": [
             "rollout-riverline-second-blocker-ledger",
             "esc-riverline",
@@ -58680,11 +58797,12 @@
         "adv-atlas-rerank-4520",
         "adv-beacon-oauth-3771",
         "adv-compass-csv-1440",
-        "adv-forge-ssrf-1984"
+        "adv-forge-ssrf-1984",
+        "warroom-r7-june-critical-roster"
       ],
       "systems": {
         "real_fixed_flow_llm_qr": {
-          "recall@10": 0.0,
+          "recall@10": 0.0909,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "v3-warroom-decoy-0078",
@@ -58699,7 +58817,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.0,
+          "recall@10": 0.0909,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "cluster-enterprise-memo-121",
@@ -58714,7 +58832,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.0,
+          "recall@10": 0.0909,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "ticket-sec-1775",
@@ -58729,7 +58847,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.1,
+          "recall@10": 0.1818,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "approval-atlas-northwind-final",
@@ -58744,7 +58862,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.0,
+          "recall@10": 0.0909,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "policy-reflection-missing-evidence-v3",
@@ -58759,7 +58877,7 @@
           ]
         },
         "real_agentic_code_gen": {
-          "recall@10": 0.0,
+          "recall@10": 0.0909,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "alias-customer-codenames",
@@ -59804,6 +59922,7 @@
         "esc-aster",
         "esc-riverline",
         "rel-meridian-2-7-5",
+        "rollout-riverline-second-blocker-ledger",
         "ticket-sec-1775"
       ],
       "systems": {
@@ -59823,7 +59942,7 @@
           ]
         },
         "real_preset_flow_llm_router": {
-          "recall@10": 0.25,
+          "recall@10": 0.2222,
           "top_doc_ids": [
             "warroom-r7-june-critical-roster",
             "esc-urbannest",
@@ -59838,7 +59957,7 @@
           ]
         },
         "real_agentic_fixed_flow_llm_reflection": {
-          "recall@10": 0.5,
+          "recall@10": 0.5556,
           "top_doc_ids": [
             "rollout-riverline-second-blocker-ledger",
             "esc-riverline",
@@ -59853,7 +59972,7 @@
           ]
         },
         "real_agentic_preset_flow_llm_reflection": {
-          "recall@10": 0.375,
+          "recall@10": 0.4444,
           "top_doc_ids": [
             "alias-owner-directory",
             "ticket-sec-1775",
@@ -59868,7 +59987,7 @@
           ]
         },
         "real_one_shot_code_gen": {
-          "recall@10": 0.5,
+          "recall@10": 0.4444,
           "top_doc_ids": [
             "source-authority-matrix-v3",
             "alias-owner-directory",
@@ -59883,7 +60002,7 @@
           ]
         },
         "real_agentic_code_gen": {
-          "recall@10": 0.875,
+          "recall@10": 0.8889,
           "top_doc_ids": [
             "acct-aster",
             "acct-riverline",

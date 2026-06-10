@@ -53,9 +53,9 @@
       },
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2288,
-        "recall@10": 0.1857,
-        "mrr@10": 0.5254,
+        "ndcg@10": 0.2712,
+        "recall@10": 0.2018,
+        "mrr@10": 0.6659,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2258,
         "hard_negative_count@10": 0.2903,
@@ -146,6 +146,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -160,8 +161,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4704,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4197,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -249,7 +250,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -262,9 +264,9 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.217,
-            "recall@10": 0.3333,
-            "mrr@10": 0.1429,
+            "ndcg@10": 0.4233,
+            "recall@10": 0.4,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -347,6 +349,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -360,8 +363,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.235,
+            "recall@10": 0.1111,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -442,6 +445,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -540,7 +544,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -553,8 +558,8 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -635,6 +640,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -650,8 +656,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1734,
-            "recall@10": 0.1429,
+            "ndcg@10": 0.2685,
+            "recall@10": 0.25,
             "mrr@10": 0.5,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -832,6 +838,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -850,9 +857,9 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -932,6 +939,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -950,8 +960,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3025,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.2832,
+            "recall@10": 0.25,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -1324,6 +1334,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -1338,8 +1349,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -1514,7 +1525,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -1701,6 +1713,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -1715,9 +1728,9 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -1902,8 +1915,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -1915,9 +1930,9 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4297,
+            "ndcg@10": 0.6121,
             "recall@10": 0.5,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -2002,7 +2017,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -2016,9 +2032,9 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -3039,6 +3055,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -3100,9 +3117,9 @@
       },
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.346,
-        "recall@10": 0.2785,
-        "mrr@10": 0.6478,
+        "ndcg@10": 0.3654,
+        "recall@10": 0.2852,
+        "mrr@10": 0.7124,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.1935,
         "hard_negative_count@10": 0.2581,
@@ -3570,6 +3587,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -3584,8 +3602,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4704,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4197,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -3776,7 +3794,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -3789,8 +3808,8 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.287,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.3788,
+            "recall@10": 0.4,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -3983,6 +4002,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -3996,8 +4016,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.539,
-            "recall@10": 0.375,
+            "ndcg@10": 0.5009,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -4187,6 +4207,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -4199,8 +4220,8 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -4490,7 +4511,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -4503,8 +4525,8 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1089,
-            "recall@10": 0.125,
+            "ndcg@10": 0.1922,
+            "recall@10": 0.2222,
             "mrr@10": 0.25,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -4733,6 +4755,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -4748,8 +4771,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4483,
-            "recall@10": 0.2857,
+            "ndcg@10": 0.5104,
+            "recall@10": 0.375,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -5168,6 +5191,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -5186,8 +5210,8 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3836,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4725,
+            "recall@10": 0.5,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -5472,6 +5496,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -5490,8 +5517,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3025,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.2832,
+            "recall@10": 0.25,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -6377,6 +6404,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -6391,8 +6419,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5531,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4935,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -6824,7 +6852,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -7268,6 +7297,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -7282,9 +7312,9 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -7876,8 +7906,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -7889,8 +7921,8 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6812,
-            "recall@10": 0.8333,
+            "ndcg@10": 0.6673,
+            "recall@10": 0.75,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -8085,7 +8117,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -8099,9 +8132,9 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -11076,6 +11109,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -11086,8 +11120,8 @@
             "v3-alias-decoy-0004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3794,
-            "recall@10": 0.25,
+            "ndcg@10": 0.3526,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -11344,9 +11378,9 @@
       },
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2357,
-        "recall@10": 0.2083,
-        "mrr@10": 0.5093,
+        "ndcg@10": 0.2777,
+        "recall@10": 0.2233,
+        "mrr@10": 0.6498,
         "all_evidence_recovered@10": 0.0323,
         "hard_negative_hit_rate@10": 0.1613,
         "hard_negative_count@10": 0.3226,
@@ -11572,6 +11606,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -11586,8 +11621,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4704,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4197,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -11700,7 +11735,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -11713,9 +11749,9 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2204,
-            "recall@10": 0.3333,
-            "mrr@10": 0.1429,
+            "ndcg@10": 0.4265,
+            "recall@10": 0.4,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -11826,6 +11862,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -11839,8 +11876,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.235,
+            "recall@10": 0.1111,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -11949,6 +11986,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -12077,7 +12115,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -12090,8 +12129,8 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -12200,6 +12239,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -12215,8 +12255,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1734,
-            "recall@10": 0.1429,
+            "ndcg@10": 0.2685,
+            "recall@10": 0.25,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -12450,6 +12490,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -12468,9 +12509,9 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -12582,6 +12623,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -12600,8 +12644,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3025,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.2832,
+            "recall@10": 0.25,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -13081,6 +13125,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -13095,8 +13140,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4704,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4197,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -13317,7 +13362,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -13559,6 +13605,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -13573,9 +13620,9 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -13810,8 +13857,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -13823,9 +13872,9 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4297,
+            "ndcg@10": 0.6121,
             "recall@10": 0.5,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -13937,7 +13986,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -13951,9 +14001,9 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -15207,6 +15257,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -15293,8 +15344,8 @@
       },
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.4674,
-        "recall@10": 0.4655,
+        "ndcg@10": 0.4696,
+        "recall@10": 0.4627,
         "mrr@10": 0.6758,
         "all_evidence_recovered@10": 0.0968,
         "hard_negative_hit_rate@10": 0.1613,
@@ -15791,6 +15842,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -15805,8 +15857,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2826,
-            "recall@10": 0.4,
+            "ndcg@10": 0.2522,
+            "recall@10": 0.3333,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -15992,7 +16044,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -16005,8 +16058,8 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2162,
-            "recall@10": 0.2222,
+            "ndcg@10": 0.2876,
+            "recall@10": 0.3,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -16235,6 +16288,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -16248,8 +16302,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5104,
-            "recall@10": 0.375,
+            "ndcg@10": 0.4743,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -16436,6 +16490,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -16448,8 +16503,8 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3008,
-            "recall@10": 0.4,
+            "ndcg@10": 0.3692,
+            "recall@10": 0.5,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -16732,7 +16787,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -16745,8 +16801,8 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0979,
-            "recall@10": 0.125,
+            "ndcg@10": 0.1747,
+            "recall@10": 0.2222,
             "mrr@10": 0.2,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -16972,6 +17028,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -16987,8 +17044,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7709,
-            "recall@10": 0.7143,
+            "ndcg@10": 0.7856,
+            "recall@10": 0.75,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -17469,6 +17526,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -17487,7 +17545,7 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7486,
+            "ndcg@10": 0.7634,
             "recall@10": 1.0,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
@@ -17801,6 +17859,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -17819,8 +17880,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3217,
-            "recall@10": 0.4444,
+            "ndcg@10": 0.3012,
+            "recall@10": 0.3333,
             "mrr@10": 0.25,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -18654,6 +18715,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -18668,8 +18730,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8435,
-            "recall@10": 0.8,
+            "ndcg@10": 0.7526,
+            "recall@10": 0.6667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -19089,7 +19151,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -19100,8 +19163,8 @@
             "cluster-product-atlassearch-release-001"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5531,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4935,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -19497,6 +19560,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -19511,8 +19575,8 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6844,
-            "recall@10": 0.6,
+            "ndcg@10": 0.7115,
+            "recall@10": 0.6667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -20003,8 +20067,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -20016,8 +20082,8 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6689,
-            "recall@10": 0.8333,
+            "ndcg@10": 0.6492,
+            "recall@10": 0.75,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -20286,7 +20352,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -20300,8 +20367,8 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1389,
-            "recall@10": 0.1,
+            "ndcg@10": 0.224,
+            "recall@10": 0.1818,
             "mrr@10": 0.5,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -23281,6 +23348,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -23291,8 +23359,8 @@
             "v3-alias-decoy-0004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4773,
-            "recall@10": 0.375,
+            "ndcg@10": 0.4435,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -23495,9 +23563,9 @@
       },
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.2288,
-        "recall@10": 0.1857,
-        "mrr@10": 0.5254,
+        "ndcg@10": 0.2712,
+        "recall@10": 0.2018,
+        "mrr@10": 0.6659,
         "all_evidence_recovered@10": 0.0,
         "hard_negative_hit_rate@10": 0.2258,
         "hard_negative_count@10": 0.2903,
@@ -23841,6 +23909,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -23855,8 +23924,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4704,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4197,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -24008,7 +24077,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -24021,9 +24091,9 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.217,
-            "recall@10": 0.3333,
-            "mrr@10": 0.1429,
+            "ndcg@10": 0.4233,
+            "recall@10": 0.4,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -24170,6 +24240,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -24183,8 +24254,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.235,
+            "recall@10": 0.1111,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -24336,6 +24407,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -24564,7 +24636,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -24577,8 +24650,8 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2529,
-            "recall@10": 0.125,
+            "ndcg@10": 0.3833,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -24723,6 +24796,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -24738,8 +24812,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1734,
-            "recall@10": 0.1429,
+            "ndcg@10": 0.2685,
+            "recall@10": 0.25,
             "mrr@10": 0.5,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -25153,6 +25227,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -25171,9 +25246,9 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -25393,6 +25468,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -25411,8 +25489,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3025,
-            "recall@10": 0.3333,
+            "ndcg@10": 0.2832,
+            "recall@10": 0.25,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -26026,6 +26104,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -26040,8 +26119,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3392,
-            "recall@10": 0.2,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -26291,7 +26370,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -26614,6 +26694,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -26628,9 +26709,9 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.3026,
+            "recall@10": 0.1667,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -27027,8 +27108,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -27040,9 +27123,9 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.4297,
+            "ndcg@10": 0.6121,
             "recall@10": 0.5,
-            "mrr@10": 0.5,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -27239,7 +27322,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -27253,9 +27337,9 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0,
-            "recall@10": 0.0,
-            "mrr@10": 0.0,
+            "ndcg@10": 0.2201,
+            "recall@10": 0.0909,
+            "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
           },
@@ -29315,6 +29399,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -29487,8 +29572,8 @@
       },
       "metrics": {
         "evaluated_queries": 31,
-        "ndcg@10": 0.4634,
-        "recall@10": 0.4712,
+        "ndcg@10": 0.462,
+        "recall@10": 0.4625,
         "mrr@10": 0.6704,
         "all_evidence_recovered@10": 0.0323,
         "hard_negative_hit_rate@10": 0.2258,
@@ -29980,6 +30065,7 @@
           "relevant_doc_ids": [
             "acct-northwind",
             "adv-atlas-saml-4102",
+            "approval-atlas-northwind-final",
             "esc-northwind",
             "rel-atlas-4-8-2",
             "ticket-sec-1842"
@@ -29994,8 +30080,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.2826,
-            "recall@10": 0.4,
+            "ndcg@10": 0.2522,
+            "recall@10": 0.3333,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -30203,7 +30289,8 @@
             "esc-heliogrid",
             "esc-northwind",
             "esc-riverline",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -30216,8 +30303,8 @@
             "cluster-enterprise-dashboard-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.1483,
-            "recall@10": 0.1111,
+            "ndcg@10": 0.224,
+            "recall@10": 0.2,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -30413,6 +30500,7 @@
             "esc-riverline",
             "rel-atlas-4-8-2",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775",
             "ticket-sec-1842"
           ],
@@ -30426,8 +30514,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5104,
-            "recall@10": 0.375,
+            "ndcg@10": 0.4743,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -30620,6 +30708,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
           ],
@@ -30632,8 +30721,8 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3008,
-            "recall@10": 0.4,
+            "ndcg@10": 0.2684,
+            "recall@10": 0.3333,
             "mrr@10": 0.3333,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -30953,7 +31042,8 @@
             "adv-atlas-saml-4102",
             "adv-forge-ssrf-1984",
             "adv-meridian-path-2899",
-            "runbook-regulated-upgrade"
+            "runbook-regulated-upgrade",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-bluepeak",
@@ -30966,8 +31056,8 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.0979,
-            "recall@10": 0.125,
+            "ndcg@10": 0.1747,
+            "recall@10": 0.2222,
             "mrr@10": 0.2,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -31160,6 +31250,7 @@
             "acct-bluepeak",
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-bluepeak",
             "esc-quartzbio",
             "rel-atlas-4-8-2",
@@ -31175,8 +31266,8 @@
             "rel-atlas-4-8-1"
           ],
           "query_metrics": {
-            "ndcg@10": 0.79,
-            "recall@10": 0.7143,
+            "ndcg@10": 0.8031,
+            "recall@10": 0.75,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -31739,6 +31830,7 @@
           "relevant_doc_ids": [
             "acct-contoso",
             "adv-beacon-oauth-3771",
+            "approval-beacon-contoso-may06",
             "esc-contoso",
             "rel-beacon-3-14-0",
             "rel-beacon-3-14-1"
@@ -31757,7 +31849,7 @@
             "v3-approval-decoy-0016"
           ],
           "query_metrics": {
-            "ndcg@10": 0.7635,
+            "ndcg@10": 0.7767,
             "recall@10": 1.0,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
@@ -32073,6 +32165,9 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "adv-beacon-oauth-3771",
+            "approval-atlas-northwind-final",
+            "approval-beacon-contoso-may06",
+            "approval-quartzbio-namespace-proof",
             "rel-atlas-4-8-2",
             "rel-atlas-4-9-0",
             "rel-beacon-3-14-1",
@@ -32091,8 +32186,8 @@
             "cluster-enterprise-review-003"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3217,
-            "recall@10": 0.4444,
+            "ndcg@10": 0.3012,
+            "recall@10": 0.3333,
             "mrr@10": 0.25,
             "hard_negative_count@10": 3,
             "hard_negative_doc_ids@10": [
@@ -32869,6 +32964,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "ticket-sec-1899"
@@ -32883,8 +32979,8 @@
             "rel-meridian-2-7-4"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8688,
-            "recall@10": 0.8,
+            "ndcg@10": 0.7751,
+            "recall@10": 0.6667,
             "mrr@10": 1.0,
             "hard_negative_count@10": 1,
             "hard_negative_doc_ids@10": [
@@ -33197,7 +33293,8 @@
             "adv-atlas-rerank-4520",
             "adv-atlas-saml-4102",
             "esc-bluepeak",
-            "ticket-sec-1842"
+            "ticket-sec-1842",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-northwind",
@@ -33208,8 +33305,8 @@
             "cluster-product-atlassearch-release-001"
           ],
           "query_metrics": {
-            "ndcg@10": 0.5531,
-            "recall@10": 0.4,
+            "ndcg@10": 0.4935,
+            "recall@10": 0.3333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -33640,6 +33737,7 @@
           "relevant_doc_ids": [
             "acct-quartzbio",
             "adv-atlas-rerank-4520",
+            "approval-quartzbio-namespace-proof",
             "esc-quartzbio",
             "rel-atlas-4-9-0",
             "runbook-regulated-upgrade"
@@ -33654,8 +33752,8 @@
             "rel-atlas-4-8-2"
           ],
           "query_metrics": {
-            "ndcg@10": 0.8304,
-            "recall@10": 0.8,
+            "ndcg@10": 0.8418,
+            "recall@10": 0.8333,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -34257,8 +34355,10 @@
             "acct-riverline",
             "adv-atlas-saml-4102",
             "adv-meridian-path-2899",
+            "approval-atlas-northwind-final",
             "esc-northwind",
-            "esc-riverline"
+            "esc-riverline",
+            "rollout-riverline-second-blocker-ledger"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -34270,8 +34370,8 @@
             "cluster-meridian-path-2899-meeting-004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.6689,
-            "recall@10": 0.8333,
+            "ndcg@10": 0.6492,
+            "recall@10": 0.75,
             "mrr@10": 0.5,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -34529,7 +34629,8 @@
             "adv-atlas-rerank-4520",
             "adv-beacon-oauth-3771",
             "adv-compass-csv-1440",
-            "adv-forge-ssrf-1984"
+            "adv-forge-ssrf-1984",
+            "warroom-r7-june-critical-roster"
           ],
           "hard_negative_doc_ids": [
             "acct-aster",
@@ -34543,8 +34644,8 @@
             "cluster-enterprise-thread-002"
           ],
           "query_metrics": {
-            "ndcg@10": 0.359,
-            "recall@10": 0.2,
+            "ndcg@10": 0.4441,
+            "recall@10": 0.2727,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -37518,6 +37619,7 @@
             "esc-aster",
             "esc-riverline",
             "rel-meridian-2-7-5",
+            "rollout-riverline-second-blocker-ledger",
             "ticket-sec-1775"
           ],
           "hard_negative_doc_ids": [
@@ -37528,8 +37630,8 @@
             "v3-alias-decoy-0004"
           ],
           "query_metrics": {
-            "ndcg@10": 0.3794,
-            "recall@10": 0.25,
+            "ndcg@10": 0.3526,
+            "recall@10": 0.2222,
             "mrr@10": 1.0,
             "hard_negative_count@10": 0,
             "hard_negative_doc_ids@10": []
@@ -37766,21 +37868,9 @@
   },
   "summary_rows": [
     {
-      "system": "agentic_code_gen_rule_reflection",
-      "family": "agentic code-gen",
-      "recall@10": 0.4712,
-      "mean_latency_ms": 3338.47,
-      "mean_generation_ms": 0.244,
-      "mean_execution_ms": 3338.221,
-      "mean_search_calls": 7.161,
-      "mean_query_rewrite_calls": 1.0,
-      "mean_rerank_pairs": 2400.0,
-      "mean_candidate_pool": 3341.935
-    },
-    {
       "system": "agentic_preset_flows_rule_reflection",
       "family": "agentic preset flow",
-      "recall@10": 0.4655,
+      "recall@10": 0.4627,
       "mean_latency_ms": 1104.214,
       "mean_generation_ms": 5.39,
       "mean_execution_ms": 1098.819,
@@ -37790,9 +37880,21 @@
       "mean_candidate_pool": 733.484
     },
     {
+      "system": "agentic_code_gen_rule_reflection",
+      "family": "agentic code-gen",
+      "recall@10": 0.4625,
+      "mean_latency_ms": 3338.47,
+      "mean_generation_ms": 0.244,
+      "mean_execution_ms": 3338.221,
+      "mean_search_calls": 7.161,
+      "mean_query_rewrite_calls": 1.0,
+      "mean_rerank_pairs": 2400.0,
+      "mean_candidate_pool": 3341.935
+    },
+    {
       "system": "agentic_fixed_flow_rule_reflection",
       "family": "agentic fixed flow",
-      "recall@10": 0.2785,
+      "recall@10": 0.2852,
       "mean_latency_ms": 7775.79,
       "mean_generation_ms": 0.246,
       "mean_execution_ms": 7775.537,
@@ -37804,7 +37906,7 @@
     {
       "system": "preset_flow_model_router",
       "family": "preset flow",
-      "recall@10": 0.2083,
+      "recall@10": 0.2233,
       "mean_latency_ms": 1770.742,
       "mean_generation_ms": 0.034,
       "mean_execution_ms": 1770.701,
@@ -37816,7 +37918,7 @@
     {
       "system": "one_shot_code_gen_rule_policy",
       "family": "one-shot code-gen",
-      "recall@10": 0.1857,
+      "recall@10": 0.2018,
       "mean_latency_ms": 3237.988,
       "mean_generation_ms": 0.15,
       "mean_execution_ms": 3237.832,
@@ -37828,7 +37930,7 @@
     {
       "system": "fixed_flow_model_qr",
       "family": "fixed flow",
-      "recall@10": 0.1857,
+      "recall@10": 0.2018,
       "mean_latency_ms": 3556.834,
       "mean_generation_ms": 0.001,
       "mean_execution_ms": 3556.826,
@@ -37847,7 +37949,7 @@
       "note": "agentic codegen reflection recovered evidence one-shot codegen missed",
       "systems": {
         "fixed_flow_model_qr": {
-          "recall@10": 0.0,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "approval-beacon-contoso-may06",
             "v3-approval-decoy-0076",
@@ -37884,7 +37986,7 @@
           ]
         },
         "agentic_fixed_flow_rule_reflection": {
-          "recall@10": 0.4,
+          "recall@10": 0.5,
           "top_doc_ids": [
             "alias-owner-directory",
             "rel-beacon-3-14-0",
@@ -37957,7 +38059,7 @@
           ]
         },
         "preset_flow_model_router": {
-          "recall@10": 0.0,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "approval-beacon-contoso-may06",
             "v3-approval-decoy-0076",
@@ -38166,7 +38268,7 @@
           ]
         },
         "one_shot_code_gen_rule_policy": {
-          "recall@10": 0.0,
+          "recall@10": 0.1667,
           "top_doc_ids": [
             "approval-beacon-contoso-may06",
             "v3-approval-decoy-0076",
@@ -38617,6 +38719,663 @@
       "relevant_doc_ids": [
         "acct-contoso",
         "adv-beacon-oauth-3771",
+        "approval-beacon-contoso-may06",
+        "esc-contoso",
+        "rel-beacon-3-14-0",
+        "rel-beacon-3-14-1"
+      ]
+    },
+    {
+      "kind": "agentic_preset_win",
+      "qid": "sac-038",
+      "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+      "category": "authority_disambiguation",
+      "note": "agentic preset flow added a missing preset stack after reflection",
+      "systems": {
+        "fixed_flow_model_qr": {
+          "recall@10": 0.1429,
+          "top_doc_ids": [
+            "approval-beacon-contoso-may06",
+            "v3-approval-decoy-0541",
+            "v3-approval-decoy-0001",
+            "v3-approval-decoy-0511",
+            "v3-approval-decoy-0241",
+            "v3-approval-decoy-0211",
+            "v3-approval-decoy-0841",
+            "v3-approval-decoy-0631",
+            "v3-approval-decoy-0331",
+            "v3-approval-decoy-0811"
+          ],
+          "trace": [
+            {
+              "event": "fixed_flow_model_qr",
+              "payload": {
+                "flow": "query -> model query rewrite -> multi-query hybrid retrieval -> rerank",
+                "qr_provider": "rule_proxy",
+                "rewrites": [
+                  "Beacon",
+                  "CT-R's OAuth review which Beacon version final approval",
+                  "ct-r s oauth review beacon version customer-citable after final approval version must"
+                ],
+                "subqueries": [
+                  "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                  "Beacon",
+                  "CT-R's OAuth review which Beacon version final approval",
+                  "ct-r s oauth review beacon version customer-citable after final approval version must"
+                ],
+                "candidate_pool": 3776,
+                "rerank_candidates": 2400
+              }
+            }
+          ]
+        },
+        "agentic_fixed_flow_rule_reflection": {
+          "recall@10": 0.1429,
+          "top_doc_ids": [
+            "approval-beacon-contoso-may06",
+            "v3-approval-decoy-0541",
+            "v3-approval-decoy-0001",
+            "v3-approval-decoy-0511",
+            "v3-approval-decoy-0241",
+            "v3-approval-decoy-0211",
+            "v3-approval-decoy-0841",
+            "v3-approval-decoy-0631",
+            "v3-approval-decoy-0331",
+            "v3-approval-decoy-0811"
+          ],
+          "trace": [
+            {
+              "event": "agentic_fixed_flow_plan",
+              "payload": {
+                "strategy": "agentic_fixed_flow_multi_call",
+                "initial_queries": [
+                  "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                  "ct-r s oauth review beacon version is customer-citable after final approval version must rejected"
+                ],
+                "goals": [
+                  "alias_registry",
+                  "account_or_escalation",
+                  "ticket_or_advisory",
+                  "release_note",
+                  "source_authority"
+                ],
+                "max_reflection_rounds": 2
+              }
+            },
+            {
+              "event": "fixed_flow_tool_call",
+              "payload": {
+                "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                "subqueries": [
+                  "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                  "Beacon"
+                ],
+                "candidate_pool": 1255,
+                "returned": 20,
+                "rewrite_needed": true
+              }
+            },
+            {
+              "event": "fixed_flow_tool_call",
+              "payload": {
+                "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                "subqueries": [
+                  "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                  "ct-r s oauth review beacon version final approval version"
+                ],
+                "candidate_pool": 953,
+                "returned": 20,
+                "rewrite_needed": true
+              }
+            },
+            {
+              "event": "fixed_flow_tool_call",
+              "payload": {
+                "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected? alias registry source-of-truth",
+                "subqueries": [
+                  "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected? alias registry source-of-truth",
+                  "Beacon"
+                ],
+                "candidate_pool": 1185,
+                "returned": 20,
+                "rewrite_needed": true
+              }
+            }
+          ]
+        },
+        "preset_flow_model_router": {
+          "recall@10": 0.1429,
+          "top_doc_ids": [
+            "approval-beacon-contoso-may06",
+            "v3-approval-decoy-0541",
+            "v3-approval-decoy-0001",
+            "v3-approval-decoy-0511",
+            "v3-approval-decoy-0241",
+            "v3-approval-decoy-0211",
+            "v3-approval-decoy-0841",
+            "v3-approval-decoy-0631",
+            "v3-approval-decoy-0331",
+            "v3-approval-decoy-0811"
+          ],
+          "trace": [
+            {
+              "event": "preset_stack_call",
+              "payload": {
+                "stack": "alias_resolution",
+                "routes": [
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected? alias registry source-of-truth",
+                    "mode": "bm25",
+                    "top_k": 2400,
+                    "include_doc_types": [
+                      "alias_registry"
+                    ]
+                  },
+                  {
+                    "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected customer owner alias registry",
+                    "mode": "hybrid",
+                    "top_k": 1200,
+                    "bm25_weight": 0.7
+                  }
+                ],
+                "returned": 1202
+              }
+            },
+            {
+              "event": "preset_flow_router",
+              "payload": {
+                "router_provider": "rule_proxy",
+                "allow_multiple": false,
+                "stacks": [
+                  "alias_resolution"
+                ],
+                "candidate_pool": 1202,
+                "rerank_candidates": 1202
+              }
+            }
+          ]
+        },
+        "agentic_preset_flows_rule_reflection": {
+          "recall@10": 1.0,
+          "top_doc_ids": [
+            "alias-customer-codenames",
+            "esc-contoso",
+            "acct-contoso",
+            "adv-beacon-oauth-3771",
+            "ticket-sec-1811",
+            "rel-beacon-3-14-1",
+            "rel-beacon-3-14-0",
+            "warroom-r7-june-critical-roster",
+            "approval-beacon-contoso-may06",
+            "v3-approval-decoy-0541"
+          ],
+          "trace": [
+            {
+              "event": "agentic_preset_plan",
+              "payload": {
+                "router_provider": "rule_proxy",
+                "reflection_provider": "rule_proxy",
+                "initial_stacks": [
+                  "alias_resolution",
+                  "exact_security",
+                  "wide_fanout",
+                  "authority",
+                  "semantic_multihop"
+                ],
+                "goals": [
+                  "alias_registry",
+                  "account_or_escalation",
+                  "ticket_or_advisory",
+                  "release_note",
+                  "source_authority"
+                ],
+                "max_rounds": 2
+              }
+            },
+            {
+              "event": "preset_stack_call",
+              "payload": {
+                "stack": "alias_resolution",
+                "routes": [
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected? alias registry source-of-truth",
+                    "mode": "bm25",
+                    "top_k": 800,
+                    "include_doc_types": [
+                      "alias_registry"
+                    ]
+                  },
+                  {
+                    "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected customer owner alias registry",
+                    "mode": "hybrid",
+                    "top_k": 400,
+                    "bm25_weight": 0.7
+                  }
+                ],
+                "returned": 402
+              }
+            },
+            {
+              "event": "preset_stack_call",
+              "payload": {
+                "stack": "exact_security",
+                "routes": [
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                    "mode": "bm25",
+                    "top_k": 800,
+                    "must_terms": [],
+                    "should_terms": [
+                      "fixed version",
+                      "vendor advisory",
+                      "internal ticket"
+                    ]
+                  },
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected? fixed version advisory ticket release notes",
+                    "mode": "hybrid",
+                    "top_k": 400,
+                    "bm25_weight": 0.7,
+                    "include_doc_types": [
+                      "security_ticket",
+                      "security_advisory",
+                      "release",
+                      "approval_ledger"
+                    ],
+                    "exclude_terms": [
+                      "draft",
+                      "stale"
+                    ]
+                  }
+                ],
+                "returned": 824
+              }
+            },
+            {
+              "event": "preset_stack_call",
+              "payload": {
+                "stack": "wide_fanout",
+                "routes": [
+                  {
+                    "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected account escalation current blocker renewal owner",
+                    "mode": "hybrid",
+                    "top_k": 800,
+                    "bm25_weight": 0.65,
+                    "include_doc_types": [
+                      "account_brief",
+                      "escalation",
+                      "war_room_roster",
+                      "security_ticket"
+                    ],
+                    "should_terms": [
+                      "current blocker",
+                      "renewal",
+                      "owner",
+                      "products in production"
+                    ]
+                  },
+                  {
+                    "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                    "mode": "bm25",
+                    "top_k": 400,
+                    "should_terms": []
+                  }
+                ],
+                "returned": 425
+              }
+            }
+          ]
+        },
+        "one_shot_code_gen_rule_policy": {
+          "recall@10": 0.1429,
+          "top_doc_ids": [
+            "approval-beacon-contoso-may06",
+            "v3-approval-decoy-0541",
+            "v3-approval-decoy-0001",
+            "v3-approval-decoy-0511",
+            "v3-approval-decoy-0241",
+            "v3-approval-decoy-0211",
+            "v3-approval-decoy-0841",
+            "v3-approval-decoy-0631",
+            "v3-approval-decoy-0331",
+            "v3-approval-decoy-0811"
+          ],
+          "trace": [
+            {
+              "event": "agentic_plan",
+              "payload": {
+                "strategy": "sac_enterprise_dynamic_routes",
+                "routes": [
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                    "mode": "hybrid",
+                    "top_k": 2000,
+                    "bm25_weight": 0.55,
+                    "exclude_terms": [
+                      "scratchpad",
+                      "copied dashboard",
+                      "wrong-customer"
+                    ]
+                  },
+                  {
+                    "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                    "mode": "hybrid",
+                    "top_k": 140,
+                    "bm25_weight": 0.65,
+                    "include_doc_types": [
+                      "account_brief",
+                      "escalation",
+                      "war_room_roster",
+                      "security_ticket"
+                    ],
+                    "should_terms": [
+                      "current blocker",
+                      "renewal",
+                      "owner"
+                    ]
+                  },
+                  {
+                    "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                    "mode": "bm25",
+                    "top_k": 90
+                  },
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                    "mode": "hybrid",
+                    "top_k": 120,
+                    "bm25_weight": 0.72,
+                    "include_doc_types": [
+                      "approval_ledger",
+                      "authority_matrix",
+                      "war_room_roster",
+                      "policy"
+                    ],
+                    "should_terms": [
+                      "final approval",
+                      "source-of-truth",
+                      "approved citation",
+                      "supersedes"
+                    ],
+                    "exclude_terms": [
+                      "draft",
+                      "stale",
+                      "not final"
+                    ]
+                  }
+                ],
+                "exact_terms": [],
+                "rationale": [
+                  "start with hybrid retrieval over the full query",
+                  "wide fanout query gets broader route budgets",
+                  "authority query uses source-of-truth metadata filters"
+                ]
+              }
+            },
+            {
+              "event": "reflection",
+              "payload": {
+                "candidate_pool": 3102,
+                "rerank_candidates": 2400,
+                "followup_used": false,
+                "subqueries": [
+                  "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                  "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                  "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                  "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                  "Beacon",
+                  "CT-R's OAuth review which Beacon version final approval",
+                  "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?"
+                ],
+                "search_modes": [
+                  "bm25",
+                  "hybrid"
+                ],
+                "query_understanding_intents": [
+                  "answer"
+                ],
+                "linked_entities": [
+                  {
+                    "mention": "Beacon",
+                    "ner_label": "ORG",
+                    "entity": "Beacon",
+                    "confidence": 0.5,
+                    "method": "spacy_ner_fallback"
+                  }
+                ],
+                "rewrite_needed": true,
+                "rewrites": [
+                  "Beacon",
+                  "CT-R's OAuth review which Beacon version final approval",
+                  "ct-r s oauth review beacon version customer-citable after final approval version must"
+                ]
+              }
+            }
+          ]
+        },
+        "agentic_code_gen_rule_reflection": {
+          "recall@10": 0.8571,
+          "top_doc_ids": [
+            "alias-customer-codenames",
+            "esc-contoso",
+            "esc-urbannest",
+            "adv-beacon-oauth-3771",
+            "ticket-sec-1811",
+            "rel-beacon-3-14-0",
+            "rel-beacon-3-14-1",
+            "warroom-r7-june-critical-roster",
+            "approval-beacon-contoso-may06",
+            "v3-approval-decoy-0541"
+          ],
+          "trace": [
+            {
+              "event": "agentic_iterative_plan",
+              "payload": {
+                "strategy": "iterative_agentic_evidence_coverage",
+                "initial_routes": [
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                    "mode": "hybrid",
+                    "top_k": 2000,
+                    "bm25_weight": 0.55,
+                    "exclude_terms": [
+                      "scratchpad",
+                      "copied dashboard",
+                      "wrong-customer"
+                    ]
+                  },
+                  {
+                    "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                    "mode": "hybrid",
+                    "top_k": 140,
+                    "bm25_weight": 0.65,
+                    "include_doc_types": [
+                      "account_brief",
+                      "escalation",
+                      "war_room_roster",
+                      "security_ticket"
+                    ],
+                    "should_terms": [
+                      "current blocker",
+                      "renewal",
+                      "owner"
+                    ]
+                  },
+                  {
+                    "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                    "mode": "bm25",
+                    "top_k": 90
+                  },
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                    "mode": "hybrid",
+                    "top_k": 120,
+                    "bm25_weight": 0.72,
+                    "include_doc_types": [
+                      "approval_ledger",
+                      "authority_matrix",
+                      "war_room_roster",
+                      "policy"
+                    ],
+                    "should_terms": [
+                      "final approval",
+                      "source-of-truth",
+                      "approved citation",
+                      "supersedes"
+                    ],
+                    "exclude_terms": [
+                      "draft",
+                      "stale",
+                      "not final"
+                    ]
+                  }
+                ],
+                "goals": [
+                  "alias_registry",
+                  "account_or_escalation",
+                  "ticket_or_advisory",
+                  "release_note",
+                  "source_authority"
+                ],
+                "rationale": [
+                  "start with hybrid retrieval over the full query",
+                  "wide fanout query gets broader route budgets",
+                  "authority query uses source-of-truth metadata filters",
+                  "alias/code-name queries require source-of-truth alias expansion",
+                  "authority-sensitive queries require final/source-of-truth evidence"
+                ]
+              }
+            },
+            {
+              "event": "agentic_iterative_reflection",
+              "payload": {
+                "initial_routes": [
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                    "mode": "hybrid",
+                    "top_k": 2000,
+                    "bm25_weight": 0.55,
+                    "exclude_terms": [
+                      "scratchpad",
+                      "copied dashboard",
+                      "wrong-customer"
+                    ]
+                  },
+                  {
+                    "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                    "mode": "hybrid",
+                    "top_k": 140,
+                    "bm25_weight": 0.65,
+                    "include_doc_types": [
+                      "account_brief",
+                      "escalation",
+                      "war_room_roster",
+                      "security_ticket"
+                    ],
+                    "should_terms": [
+                      "current blocker",
+                      "renewal",
+                      "owner"
+                    ]
+                  },
+                  {
+                    "query": "ct-r s oauth review beacon version is customer-citable after final approval version must rejected",
+                    "mode": "bm25",
+                    "top_k": 90
+                  },
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                    "mode": "hybrid",
+                    "top_k": 120,
+                    "bm25_weight": 0.72,
+                    "include_doc_types": [
+                      "approval_ledger",
+                      "authority_matrix",
+                      "war_room_roster",
+                      "policy"
+                    ],
+                    "should_terms": [
+                      "final approval",
+                      "source-of-truth",
+                      "approved citation",
+                      "supersedes"
+                    ],
+                    "exclude_terms": [
+                      "draft",
+                      "stale",
+                      "not final"
+                    ]
+                  },
+                  {
+                    "query": "Beacon",
+                    "mode": "hybrid",
+                    "top_k": 2000
+                  },
+                  {
+                    "query": "CT-R's OAuth review which Beacon version final approval",
+                    "mode": "hybrid",
+                    "top_k": 2000
+                  },
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?",
+                    "mode": "hybrid",
+                    "top_k": 2000
+                  }
+                ],
+                "missing_goals": [
+                  "alias_registry"
+                ],
+                "followup_routes": [
+                  {
+                    "query": "For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected? alias registry source-of-truth",
+                    "mode": "bm25",
+                    "top_k": 120
+                  },
+                  {
+                    "query": "ct-r customer owner alias registry",
+                    "mode": "hybrid",
+                    "top_k": 120
+                  }
+                ],
+                "candidate_pool": 3151,
+                "preselected": [
+                  "alias-customer-codenames",
+                  "esc-contoso",
+                  "esc-urbannest",
+                  "adv-beacon-oauth-3771",
+                  "ticket-sec-1811",
+                  "rel-beacon-3-14-0",
+                  "rel-beacon-3-14-1",
+                  "warroom-r7-june-critical-roster"
+                ],
+                "rerank_candidates": 2400,
+                "top_doc_ids": [
+                  "alias-customer-codenames",
+                  "esc-contoso",
+                  "esc-urbannest",
+                  "adv-beacon-oauth-3771",
+                  "ticket-sec-1811",
+                  "rel-beacon-3-14-0",
+                  "rel-beacon-3-14-1",
+                  "warroom-r7-june-critical-roster",
+                  "approval-beacon-contoso-may06",
+                  "v3-approval-decoy-0541"
+                ],
+                "rewrite_needed": true,
+                "rewrites": [
+                  "Beacon",
+                  "CT-R's OAuth review which Beacon version final approval",
+                  "ct-r s oauth review beacon version customer-citable after final approval version must"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "relevant_doc_ids": [
+        "acct-contoso",
+        "adv-beacon-oauth-3771",
+        "alias-customer-codenames",
+        "approval-beacon-contoso-may06",
         "esc-contoso",
         "rel-beacon-3-14-0",
         "rel-beacon-3-14-1"
@@ -39313,588 +40072,6 @@
       "relevant_doc_ids": [
         "policy-reflection-missing-evidence-v3",
         "source-authority-matrix-v3"
-      ]
-    },
-    {
-      "kind": "representative",
-      "qid": "sac-001",
-      "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-      "category": "security_fanout_join",
-      "note": "representative matrix example",
-      "systems": {
-        "fixed_flow_model_qr": {
-          "recall@10": 0.4,
-          "top_doc_ids": [
-            "adv-atlas-saml-4102",
-            "cluster-atlas-saml-4102-email-026",
-            "cluster-atlas-rerank-4520-postmortem-058",
-            "cluster-atlas-rerank-4520-postmortem-018",
-            "esc-northwind",
-            "cluster-customer-northwind-renewal-042",
-            "cluster-customer-northwind-renewal-018",
-            "cluster-customer-northwind-renewal-026",
-            "cluster-customer-northwind-renewal-034",
-            "cluster-customer-northwind-renewal-002"
-          ],
-          "trace": [
-            {
-              "event": "fixed_flow_model_qr",
-              "payload": {
-                "flow": "query -> model query rewrite -> multi-query hybrid retrieval -> rerank",
-                "qr_provider": "rule_proxy",
-                "rewrites": [
-                  "Northwind Health",
-                  "Northwind Health which critical vulnerabilities products",
-                  "northwind health critical vulnerabilities affect products they run fixed versions needed owns"
-                ],
-                "subqueries": [
-                  "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-                  "Northwind Health",
-                  "Northwind Health which critical vulnerabilities products",
-                  "northwind health critical vulnerabilities affect products they run fixed versions needed owns"
-                ],
-                "candidate_pool": 3470,
-                "rerank_candidates": 2400
-              }
-            }
-          ]
-        },
-        "agentic_fixed_flow_rule_reflection": {
-          "recall@10": 0.4,
-          "top_doc_ids": [
-            "adv-atlas-saml-4102",
-            "cluster-atlas-saml-4102-email-026",
-            "cluster-atlas-rerank-4520-postmortem-058",
-            "cluster-atlas-rerank-4520-postmortem-018",
-            "esc-northwind",
-            "cluster-atlas-saml-4102-email-036",
-            "cluster-atlas-rerank-4520-postmortem-028",
-            "cluster-atlas-rerank-4520-ticket-053",
-            "cluster-atlas-saml-4102-digest-031",
-            "cluster-atlas-saml-4102-digest-021"
-          ],
-          "trace": [
-            {
-              "event": "agentic_fixed_flow_plan",
-              "payload": {
-                "strategy": "agentic_fixed_flow_multi_call",
-                "initial_queries": [
-                  "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-                  "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout"
-                ],
-                "goals": [
-                  "release_note"
-                ],
-                "max_reflection_rounds": 2
-              }
-            },
-            {
-              "event": "fixed_flow_tool_call",
-              "payload": {
-                "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-                "subqueries": [
-                  "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-                  "Northwind Health"
-                ],
-                "candidate_pool": 992,
-                "returned": 20,
-                "rewrite_needed": true
-              }
-            },
-            {
-              "event": "fixed_flow_tool_call",
-              "payload": {
-                "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                "subqueries": [
-                  "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                  "northwind health critical vulnerabilities products they fixed versions"
-                ],
-                "candidate_pool": 1179,
-                "returned": 20,
-                "rewrite_needed": true
-              }
-            },
-            {
-              "event": "fixed_flow_tool_call",
-              "payload": {
-                "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout? release notes fixed version fixes performance note",
-                "subqueries": [
-                  "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout? release notes fixed version fixes performance note",
-                  "Northwind Health"
-                ],
-                "candidate_pool": 1092,
-                "returned": 20,
-                "rewrite_needed": true
-              }
-            }
-          ]
-        },
-        "preset_flow_model_router": {
-          "recall@10": 0.4,
-          "top_doc_ids": [
-            "adv-atlas-saml-4102",
-            "cluster-atlas-saml-4102-email-026",
-            "cluster-atlas-rerank-4520-postmortem-058",
-            "cluster-atlas-rerank-4520-postmortem-018",
-            "esc-northwind",
-            "cluster-customer-northwind-renewal-042",
-            "cluster-customer-northwind-renewal-018",
-            "cluster-customer-northwind-renewal-026",
-            "cluster-customer-northwind-renewal-034",
-            "cluster-customer-northwind-renewal-002"
-          ],
-          "trace": [
-            {
-              "event": "preset_stack_call",
-              "payload": {
-                "stack": "wide_fanout",
-                "routes": [
-                  {
-                    "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout account escalation current blocker renewal owner",
-                    "mode": "hybrid",
-                    "top_k": 2400,
-                    "bm25_weight": 0.65,
-                    "include_doc_types": [
-                      "account_brief",
-                      "escalation",
-                      "war_room_roster",
-                      "security_ticket"
-                    ],
-                    "should_terms": [
-                      "current blocker",
-                      "renewal",
-                      "owner",
-                      "products in production"
-                    ]
-                  },
-                  {
-                    "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                    "mode": "bm25",
-                    "top_k": 1200,
-                    "should_terms": []
-                  }
-                ],
-                "returned": 1214
-              }
-            },
-            {
-              "event": "preset_flow_router",
-              "payload": {
-                "router_provider": "rule_proxy",
-                "allow_multiple": false,
-                "stacks": [
-                  "wide_fanout"
-                ],
-                "candidate_pool": 1214,
-                "rerank_candidates": 1214
-              }
-            }
-          ]
-        },
-        "agentic_preset_flows_rule_reflection": {
-          "recall@10": 0.4,
-          "top_doc_ids": [
-            "rel-compass-1-19-3",
-            "rel-atlas-4-9-0",
-            "adv-atlas-saml-4102",
-            "cluster-atlas-saml-4102-email-026",
-            "cluster-atlas-rerank-4520-postmortem-058",
-            "cluster-atlas-rerank-4520-postmortem-018",
-            "esc-northwind",
-            "cluster-atlas-saml-4102-email-036",
-            "cluster-atlas-rerank-4520-postmortem-028",
-            "cluster-atlas-rerank-4520-ticket-053"
-          ],
-          "trace": [
-            {
-              "event": "agentic_preset_plan",
-              "payload": {
-                "router_provider": "rule_proxy",
-                "reflection_provider": "rule_proxy",
-                "initial_stacks": [
-                  "wide_fanout",
-                  "semantic_multihop"
-                ],
-                "goals": [
-                  "release_note"
-                ],
-                "max_rounds": 2
-              }
-            },
-            {
-              "event": "preset_stack_call",
-              "payload": {
-                "stack": "wide_fanout",
-                "routes": [
-                  {
-                    "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout account escalation current blocker renewal owner",
-                    "mode": "hybrid",
-                    "top_k": 800,
-                    "bm25_weight": 0.65,
-                    "include_doc_types": [
-                      "account_brief",
-                      "escalation",
-                      "war_room_roster",
-                      "security_ticket"
-                    ],
-                    "should_terms": [
-                      "current blocker",
-                      "renewal",
-                      "owner",
-                      "products in production"
-                    ]
-                  },
-                  {
-                    "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                    "mode": "bm25",
-                    "top_k": 400,
-                    "should_terms": []
-                  }
-                ],
-                "returned": 423
-              }
-            },
-            {
-              "event": "preset_stack_call",
-              "payload": {
-                "stack": "semantic_multihop",
-                "routes": [
-                  {
-                    "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-                    "mode": "dense",
-                    "top_k": 800,
-                    "include_doc_types": [
-                      "release",
-                      "approval_ledger",
-                      "meeting_note",
-                      "escalation",
-                      "security_ticket",
-                      "account_brief",
-                      "policy"
-                    ]
-                  },
-                  {
-                    "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout? authoritative evidence source-of-truth",
-                    "mode": "hybrid",
-                    "top_k": 400,
-                    "bm25_weight": 0.55
-                  }
-                ],
-                "returned": 449
-              }
-            },
-            {
-              "event": "agentic_preset_reflection",
-              "payload": {
-                "stack_calls": [
-                  {
-                    "stack": "wide_fanout",
-                    "round": 0,
-                    "returned": 423
-                  },
-                  {
-                    "stack": "semantic_multihop",
-                    "round": 0,
-                    "returned": 449
-                  }
-                ],
-                "reflection_rounds": [
-                  {
-                    "round": 1,
-                    "missing_goals": [],
-                    "followup_stacks": [],
-                    "candidate_pool_before": 539
-                  }
-                ],
-                "candidate_pool": 539,
-                "preselected": [
-                  "rel-compass-1-19-3",
-                  "rel-atlas-4-9-0"
-                ],
-                "rerank_candidates": 539,
-                "top_doc_ids": [
-                  "rel-compass-1-19-3",
-                  "rel-atlas-4-9-0",
-                  "adv-atlas-saml-4102",
-                  "cluster-atlas-saml-4102-email-026",
-                  "cluster-atlas-rerank-4520-postmortem-058",
-                  "cluster-atlas-rerank-4520-postmortem-018",
-                  "esc-northwind",
-                  "cluster-atlas-saml-4102-email-036",
-                  "cluster-atlas-rerank-4520-postmortem-028",
-                  "cluster-atlas-rerank-4520-ticket-053"
-                ]
-              }
-            }
-          ]
-        },
-        "one_shot_code_gen_rule_policy": {
-          "recall@10": 0.4,
-          "top_doc_ids": [
-            "adv-atlas-saml-4102",
-            "cluster-atlas-saml-4102-email-026",
-            "cluster-atlas-rerank-4520-postmortem-058",
-            "cluster-atlas-rerank-4520-postmortem-018",
-            "esc-northwind",
-            "cluster-customer-northwind-renewal-042",
-            "cluster-customer-northwind-renewal-018",
-            "cluster-customer-northwind-renewal-026",
-            "cluster-customer-northwind-renewal-034",
-            "cluster-customer-northwind-renewal-002"
-          ],
-          "trace": [
-            {
-              "event": "agentic_plan",
-              "payload": {
-                "strategy": "sac_enterprise_dynamic_routes",
-                "routes": [
-                  {
-                    "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-                    "mode": "hybrid",
-                    "top_k": 2000,
-                    "bm25_weight": 0.55,
-                    "exclude_terms": [
-                      "scratchpad",
-                      "copied dashboard",
-                      "wrong-customer"
-                    ]
-                  },
-                  {
-                    "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                    "mode": "hybrid",
-                    "top_k": 140,
-                    "bm25_weight": 0.65,
-                    "include_doc_types": [
-                      "account_brief",
-                      "escalation",
-                      "war_room_roster",
-                      "security_ticket"
-                    ],
-                    "should_terms": [
-                      "current blocker",
-                      "renewal",
-                      "owner"
-                    ]
-                  },
-                  {
-                    "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                    "mode": "bm25",
-                    "top_k": 90
-                  }
-                ],
-                "exact_terms": [],
-                "rationale": [
-                  "start with hybrid retrieval over the full query",
-                  "wide fanout query gets broader route budgets"
-                ]
-              }
-            },
-            {
-              "event": "reflection",
-              "payload": {
-                "candidate_pool": 2903,
-                "rerank_candidates": 2400,
-                "followup_used": false,
-                "subqueries": [
-                  "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-                  "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                  "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                  "Northwind Health",
-                  "Northwind Health which critical vulnerabilities products",
-                  "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?"
-                ],
-                "search_modes": [
-                  "bm25",
-                  "hybrid"
-                ],
-                "query_understanding_intents": [
-                  "answer"
-                ],
-                "linked_entities": [
-                  {
-                    "mention": "Northwind Health",
-                    "ner_label": "ORG",
-                    "entity": "Northwind Health",
-                    "confidence": 0.5,
-                    "method": "spacy_ner_fallback"
-                  }
-                ],
-                "rewrite_needed": true,
-                "rewrites": [
-                  "Northwind Health",
-                  "Northwind Health which critical vulnerabilities products",
-                  "northwind health critical vulnerabilities affect products they run fixed versions needed owns"
-                ]
-              }
-            }
-          ]
-        },
-        "agentic_code_gen_rule_reflection": {
-          "recall@10": 0.4,
-          "top_doc_ids": [
-            "rel-compass-1-19-3",
-            "rel-forge-6-2-0",
-            "adv-atlas-saml-4102",
-            "cluster-atlas-saml-4102-email-026",
-            "cluster-atlas-rerank-4520-postmortem-058",
-            "cluster-atlas-rerank-4520-postmortem-018",
-            "esc-northwind",
-            "cluster-atlas-saml-4102-email-036",
-            "cluster-atlas-rerank-4520-postmortem-028",
-            "cluster-atlas-rerank-4520-ticket-053"
-          ],
-          "trace": [
-            {
-              "event": "agentic_iterative_plan",
-              "payload": {
-                "strategy": "iterative_agentic_evidence_coverage",
-                "initial_routes": [
-                  {
-                    "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-                    "mode": "hybrid",
-                    "top_k": 2000,
-                    "bm25_weight": 0.55,
-                    "exclude_terms": [
-                      "scratchpad",
-                      "copied dashboard",
-                      "wrong-customer"
-                    ]
-                  },
-                  {
-                    "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                    "mode": "hybrid",
-                    "top_k": 140,
-                    "bm25_weight": 0.65,
-                    "include_doc_types": [
-                      "account_brief",
-                      "escalation",
-                      "war_room_roster",
-                      "security_ticket"
-                    ],
-                    "should_terms": [
-                      "current blocker",
-                      "renewal",
-                      "owner"
-                    ]
-                  },
-                  {
-                    "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                    "mode": "bm25",
-                    "top_k": 90
-                  }
-                ],
-                "goals": [
-                  "release_note"
-                ],
-                "rationale": [
-                  "start with hybrid retrieval over the full query",
-                  "wide fanout query gets broader route budgets"
-                ]
-              }
-            },
-            {
-              "event": "agentic_iterative_reflection",
-              "payload": {
-                "initial_routes": [
-                  {
-                    "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-                    "mode": "hybrid",
-                    "top_k": 2000,
-                    "bm25_weight": 0.55,
-                    "exclude_terms": [
-                      "scratchpad",
-                      "copied dashboard",
-                      "wrong-customer"
-                    ]
-                  },
-                  {
-                    "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                    "mode": "hybrid",
-                    "top_k": 140,
-                    "bm25_weight": 0.65,
-                    "include_doc_types": [
-                      "account_brief",
-                      "escalation",
-                      "war_room_roster",
-                      "security_ticket"
-                    ],
-                    "should_terms": [
-                      "current blocker",
-                      "renewal",
-                      "owner"
-                    ]
-                  },
-                  {
-                    "query": "northwind health critical vulnerabilities affect products they run fixed versions needed owns rollout",
-                    "mode": "bm25",
-                    "top_k": 90
-                  },
-                  {
-                    "query": "Northwind Health",
-                    "mode": "hybrid",
-                    "top_k": 2000
-                  },
-                  {
-                    "query": "Northwind Health which critical vulnerabilities products",
-                    "mode": "hybrid",
-                    "top_k": 2000
-                  },
-                  {
-                    "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?",
-                    "mode": "hybrid",
-                    "top_k": 2000
-                  }
-                ],
-                "missing_goals": [
-                  "release_note"
-                ],
-                "followup_routes": [
-                  {
-                    "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout? release notes fixed version fixes performance note",
-                    "mode": "bm25",
-                    "top_k": 160
-                  },
-                  {
-                    "query": "For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout? release evidence feature approved",
-                    "mode": "hybrid",
-                    "top_k": 120
-                  }
-                ],
-                "candidate_pool": 2910,
-                "preselected": [
-                  "rel-compass-1-19-3",
-                  "rel-forge-6-2-0"
-                ],
-                "rerank_candidates": 2400,
-                "top_doc_ids": [
-                  "rel-compass-1-19-3",
-                  "rel-forge-6-2-0",
-                  "adv-atlas-saml-4102",
-                  "cluster-atlas-saml-4102-email-026",
-                  "cluster-atlas-rerank-4520-postmortem-058",
-                  "cluster-atlas-rerank-4520-postmortem-018",
-                  "esc-northwind",
-                  "cluster-atlas-saml-4102-email-036",
-                  "cluster-atlas-rerank-4520-postmortem-028",
-                  "cluster-atlas-rerank-4520-ticket-053"
-                ],
-                "rewrite_needed": true,
-                "rewrites": [
-                  "Northwind Health",
-                  "Northwind Health which critical vulnerabilities products",
-                  "northwind health critical vulnerabilities affect products they run fixed versions needed owns"
-                ]
-              }
-            }
-          ]
-        }
-      },
-      "relevant_doc_ids": [
-        "acct-northwind",
-        "adv-atlas-saml-4102",
-        "esc-northwind",
-        "rel-atlas-4-8-2",
-        "ticket-sec-1842"
       ]
     }
   ]

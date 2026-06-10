@@ -24,18 +24,18 @@
 
 | System | Family | Recall@10 | Total ms | Planning/codegen ms | Execution ms | Search calls | QR calls | Rerank pairs |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| `agentic_code_gen_rule_reflection` | agentic code-gen | 0.4712 | 3338.5 | 0.2 | 3338.2 | 7.16 | 1.00 | 2400.0 |
-| `agentic_preset_flows_rule_reflection` | agentic preset flow | 0.4655 | 1104.2 | 5.4 | 1098.8 | 6.10 | 0.00 | 733.5 |
-| `agentic_fixed_flow_rule_reflection` | agentic fixed flow | 0.2785 | 7775.8 | 0.2 | 7775.5 | 12.39 | 5.97 | 5189.0 |
-| `preset_flow_model_router` | preset flow | 0.2083 | 1770.7 | 0.0 | 1770.7 | 2.00 | 0.00 | 1251.5 |
-| `one_shot_code_gen_rule_policy` | one-shot code-gen | 0.1857 | 3238.0 | 0.1 | 3237.8 | 6.97 | 1.00 | 2400.0 |
-| `fixed_flow_model_qr` | fixed flow | 0.1857 | 3556.8 | 0.0 | 3556.8 | 3.97 | 1.00 | 2400.0 |
+| `agentic_preset_flows_rule_reflection` | agentic preset flow | 0.4627 | 1104.2 | 5.4 | 1098.8 | 6.10 | 0.00 | 733.5 |
+| `agentic_code_gen_rule_reflection` | agentic code-gen | 0.4625 | 3338.5 | 0.2 | 3338.2 | 7.16 | 1.00 | 2400.0 |
+| `agentic_fixed_flow_rule_reflection` | agentic fixed flow | 0.2852 | 7775.8 | 0.2 | 7775.5 | 12.39 | 5.97 | 5189.0 |
+| `preset_flow_model_router` | preset flow | 0.2233 | 1770.7 | 0.0 | 1770.7 | 2.00 | 0.00 | 1251.5 |
+| `one_shot_code_gen_rule_policy` | one-shot code-gen | 0.2018 | 3238.0 | 0.1 | 3237.8 | 6.97 | 1.00 | 2400.0 |
+| `fixed_flow_model_qr` | fixed flow | 0.2018 | 3556.8 | 0.0 | 3556.8 | 3.97 | 1.00 | 2400.0 |
 
 ## Readout
 
-- Agentic codegen vs one-shot codegen: Recall@10 `0.4712` vs `0.1857`, latency `3338.5` ms vs `3238.0` ms.
-- Agentic preset flows vs single preset router: Recall@10 `0.4655` vs `0.2083`, showing the value of reflection even when the agent can only choose preset stacks.
-- Fixed multi-query hybrid remains a strong baseline: Recall@10 `0.1857` at `3556.8` ms. Codegen only matters if route-level control or iterative evidence coverage changes the candidate set.
+- Agentic codegen vs one-shot codegen: Recall@10 `0.4625` vs `0.2018`, latency `3338.5` ms vs `3238.0` ms.
+- Agentic preset flows vs single preset router: Recall@10 `0.4627` vs `0.2233`, showing the value of reflection even when the agent can only choose preset stacks.
+- Fixed multi-query hybrid remains a strong baseline: Recall@10 `0.2018` at `3556.8` ms. Codegen only matters if route-level control or iterative evidence coverage changes the candidate set.
 
 ## Examples
 
@@ -45,16 +45,33 @@ Compare Beacon CRM Connector 3.14.0 and 3.14.1 for Contoso's security review. Wh
 
 agentic codegen reflection recovered evidence one-shot codegen missed
 
-Relevant docs: `acct-contoso, adv-beacon-oauth-3771, esc-contoso, rel-beacon-3-14-0, rel-beacon-3-14-1`
+Relevant docs: `acct-contoso, adv-beacon-oauth-3771, approval-beacon-contoso-may06, esc-contoso, rel-beacon-3-14-0, rel-beacon-3-14-1`
 
 | System | Recall@10 | Top docs |
 |---|---:|---|
-| `fixed_flow_model_qr` | 0.0000 | `approval-beacon-contoso-may06, v3-approval-decoy-0076, v3-approval-decoy-0676, v3-approval-decoy-0406, v3-approval-decoy-0071` |
-| `agentic_fixed_flow_rule_reflection` | 0.4000 | `alias-owner-directory, rel-beacon-3-14-0, rel-beacon-3-14-1, approval-beacon-contoso-may06, v3-approval-decoy-0076` |
-| `preset_flow_model_router` | 0.0000 | `approval-beacon-contoso-may06, v3-approval-decoy-0076, v3-approval-decoy-0676, v3-approval-decoy-0406, v3-approval-decoy-0071` |
+| `fixed_flow_model_qr` | 0.1667 | `approval-beacon-contoso-may06, v3-approval-decoy-0076, v3-approval-decoy-0676, v3-approval-decoy-0406, v3-approval-decoy-0071` |
+| `agentic_fixed_flow_rule_reflection` | 0.5000 | `alias-owner-directory, rel-beacon-3-14-0, rel-beacon-3-14-1, approval-beacon-contoso-may06, v3-approval-decoy-0076` |
+| `preset_flow_model_router` | 0.1667 | `approval-beacon-contoso-may06, v3-approval-decoy-0076, v3-approval-decoy-0676, v3-approval-decoy-0406, v3-approval-decoy-0071` |
 | `agentic_preset_flows_rule_reflection` | 1.0000 | `alias-customer-codenames, acct-contoso, esc-contoso, ticket-sec-1811, adv-beacon-oauth-3771` |
-| `one_shot_code_gen_rule_policy` | 0.0000 | `approval-beacon-contoso-may06, v3-approval-decoy-0076, v3-approval-decoy-0676, v3-approval-decoy-0406, v3-approval-decoy-0071` |
+| `one_shot_code_gen_rule_policy` | 0.1667 | `approval-beacon-contoso-may06, v3-approval-decoy-0076, v3-approval-decoy-0676, v3-approval-decoy-0406, v3-approval-decoy-0071` |
 | `agentic_code_gen_rule_reflection` | 1.0000 | `alias-customer-codenames, esc-contoso, acct-contoso, adv-beacon-oauth-3771, ticket-sec-1811` |
+
+### sac-038 - agentic_preset_win
+
+For CT-R's OAuth review, which Beacon version is customer-citable after final approval, and which version must be rejected?
+
+agentic preset flow added a missing preset stack after reflection
+
+Relevant docs: `acct-contoso, adv-beacon-oauth-3771, alias-customer-codenames, approval-beacon-contoso-may06, esc-contoso, rel-beacon-3-14-0, rel-beacon-3-14-1`
+
+| System | Recall@10 | Top docs |
+|---|---:|---|
+| `fixed_flow_model_qr` | 0.1429 | `approval-beacon-contoso-may06, v3-approval-decoy-0541, v3-approval-decoy-0001, v3-approval-decoy-0511, v3-approval-decoy-0241` |
+| `agentic_fixed_flow_rule_reflection` | 0.1429 | `approval-beacon-contoso-may06, v3-approval-decoy-0541, v3-approval-decoy-0001, v3-approval-decoy-0511, v3-approval-decoy-0241` |
+| `preset_flow_model_router` | 0.1429 | `approval-beacon-contoso-may06, v3-approval-decoy-0541, v3-approval-decoy-0001, v3-approval-decoy-0511, v3-approval-decoy-0241` |
+| `agentic_preset_flows_rule_reflection` | 1.0000 | `alias-customer-codenames, esc-contoso, acct-contoso, adv-beacon-oauth-3771, ticket-sec-1811` |
+| `one_shot_code_gen_rule_policy` | 0.1429 | `approval-beacon-contoso-may06, v3-approval-decoy-0541, v3-approval-decoy-0001, v3-approval-decoy-0511, v3-approval-decoy-0241` |
+| `agentic_code_gen_rule_reflection` | 0.8571 | `alias-customer-codenames, esc-contoso, esc-urbannest, adv-beacon-oauth-3771, ticket-sec-1811` |
 
 ### sac-043 - fixed_flow_vs_single_preset
 
@@ -72,23 +89,6 @@ Relevant docs: `policy-reflection-missing-evidence-v3, source-authority-matrix-v
 | `agentic_preset_flows_rule_reflection` | 0.5000 | `warroom-r7-june-critical-roster, approval-atlas-northwind-final, policy-sac-latency-ledger-v3, policy-reflection-missing-evidence-v3, v3-reflection-decoy-0012` |
 | `one_shot_code_gen_rule_policy` | 0.5000 | `policy-reflection-missing-evidence-v3, v3-reflection-decoy-0012, v3-reflection-decoy-0017, v3-reflection-decoy-0002, v3-reflection-decoy-0007` |
 | `agentic_code_gen_rule_reflection` | 0.5000 | `warroom-r7-june-critical-roster, approval-atlas-northwind-final, policy-sac-latency-ledger-v3, policy-reflection-missing-evidence-v3, v3-reflection-decoy-0012` |
-
-### sac-001 - representative
-
-For Northwind Health, which critical vulnerabilities affect products they run, what fixed versions are needed, and who owns the rollout?
-
-representative matrix example
-
-Relevant docs: `acct-northwind, adv-atlas-saml-4102, esc-northwind, rel-atlas-4-8-2, ticket-sec-1842`
-
-| System | Recall@10 | Top docs |
-|---|---:|---|
-| `fixed_flow_model_qr` | 0.4000 | `adv-atlas-saml-4102, cluster-atlas-saml-4102-email-026, cluster-atlas-rerank-4520-postmortem-058, cluster-atlas-rerank-4520-postmortem-018, esc-northwind` |
-| `agentic_fixed_flow_rule_reflection` | 0.4000 | `adv-atlas-saml-4102, cluster-atlas-saml-4102-email-026, cluster-atlas-rerank-4520-postmortem-058, cluster-atlas-rerank-4520-postmortem-018, esc-northwind` |
-| `preset_flow_model_router` | 0.4000 | `adv-atlas-saml-4102, cluster-atlas-saml-4102-email-026, cluster-atlas-rerank-4520-postmortem-058, cluster-atlas-rerank-4520-postmortem-018, esc-northwind` |
-| `agentic_preset_flows_rule_reflection` | 0.4000 | `rel-compass-1-19-3, rel-atlas-4-9-0, adv-atlas-saml-4102, cluster-atlas-saml-4102-email-026, cluster-atlas-rerank-4520-postmortem-058` |
-| `one_shot_code_gen_rule_policy` | 0.4000 | `adv-atlas-saml-4102, cluster-atlas-saml-4102-email-026, cluster-atlas-rerank-4520-postmortem-058, cluster-atlas-rerank-4520-postmortem-018, esc-northwind` |
-| `agentic_code_gen_rule_reflection` | 0.4000 | `rel-compass-1-19-3, rel-forge-6-2-0, adv-atlas-saml-4102, cluster-atlas-saml-4102-email-026, cluster-atlas-rerank-4520-postmortem-058` |
 
 ## Notes
 
