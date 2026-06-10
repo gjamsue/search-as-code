@@ -1075,6 +1075,53 @@
             </div>
           </div>
           <div class="card wide">
+            <h3>Why this benchmark is hard</h3>
+            <p>These are not generic semantic-search questions. Each one has a specific trap that a normal top-k retrieval pipeline tends to miss.</p>
+            <div class="table-scroll">
+              <table class="leaderboard">
+                <thead>
+                  <tr>
+                    <th>Example</th>
+                    <th>Hard part</th>
+                    <th>Normal-search trap</th>
+                    <th>Required evidence</th>
+                    <th>Fixed / best named / agent code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Beacon 3.14.0 vs 3.14.1 for Contoso</td>
+                    <td>Version compare + final approval authority</td>
+                    <td>Approval decoys and stale release notes rank highly unless the flow preserves both versions and the final approval ledger.</td>
+                    <td>Alias, approval ledger, account, escalation, advisory, both releases</td>
+                    <td>0.0000 / 0.0000 / 1.0000</td>
+                  </tr>
+                  <tr>
+                    <td>Regulated customer asks for cache namespace proof</td>
+                    <td>Under-specified customer + release/feature join</td>
+                    <td>The query does not name QuartzBio; generic search gets proof notes and nearby Atlas releases but misses the full evidence chain.</td>
+                    <td>Account, escalation, runbook, advisory, AtlasSearch 4.9.0 release</td>
+                    <td>0.0000 / 0.2000 / 1.0000</td>
+                  </tr>
+                  <tr>
+                    <td>NovaFoods has a ForgeDeploy sales mention</td>
+                    <td>Negative evidence and stop condition</td>
+                    <td>Keyword search keeps chasing ForgeDeploy advisories even though the authoritative CRM footprint says no ForgeDeploy deployment.</td>
+                    <td>Negative footprint, account brief, alias/sales note context</td>
+                    <td>0.0000 / 0.5000 / 1.0000</td>
+                  </tr>
+                  <tr>
+                    <td>Red-risk renewals before July</td>
+                    <td>Temporal filter + multi-customer join</td>
+                    <td>A single top-k result can find a roster or one escalation, but the answer needs four accounts, four escalations, and the regulated-upgrade runbook.</td>
+                    <td>Account briefs, escalations, renewal timing, blocker next actions, runbook</td>
+                    <td>0.3333 / 0.4444 / 0.8889</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card wide">
             <h3>What this setup stresses</h3>
             <ul class="takeaway-list">
               <li><strong>Dynamic route selection:</strong> decide when to use hybrid, BM25, dense, rewrite, alias expansion, exact identifiers, and metadata filters.</li>
